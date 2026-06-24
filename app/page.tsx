@@ -25,7 +25,7 @@ export default function HomePage() {
         </p>
 
         <div className="inline-block border border-[#E8E2D9] rounded-full px-6 py-2.5 text-sm font-medium text-[#3D4A3E]">
-          Binnenkort beschikbaar
+          Coming soon
         </div>
       </div>
     </main>
