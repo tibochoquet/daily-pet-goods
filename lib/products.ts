@@ -630,7 +630,7 @@ price: 49.99,
     name: "Koelmat Hond L – Zelfkoelende Koelmat voor Grote Honden – Verkoelende Ligmat – Zomer Mat – 50x90 cm",
     slug: "koelmat-hond-l-zelfkoelende-4338",
     category: "dog-outdoor",
-    price: 0, // TODO: vul prijs in
+    price: 49.99,
     description: "Houd jouw hond koel en comfortabel tijdens warme zomerdagen met deze zelfkoelende koelmat. De koelmat activeert automatisch zodra jouw hond erop gaat liggen en zorgt voor een aangenaam verkoelend effect zonder water, elektriciteit of een vriezer. Ideaal voor gebruik in huis, in de bench, onderweg of op vakantie. Dankzij het duurzame en waterafstotende oppervlak is de mat eenvoudig schoon te maken en geschikt voor dagelijks gebruik. Met het royale formaat is deze koelmat perfect voor middelgrote en grote honden.",
     shortDescription: "Zelfkoelende koelmat voor grote honden – 50x90 cm. Geen water of stroom nodig, opvouwbaar en waterafstotend.",
     features: [
@@ -723,7 +723,7 @@ price: 49.99,
     name: "Koelmat Kat – Zelfkoelende Koelmat voor Katten – Verkoelende Ligmat – Zomer Mat – 40x50 cm",
     slug: "koelmat-kat-zelfkoelende-4587",
     category: "cat-outdoor",
-    price: 0, // TODO: vul prijs in
+    price: 34.99,
     description: "Geef jouw kat een heerlijke verkoelende ligplek tijdens warme zomerdagen met deze zelfkoelende koelmat. De koelmat activeert automatisch zodra jouw kat erop gaat liggen en zorgt voor een aangenaam verkoelend effect zonder water, elektriciteit of een vriezer. Perfect voor warme dagen in huis, op vakantie of onderweg. Dankzij het duurzame en waterafstotende oppervlak is de mat eenvoudig schoon te maken en geschikt voor dagelijks gebruik. De compacte afmeting maakt deze koelmat ideaal voor katten, kittens en andere kleine huisdieren.",
     shortDescription: "Zelfkoelende koelmat voor katten – 40x50 cm. Geen water of stroom nodig, waterafstotend en opvouwbaar.",
     features: [
