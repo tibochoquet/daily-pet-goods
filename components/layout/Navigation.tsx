@@ -11,7 +11,8 @@ const shopLinks = [
   { href: '/cat-bowls', label: 'Cat Bowls' },
   { href: '/dog-beds', label: 'Dog Beds' },
   { href: '/dog-travel', label: 'Dog Travel' },
-  { href: '/dog-pools', label: 'Dog Pools' },
+  { href: '/dog-pools', label: 'Dog Pools & Cooling' },
+  { href: '/cat-cooling', label: 'Cat Cooling' },
 ]
 
 const navLinks = [

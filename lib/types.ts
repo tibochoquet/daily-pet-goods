@@ -35,6 +35,7 @@ export type ProductCategory =
   | 'dog-beds'
   | 'dog-travel'
   | 'dog-outdoor'
+  | 'cat-outdoor'
 
 export interface Category {
   id: ProductCategory
