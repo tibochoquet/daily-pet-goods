@@ -2,8 +2,10 @@ import type { Metadata } from 'next'
 import { Inter, Playfair_Display } from 'next/font/google'
 import './globals.css'
 import Navigation from '@/components/layout/Navigation'
+import AnnouncementBar from '@/components/layout/AnnouncementBar'
 import Footer from '@/components/layout/Footer'
 import JsonLd from '@/components/JsonLd'
+import { CartProvider } from '@/components/cart/CartProvider'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -78,9 +80,12 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
       <body className="font-sans antialiased bg-[#FAFAF7]">
         <JsonLd data={organizationSchema} />
-        <Navigation />
-        <main>{children}</main>
-        <Footer />
+        <CartProvider>
+          <AnnouncementBar />
+          <Navigation />
+          <main>{children}</main>
+          <Footer />
+        </CartProvider>
       </body>
     </html>
   )

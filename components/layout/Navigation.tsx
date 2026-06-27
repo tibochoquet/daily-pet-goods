@@ -2,7 +2,8 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { Menu, X, ShoppingBag, ChevronDown } from 'lucide-react'
+import { Menu, X, ShoppingBag, ChevronDown, ShoppingCart } from 'lucide-react'
+import { useCart } from '@/components/cart/CartProvider'
 
 const shopLinks = [
   { href: '/shop', label: 'All Products' },
@@ -22,6 +23,7 @@ const navLinks = [
 export default function Navigation() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [shopOpen, setShopOpen] = useState(false)
+  const { itemCount } = useCart()
 
   return (
     <header className="sticky top-0 z-50 bg-[#FAFAF7]/95 backdrop-blur-sm border-b border-[#E8E2D9]">
@@ -80,6 +82,20 @@ export default function Navigation() {
 
           {/* Right side */}
           <div className="flex items-center gap-3">
+            {/* Cart icon */}
+            <Link
+              href="/winkelwagen"
+              className="relative p-2 text-[#1A1A1A] hover:text-[#2C4A3E] transition-colors"
+              aria-label={`Winkelwagen${itemCount > 0 ? `, ${itemCount} artikel${itemCount !== 1 ? 'en' : ''}` : ''}`}
+            >
+              <ShoppingCart size={20} />
+              {itemCount > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] bg-[#C8745A] text-white text-[10px] font-bold rounded-full flex items-center justify-center px-1 leading-none">
+                  {itemCount > 99 ? '99+' : itemCount}
+                </span>
+              )}
+            </Link>
+
             <Link
               href="/shop"
               className="hidden md:inline-flex items-center gap-2 bg-[#2C4A3E] text-white text-sm font-medium px-4 py-2 rounded-full hover:bg-[#3D6456] transition-colors"
