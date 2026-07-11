@@ -5,7 +5,6 @@ import Navigation from '@/components/layout/Navigation'
 import AnnouncementBar from '@/components/layout/AnnouncementBar'
 import Footer from '@/components/layout/Footer'
 import JsonLd from '@/components/JsonLd'
-import { CartProvider } from '@/components/cart/CartProvider'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -22,34 +21,34 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.dailypetgoods.nl'),
   title: {
-    default: 'Daily Pet Goods — Premium Pet Products for Dogs & Cats',
+    default: 'Daily Pet Goods — Premium huisdierproducten voor honden & katten',
     template: '%s | Daily Pet Goods',
   },
   description:
-    'Premium, thoughtfully selected products for dogs and cats. Elevated feeders, mango wood bowls, cosy dog beds, travel gear, and summer pools — delivered via Bol.com.',
+    'Zorgvuldig geselecteerde premium producten voor honden en katten. Verhoogde voerbakken, mangohouten bakken, knusse hondenmanden, reisbenodigdheden en zwembaden — verkrijgbaar via Bol.com.',
   keywords: [
-    'dog bowls',
-    'elevated dog feeder',
-    'mango wood dog bowl',
-    'dog beds',
-    'cat feeder',
-    'dog travel accessories',
-    'foldable dog pool',
-    'premium pet products',
-    'pet accessories Netherlands',
+    'hondenbakken',
+    'verhoogde voerbak hond',
+    'mangohouten hondenbak',
+    'hondenmanden',
+    'kattenvoerbak',
+    'reisbenodigdheden hond',
+    'opvouwbaar hondenzwembad',
+    'premium huisdierproducten',
+    'huisdieraccessoires Nederland',
   ],
   openGraph: {
     type: 'website',
-    locale: 'en_NL',
+    locale: 'nl_NL',
     siteName: 'Daily Pet Goods',
-    title: 'Daily Pet Goods — Premium Pet Products for Dogs & Cats',
+    title: 'Daily Pet Goods — Premium huisdierproducten voor honden & katten',
     description:
-      'Premium, thoughtfully selected products for dogs and cats. Delivered via Bol.com.',
+      'Zorgvuldig geselecteerde premium producten voor honden en katten. Verkrijgbaar via Bol.com.',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Daily Pet Goods — Premium Pet Products for Dogs & Cats',
-    description: 'Premium, thoughtfully selected products for dogs and cats.',
+    title: 'Daily Pet Goods — Premium huisdierproducten voor honden & katten',
+    description: 'Zorgvuldig geselecteerde premium producten voor honden en katten.',
   },
   robots: {
     index: true,
@@ -77,15 +76,13 @@ export default function RootLayout({
   }
 
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
+    <html lang="nl" className={`${inter.variable} ${playfair.variable}`}>
       <body className="font-sans antialiased bg-[#FAFAF7]">
         <JsonLd data={organizationSchema} />
-        <CartProvider>
-          <AnnouncementBar />
-          <Navigation />
-          <main>{children}</main>
-          <Footer />
-        </CartProvider>
+        <AnnouncementBar />
+        <Navigation />
+        <main>{children}</main>
+        <Footer />
       </body>
     </html>
   )

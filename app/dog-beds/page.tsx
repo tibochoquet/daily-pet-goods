@@ -3,9 +3,9 @@ import { getProductsByCategory } from '@/lib/products'
 import CategoryPage from '@/components/shop/CategoryPage'
 
 export const metadata: Metadata = {
-  title: 'Dog Beds — Plush Donut Beds, Lounge Beds & Sambo Beds',
+  title: 'Hondenmanden — Donut manden, lounge beds & Sambo manden',
   description:
-    'Premium dog beds for every sleeping style. Ultra-soft plush donut beds in 80 and 90 cm, structured Sambo beds in 4 colours, and spacious lounge beds for large breeds.',
+    'Premium hondenmanden voor elke slaapstijl. Extra zachte pluche donut manden in 80 en 90 cm, structurele Sambo manden in 4 kleuren, en ruime loungebeds voor grote rassen.',
   alternates: { canonical: 'https://www.dailypetgoods.nl/dog-beds' },
 }
 
@@ -13,11 +13,11 @@ export default function DogBedsPage() {
   const products = getProductsByCategory('dog-beds')
   return (
     <CategoryPage
-      title="Dog Beds"
-      description="A great night's sleep starts with the right bed. Whether your dog loves to curl up in a cosy donut or stretch out on a spacious lounge bed, we have the perfect spot for them."
+      title="Hondenmanden"
+      description="Een goede nachtrust begint met de juiste mand. Of jouw hond nu graag opkrult in een knusse donut mand of languit ligt op een ruim loungebed — wij hebben de perfecte plek."
       products={products}
       category="dog-beds"
-      breadcrumbLabel="Dog Beds"
+      breadcrumbLabel="Hondenmanden"
     />
   )
 }

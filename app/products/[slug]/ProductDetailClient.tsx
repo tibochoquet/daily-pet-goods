@@ -3,27 +3,12 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ChevronLeft, ShoppingCart, Check, ChevronLeft as Prev, ChevronRight as Next } from 'lucide-react'
+import { ChevronLeft, ArrowUpRight, Check, ChevronLeft as Prev, ChevronRight as Next } from 'lucide-react'
 import type { Product } from '@/lib/types'
-import { useCart } from '@/components/cart/CartProvider'
 
 export default function ProductDetailClient({ product }: { product: Product }) {
   const images = product.images && product.images.length > 0 ? product.images : [product.image]
   const [activeIndex, setActiveIndex] = useState(0)
-  const [added, setAdded] = useState(false)
-  const { addItem } = useCart()
-
-  function handleAdd() {
-    addItem({
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      image: product.image,
-      quantity: 1,
-    })
-    setAdded(true)
-    setTimeout(() => setAdded(false), 2000)
-  }
 
   function prev() {
     setActiveIndex((i) => (i === 0 ? images.length - 1 : i - 1))
@@ -106,40 +91,24 @@ export default function ProductDetailClient({ product }: { product: Product }) {
           </h1>
 
           <div className="mb-6">
-            <div className="flex items-baseline gap-2.5">
-              <span className="text-3xl font-bold text-[#2C4A3E]">
-                €{(product.price * 0.9).toFixed(2)}
-              </span>
-              <span className="text-lg text-[#9CA3AF] line-through">
-                €{product.price.toFixed(2)}
-              </span>
-            </div>
-            <p className="text-xs text-[#C8745A] font-medium mt-1 tracking-wide uppercase">
-              10% korting met code DAILY10 aan de kassa
+            <span className="text-3xl font-bold text-[#2C4A3E]">
+              €{product.price.toFixed(2)}
+            </span>
+            <p className="text-xs text-[#6B7280] font-medium mt-1 tracking-wide uppercase">
+              Prijs en levering via Bol.com
             </p>
           </div>
 
-          {/* Add to cart */}
-          <button
-            onClick={handleAdd}
-            className={`flex items-center justify-center gap-2.5 w-full sm:w-auto px-8 py-4 rounded-full font-semibold text-sm transition-all duration-200 mb-8 ${
-              added
-                ? 'bg-[#2C4A3E] text-white'
-                : 'bg-[#C8745A] text-white hover:bg-[#A85E45]'
-            }`}
+          {/* Buy on Bol.com */}
+          <a
+            href={product.bolUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2.5 w-full sm:w-auto px-8 py-4 rounded-full font-semibold text-sm transition-all duration-200 mb-8 bg-[#C8745A] text-white hover:bg-[#A85E45]"
           >
-            {added ? (
-              <>
-                <Check size={16} />
-                Toegevoegd aan winkelwagen
-              </>
-            ) : (
-              <>
-                <ShoppingCart size={16} />
-                In winkelwagen
-              </>
-            )}
-          </button>
+            Bekijk op Bol.com
+            <ArrowUpRight size={16} />
+          </a>
 
           {/* Description */}
           <div className="mb-6">

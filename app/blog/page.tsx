@@ -5,9 +5,9 @@ import { Clock, ArrowRight } from 'lucide-react'
 import { blogPosts } from '@/lib/blog'
 
 export const metadata: Metadata = {
-  title: 'Blog — Pet Care Tips & Guides',
+  title: 'Blog — Tips & gidsen over huisdierverzorging',
   description:
-    'Expert guides and practical advice for dog and cat owners. Dog bowl comparisons, bed reviews, travel tips, and more — from the Daily Pet Goods team.',
+    'Praktische adviezen en gidsen voor hond- en katteneigenaren. Vergelijkingen van hondenbakken, mandenreviews, reistips en meer — van het Daily Pet Goods team.',
   alternates: { canonical: 'https://www.dailypetgoods.nl/blog' },
 }
 
@@ -20,10 +20,10 @@ export default function BlogPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-sm font-semibold text-[#C8745A] uppercase tracking-wider mb-4">Blog</p>
           <h1 className="font-serif text-4xl md:text-5xl font-bold text-[#1A1A1A] mb-4">
-            Pet care tips & guides
+            Tips & gidsen over huisdierverzorging
           </h1>
           <p className="text-lg text-[#6B7280] max-w-xl">
-            Practical advice to help you choose the right products and care for your pets every day.
+            Praktisch advies om de juiste producten te kiezen en dagelijks goed voor je huisdier te zorgen.
           </p>
         </div>
       </section>
@@ -50,7 +50,7 @@ export default function BlogPage() {
                   </span>
                   <div className="flex items-center gap-1.5 text-xs text-[#6B7280]">
                     <Clock size={12} />
-                    {featured.readTime} min read
+                    {featured.readTime} min. leestijd
                   </div>
                 </div>
                 <h2 className="font-serif text-2xl md:text-3xl font-bold text-[#1A1A1A] leading-tight mb-4 group-hover:text-[#2C4A3E] transition-colors">
@@ -58,7 +58,7 @@ export default function BlogPage() {
                 </h2>
                 <p className="text-[#6B7280] leading-relaxed mb-6">{featured.excerpt}</p>
                 <div className="inline-flex items-center gap-2 text-[#2C4A3E] font-medium text-sm group-hover:gap-3 transition-all">
-                  Read article
+                  Lees artikel
                   <ArrowRight size={16} />
                 </div>
               </div>

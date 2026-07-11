@@ -5,32 +5,32 @@ import { ArrowRight, Heart, Leaf, Shield, Star } from 'lucide-react'
 import { brandImages } from '@/lib/images'
 
 export const metadata: Metadata = {
-  title: 'About Us — The Story Behind Daily Pet Goods',
+  title: 'Over ons — Het verhaal achter Daily Pet Goods',
   description:
-    'Daily Pet Goods was built by a pet owner who wanted better products — without the overwhelm of generic marketplaces. Learn our story and why we do what we do.',
+    'Daily Pet Goods werd opgericht door een huisdiereigenaar die betere producten wilde — zonder de overweldigende keuze van generieke marktplaatsen. Lees ons verhaal en waarom we doen wat we doen.',
   alternates: { canonical: 'https://www.dailypetgoods.nl/about' },
 }
 
 const values = [
   {
     icon: Heart,
-    title: 'Pet-first thinking',
-    description: 'Every product starts with a simple question: will a pet love using this?',
+    title: 'Huisdier op één',
+    description: 'Elk product begint met een simpele vraag: zal een huisdier dit graag gebruiken?',
   },
   {
     icon: Leaf,
-    title: 'Sustainable materials',
-    description: 'We favour natural materials — mango wood, stainless steel, food-grade silicone.',
+    title: 'Duurzame materialen',
+    description: 'We kiezen het liefst voor natuurlijke materialen — mangohout, roestvrij staal, voedselveilig silicone.',
   },
   {
     icon: Shield,
-    title: 'Quality you can trust',
-    description: 'We test every product before it joins our collection. No shortcuts.',
+    title: 'Kwaliteit die je kunt vertrouwen',
+    description: 'We testen elk product voordat het bij onze collectie komt. Geen shortcuts.',
   },
   {
     icon: Star,
-    title: 'Honest curation',
-    description: 'We only stock products we would buy for our own pets. No filler.',
+    title: 'Eerlijke selectie',
+    description: 'We verkopen alleen producten die we zelf voor onze eigen huisdieren zouden kopen. Geen opvulling.',
   },
 ]
 
@@ -41,7 +41,7 @@ export default function AboutPage() {
       <section className="relative min-h-[75vh] flex items-end overflow-hidden">
         <Image
           src={brandImages.lifestyleHero}
-          alt="Golden retriever resting on a premium cream lounge bed, grey cat on armchair — warm modern home interior"
+          alt="Golden retriever rustend op een premium crème loungebed, grijze kat op een fauteuil — warm modern interieur"
           fill
           className="object-cover object-center"
           priority
@@ -54,14 +54,14 @@ export default function AboutPage() {
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-14 md:pb-20">
           <div className="max-w-xl">
             <p className="text-sm font-semibold text-[#D4956B] uppercase tracking-wider mb-4">
-              Our story
+              Ons verhaal
             </p>
             <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-5">
-              Built by a pet owner,{' '}
-              <em className="not-italic text-[#D4956B]">for pet owners.</em>
+              Gebouwd door een huisdiereigenaar,{' '}
+              <em className="not-italic text-[#D4956B]">voor huisdiereigenaren.</em>
             </h1>
             <p className="text-lg text-white/65 leading-relaxed">
-              We started with a frustration. We ended up building the brand we wished existed.
+              We begonnen met een frustratie. We eindigden met het bouwen van het merk dat we zelf misten.
             </p>
           </div>
         </div>
@@ -71,13 +71,13 @@ export default function AboutPage() {
       <section className="py-16 md:py-24 bg-[#FAFAF7]">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-xl text-[#2C4A3E] font-serif font-medium leading-relaxed mb-6">
-            Finding beautiful, quality products for our dog meant either paying luxury prices or wading through pages of cheap, throwaway items on generic marketplaces.
+            Mooie, kwalitatieve producten vinden voor onze hond betekende óf luxe prijzen betalen, óf je een weg banen door pagina&apos;s vol goedkope, wegwerpproducten op generieke marktplaatsen.
           </p>
           <p className="text-[#6B7280] leading-relaxed mb-5">
-            We wanted the middle ground — products that were well-made, looked great at home, and didn't cost a fortune. So we went looking for them, tested them, and built a small curated collection around the things that actually worked.
+            Wij wilden de middenweg — producten die goed gemaakt waren, er mooi uitzagen in huis, en niet een fortuin kostten. Dus gingen we op zoek, testten we alles, en bouwden we een kleine, zorgvuldig samengestelde collectie rond de dingen die echt werkten.
           </p>
           <p className="text-[#6B7280] leading-relaxed">
-            Today, every product in our range has been through that same process. If it isn't good enough for our own pets, it doesn't make the cut.
+            Vandaag heeft elk product in ons assortiment datzelfde proces doorlopen. Is het niet goed genoeg voor onze eigen huisdieren, dan haalt het de collectie niet.
           </p>
         </div>
       </section>
@@ -87,10 +87,10 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <p className="text-sm font-semibold text-[#C8745A] uppercase tracking-wider mb-3">
-              What we stand for
+              Waar we voor staan
             </p>
             <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#1A1A1A]">
-              Our values
+              Onze waarden
             </h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -119,19 +119,19 @@ export default function AboutPage() {
       <section className="py-16 md:py-24 bg-[#2C4A3E]">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-white mb-6">
-            Why we sell on Bol.com
+            Waarom we verkopen via Bol.com
           </h2>
           <p className="text-white/65 leading-relaxed mb-4">
-            We chose Bol.com because it&apos;s the platform our customers already trust for fast, reliable delivery. You don&apos;t need a new account, you know how returns work, and you can track your order every step of the way.
+            We kozen voor Bol.com omdat het platform is dat onze klanten al vertrouwen voor snelle, betrouwbare levering. Je hebt geen nieuw account nodig, je weet hoe retourneren werkt, en je kunt je bestelling elke stap volgen.
           </p>
           <p className="text-white/65 leading-relaxed mb-10">
-            It lets us focus on what we do best — curating great products — rather than running fulfilment and payment infrastructure from scratch.
+            Het stelt ons in staat om te focussen op wat we het beste kunnen — het samenstellen van geweldige producten — in plaats van zelf een logistiek en betaalsysteem op te bouwen.
           </p>
           <Link
             href="/shop"
             className="inline-flex items-center gap-2 bg-white text-[#2C4A3E] font-semibold px-7 py-4 rounded-full hover:bg-[#F3EDE3] transition-colors text-sm"
           >
-            Browse our products
+            Bekijk onze producten
             <ArrowRight size={16} />
           </Link>
         </div>
@@ -141,16 +141,16 @@ export default function AboutPage() {
       <section className="py-16 bg-[#FAFAF7]">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="font-serif text-2xl md:text-3xl font-bold text-[#1A1A1A] mb-4">
-            Have a question?
+            Heb je een vraag?
           </h2>
           <p className="text-[#6B7280] mb-6">
-            We love hearing from pet owners. Get in touch and we&apos;ll get back to you quickly.
+            We horen graag van huisdiereigenaren. Neem contact op en we reageren snel.
           </p>
           <Link
             href="/contact"
             className="inline-flex items-center gap-2 bg-[#2C4A3E] text-white font-semibold px-6 py-3.5 rounded-full hover:bg-[#3D6456] transition-colors text-sm"
           >
-            Contact us
+            Neem contact op
             <ArrowRight size={16} />
           </Link>
         </div>

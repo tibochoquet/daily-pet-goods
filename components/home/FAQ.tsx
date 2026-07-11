@@ -5,34 +5,34 @@ import { Plus, Minus } from 'lucide-react'
 
 const faqs = [
   {
-    question: 'Where can I buy Daily Pet Goods products?',
+    question: 'Waar kan ik Daily Pet Goods producten kopen?',
     answer:
-      'All our products are available on Bol.com, one of the largest and most trusted online retailers in the Netherlands and Belgium. Simply click the "Buy on Bol" button on any product page to go directly to the listing.',
+      'Al onze producten zijn verkrijgbaar via Bol.com, een van de grootste en meest vertrouwde webwinkels van Nederland en België. Klik op de knop "Bekijk op Bol.com" op een productpagina om direct naar de listing te gaan.',
   },
   {
-    question: 'How fast will my order arrive?',
+    question: 'Hoe snel wordt mijn bestelling geleverd?',
     answer:
-      'Orders through Bol.com typically arrive the next business day for most addresses in the Netherlands. Delivery to Belgium usually takes 2–3 business days. Bol.com provides full order tracking so you can follow your package.',
+      'Bestellingen via Bol.com komen voor de meeste adressen in Nederland doorgaans de volgende werkdag aan. Levering in België duurt meestal 2–3 werkdagen. Bol.com biedt volledige track & trace zodat je je pakket kunt volgen.',
   },
   {
-    question: 'How do I choose the right size elevated feeder?',
+    question: 'Hoe kies ik de juiste maat verhoogde voerbak?',
     answer:
-      'A good rule of thumb: small (M) for dogs up to 10 kg, large (L) for dogs 10–25 kg, and extra-large (XL) for dogs over 25 kg. The ideal bowl height should allow your dog to eat without straining their neck downward or stretching upward.',
+      'Een goede vuistregel: maat M voor honden tot 10 kg, L voor honden van 10–25 kg, en XL voor honden boven de 25 kg. De ideale bakhoogte zorgt ervoor dat je hond kan eten zonder de nek te hoeven buigen of strekken.',
   },
   {
-    question: 'Are the mango wood bowls safe for food and water?',
+    question: 'Zijn de mangohouten bakken veilig voor voer en water?',
     answer:
-      'Yes. All our mango wood products use food-safe oil finishes and include stainless steel inserts for direct food and water contact. The wood itself only holds the insert — it never comes into contact with your pet\'s food.',
+      'Ja. Al onze mangohouten producten hebben een voedselveilige olieafwerking en bevatten roestvrijstalen inzetstukken voor direct contact met voer en water. Het hout zelf houdt alleen het inzetstuk vast — het komt nooit in contact met het eten van je huisdier.',
   },
   {
-    question: 'Can I wash the dog bed covers?',
+    question: 'Kan ik de hoezen van de hondenmanden wassen?',
     answer:
-      'Yes. The covers on our Sambo Dog Bed, Plush Donut Dog Beds, and Lounge Dog Bed are all removable and machine washable. We recommend washing at 30°C on a gentle cycle.',
+      'Ja. De hoezen van onze Sambo hondenmand, pluche donut manden en het loungebed zijn allemaal afneembaar en machinewasbaar. We raden een wasje op 30°C met een fijn programma aan.',
   },
   {
-    question: 'What if a product arrives damaged?',
+    question: 'Wat als een product beschadigd aankomt?',
     answer:
-      'Bol.com has an excellent customer service and return policy. If your order arrives damaged or isn\'t as described, contact Bol.com directly or reach us at hello@dailypetgoods.nl and we\'ll make sure it\'s sorted quickly.',
+      'Bol.com heeft een uitstekende klantenservice en retourbeleid. Komt je bestelling beschadigd aan of klopt hij niet met de beschrijving? Neem dan contact op met Bol.com, of mail ons op hello@dailypetgoods.nl en we zorgen dat het snel wordt opgelost.',
   },
 ]
 
@@ -45,7 +45,7 @@ export default function FAQ() {
         <div className="text-center mb-12">
           <p className="text-sm font-semibold text-[#C8745A] uppercase tracking-wider mb-2">FAQ</p>
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#1A1A1A]">
-            Common questions
+            Veelgestelde vragen
           </h2>
         </div>
 

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { Mail, ArrowRight, CheckCircle2 } from 'lucide-react'
 
 export default function NewsletterSignup() {
@@ -22,16 +23,16 @@ export default function NewsletterSignup() {
         </div>
 
         <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#1A1A1A] mb-4">
-          Be the first to know
+          Blijf op de hoogte
         </h2>
         <p className="text-[#6B7280] leading-relaxed mb-8">
-          New products, seasonal picks, and practical pet care tips — straight to your inbox. No spam, ever. Unsubscribe any time.
+          Nieuwe producten, seizoensuitjes en praktische tips voor huisdierverzorging — rechtstreeks in je inbox. Geen spam, ooit. Altijd op te zeggen.
         </p>
 
         {submitted ? (
           <div className="flex items-center justify-center gap-3 bg-[#2C4A3E]/10 text-[#2C4A3E] rounded-2xl py-5 px-6">
             <CheckCircle2 size={20} />
-            <span className="font-medium">You&apos;re in! We&apos;ll be in touch soon.</span>
+            <span className="font-medium">Je bent aangemeld! We houden je op de hoogte.</span>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="flex gap-3 max-w-md mx-auto">
@@ -40,21 +41,22 @@ export default function NewsletterSignup() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="your@email.com"
+              placeholder="jouw@email.nl"
               className="flex-1 bg-white border border-[#E8E2D9] rounded-full px-5 py-3.5 text-sm text-[#1A1A1A] placeholder:text-[#B0A898] focus:outline-none focus:border-[#2C4A3E] focus:ring-2 focus:ring-[#2C4A3E]/10 transition-all"
             />
             <button
               type="submit"
               className="inline-flex items-center gap-2 bg-[#2C4A3E] text-white font-semibold px-5 py-3.5 rounded-full hover:bg-[#3D6456] transition-colors text-sm shrink-0"
             >
-              Subscribe
+              Aanmelden
               <ArrowRight size={14} />
             </button>
           </form>
         )}
 
         <p className="text-xs text-[#B0A898] mt-4">
-          By subscribing you agree to our Privacy Policy. Unsubscribe any time.
+          Door je aan te melden ga je akkoord met ons{' '}
+          <Link href="/privacy" className="underline hover:text-[#6B7280]">privacybeleid</Link>. Altijd op te zeggen.
         </p>
       </div>
     </section>

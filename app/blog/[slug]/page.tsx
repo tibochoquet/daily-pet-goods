@@ -31,9 +31,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 const placeholderContent = `
-<p>This article is coming soon. We're currently writing in-depth, research-backed content on this topic to help you make the best decisions for your pet.</p>
+<p>Dit artikel volgt binnenkort. We werken op dit moment aan diepgaande, goed onderbouwde content over dit onderwerp om jou te helpen de beste keuzes te maken voor je huisdier.</p>
 
-<p>In the meantime, browse our product range or <a href="/contact">get in touch</a> if you have a specific question we can help with.</p>
+<p>Bekijk in de tussentijd ons productaanbod, of <a href="/contact">neem contact op</a> als je een specifieke vraag hebt waar we mee kunnen helpen.</p>
 `
 
 export default async function BlogPostPage({ params }: Props) {
@@ -53,7 +53,7 @@ export default async function BlogPostPage({ params }: Props) {
             className="inline-flex items-center gap-2 text-sm text-[#6B7280] hover:text-[#2C4A3E] transition-colors mb-6"
           >
             <ArrowLeft size={14} />
-            Back to blog
+            Terug naar blog
           </Link>
 
           <div className="flex items-center gap-3 mb-5">
@@ -62,7 +62,7 @@ export default async function BlogPostPage({ params }: Props) {
             </span>
             <div className="flex items-center gap-1.5 text-xs text-[#6B7280]">
               <Clock size={12} />
-              {post.readTime} min read
+              {post.readTime} min. leestijd
             </div>
           </div>
 
@@ -119,7 +119,7 @@ export default async function BlogPostPage({ params }: Props) {
       {relatedPosts.length > 0 && (
         <section className="py-16 bg-white border-t border-[#E8E2D9]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="font-serif text-2xl font-bold text-[#1A1A1A] mb-8">Related articles</h2>
+            <h2 className="font-serif text-2xl font-bold text-[#1A1A1A] mb-8">Gerelateerde artikelen</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {relatedPosts.map((related) => (
                 <Link

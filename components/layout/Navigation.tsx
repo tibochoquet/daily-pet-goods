@@ -2,21 +2,20 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { Menu, X, ShoppingBag, ChevronDown, ShoppingCart } from 'lucide-react'
-import { useCart } from '@/components/cart/CartProvider'
+import { Menu, X, ShoppingBag, ChevronDown } from 'lucide-react'
 
 const shopLinks = [
-  { href: '/shop', label: 'All Products' },
-  { href: '/dog-bowls', label: 'Dog Bowls' },
-  { href: '/cat-bowls', label: 'Cat Bowls' },
-  { href: '/dog-beds', label: 'Dog Beds' },
-  { href: '/dog-travel', label: 'Dog Travel' },
-  { href: '/dog-pools', label: 'Dog Pools & Cooling' },
-  { href: '/cat-cooling', label: 'Cat Cooling' },
+  { href: '/shop', label: 'Alle producten' },
+  { href: '/dog-bowls', label: 'Hondenbakken' },
+  { href: '/cat-bowls', label: 'Kattenbakken' },
+  { href: '/dog-beds', label: 'Hondenmanden' },
+  { href: '/dog-travel', label: 'Onderweg met je hond' },
+  { href: '/dog-pools', label: 'Zwembaden & koelmatten hond' },
+  { href: '/cat-cooling', label: 'Koelmatten voor katten' },
 ]
 
 const navLinks = [
-  { href: '/about', label: 'About' },
+  { href: '/about', label: 'Over ons' },
   { href: '/blog', label: 'Blog' },
   { href: '/contact', label: 'Contact' },
 ]
@@ -24,7 +23,6 @@ const navLinks = [
 export default function Navigation() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [shopOpen, setShopOpen] = useState(false)
-  const { itemCount } = useCart()
 
   return (
     <header className="sticky top-0 z-50 bg-[#FAFAF7]/95 backdrop-blur-sm border-b border-[#E8E2D9]">
@@ -55,7 +53,7 @@ export default function Navigation() {
               </button>
               {shopOpen && (
                 <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2">
-                  <div className="bg-white border border-[#E8E2D9] rounded-xl shadow-lg py-2 w-48">
+                  <div className="bg-white border border-[#E8E2D9] rounded-xl shadow-lg py-2 w-56">
                     {shopLinks.map((link) => (
                       <Link
                         key={link.href}
@@ -83,33 +81,19 @@ export default function Navigation() {
 
           {/* Right side */}
           <div className="flex items-center gap-3">
-            {/* Cart icon */}
-            <Link
-              href="/winkelwagen"
-              className="relative p-2 text-[#1A1A1A] hover:text-[#2C4A3E] transition-colors"
-              aria-label={`Winkelwagen${itemCount > 0 ? `, ${itemCount} artikel${itemCount !== 1 ? 'en' : ''}` : ''}`}
-            >
-              <ShoppingCart size={20} />
-              {itemCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] bg-[#C8745A] text-white text-[10px] font-bold rounded-full flex items-center justify-center px-1 leading-none">
-                  {itemCount > 99 ? '99+' : itemCount}
-                </span>
-              )}
-            </Link>
-
             <Link
               href="/shop"
               className="hidden md:inline-flex items-center gap-2 bg-[#2C4A3E] text-white text-sm font-medium px-4 py-2 rounded-full hover:bg-[#3D6456] transition-colors"
             >
               <ShoppingBag size={14} />
-              Shop Now
+              Nu shoppen
             </Link>
 
             {/* Mobile menu button */}
             <button
               className="md:hidden p-2 text-[#1A1A1A] hover:text-[#2C4A3E]"
               onClick={() => setMobileOpen(!mobileOpen)}
-              aria-label="Toggle menu"
+              aria-label="Menu openen/sluiten"
             >
               {mobileOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
@@ -151,7 +135,7 @@ export default function Navigation() {
                 className="block w-full text-center bg-[#2C4A3E] text-white text-sm font-medium px-4 py-3 rounded-xl hover:bg-[#3D6456] transition-colors"
                 onClick={() => setMobileOpen(false)}
               >
-                Shop All Products
+                Bekijk alle producten
               </Link>
             </div>
           </div>

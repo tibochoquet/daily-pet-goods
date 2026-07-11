@@ -3,8 +3,8 @@ import { ArrowRight } from 'lucide-react'
 
 const categories = [
   {
-    title: 'Dog Bowls',
-    description: 'Elevated feeders, mango wood & metal',
+    title: 'Hondenbakken',
+    description: 'Verhoogde voerbakken, mangohout & metaal',
     href: '/dog-bowls',
     bg: 'bg-[#C8745A]',
     text: 'text-white',
@@ -12,8 +12,8 @@ const categories = [
     span: 'lg:col-span-2 lg:row-span-2',
   },
   {
-    title: 'Cat Bowls',
-    description: 'Mango wood & minimalist metal',
+    title: 'Kattenbakken',
+    description: 'Mangohout & minimalistisch metaal',
     href: '/cat-bowls',
     bg: 'bg-[#3D6456]',
     text: 'text-white',
@@ -21,8 +21,8 @@ const categories = [
     span: '',
   },
   {
-    title: 'Dog Beds',
-    description: 'Plush donuts, lounge & structured beds',
+    title: 'Hondenmanden',
+    description: 'Pluche donuts, lounge & Sambo manden',
     href: '/dog-beds',
     bg: 'bg-[#F3EDE3]',
     text: 'text-[#1A1A1A]',
@@ -30,8 +30,8 @@ const categories = [
     span: '',
   },
   {
-    title: 'Dog Travel',
-    description: 'Car covers, harnesses & bottles',
+    title: 'Onderweg met je hond',
+    description: 'Achterbankbeschermers, tuigjes & flessen',
     href: '/dog-travel',
     bg: 'bg-[#2C4A3E]',
     text: 'text-white',
@@ -39,10 +39,19 @@ const categories = [
     span: '',
   },
   {
-    title: 'Dog Pools',
-    description: 'Foldable summer splash pools',
+    title: 'Zwembaden & koelmatten',
+    description: 'Opvouwbare zomerzwembaden voor honden',
     href: '/dog-pools',
     bg: 'bg-[#1F3329]',
+    text: 'text-white',
+    sub: 'text-white/70',
+    span: '',
+  },
+  {
+    title: 'Koelmatten katten',
+    description: 'Zelfkoelend, zonder water of stroom',
+    href: '/cat-cooling',
+    bg: 'bg-[#D4956B]',
     text: 'text-white',
     sub: 'text-white/70',
     span: '',
@@ -59,16 +68,16 @@ export default function FeaturedCategories() {
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
           <div>
-            <p className="text-sm font-semibold text-[#C8745A] uppercase tracking-wider mb-2">Categories</p>
+            <p className="text-sm font-semibold text-[#C8745A] uppercase tracking-wider mb-2">Categorieën</p>
             <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#1A1A1A]">
-              Shop by category
+              Shop per categorie
             </h2>
           </div>
           <Link
             href="/shop"
             className="inline-flex items-center gap-2 text-[#2C4A3E] font-medium text-sm hover:gap-3 transition-all"
           >
-            View all products
+            Bekijk alle producten
             <ArrowRight size={16} />
           </Link>
         </div>
@@ -83,7 +92,7 @@ export default function FeaturedCategories() {
           >
             <div className="flex items-start justify-between">
               <span className={`text-xs font-semibold uppercase tracking-wider ${featured.sub}`}>
-                Featured
+                Uitgelicht
               </span>
               <span className={`w-9 h-9 rounded-full border ${featured.text === 'text-white' ? 'border-white/25 text-white' : 'border-black/15 text-[#1A1A1A]'} flex items-center justify-center group-hover:bg-white/10 transition-colors`}>
                 <ArrowRight size={14} />

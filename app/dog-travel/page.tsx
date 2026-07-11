@@ -4,13 +4,13 @@ import { brandImages } from '@/lib/images'
 import CategoryPage from '@/components/shop/CategoryPage'
 
 export const metadata: Metadata = {
-  title: 'Dog Travel Accessories — Car Covers, Harnesses & More',
+  title: 'Onderweg met je hond — Autodekens, tuigjes & meer',
   description:
-    'Everything you need for travelling with your dog. Waterproof car seat covers, padded harnesses, travel water bottles, and collapsible bowls for adventures on the go.',
+    'Alles wat je nodig hebt om te reizen met je hond. Waterdichte achterbankbeschermers, gevoerde tuigjes, reisdrinkflessen en opvouwbare bakken voor onderweg.',
   alternates: { canonical: 'https://www.dailypetgoods.nl/dog-travel' },
   openGraph: {
-    title: 'Dog Travel Accessories — Daily Pet Goods',
-    description: 'Waterproof car covers, harnesses, water bottles and more for dog adventures.',
+    title: 'Onderweg met je hond — Daily Pet Goods',
+    description: 'Waterdichte achterbankbeschermers, tuigjes, drinkflessen en meer voor avontuurtjes met je hond.',
     images: [{ url: brandImages.travelHero }],
   },
 }
@@ -19,13 +19,13 @@ export default function DogTravelPage() {
   const products = getProductsByCategory('dog-travel')
   return (
     <CategoryPage
-      title="Dog Travel Accessories"
-      description="Adventures are better with your dog. From a waterproof car cover that protects your seats to a one-handed water bottle for long hikes — everything you need on the go."
+      title="Onderweg met je hond"
+      description="Avontuurtjes zijn leuker met je hond. Van een waterdichte achterbankbeschermer tot een drinkfles die je met één hand bedient tijdens lange wandelingen — alles wat je onderweg nodig hebt."
       image={brandImages.travelHero}
-      imageAlt="Woman walking a golden retriever on a harness with travel accessories and car visible in background"
+      imageAlt="Vrouw wandelt met een golden retriever aan een tuigje, met reisaccessoires en auto op de achtergrond"
       products={products}
       category="dog-travel"
-      breadcrumbLabel="Dog Travel"
+      breadcrumbLabel="Onderweg met je hond"
     />
   )
 }

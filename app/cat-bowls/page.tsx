@@ -3,9 +3,9 @@ import { getProductsByCategory } from '@/lib/products'
 import CategoryPage from '@/components/shop/CategoryPage'
 
 export const metadata: Metadata = {
-  title: 'Cat Bowls — Mango Wood & Metal Feeding Stations',
+  title: 'Kattenbakken — Mangohout & metalen voerstations',
   description:
-    'Beautiful feeding stations for cats: handcrafted mango wood double feeders and minimalist metal cat feeders. Designed for comfort and your home aesthetic.',
+    'Prachtige voerstations voor katten: handgemaakte dubbele mangohouten voerbakken en minimalistische metalen kattenbakken. Ontworpen voor comfort en een mooi interieur.',
   alternates: { canonical: 'https://www.dailypetgoods.nl/cat-bowls' },
 }
 
@@ -13,11 +13,11 @@ export default function CatBowlsPage() {
   const products = getProductsByCategory('cat-feeding')
   return (
     <CategoryPage
-      title="Cat Bowls & Feeders"
-      description="Feeding stations as beautiful as they are functional. Our mango wood and metal cat feeders fit seamlessly into your home while giving your cat a comfortable place to eat."
+      title="Kattenbakken & voerstations"
+      description="Voerstations die net zo mooi als functioneel zijn. Onze mangohouten en metalen kattenbakken passen naadloos in huis en geven jouw kat een comfortabele eetplek."
       products={products}
       category="cat-feeding"
-      breadcrumbLabel="Cat Bowls"
+      breadcrumbLabel="Kattenbakken"
     />
   )
 }

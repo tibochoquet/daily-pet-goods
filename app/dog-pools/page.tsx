@@ -3,9 +3,9 @@ import { getProductsByCategory } from '@/lib/products'
 import CategoryPage from '@/components/shop/CategoryPage'
 
 export const metadata: Metadata = {
-  title: 'Foldable Dog Pools — Summer Splash Pools in 80, 120 & 160 cm',
+  title: 'Zwembaden & koelmatten voor honden',
   description:
-    'Foldable dog pools in three sizes: 80 cm for small dogs, 120 cm for medium dogs, and 160 cm for large breeds. No inflation needed — unfold, fill, and enjoy.',
+    'Opvouwbare hondenzwembaden in drie maten (80, 120 en 160 cm) en zelfkoelende koelmatten in S, M en L. Geen pomp nodig — uitvouwen, vullen en genieten.',
   alternates: { canonical: 'https://www.dailypetgoods.nl/dog-pools' },
 }
 
@@ -13,11 +13,11 @@ export default function DogPoolsPage() {
   const products = getProductsByCategory('dog-outdoor')
   return (
     <CategoryPage
-      title="Dog Pools"
-      description="Keep your dog cool all summer with our foldable splash pools. No pump, no fuss — just unfold, fill, and watch them splash. Available in three sizes for every breed."
+      title="Zwembaden & koelmatten"
+      description="Houd jouw hond de hele zomer koel met onze opvouwbare zwembaden en zelfkoelende koelmatten. Geen pomp, geen gedoe — gewoon uitvouwen, vullen of neerleggen en genieten. Verkrijgbaar in meerdere maten voor elk ras."
       products={products}
       category="dog-outdoor"
-      breadcrumbLabel="Dog Pools"
+      breadcrumbLabel="Zwembaden & koelmatten"
     />
   )
 }

@@ -3,27 +3,27 @@ import { CheckCircle2, Truck, Gem, Heart } from 'lucide-react'
 const reasons = [
   {
     icon: Gem,
-    title: 'Carefully selected',
+    title: 'Zorgvuldig geselecteerd',
     description:
-      'Every product is tested and chosen for quality, durability, and design. No filler — only essentials your pet will actually use.',
+      'Elk product wordt getest en gekozen op kwaliteit, duurzaamheid en design. Geen opvulling — alleen essentials die jouw huisdier echt gebruikt.',
   },
   {
     icon: Truck,
-    title: 'Fast delivery',
+    title: 'Snelle levering',
     description:
-      'Order through Bol.com for reliable next-day delivery across the Netherlands and Belgium.',
+      'Bestel via Bol.com voor betrouwbare levering, vaak al de volgende dag, in heel Nederland en België.',
   },
   {
     icon: CheckCircle2,
-    title: 'Quality materials',
+    title: 'Kwaliteitsmaterialen',
     description:
-      'Sustainable mango wood, food-grade stainless steel, BPA-free silicone — safe, durable, and built to last.',
+      'Duurzaam mangohout, voedselveilig roestvrij staal, BPA-vrij silicone — veilig, stevig en gebouwd om lang mee te gaan.',
   },
   {
     icon: Heart,
-    title: 'Customer focused',
+    title: 'Persoonlijk contact',
     description:
-      'Real questions get real answers. We\'re here for sizing help, product advice, or anything after your order arrives.',
+      'Echte vragen krijgen een echt antwoord. We helpen graag met maatadvies, productvragen, of iets anders na je bestelling.',
   },
 ]
 
@@ -32,12 +32,12 @@ export default function WhyChooseUs() {
     <section className="py-16 md:py-24 bg-[#FAFAF7]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <p className="text-sm font-semibold text-[#C8745A] uppercase tracking-wider mb-2">Why us</p>
+          <p className="text-sm font-semibold text-[#C8745A] uppercase tracking-wider mb-2">Waarom wij</p>
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#1A1A1A]">
-            The Daily Pet Goods difference
+            Het Daily Pet Goods verschil
           </h2>
           <p className="text-[#6B7280] mt-3 max-w-xl mx-auto leading-relaxed">
-            We started with a frustration — finding quality pet products that look good at home, without paying luxury prices. We built the middle ground.
+            We begonnen met een frustratie — het vinden van kwalitatieve huisdierproducten die er goed uitzien in huis, zonder luxe prijzen. Wij bouwden de middenweg.
           </p>
         </div>
 

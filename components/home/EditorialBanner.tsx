@@ -9,7 +9,7 @@ export default function EditorialBanner() {
       {/* Full-bleed accessories flat-lay */}
       <Image
         src={brandImages.accessories}
-        alt="Premium pet accessories flat-lay: dog bed, travel bag, harness, bowls, collar and leash arranged on a wooden surface"
+        alt="Premium huisdieraccessoires uitgestald: hondenmand, reistas, tuigje, bakken, halsband en riem op een houten ondergrond"
         fill
         className="object-cover object-center"
         sizes="100vw"
@@ -23,20 +23,20 @@ export default function EditorialBanner() {
       <div className="absolute inset-x-0 bottom-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 md:pb-16">
         <div className="max-w-xl">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/50 mb-3">
-            The full collection
+            De volledige collectie
           </p>
           <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight mb-5">
-            Thoughtfully chosen.{' '}
-            <span className="text-[#D4956B]">Built to last.</span>
+            Zorgvuldig gekozen.{' '}
+            <span className="text-[#D4956B]">Gebouwd om lang mee te gaan.</span>
           </h2>
           <p className="text-white/65 text-base leading-relaxed mb-7 max-w-md">
-            From mango wood feeders to waterproof car covers — every product in our collection is tested for quality, design, and your pet&apos;s everyday needs.
+            Van mangohouten voerbakken tot waterdichte achterbankbeschermers — elk product in onze collectie is getest op kwaliteit, design en de dagelijkse behoeften van jouw huisdier.
           </p>
           <Link
             href="/shop"
             className="inline-flex items-center gap-2.5 bg-white text-[#2C4A3E] font-semibold px-7 py-3.5 rounded-full hover:bg-[#F3EDE3] transition-colors text-sm shadow-lg"
           >
-            Browse all products
+            Bekijk alle producten
             <ArrowRight size={15} />
           </Link>
         </div>

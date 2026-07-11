@@ -3,9 +3,9 @@ import { getProductsByCategory } from '@/lib/products'
 import CategoryPage from '@/components/shop/CategoryPage'
 
 export const metadata: Metadata = {
-  title: 'Cat Cooling Mats — Self-Cooling Mats for Cats',
+  title: 'Koelmatten voor katten — Zelfkoelende matten',
   description:
-    'Self-cooling mats for cats — no water, electricity or freezer needed. Simply place and let your cat enjoy a cool spot all summer long.',
+    'Zelfkoelende matten voor katten — geen water, stroom of vriezer nodig. Gewoon neerleggen en jouw kat geniet de hele zomer van een koele plek.',
   alternates: { canonical: 'https://www.dailypetgoods.nl/cat-cooling' },
 }
 
@@ -13,11 +13,11 @@ export default function CatCoolingPage() {
   const products = getProductsByCategory('cat-outdoor')
   return (
     <CategoryPage
-      title="Cat Cooling Mats"
-      description="Keep your cat comfortably cool on warm days with our self-cooling mats. No water, electricity or freezer needed — the mat activates automatically when your cat lies down."
+      title="Koelmatten voor katten"
+      description="Houd jouw kat aangenaam koel op warme dagen met onze zelfkoelende matten. Geen water, stroom of vriezer nodig — de mat activeert automatisch zodra jouw kat erop gaat liggen."
       products={products}
       category="cat-outdoor"
-      breadcrumbLabel="Cat Cooling"
+      breadcrumbLabel="Koelmatten katten"
     />
   )
 }

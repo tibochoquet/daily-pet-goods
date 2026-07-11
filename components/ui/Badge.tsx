@@ -4,8 +4,8 @@ interface BadgeProps {
 
 const config = {
   bestseller: { label: 'Bestseller', className: 'bg-[#2C4A3E] text-white' },
-  new: { label: 'New', className: 'bg-[#C8745A] text-white' },
-  sale: { label: 'Sale', className: 'bg-yellow-500 text-white' },
+  new: { label: 'Nieuw', className: 'bg-[#C8745A] text-white' },
+  sale: { label: 'Aanbieding', className: 'bg-yellow-500 text-white' },
 }
 
 export default function Badge({ variant }: BadgeProps) {
