@@ -43,7 +43,7 @@ export default function AboutPage() {
           src={brandImages.lifestyleHero}
           alt="Golden retriever rustend op een premium crème loungebed, grijze kat op een fauteuil — warm modern interieur"
           fill
-          className="object-cover object-center"
+          className="object-cover object-[38%_center] sm:object-center"
           priority
           sizes="100vw"
           quality={90}

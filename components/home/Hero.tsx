@@ -12,7 +12,7 @@ export default function Hero() {
         src={brandImages.heroMain}
         alt="Golden retriever rustend op een premium grijs loungebed, grijze kat ernaast in een lichte moderne woonkamer"
         fill
-        className="object-cover object-center"
+        className="object-cover object-[78%_center] sm:object-center"
         priority
         sizes="100vw"
         quality={90}
