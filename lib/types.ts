@@ -12,6 +12,7 @@ export interface Product {
   specs?: Record<string, string>
   image: string
   images?: string[]
+  video?: string
   bolUrl: string
   badge?: 'bestseller' | 'new' | 'sale'
   rating: number

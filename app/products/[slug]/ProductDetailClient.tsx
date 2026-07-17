@@ -3,18 +3,25 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ChevronLeft, ArrowUpRight, Check, ChevronLeft as Prev, ChevronRight as Next } from 'lucide-react'
+import { ChevronLeft, ArrowUpRight, Check, Play, ChevronLeft as Prev, ChevronRight as Next } from 'lucide-react'
 import type { Product } from '@/lib/types'
+
+type MediaItem = { type: 'video'; src: string } | { type: 'image'; src: string }
 
 export default function ProductDetailClient({ product }: { product: Product }) {
   const images = product.images && product.images.length > 0 ? product.images : [product.image]
+  const media: MediaItem[] = [
+    ...(product.video ? [{ type: 'video', src: product.video } as const] : []),
+    ...images.map((src) => ({ type: 'image', src } as const)),
+  ]
   const [activeIndex, setActiveIndex] = useState(0)
+  const active = media[activeIndex]
 
   function prev() {
-    setActiveIndex((i) => (i === 0 ? images.length - 1 : i - 1))
+    setActiveIndex((i) => (i === 0 ? media.length - 1 : i - 1))
   }
   function next() {
-    setActiveIndex((i) => (i === images.length - 1 ? 0 : i + 1))
+    setActiveIndex((i) => (i === media.length - 1 ? 0 : i + 1))
   }
 
   return (
@@ -33,29 +40,43 @@ export default function ProductDetailClient({ product }: { product: Product }) {
 
         {/* Gallery */}
         <div className="space-y-3">
-          {/* Main image */}
+          {/* Main media */}
           <div className="relative aspect-square rounded-2xl overflow-hidden bg-[#F3EDE3]">
-            <Image
-              src={images[activeIndex]}
-              alt={product.name}
-              fill
-              className="object-cover"
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              priority
-            />
-            {images.length > 1 && (
+            {active.type === 'video' ? (
+              <video
+                key={active.src}
+                src={active.src}
+                poster={product.image}
+                className="absolute inset-0 w-full h-full object-cover"
+                controls
+                loop
+                muted
+                playsInline
+                autoPlay
+              />
+            ) : (
+              <Image
+                src={active.src}
+                alt={product.name}
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                priority
+              />
+            )}
+            {media.length > 1 && (
               <>
                 <button
                   onClick={prev}
                   className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 bg-white/80 hover:bg-white rounded-full flex items-center justify-center shadow-sm transition-colors"
-                  aria-label="Vorige foto"
+                  aria-label="Vorige"
                 >
                   <Prev size={16} className="text-[#1A1A1A]" />
                 </button>
                 <button
                   onClick={next}
                   className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 bg-white/80 hover:bg-white rounded-full flex items-center justify-center shadow-sm transition-colors"
-                  aria-label="Volgende foto"
+                  aria-label="Volgende"
                 >
                   <Next size={16} className="text-[#1A1A1A]" />
                 </button>
@@ -64,9 +85,9 @@ export default function ProductDetailClient({ product }: { product: Product }) {
           </div>
 
           {/* Thumbnails */}
-          {images.length > 1 && (
+          {media.length > 1 && (
             <div className="flex gap-2 flex-wrap">
-              {images.map((src, i) => (
+              {media.map((item, i) => (
                 <button
                   key={i}
                   onClick={() => setActiveIndex(i)}
@@ -75,9 +96,18 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                       ? 'border-[#2C4A3E]'
                       : 'border-[#E8E2D9] hover:border-[#C8745A]'
                   }`}
-                  aria-label={`Foto ${i + 1}`}
+                  aria-label={item.type === 'video' ? 'Video' : `Foto ${i + 1}`}
                 >
-                  <Image src={src} alt="" fill className="object-cover" sizes="64px" />
+                  {item.type === 'video' ? (
+                    <>
+                      <Image src={product.image} alt="" fill className="object-cover" sizes="64px" />
+                      <span className="absolute inset-0 flex items-center justify-center bg-black/30">
+                        <Play size={18} className="text-white fill-white" />
+                      </span>
+                    </>
+                  ) : (
+                    <Image src={item.src} alt="" fill className="object-cover" sizes="64px" />
+                  )}
                 </button>
               ))}
             </div>
