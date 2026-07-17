@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
-import ImagePlaceholder from '@/components/ui/ImagePlaceholder'
 
 interface EditorialHeroProps {
   eyebrow: string
@@ -10,9 +9,10 @@ interface EditorialHeroProps {
   ctaLabel?: string
   ctaHref?: string
   breadcrumbLabel: string
-  /** Path from /public. Omit while photography is still in production, an elegant placeholder is shown instead. */
-  image?: string
-  imageAlt?: string
+  image: string
+  imageAlt: string
+  /** Tailwind object-position class, defaults to object-center. Tune per photo so the subject stays in frame on narrow (mobile) crops. */
+  imagePosition?: string
 }
 
 export default function EditorialHero({
@@ -24,56 +24,49 @@ export default function EditorialHero({
   breadcrumbLabel,
   image,
   imageAlt,
+  imagePosition = 'object-center',
 }: EditorialHeroProps) {
   return (
-    <section className="bg-[#FAFAF7]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16 md:pt-10 md:pb-24">
-        <p className="text-sm text-[#6B7280] mb-10">
-          <Link href="/" className="hover:text-[#2C4A3E] transition-colors">Home</Link>
+    <section className="relative min-h-[70vh] flex items-end overflow-hidden group">
+      <Image
+        src={image}
+        alt={imageAlt}
+        fill
+        className={`object-cover ${imagePosition} transition-transform duration-700 ease-out group-hover:scale-105`}
+        priority
+        sizes="100vw"
+        quality={88}
+      />
+      {/* Gradient for legibility, intensifies slightly on hover so the name reads clearly */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-black/5 transition-opacity duration-500 opacity-90 group-hover:opacity-100" />
+
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-14 md:pb-20">
+        <p className="text-sm text-white/50 mb-6">
+          <Link href="/" className="hover:text-white/80 transition-colors">Home</Link>
           {' / '}
-          <Link href="/shop" className="hover:text-[#2C4A3E] transition-colors">Shop</Link>
+          <Link href="/shop" className="hover:text-white/80 transition-colors">Shop</Link>
           {' / '}
-          <span className="text-[#1A1A1A] font-medium">{breadcrumbLabel}</span>
+          <span className="text-white/80">{breadcrumbLabel}</span>
         </p>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-          {/* Text */}
-          <div className="max-w-xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#C8745A] mb-5">
-              {eyebrow}
-            </p>
-            <h1 className="font-serif text-4xl sm:text-5xl lg:text-[3.25rem] font-bold text-[#1A1A1A] leading-[1.08] mb-6">
-              {title}
-            </h1>
-            <p className="text-lg text-[#6B7280] leading-relaxed mb-9">
-              {description}
-            </p>
-            {ctaLabel && ctaHref && (
-              <Link
-                href={ctaHref}
-                className="inline-flex items-center gap-2 bg-[#2C4A3E] text-white font-semibold px-7 py-3.5 rounded-full hover:bg-[#3D6456] transition-colors text-sm"
-              >
-                {ctaLabel}
-                <ArrowRight size={16} />
-              </Link>
-            )}
-          </div>
-
-          {/* Image */}
-          {image ? (
-            <div className="relative aspect-[4/5] rounded-3xl overflow-hidden">
-              <Image
-                src={image}
-                alt={imageAlt ?? title}
-                fill
-                className="object-cover"
-                priority
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                quality={88}
-              />
-            </div>
-          ) : (
-            <ImagePlaceholder className="aspect-[4/5]" />
+        <div className="max-w-xl">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#D4956B] mb-4 opacity-90 translate-y-1 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+            {eyebrow}
+          </p>
+          <h1 className="font-serif text-4xl sm:text-5xl lg:text-[3.25rem] font-bold text-white leading-[1.08] mb-5">
+            {title}
+          </h1>
+          <p className="text-lg text-white/70 leading-relaxed mb-8">
+            {description}
+          </p>
+          {ctaLabel && ctaHref && (
+            <Link
+              href={ctaHref}
+              className="inline-flex items-center gap-2 bg-white text-[#2C4A3E] font-semibold px-7 py-3.5 rounded-full hover:bg-[#F3EDE3] transition-colors text-sm shadow-lg"
+            >
+              {ctaLabel}
+              <ArrowRight size={16} />
+            </Link>
           )}
         </div>
       </div>

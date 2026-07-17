@@ -1,7 +1,6 @@
 import type { Product } from '@/lib/types'
 import ProductCard from './ProductCard'
 import EditorialHero from './EditorialHero'
-import EditorialSplit from './EditorialSplit'
 import NewsletterSignup from '@/components/home/NewsletterSignup'
 
 interface HeroContent {
@@ -10,37 +9,25 @@ interface HeroContent {
   description: string
   ctaLabel?: string
   ctaHref?: string
-  image?: string
-  imageAlt?: string
-}
-
-interface LifestyleContent {
-  eyebrow: string
-  title: string
-  description: string
-  imagePosition?: 'left' | 'right'
-  image?: string
-  imageAlt?: string
+  image: string
+  imageAlt: string
+  imagePosition?: string
 }
 
 interface CategoryPageProps {
   hero: HeroContent
   breadcrumbLabel: string
-  lifestyleSection?: LifestyleContent
   products: Product[]
 }
 
 export default function CategoryPage({
   hero,
   breadcrumbLabel,
-  lifestyleSection,
   products,
 }: CategoryPageProps) {
   return (
     <>
       <EditorialHero {...hero} breadcrumbLabel={breadcrumbLabel} />
-
-      {lifestyleSection && <EditorialSplit {...lifestyleSection} />}
 
       {/* Products grid */}
       <section id="collectie" className="py-16 md:py-20 bg-[#FAFAF7] scroll-mt-20">
