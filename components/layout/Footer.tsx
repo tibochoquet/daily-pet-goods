@@ -42,7 +42,7 @@ export default function Footer() {
             </p>
             <div className="flex gap-3">
               <a
-                href="mailto:hello@dailypetgoods.nl"
+                href="mailto:lifegoods.daily@gmail.com"
                 aria-label="E-mail"
                 className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
               >
@@ -96,8 +96,8 @@ export default function Footer() {
             <ul className="space-y-3">
               <li className="flex items-start gap-2.5 text-sm text-white/70">
                 <Mail size={14} className="mt-0.5 shrink-0 text-white/40" />
-                <a href="mailto:hello@dailypetgoods.nl" className="hover:text-white transition-colors">
-                  hello@dailypetgoods.nl
+                <a href="mailto:lifegoods.daily@gmail.com" className="hover:text-white transition-colors">
+                  lifegoods.daily@gmail.com
                 </a>
               </li>
               <li className="flex items-start gap-2.5 text-sm text-white/70">

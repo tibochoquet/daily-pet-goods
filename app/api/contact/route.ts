@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
     const resend = new Resend(process.env.RESEND_API_KEY)
     await resend.emails.send({
       from: 'Daily Pet Goods <contact@dailypetgoods.nl>',
-      to: 'hello@dailypetgoods.nl',
+      to: 'lifegoods.daily@gmail.com',
       replyTo: email,
       subject: `Contactformulier: ${subject || 'Nieuw bericht'}`,
       html,

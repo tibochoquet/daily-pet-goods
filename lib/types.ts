@@ -1,33 +1,23 @@
-export interface Product {
-  id: string
-  name: string
-  slug: string
-  category: ProductCategory
-  subcategory?: string
-  price: number
-  originalPrice?: number
-  description: string
-  shortDescription: string
-  features: string[]
-  specs?: Record<string, string>
-  image: string
-  images?: string[]
-  video?: string
-  bolUrl: string
-  badge?: 'bestseller' | 'new' | 'sale'
-  rating: number
-  reviewCount: number
-  inStock: boolean
-  variants?: ProductVariant[]
-}
-
 export interface ProductVariant {
   id: string
   label: string
-  value: string
-  image?: string
-  price?: number
-  bolUrl?: string
+  price: number
+  bolUrl: string
+  image: string
+  images?: string[]
+  video?: string
+  specs?: Record<string, string>
+}
+
+export interface Product {
+  slug: string
+  name: string
+  category: ProductCategory
+  description: string
+  shortDescription: string
+  features: string[]
+  badge?: 'bestseller' | 'new' | 'sale'
+  variants: ProductVariant[]
 }
 
 export type ProductCategory =
@@ -57,15 +47,4 @@ export interface BlogPost {
   publishedAt: string
   readTime: number
   tags: string[]
-}
-
-export interface Review {
-  id: string
-  author: string
-  location: string
-  rating: number
-  text: string
-  product: string
-  date: string
-  avatar?: string
 }

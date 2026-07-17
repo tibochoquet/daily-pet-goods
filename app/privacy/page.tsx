@@ -22,8 +22,8 @@ export default function PrivacyPage() {
             Daily Pet Goods (&quot;wij&quot;, &quot;ons&quot;) beheert de website dailypetgoods.nl. Op deze
             website presenteren en verwijzen we naar producten die je koopt via Bol.com. Vragen over
             dit privacybeleid kun je sturen naar{' '}
-            <a href="mailto:hello@dailypetgoods.nl" className="text-[#2C4A3E] hover:underline">
-              hello@dailypetgoods.nl
+            <a href="mailto:lifegoods.daily@gmail.com" className="text-[#2C4A3E] hover:underline">
+              lifegoods.daily@gmail.com
             </a>.
           </p>
         </section>
@@ -72,8 +72,8 @@ export default function PrivacyPage() {
           <p>
             Je hebt het recht om inzage, correctie of verwijdering van je gegevens te vragen. Stuur
             hiervoor een e-mail naar{' '}
-            <a href="mailto:hello@dailypetgoods.nl" className="text-[#2C4A3E] hover:underline">
-              hello@dailypetgoods.nl
+            <a href="mailto:lifegoods.daily@gmail.com" className="text-[#2C4A3E] hover:underline">
+              lifegoods.daily@gmail.com
             </a>.
           </p>
         </section>

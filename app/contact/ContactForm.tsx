@@ -134,7 +134,7 @@ export default function ContactForm() {
 
       {status === 'error' && (
         <p className="text-sm text-[#C8745A]">
-          Er ging iets mis bij het versturen. Probeer het nogmaals of mail rechtstreeks naar hello@dailypetgoods.nl.
+          Er ging iets mis bij het versturen. Probeer het nogmaals of mail rechtstreeks naar lifegoods.daily@gmail.com.
         </p>
       )}
 

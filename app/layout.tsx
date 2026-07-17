@@ -69,7 +69,7 @@ export default function RootLayout({
     logo: 'https://www.dailypetgoods.nl/logo.png',
     contactPoint: {
       '@type': 'ContactPoint',
-      email: 'hello@dailypetgoods.nl',
+      email: 'lifegoods.daily@gmail.com',
       contactType: 'customer service',
     },
     sameAs: [],

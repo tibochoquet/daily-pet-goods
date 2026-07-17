@@ -36,10 +36,10 @@ export default function ContactPage() {
                 </div>
                 <h3 className="font-semibold text-[#1A1A1A] mb-1">E-mail ons</h3>
                 <a
-                  href="mailto:hello@dailypetgoods.nl"
+                  href="mailto:lifegoods.daily@gmail.com"
                   className="text-sm text-[#2C4A3E] hover:underline"
                 >
-                  hello@dailypetgoods.nl
+                  lifegoods.daily@gmail.com
                 </a>
               </div>
 

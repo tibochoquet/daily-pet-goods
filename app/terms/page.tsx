@@ -65,8 +65,8 @@ export default function TermsPage() {
           <h2 className="font-serif text-xl font-semibold text-[#1A1A1A] mb-2">6. Contact</h2>
           <p>
             Vragen over deze voorwaarden? Mail naar{' '}
-            <a href="mailto:hello@dailypetgoods.nl" className="text-[#2C4A3E] hover:underline">
-              hello@dailypetgoods.nl
+            <a href="mailto:lifegoods.daily@gmail.com" className="text-[#2C4A3E] hover:underline">
+              lifegoods.daily@gmail.com
             </a>.
           </p>
         </section>

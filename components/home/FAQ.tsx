@@ -32,7 +32,7 @@ const faqs = [
   {
     question: 'Wat als een product beschadigd aankomt?',
     answer:
-      'Bol.com heeft een uitstekende klantenservice en retourbeleid. Komt je bestelling beschadigd aan of klopt hij niet met de beschrijving? Neem dan contact op met Bol.com, of mail ons op hello@dailypetgoods.nl en we zorgen dat het snel wordt opgelost.',
+      'Bol.com heeft een uitstekende klantenservice en retourbeleid. Komt je bestelling beschadigd aan of klopt hij niet met de beschrijving? Neem dan contact op met Bol.com, of mail ons op lifegoods.daily@gmail.com en we zorgen dat het snel wordt opgelost.',
   },
 ]
 
