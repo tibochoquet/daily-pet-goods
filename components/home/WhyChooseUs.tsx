@@ -13,7 +13,7 @@ const reasons = [
     icon: Truck,
     title: 'Snelle levering',
     description:
-      'Bestel via Bol.com voor betrouwbare levering, vaak al de volgende dag, in heel Nederland en België.',
+      'Gratis verzending en snelle levering binnen Nederland, rechtstreeks vanuit ons magazijn.',
   },
   {
     icon: CheckCircle2,

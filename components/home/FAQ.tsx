@@ -7,12 +7,17 @@ const faqs = [
   {
     question: 'Waar kan ik Daily Pet Goods producten kopen?',
     answer:
-      'Al onze producten zijn verkrijgbaar via Bol.com, een van de grootste en meest vertrouwde webwinkels van Nederland en België. Klik op de knop "Bekijk op Bol.com" op een productpagina om direct naar de listing te gaan.',
+      'Rechtstreeks via onze website. Kies je product en variant, voeg toe aan je winkelwagen en rond de bestelling af via checkout. Geen account nodig.',
+  },
+  {
+    question: 'Hoe werkt betalen?',
+    answer:
+      'Na het plaatsen van je bestelling sturen we je binnen 24 uur een betaalverzoek (Tikkie of bankoverschrijving). Zodra de betaling binnen is, verzenden we je bestelling.',
   },
   {
     question: 'Hoe snel wordt mijn bestelling geleverd?',
     answer:
-      'Bestellingen via Bol.com komen voor de meeste adressen in Nederland doorgaans de volgende werkdag aan. Levering in België duurt meestal 2–3 werkdagen. Bol.com biedt volledige track & trace zodat je je pakket kunt volgen.',
+      'We verzenden je bestelling binnen 1 tot 2 werkdagen nadat de betaling binnen is. Bezorging binnen Nederland duurt daarna gemiddeld 1 tot 3 werkdagen.',
   },
   {
     question: 'Hoe kies ik de juiste maat verhoogde voerbak?',
@@ -30,9 +35,9 @@ const faqs = [
       'Ja. De hoezen van onze Sambo hondenmand, pluche donut manden en het loungebed zijn allemaal afneembaar en machinewasbaar. We raden een wasje op 30°C met een fijn programma aan.',
   },
   {
-    question: 'Wat als een product beschadigd aankomt?',
+    question: 'Wat als een product beschadigd aankomt, of ik wil retourneren?',
     answer:
-      'Bol.com heeft een uitstekende klantenservice en retourbeleid. Komt je bestelling beschadigd aan of klopt hij niet met de beschrijving? Neem dan contact op met Bol.com, of mail ons op lifegoods.daily@gmail.com en we zorgen dat het snel wordt opgelost.',
+      'Mail ons op lifegoods.daily@gmail.com met je bestelnummer en foto\'s van het product. Je hebt bovendien 14 dagen bedenktijd om een bestelling zonder opgaaf van reden te retourneren, zoals bij elke online aankoop in Nederland.',
   },
 ]
 

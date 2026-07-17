@@ -115,17 +115,17 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Why Bol.com */}
+      {/* Rechtstreeks bestellen */}
       <section className="py-16 md:py-24 bg-[#2C4A3E]">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-white mb-6">
-            Waarom we verkopen via Bol.com
+            Rechtstreeks bij ons besteld
           </h2>
           <p className="text-white/65 leading-relaxed mb-4">
-            We kozen voor Bol.com omdat het platform is dat onze klanten al vertrouwen voor snelle, betrouwbare levering. Je hebt geen nieuw account nodig, je weet hoe retourneren werkt, en je kunt je bestelling elke stap volgen.
+            Je bestelt rechtstreeks via onze website, zonder tussenpartij. Zo houden we grip op kwaliteit, verpakking en klantcontact, van bestelling tot aan je deur.
           </p>
           <p className="text-white/65 leading-relaxed mb-10">
-            Het stelt ons in staat om te focussen op wat we het beste kunnen. Het samenstellen van geweldige producten. In plaats van zelf een logistiek en betaalsysteem op te bouwen.
+            Heb je een vraag over je bestelling? Wij zijn zelf je aanspreekpunt, geen callcenter.
           </p>
           <Link
             href="/shop"

@@ -65,7 +65,7 @@ export default function Hero() {
           <div className="flex flex-wrap gap-6">
             <div className="flex items-center gap-2 text-white/55 text-sm">
               <Truck size={13} className="text-white/40" />
-              Snel geleverd via Bol.com
+              Gratis verzending
             </div>
             <div className="flex items-center gap-2 text-white/55 text-sm">
               <ShieldCheck size={13} className="text-white/40" />

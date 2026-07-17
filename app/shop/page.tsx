@@ -37,7 +37,7 @@ export default function ShopPage() {
             Elk product uit de Daily Pet Goods-collectie, zorgvuldig geselecteerd op kwaliteit, design en de dagelijkse behoeften van jouw huisdier.
           </p>
           <p className="mt-4 text-sm text-[#6B7280]">
-            <span className="font-semibold text-[#1A1A1A]">{products.length} producten</span> verkrijgbaar via Bol.com
+            <span className="font-semibold text-[#1A1A1A]">{products.length} producten</span> met gratis verzending
           </p>
         </div>
       </section>

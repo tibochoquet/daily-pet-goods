@@ -57,7 +57,7 @@ export default function ContactPage() {
                 </div>
                 <h3 className="font-semibold text-[#1A1A1A] mb-1">Vragen over je bestelling</h3>
                 <p className="text-sm text-[#6B7280]">
-                  Voor vragen over een bestelling, levering of retour kun je ook rechtstreeks terecht bij de klantenservice van Bol.com.
+                  Voor vragen over een bestelling, levering of retour mail je gewoon rechtstreeks naar ons.
                 </p>
               </div>
             </div>

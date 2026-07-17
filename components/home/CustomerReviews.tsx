@@ -1,25 +1,25 @@
-import { ShieldCheck, Truck, RotateCcw, CreditCard } from 'lucide-react'
+import { Truck, RotateCcw, MessageCircle, Package } from 'lucide-react'
 
 const reasons = [
   {
-    icon: ShieldCheck,
-    title: 'Veilig kopen via Bol.com',
-    description: 'Elke bestelling loopt via Bol.com, met kopersbescherming en een vertrouwd afrekenproces.',
+    icon: Truck,
+    title: 'Gratis verzending',
+    description: 'Op elke bestelling, zonder minimumbedrag.',
   },
   {
-    icon: Truck,
-    title: 'Snelle levering & track & trace',
-    description: 'Bol.com verzorgt de levering en je volgt je bestelling stap voor stap.',
+    icon: Package,
+    title: 'Zorgvuldig verpakt',
+    description: 'Elke bestelling wordt persoonlijk ingepakt en snel verzonden.',
   },
   {
     icon: RotateCcw,
-    title: 'Eenvoudig retourneren',
-    description: 'Niet tevreden? Via Bol.com regel je een retour zonder gedoe.',
+    title: '14 dagen bedenktijd',
+    description: 'Niet tevreden? Retourneer zonder opgaaf van reden.',
   },
   {
-    icon: CreditCard,
-    title: 'Vertrouwde betaalmethoden',
-    description: 'Betaal veilig met iDEAL, creditcard of achteraf betalen, zoals je van Bol.com gewend bent.',
+    icon: MessageCircle,
+    title: 'Persoonlijk contact',
+    description: 'Vragen? Je mailt rechtstreeks met ons, geen callcenter.',
   },
 ]
 
@@ -33,7 +33,7 @@ export default function CustomerReviews() {
             Waarom klanten voor ons kiezen
           </h2>
           <p className="text-white/60 mt-3 max-w-xl mx-auto leading-relaxed">
-            Wij selecteren de producten, jij bestelt en betaalt veilig via het platform dat je al kent.
+            Wij selecteren de producten, jij bestelt rechtstreeks bij ons, zonder tussenpartij.
           </p>
         </div>
 

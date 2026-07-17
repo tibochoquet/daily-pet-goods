@@ -19,9 +19,9 @@ export default function PrivacyPage() {
         <section>
           <h2 className="font-serif text-xl font-semibold text-[#1A1A1A] mb-2">1. Wie we zijn</h2>
           <p>
-            Daily Pet Goods (&quot;wij&quot;, &quot;ons&quot;) beheert de website dailypetgoods.nl. Op deze
-            website presenteren en verwijzen we naar producten die je koopt via Bol.com. Vragen over
-            dit privacybeleid kun je sturen naar{' '}
+            Daily Pet Goods (&quot;wij&quot;, &quot;ons&quot;) beheert de website dailypetgoods.nl en
+            verkoopt hierop rechtstreeks huisdierproducten. Vragen over dit privacybeleid kun je sturen
+            naar{' '}
             <a href="mailto:lifegoods.daily@gmail.com" className="text-[#2C4A3E] hover:underline">
               lifegoods.daily@gmail.com
             </a>.
@@ -30,40 +30,49 @@ export default function PrivacyPage() {
 
         <section>
           <h2 className="font-serif text-xl font-semibold text-[#1A1A1A] mb-2">2. Welke gegevens we verwerken</h2>
-          <p className="mb-3">
-            Wij verkopen niet rechtstreeks via deze website. Bestellingen, betalingen en verzending
-            lopen volledig via Bol.com. We verzamelen daardoor zelf geen betaal- of adresgegevens.
-          </p>
-          <p>De enige gegevens die wij zelf verwerken zijn:</p>
+          <p className="mb-3">Wanneer je een bestelling plaatst, verwerken we:</p>
           <ul className="list-disc pl-5 mt-2 space-y-1">
+            <li>Naam, e-mailadres en telefoonnummer.</li>
+            <li>Verzendadres.</li>
+            <li>De inhoud van je bestelling.</li>
+          </ul>
+          <p className="mt-3 mb-2">Daarnaast verwerken we:</p>
+          <ul className="list-disc pl-5 space-y-1">
             <li>Naam, e-mailadres en het bericht dat je invult in ons contactformulier.</li>
             <li>Het e-mailadres dat je invult bij de nieuwsbrief-aanmelding op de homepage.</li>
           </ul>
+          <p className="mt-3">
+            We ontvangen en verwerken geen betaalgegevens (zoals bankrekening- of kaartnummers) via de
+            website zelf. Betalingen verlopen buiten de site om, via een betaalverzoek dat we je
+            persoonlijk sturen (bijvoorbeeld Tikkie of een bankoverschrijving).
+          </p>
         </section>
 
         <section>
           <h2 className="font-serif text-xl font-semibold text-[#1A1A1A] mb-2">3. Waarvoor we deze gegevens gebruiken</h2>
           <p>
-            We gebruiken je gegevens uitsluitend om je vraag via het contactformulier te beantwoorden,
-            of om je op de hoogte te houden van nieuwe producten als je je hebt aangemeld voor de
-            nieuwsbrief. We verkopen of delen je gegevens nooit met derden voor marketingdoeleinden.
+            We gebruiken je gegevens om je bestelling te verwerken, te verzenden en om je hierover te
+            kunnen contacteren. Contactformulier-gegevens gebruiken we om je vraag te beantwoorden, en
+            je nieuwsbrief-e-mailadres om je op de hoogte te houden van nieuwe producten. We verkopen of
+            delen je gegevens nooit met derden voor marketingdoeleinden.
           </p>
         </section>
 
         <section>
-          <h2 className="font-serif text-xl font-semibold text-[#1A1A1A] mb-2">4. Bestellingen via Bol.com</h2>
+          <h2 className="font-serif text-xl font-semibold text-[#1A1A1A] mb-2">4. Bewaartermijn</h2>
           <p>
-            Wanneer je een aankoop doet, gebeurt dit volledig op Bol.com. Bol.com verwerkt daarbij je
-            bestel-, betaal- en verzendgegevens onder haar eigen privacybeleid. Wij hebben geen
-            toegang tot deze gegevens.
-          </p>
-        </section>
-
-        <section>
-          <h2 className="font-serif text-xl font-semibold text-[#1A1A1A] mb-2">5. Bewaartermijn</h2>
-          <p>
+            Bestelgegevens bewaren we zo lang als nodig is voor onze administratie- en garantieplicht.
             Berichten via het contactformulier bewaren we niet langer dan nodig om je vraag af te
             handelen. Je e-mailadres voor de nieuwsbrief bewaren we tot je je afmeldt.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="font-serif text-xl font-semibold text-[#1A1A1A] mb-2">5. Delen met derden</h2>
+          <p>
+            We delen je gegevens alleen wanneer dat nodig is om je bestelling te verzenden (bijvoorbeeld
+            met de bezorgdienst) of wanneer we hiertoe wettelijk verplicht zijn. We verkopen je gegevens
+            nooit aan derden.
           </p>
         </section>
 
@@ -82,7 +91,8 @@ export default function PrivacyPage() {
           <h2 className="font-serif text-xl font-semibold text-[#1A1A1A] mb-2">7. Cookies</h2>
           <p>
             Deze website gebruikt geen tracking- of advertentiecookies. Er worden alleen technisch
-            noodzakelijke gegevens gebruikt om de site te laten functioneren.
+            noodzakelijke gegevens gebruikt om de site te laten functioneren, waaronder de inhoud van je
+            winkelwagen die lokaal in je browser wordt opgeslagen.
           </p>
         </section>
       </div>

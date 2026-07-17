@@ -6,7 +6,7 @@ export default function AnnouncementBar() {
       <span className="inline-flex items-center gap-2">
         <Truck size={13} className="flex-shrink-0" />
         <span>
-          Snelle levering en veilig betalen via <strong>Bol.com</strong>
+          Gratis verzending op elke bestelling
         </span>
       </span>
     </div>

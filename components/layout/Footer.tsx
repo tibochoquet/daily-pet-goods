@@ -38,7 +38,7 @@ export default function Footer() {
               <span className="text-xl font-serif font-semibold text-white">Daily Pet Goods</span>
             </Link>
             <p className="text-sm text-white/60 leading-relaxed mb-6">
-              Dagelijkse essentials voor de huisdieren waar je van houdt. Premium, zorgvuldig geselecteerde producten, thuisbezorgd via Bol.com.
+              Dagelijkse essentials voor de huisdieren waar je van houdt. Premium, zorgvuldig geselecteerde producten, rechtstreeks bij jou thuisbezorgd.
             </p>
             <div className="flex gap-3">
               <a
@@ -106,9 +106,9 @@ export default function Footer() {
               </li>
             </ul>
             <div className="mt-6 p-4 bg-white/5 rounded-xl border border-white/10">
-              <p className="text-xs text-white/50 mb-1">Bestellen via</p>
-              <p className="text-sm font-medium text-white">Bol.com</p>
-              <p className="text-xs text-white/50 mt-1">Snelle levering · Veilig betalen</p>
+              <p className="text-xs text-white/50 mb-1">Bestellen</p>
+              <p className="text-sm font-medium text-white">Rechtstreeks via onze website</p>
+              <p className="text-xs text-white/50 mt-1">Gratis verzending</p>
             </div>
           </div>
         </div>
