@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { Mail, MapPin } from 'lucide-react'
 
 const shopLinks = [
@@ -26,7 +27,14 @@ export default function Footer() {
 
           {/* Brand */}
           <div className="lg:col-span-1">
-            <Link href="/" className="inline-block mb-4">
+            <Link href="/" className="inline-flex items-center gap-2.5 mb-4">
+              <Image
+                src="/assets/logo/icon-cream-transparent.png"
+                alt=""
+                width={32}
+                height={32}
+                className="h-8 w-8 object-contain"
+              />
               <span className="text-xl font-serif font-semibold text-white">Daily Pet Goods</span>
             </Link>
             <p className="text-sm text-white/60 leading-relaxed mb-6">

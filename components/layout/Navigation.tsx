@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState } from 'react'
 import { Menu, X, ShoppingBag, ChevronDown } from 'lucide-react'
 
@@ -30,7 +31,15 @@ export default function Navigation() {
         <div className="flex items-center justify-between h-16 md:h-20">
 
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
+          <Link href="/" className="flex items-center gap-2.5 group">
+            <Image
+              src="/assets/logo/icon-twotone-transparent.png"
+              alt=""
+              width={36}
+              height={36}
+              className="h-8 w-8 md:h-9 md:w-9 object-contain"
+              priority
+            />
             <span className="text-xl md:text-2xl font-serif font-semibold text-[#2C4A3E] tracking-tight">
               Daily Pet Goods
             </span>

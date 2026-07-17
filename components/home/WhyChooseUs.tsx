@@ -1,4 +1,6 @@
+import Image from 'next/image'
 import { CheckCircle2, Truck, Gem, Heart } from 'lucide-react'
+import { brandImages } from '@/lib/images'
 
 const reasons = [
   {
@@ -29,8 +31,18 @@ const reasons = [
 
 export default function WhyChooseUs() {
   return (
-    <section className="py-16 md:py-24 bg-[#FAFAF7]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="relative py-16 md:py-24 overflow-hidden">
+      <Image
+        src={brandImages.lifestyleGeneral}
+        alt="Hond en kat ontspannen tussen voerbakken en een hondenmand in een lichte woonkamer"
+        fill
+        className="object-cover object-[50%_70%]"
+        sizes="100vw"
+        quality={85}
+      />
+      <div className="absolute inset-0 bg-[#FAFAF7]/88" />
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <p className="text-sm font-semibold text-[#C8745A] uppercase tracking-wider mb-2">Waarom wij</p>
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#1A1A1A]">
@@ -47,7 +59,7 @@ export default function WhyChooseUs() {
             return (
               <div
                 key={reason.title}
-                className="bg-white rounded-2xl p-6 border border-[#E8E2D9] hover:shadow-md transition-shadow"
+                className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 border border-[#E8E2D9] hover:shadow-md transition-shadow"
               >
                 <div className="w-11 h-11 bg-[#2C4A3E]/10 rounded-xl flex items-center justify-center mb-4">
                   <Icon size={20} className="text-[#2C4A3E]" />

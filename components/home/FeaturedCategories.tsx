@@ -49,8 +49,8 @@ const categories = [
     description: 'Zelfkoelend, zonder water of stroom',
     href: '/cat-cooling',
     image: brandImages.catCoolingCover,
-    imagePosition: 'object-[50%_65%]',
-    alt: 'Hond en kat ontspannen tussen voerbakken en een hondenmand in huis',
+    imagePosition: 'object-[58%_60%]',
+    alt: 'Kat ligt te ontspannen op een zelfkoelende koelmat',
   },
 ]
 

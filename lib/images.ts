@@ -35,8 +35,11 @@ export const brandImages = {
   /** Category tile — dachshund beside foldable pool & cooling mats in garden. Used: homepage "Shop per categorie" tile. */
   dogPoolsCover: '/assets/images/zwembaden-koelmat.png',
 
-  /** Category tile — general lifestyle scene, dog bed + cat + bowls. Used: homepage "Shop per categorie" cat cooling tile. */
-  catCoolingCover: '/assets/images/vanalles.png',
+  /** Category tile — tabby cat lying on a cooling mat. Used: homepage "Shop per categorie" cat cooling tile. */
+  catCoolingCover: '/assets/images/koelmatkat.png',
+
+  /** General lifestyle scene — dog bed, cat and bowls. Used: WhyChooseUs section background. */
+  lifestyleGeneral: '/assets/images/vanalles.png',
 } as const
 
 export type BrandImageKey = keyof typeof brandImages
