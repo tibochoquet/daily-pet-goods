@@ -23,7 +23,7 @@ export default function Hero() {
       {/* Subtle bottom fade */}
       <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/20 to-transparent" />
 
-      {/* Content — left side, over the darker area */}
+      {/* Content. Left side, over the darker area */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
         <div className="max-w-lg">
 

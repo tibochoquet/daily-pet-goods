@@ -30,7 +30,7 @@ export default function TermsPage() {
           <h2 className="font-serif text-xl font-semibold text-[#1A1A1A] mb-2">2. Bestellingen, betaling en levering</h2>
           <p>
             Omdat aankopen plaatsvinden op Bol.com, zijn de algemene voorwaarden, het retourbeleid en
-            het klantenserviceproces van Bol.com van toepassing op je bestelling — niet die van Daily
+            het klantenserviceproces van Bol.com van toepassing op je bestelling, niet die van Daily
             Pet Goods. Neem voor vragen over een bestelling, levering of retour rechtstreeks contact op
             met Bol.com.
           </p>

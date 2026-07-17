@@ -19,7 +19,7 @@ const reasons = [
   {
     icon: CreditCard,
     title: 'Vertrouwde betaalmethoden',
-    description: 'Betaal veilig met iDEAL, creditcard of achteraf betalen — zoals je van Bol.com gewend bent.',
+    description: 'Betaal veilig met iDEAL, creditcard of achteraf betalen, zoals je van Bol.com gewend bent.',
   },
 ]
 

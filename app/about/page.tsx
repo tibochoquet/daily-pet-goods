@@ -5,9 +5,9 @@ import { ArrowRight, Heart, Leaf, Shield, Star } from 'lucide-react'
 import { brandImages } from '@/lib/images'
 
 export const metadata: Metadata = {
-  title: 'Over ons — Het verhaal achter Daily Pet Goods',
+  title: 'Over ons: Het verhaal achter Daily Pet Goods',
   description:
-    'Daily Pet Goods werd opgericht door een huisdiereigenaar die betere producten wilde — zonder de overweldigende keuze van generieke marktplaatsen. Lees ons verhaal en waarom we doen wat we doen.',
+    'Daily Pet Goods werd opgericht door een huisdiereigenaar die betere producten wilde. Zonder de overweldigende keuze van generieke marktplaatsen. Lees ons verhaal en waarom we doen wat we doen.',
   alternates: { canonical: 'https://www.dailypetgoods.nl/about' },
 }
 
@@ -20,7 +20,7 @@ const values = [
   {
     icon: Leaf,
     title: 'Duurzame materialen',
-    description: 'We kiezen het liefst voor natuurlijke materialen — mangohout, roestvrij staal, voedselveilig silicone.',
+    description: 'We kiezen het liefst voor natuurlijke materialen. Mangohout, roestvrij staal, voedselveilig silicone.',
   },
   {
     icon: Shield,
@@ -37,11 +37,11 @@ const values = [
 export default function AboutPage() {
   return (
     <>
-      {/* Hero — full-bleed lifestyle image */}
+      {/* Hero. Full-bleed lifestyle image */}
       <section className="relative min-h-[75vh] flex items-end overflow-hidden">
         <Image
           src={brandImages.lifestyleHero}
-          alt="Golden retriever rustend op een premium crème loungebed, grijze kat op een fauteuil — warm modern interieur"
+          alt="Golden retriever rustend op een premium crème loungebed, grijze kat op een fauteuil. Warm modern interieur"
           fill
           className="object-cover object-[38%_center] sm:object-center"
           priority
@@ -74,7 +74,7 @@ export default function AboutPage() {
             Mooie, kwalitatieve producten vinden voor onze hond betekende óf luxe prijzen betalen, óf je een weg banen door pagina&apos;s vol goedkope, wegwerpproducten op generieke marktplaatsen.
           </p>
           <p className="text-[#6B7280] leading-relaxed mb-5">
-            Wij wilden de middenweg — producten die goed gemaakt waren, er mooi uitzagen in huis, en niet een fortuin kostten. Dus gingen we op zoek, testten we alles, en bouwden we een kleine, zorgvuldig samengestelde collectie rond de dingen die echt werkten.
+            Wij wilden de middenweg: producten die goed gemaakt waren, er mooi uitzagen in huis, en niet een fortuin kostten. Dus gingen we op zoek, testten we alles, en bouwden we een kleine, zorgvuldig samengestelde collectie rond de dingen die echt werkten.
           </p>
           <p className="text-[#6B7280] leading-relaxed">
             Vandaag heeft elk product in ons assortiment datzelfde proces doorlopen. Is het niet goed genoeg voor onze eigen huisdieren, dan haalt het de collectie niet.
@@ -125,7 +125,7 @@ export default function AboutPage() {
             We kozen voor Bol.com omdat het platform is dat onze klanten al vertrouwen voor snelle, betrouwbare levering. Je hebt geen nieuw account nodig, je weet hoe retourneren werkt, en je kunt je bestelling elke stap volgen.
           </p>
           <p className="text-white/65 leading-relaxed mb-10">
-            Het stelt ons in staat om te focussen op wat we het beste kunnen — het samenstellen van geweldige producten — in plaats van zelf een logistiek en betaalsysteem op te bouwen.
+            Het stelt ons in staat om te focussen op wat we het beste kunnen. Het samenstellen van geweldige producten. In plaats van zelf een logistiek en betaalsysteem op te bouwen.
           </p>
           <Link
             href="/shop"

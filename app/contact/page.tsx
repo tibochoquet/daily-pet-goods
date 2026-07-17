@@ -19,7 +19,7 @@ export default function ContactPage() {
             We horen graag van je
           </h1>
           <p className="text-lg text-[#6B7280] leading-relaxed">
-            Vragen over een product, maatadvies, of iets anders — stuur ons gerust een bericht.
+            Heb je vragen over een product, maatadvies, of iets anders? Stuur ons gerust een bericht.
           </p>
         </div>
       </section>

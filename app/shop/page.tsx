@@ -7,7 +7,7 @@ import NewsletterSignup from '@/components/home/NewsletterSignup'
 export const metadata: Metadata = {
   title: 'Alle producten',
   description:
-    'Bekijk onze volledige collectie premium huisdierproducten voor honden en katten — verhoogde voerbakken, mangohouten bakken, hondenmanden, reisbenodigdheden en zwembaden.',
+    'Bekijk onze volledige collectie premium huisdierproducten voor honden en katten. Verhoogde voerbakken, mangohouten bakken, hondenmanden, reisbenodigdheden en zwembaden.',
   alternates: { canonical: 'https://www.dailypetgoods.nl/shop' },
 }
 
@@ -34,7 +34,7 @@ export default function ShopPage() {
             Alle producten
           </h1>
           <p className="text-lg text-[#6B7280] max-w-xl">
-            Elk product uit de Daily Pet Goods-collectie — zorgvuldig geselecteerd op kwaliteit, design en de dagelijkse behoeften van jouw huisdier.
+            Elk product uit de Daily Pet Goods-collectie, zorgvuldig geselecteerd op kwaliteit, design en de dagelijkse behoeften van jouw huisdier.
           </p>
           <p className="mt-4 text-sm text-[#6B7280]">
             <span className="font-semibold text-[#1A1A1A]">{products.length} producten</span> verkrijgbaar via Bol.com

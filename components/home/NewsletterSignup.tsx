@@ -26,7 +26,7 @@ export default function NewsletterSignup() {
           Blijf op de hoogte
         </h2>
         <p className="text-[#6B7280] leading-relaxed mb-8">
-          Nieuwe producten, seizoensuitjes en praktische tips voor huisdierverzorging — rechtstreeks in je inbox. Geen spam, ooit. Altijd op te zeggen.
+          Nieuwe producten, seizoensuitjes en praktische tips voor huisdierverzorging, rechtstreeks in je inbox. Geen spam, ooit. Altijd op te zeggen.
         </p>
 
         {submitted ? (

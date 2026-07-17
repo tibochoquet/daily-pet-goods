@@ -16,10 +16,10 @@ export default function EditorialBanner() {
         quality={88}
       />
 
-      {/* Dark overlay — centre-to-bottom fade, keeps product details visible on top */}
+      {/* Dark overlay. Centre-to-bottom fade, keeps product details visible on top */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
 
-      {/* Content — anchored to bottom-left */}
+      {/* Content. Anchored to bottom-left */}
       <div className="absolute inset-x-0 bottom-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 md:pb-16">
         <div className="max-w-xl">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/50 mb-3">
@@ -30,7 +30,7 @@ export default function EditorialBanner() {
             <span className="text-[#D4956B]">Gebouwd om lang mee te gaan.</span>
           </h2>
           <p className="text-white/65 text-base leading-relaxed mb-7 max-w-md">
-            Van mangohouten voerbakken tot waterdichte achterbankbeschermers — elk product in onze collectie is getest op kwaliteit, design en de dagelijkse behoeften van jouw huisdier.
+            Van mangohouten voerbakken tot waterdichte achterbankbeschermers: elk product in onze collectie is getest op kwaliteit, design en de dagelijkse behoeften van jouw huisdier.
           </p>
           <Link
             href="/shop"

@@ -22,7 +22,7 @@ const faqs = [
   {
     question: 'Zijn de mangohouten bakken veilig voor voer en water?',
     answer:
-      'Ja. Al onze mangohouten producten hebben een voedselveilige olieafwerking en bevatten roestvrijstalen inzetstukken voor direct contact met voer en water. Het hout zelf houdt alleen het inzetstuk vast — het komt nooit in contact met het eten van je huisdier.',
+      'Ja. Al onze mangohouten producten hebben een voedselveilige olieafwerking en bevatten roestvrijstalen inzetstukken voor direct contact met voer en water. Het hout zelf houdt alleen het inzetstuk vast. Het komt nooit in contact met het eten van je huisdier.',
   },
   {
     question: 'Kan ik de hoezen van de hondenmanden wassen?',

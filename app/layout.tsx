@@ -21,11 +21,11 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.dailypetgoods.nl'),
   title: {
-    default: 'Daily Pet Goods — Premium huisdierproducten voor honden & katten',
+    default: 'Daily Pet Goods: Premium huisdierproducten voor honden & katten',
     template: '%s | Daily Pet Goods',
   },
   description:
-    'Zorgvuldig geselecteerde premium producten voor honden en katten. Verhoogde voerbakken, mangohouten bakken, knusse hondenmanden, reisbenodigdheden en zwembaden — verkrijgbaar via Bol.com.',
+    'Zorgvuldig geselecteerde premium producten voor honden en katten. Verhoogde voerbakken, mangohouten bakken, knusse hondenmanden, reisbenodigdheden en zwembaden. Verkrijgbaar via Bol.com.',
   keywords: [
     'hondenbakken',
     'verhoogde voerbak hond',
@@ -41,13 +41,13 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'nl_NL',
     siteName: 'Daily Pet Goods',
-    title: 'Daily Pet Goods — Premium huisdierproducten voor honden & katten',
+    title: 'Daily Pet Goods: Premium huisdierproducten voor honden & katten',
     description:
       'Zorgvuldig geselecteerde premium producten voor honden en katten. Verkrijgbaar via Bol.com.',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Daily Pet Goods — Premium huisdierproducten voor honden & katten',
+    title: 'Daily Pet Goods: Premium huisdierproducten voor honden & katten',
     description: 'Zorgvuldig geselecteerde premium producten voor honden en katten.',
   },
   robots: {

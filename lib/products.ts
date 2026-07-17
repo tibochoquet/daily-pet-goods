@@ -759,14 +759,14 @@ export const categories: Category[] = [
     id: 'dog-beds',
     name: 'Dog Beds',
     slug: 'dog-beds',
-    description: 'Van pluche donut manden tot ruime lounge beds — een knusse plek voor elke hond.',
+    description: 'Van pluche donut manden tot ruime lounge beds, een knusse plek voor elke hond.',
     image: '/assets/images/lifestyle-hero.png',
   },
   {
     id: 'dog-travel',
     name: 'Dog Travel',
     slug: 'dog-travel',
-    description: 'Alles voor onderweg met je hond — autodekens, tuigjes en meer.',
+    description: 'Alles voor onderweg met je hond: autodekens, tuigjes en meer.',
     image: '/assets/images/travel-hero.jpg',
   },
   {
@@ -780,7 +780,7 @@ export const categories: Category[] = [
     id: 'cat-outdoor',
     name: 'Cat Cooling',
     slug: 'cat-cooling',
-    description: 'Zelfkoelende mats voor katten — geen water of stroom nodig.',
+    description: 'Zelfkoelende mats voor katten, geen water of stroom nodig.',
     image: '/assets/images/lifestyle-hero.png',
   },
 ]

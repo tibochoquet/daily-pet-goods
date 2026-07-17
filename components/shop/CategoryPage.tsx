@@ -7,7 +7,7 @@ import NewsletterSignup from '@/components/home/NewsletterSignup'
 interface CategoryPageProps {
   title: string
   description: string
-  /** Path from /public — omit to show a color background instead */
+  /** Path from /public - omit to show a color background instead */
   image?: string
   imageAlt?: string
   products: Product[]
@@ -55,7 +55,7 @@ export default function CategoryPage({
               </h1>
               <p className="text-lg text-white/70 leading-relaxed mb-4">{description}</p>
               <p className="text-sm text-white/50">
-                <span className="font-semibold text-white/70">{products.length} producten</span> — verkrijgbaar via Bol.com
+                <span className="font-semibold text-white/70">{products.length} producten</span> verkrijgbaar via Bol.com
               </p>
             </div>
           </div>
@@ -76,7 +76,7 @@ export default function CategoryPage({
             </h1>
             <p className="text-lg text-[#6B7280] leading-relaxed max-w-xl">{description}</p>
             <p className="mt-4 text-sm text-[#6B7280]">
-              <span className="font-semibold text-[#1A1A1A]">{products.length} producten</span> — verkrijgbaar via Bol.com
+              <span className="font-semibold text-[#1A1A1A]">{products.length} producten</span> verkrijgbaar via Bol.com
             </p>
           </div>
         </section>

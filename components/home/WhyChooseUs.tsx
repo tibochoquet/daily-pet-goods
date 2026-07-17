@@ -7,7 +7,7 @@ const reasons = [
     icon: Gem,
     title: 'Zorgvuldig geselecteerd',
     description:
-      'Elk product wordt getest en gekozen op kwaliteit, duurzaamheid en design. Geen opvulling — alleen essentials die jouw huisdier echt gebruikt.',
+      'Elk product wordt getest en gekozen op kwaliteit, duurzaamheid en design. Geen opvulling. Alleen essentials die jouw huisdier echt gebruikt.',
   },
   {
     icon: Truck,
@@ -19,7 +19,7 @@ const reasons = [
     icon: CheckCircle2,
     title: 'Kwaliteitsmaterialen',
     description:
-      'Duurzaam mangohout, voedselveilig roestvrij staal, BPA-vrij silicone — veilig, stevig en gebouwd om lang mee te gaan.',
+      'Duurzaam mangohout, voedselveilig roestvrij staal, BPA-vrij silicone: veilig, stevig en gebouwd om lang mee te gaan.',
   },
   {
     icon: Heart,
@@ -49,7 +49,7 @@ export default function WhyChooseUs() {
             Het Daily Pet Goods verschil
           </h2>
           <p className="text-[#6B7280] mt-3 max-w-xl mx-auto leading-relaxed">
-            We begonnen met een frustratie — het vinden van kwalitatieve huisdierproducten die er goed uitzien in huis, zonder luxe prijzen. Wij bouwden de middenweg.
+            We begonnen met een frustratie: het vinden van kwalitatieve huisdierproducten die er goed uitzien in huis, zonder luxe prijzen. Wij bouwden de middenweg.
           </p>
         </div>
 

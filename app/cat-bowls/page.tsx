@@ -3,7 +3,7 @@ import { getProductsByCategory } from '@/lib/products'
 import CategoryPage from '@/components/shop/CategoryPage'
 
 export const metadata: Metadata = {
-  title: 'Kattenbakken — Mangohout & metalen voerstations',
+  title: 'Kattenbakken: Mangohout & metalen voerstations',
   description:
     'Prachtige voerstations voor katten: handgemaakte dubbele mangohouten voerbakken en minimalistische metalen kattenbakken. Ontworpen voor comfort en een mooi interieur.',
   alternates: { canonical: 'https://www.dailypetgoods.nl/cat-bowls' },

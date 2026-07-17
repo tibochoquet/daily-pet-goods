@@ -31,7 +31,7 @@ export default function PrivacyPage() {
         <section>
           <h2 className="font-serif text-xl font-semibold text-[#1A1A1A] mb-2">2. Welke gegevens we verwerken</h2>
           <p className="mb-3">
-            Wij verkopen niet rechtstreeks via deze website — bestellingen, betalingen en verzending
+            Wij verkopen niet rechtstreeks via deze website. Bestellingen, betalingen en verzending
             lopen volledig via Bol.com. We verzamelen daardoor zelf geen betaal- of adresgegevens.
           </p>
           <p>De enige gegevens die wij zelf verwerken zijn:</p>

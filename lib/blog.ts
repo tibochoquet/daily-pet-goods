@@ -12,19 +12,19 @@ export const blogPosts: BlogPost[] = [
     readTime: 6,
     tags: ['hondenbakken', 'grote honden', 'voeding'],
     content: `
-<p>Grote hondenrassen — denk aan Labradors, Duitse Herders of Boxers — hebben andere behoeften bij het eten dan kleine hondjes. Een bak die te klein of verkeerd ontworpen is, kan leiden tot gemorst voer, een oncomfortabele eethouding en op termijn zelfs gewrichtsklachten. In dit artikel bespreken we waar je op moet letten bij de aanschaf van een hondenbak voor een groot ras.</p>
+<p>Grote hondenrassen, denk aan Labradors, Duitse Herders of Boxers, hebben andere behoeften bij het eten dan kleine hondjes. Een bak die te klein of verkeerd ontworpen is, kan leiden tot gemorst voer, een oncomfortabele eethouding en op termijn zelfs gewrichtsklachten. In dit artikel bespreken we waar je op moet letten bij de aanschaf van een hondenbak voor een groot ras.</p>
 
 <h2>1. Inhoud: reken mee met het gewicht van je hond</h2>
-<p>Grote honden eten simpelweg meer per maaltijd. Een bak van 0,5 liter is prima voor een kleine hond, maar voor een hond van 25 kg of meer kom je al snel uit op bakken van 1,5 tot 2 liter, zeker als je maar één of twee keer per dag voert. Kijk bij het kiezen niet alleen naar de literinhoud, maar ook naar de diameter — een brede, ondiepe bak voorkomt dat grote brokken blijven hangen.</p>
+<p>Grote honden eten simpelweg meer per maaltijd. Een bak van 0,5 liter is prima voor een kleine hond, maar voor een hond van 25 kg of meer kom je al snel uit op bakken van 1,5 tot 2 liter, zeker als je maar één of twee keer per dag voert. Kijk bij het kiezen niet alleen naar de literinhoud, maar ook naar de diameter. Een brede, ondiepe bak voorkomt dat grote brokken blijven hangen.</p>
 
 <h2>2. Hoogte: waarom verhoogd vaak beter is</h2>
 <p>Voor grotere honden is een <a href="/dog-bowls">verhoogde voerbak</a> vaak een echte verbetering. Doordat de bak op schofthoogte staat, hoeft je hond niet diep voorover te buigen om te eten. Dat is prettiger voor de nek en kan de druk op gewrichten verminderen, wat met name bij oudere honden of rassen die gevoelig zijn voor heup- en elleboogproblemen een verschil maakt.</p>
 
 <h2>3. Materiaal: stevig en hygiënisch</h2>
-<p>Grote honden eten enthousiast — en soms hardhandig. Kies daarom voor een bak met een stevige, stabiele onderkant. Een houten voerstandaard met uitneembare bakken van roestvrij staal is een goede combinatie: het hout zorgt voor stabiliteit en een mooie uitstraling in huis, terwijl de RVS bakken hygiënisch en makkelijk schoon te maken zijn.</p>
+<p>Grote honden eten enthousiast, en soms hardhandig. Kies daarom voor een bak met een stevige, stabiele onderkant. Een houten voerstandaard met uitneembare bakken van roestvrij staal is een goede combinatie: het hout zorgt voor stabiliteit en een mooie uitstraling in huis, terwijl de RVS bakken hygiënisch en makkelijk schoon te maken zijn.</p>
 
 <h2>4. Antislip is geen overbodige luxe</h2>
-<p>Bij een enthousiast etende grote hond kan een bak zonder antislipvoetjes al snel over de vloer schuiven. Let bij je keuze op een antislip onderkant — dat scheelt herrie, gemors en frustratie.</p>
+<p>Bij een enthousiast etende grote hond kan een bak zonder antislipvoetjes al snel over de vloer schuiven. Let bij je keuze op een antislip onderkant. Dat scheelt herrie, gemors en frustratie.</p>
 
 <h2>Kort samengevat</h2>
 <ul>
@@ -40,7 +40,7 @@ export const blogPosts: BlogPost[] = [
     slug: 'waarom-verhoogde-voerbakken-goed-zijn',
     title: 'Waarom een verhoogde voerbak goed kan zijn voor je hond',
     excerpt:
-      'Een verhoogde voerbak is niet zomaar een stijlkeuze — voor bepaalde honden kan het echt bijdragen aan een prettigere eethouding. We zetten de voor- en nadelen op een rij.',
+      'Een verhoogde voerbak is niet zomaar een stijlkeuze. Voor bepaalde honden kan het echt bijdragen aan een prettigere eethouding. We zetten de voor- en nadelen op een rij.',
     category: 'Hondenvoeding',
     image: 'https://images.unsplash.com/photo-1601758174114-e711c0cbaa69?w=1200&q=80',
     publishedAt: '2026-06-08',
@@ -50,22 +50,22 @@ export const blogPosts: BlogPost[] = [
 <p>Loop je door de hondenafdeling van een dierenwinkel, dan zie je steeds vaker verhoogde voerbakken naast de klassieke bak op de grond. Maar is dat verschil nu puur esthetisch, of zit er ook een functioneel voordeel achter? We zetten het voor je op een rij.</p>
 
 <h2>Wat is een verhoogde voerbak precies?</h2>
-<p>Een verhoogde voerbak bestaat uit een standaard — vaak van hout of metaal — met daarin een of meerdere uitneembare bakken, geplaatst op een hoogte die past bij de schofthoogte van je hond. In plaats van helemaal naar de grond te buigen, eet je hond in een meer natuurlijke, rechtopstaande houding.</p>
+<p>Een verhoogde voerbak bestaat uit een standaard, vaak van hout of metaal, met daarin een of meerdere uitneembare bakken, geplaatst op een hoogte die past bij de schofthoogte van je hond. In plaats van helemaal naar de grond te buigen, eet je hond in een meer natuurlijke, rechtopstaande houding.</p>
 
 <h2>Voor welke honden maakt het een verschil?</h2>
 <p>Verhoogde bakken worden het vaakst aangeraden voor:</p>
 <ul>
 <li><strong>Grote en reuzenrassen</strong>, waarbij bukken naar de grond een grotere afstand overbrugt.</li>
 <li><strong>Oudere honden</strong> met stramme nek, rug of gewrichten.</li>
-<li><strong>Honden die snel of gulzig eten</strong> — de andere houding kan helpen het tempo iets te vertragen.</li>
+<li><strong>Honden die snel of gulzig eten</strong>: de andere houding kan helpen het tempo iets te vertragen.</li>
 </ul>
 <p>Voor kleine, jonge en verder gezonde honden is een verhoogde bak vooral een kwestie van voorkeur; het is niet per se noodzakelijk, maar kan wel prettig zijn.</p>
 
 <h2>Let op bij twijfel</h2>
-<p>Er is in het verleden discussie geweest over een mogelijk verband tussen verhoogde bakken en maagdraaiing bij bepaalde grote rassen. Het wetenschappelijk bewijs hiervoor is niet eenduidig. Twijfel je of een verhoogde bak geschikt is voor jouw hond — bijvoorbeeld bij een ras dat gevoelig is voor maagproblemen — overleg dan gerust met je dierenarts.</p>
+<p>Er is in het verleden discussie geweest over een mogelijk verband tussen verhoogde bakken en maagdraaiing bij bepaalde grote rassen. Het wetenschappelijk bewijs hiervoor is niet eenduidig. Twijfel je of een verhoogde bak geschikt is voor jouw hond. Bijvoorbeeld bij een ras dat gevoelig is voor maagproblemen. Overleg dan gerust met je dierenarts.</p>
 
 <h2>De juiste hoogte kiezen</h2>
-<p>Een goede vuistregel: de bovenkant van de bak moet ongeveer op de hoogte van de borst van je hond staan, zodat de nek recht blijft tijdens het eten en drinken — niet naar beneden gebogen, maar ook niet omhoog gestrekt.</p>
+<p>Een goede vuistregel: de bovenkant van de bak moet ongeveer op de hoogte van de borst van je hond staan, zodat de nek recht blijft tijdens het eten en drinken. Niet naar beneden gebogen, maar ook niet omhoog gestrekt.</p>
 
 <h2>Kort samengevat</h2>
 <ul>
@@ -81,7 +81,7 @@ export const blogPosts: BlogPost[] = [
     slug: 'beste-hondenmand-voor-oudere-honden',
     title: 'De beste hondenmanden voor oudere honden: comfort voor de gewrichten',
     excerpt:
-      'Oudere honden hebben meer ondersteuning nodig naarmate hun lichaam verandert. We bekijken wat een hondenmand echt geschikt maakt voor senioren — en welke stijlen je beter kunt vermijden.',
+      'Oudere honden hebben meer ondersteuning nodig naarmate hun lichaam verandert. We bekijken wat een hondenmand echt geschikt maakt voor senioren. En welke stijlen je beter kunt vermijden.',
     category: 'Hondenmanden',
     image: 'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=1200&q=80',
     publishedAt: '2026-05-29',
@@ -92,16 +92,16 @@ export const blogPosts: BlogPost[] = [
 
 <h2>Waar een seniorenmand aan moet voldoen</h2>
 <h3>Voldoende dikke vulling</h3>
-<p>Oudere honden hebben vaak minder eigen vet en spiermassa om drukpunten — zoals ellebogen en heupen — op te vangen. Een dikke, stevige vulling voorkomt dat je hond als het ware "door de mand heen" op de harde vloer ligt.</p>
+<p>Oudere honden hebben vaak minder eigen vet en spiermassa om drukpunten, zoals ellebogen en heupen, op te vangen. Een dikke, stevige vulling voorkomt dat je hond als het ware "door de mand heen" op de harde vloer ligt.</p>
 
 <h3>Opstaande rand voor houvast</h3>
-<p>Een opstaande rand, zoals bij onze <a href="/dog-beds">Sambo hondenmand</a>, geeft ondersteuning voor hoofd en nek en een gevoel van geborgenheid — fijn voor honden die door stijfheid iets minder soepel kunnen opkrullen.</p>
+<p>Een opstaande rand, zoals bij onze <a href="/dog-beds">Sambo hondenmand</a>, geeft ondersteuning voor hoofd en nek en een gevoel van geborgenheid. Fijn voor honden die door stijfheid iets minder soepel kunnen opkrullen.</p>
 
 <h3>Makkelijk in en uit te stappen</h3>
 <p>Voor honden met pijnlijke gewrichten is een lage instap belangrijker dan bij jonge honden. Een mand met een lage rand aan één zijde, of een platte loungemand, is vaak fijner dan een diepe donutmand.</p>
 
 <h3>Wasbaar materiaal</h3>
-<p>Oudere honden hebben soms wat meer "ongelukjes". Een afneembare, machinewasbare hoes — zoals bij onze <a href="/dog-beds">pluche donut manden</a> en het loungebed — maakt schoonhouden een stuk eenvoudiger.</p>
+<p>Oudere honden hebben soms wat meer "ongelukjes". Een afneembare, machinewasbare hoes, zoals bij onze <a href="/dog-beds">pluche donut manden</a> en het loungebed, maakt schoonhouden een stuk eenvoudiger.</p>
 
 <h2>Welke stijlen kun je beter vermijden?</h2>
 <p>Zeer diepe donutmanden met hoge instaprand kunnen voor honden met stramme achterpoten lastig zijn om in en uit te komen. Ook dunne, platte kussens zonder enige vulling bieden meestal onvoldoende ondersteuning voor oudere gewrichten.</p>
@@ -123,36 +123,36 @@ export const blogPosts: BlogPost[] = [
     slug: 'hondenzwembad-kiezen',
     title: 'Hoe kies je het juiste hondenzwembad? Een maatgids voor elk ras',
     excerpt:
-      'Niet elk hondenzwembad is gelijk. De juiste maat, diepte en materiaal zijn belangrijk — zeker voor actieve honden. Zo kies je de perfecte zomerse afkoelplek.',
+      'Niet elk hondenzwembad is gelijk. De juiste maat, diepte en materiaal zijn belangrijk, zeker voor actieve honden. Zo kies je de perfecte zomerse afkoelplek.',
     category: 'Buiten & zwemmen',
     image: 'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=1200&q=80',
     publishedAt: '2026-05-20',
     readTime: 5,
     tags: ['hondenzwembad', 'zomer', 'buiten'],
     content: `
-<p>Op warme dagen is een hondenzwembad een van de simpelste manieren om je hond af te laten koelen — en meestal ook direct een groot succes. Maar met verschillende maten in de winkel is het niet altijd duidelijk welke het beste bij jouw hond past.</p>
+<p>Op warme dagen is een hondenzwembad een van de simpelste manieren om je hond af te laten koelen. En meestal ook direct een groot succes. Maar met verschillende maten in de winkel is het niet altijd duidelijk welke het beste bij jouw hond past.</p>
 
 <h2>Maat kiezen op basis van je hond</h2>
 <p>Als vuistregel geldt:</p>
 <ul>
-<li><strong>80 cm</strong> — ideaal voor kleine honden en puppy's die vooral willen pootjebaden.</li>
-<li><strong>120 cm</strong> — geschikt voor middelgrote honden die willen liggen én een beetje kunnen bewegen.</li>
-<li><strong>160 cm</strong> — voor grote honden, of als je hond graag ruimte heeft om zich helemaal uit te strekken.</li>
+<li><strong>80 cm</strong>: ideaal voor kleine honden en puppy's die vooral willen pootjebaden.</li>
+<li><strong>120 cm</strong>: geschikt voor middelgrote honden die willen liggen én een beetje kunnen bewegen.</li>
+<li><strong>160 cm</strong>: voor grote honden, of als je hond graag ruimte heeft om zich helemaal uit te strekken.</li>
 </ul>
-<p>Twijfel je tussen twee maten? Kies dan gerust de grotere — een ruimer zwembad wordt door de meeste honden net zo enthousiast ontvangen, en biedt ook plek voor een tweede hond of om zelf je voeten te koelen.</p>
+<p>Twijfel je tussen twee maten? Kies dan gerust de grotere. Een ruimer zwembad wordt door de meeste honden net zo enthousiast ontvangen, en biedt ook plek voor een tweede hond of om zelf je voeten te koelen.</p>
 
 <h2>Diepte en materiaal</h2>
-<p>De meeste opvouwbare zwembaden hebben een diepte van 20 tot 30 cm — genoeg om af te koelen, ondiep genoeg om veilig te zijn voor honden die niet graag zwemmen. Kies voor een stevig, scheurbestendig materiaal dat bestand is tegen nagels, en let op een <strong>antislipbodem</strong>: dat voorkomt uitglijden bij het in- en uitstappen.</p>
+<p>De meeste opvouwbare zwembaden hebben een diepte van 20 tot 30 cm. Genoeg om af te koelen, ondiep genoeg om veilig te zijn voor honden die niet graag zwemmen. Kies voor een stevig, scheurbestendig materiaal dat bestand is tegen nagels, en let op een <strong>antislipbodem</strong>: dat voorkomt uitglijden bij het in- en uitstappen.</p>
 
 <h2>Opzetten zonder gedoe</h2>
-<p>Een groot voordeel van opvouwbare zwembaden is dat ze geen pomp nodig hebben — de rand blijft vanzelf overeind door de constructie. Uitvouwen, met de tuinslang vullen, en binnen enkele minuten kan je hond erin.</p>
+<p>Een groot voordeel van opvouwbare zwembaden is dat ze geen pomp nodig hebben. De rand blijft vanzelf overeind door de constructie. Uitvouwen, met de tuinslang vullen, en binnen enkele minuten kan je hond erin.</p>
 
 <h2>Onderhoud en opslag</h2>
 <p>Laat het zwembad na gebruik goed drogen voordat je het opvouwt, om schimmelvorming te voorkomen. Dankzij het compacte, opvouwbare ontwerp neemt het weinig ruimte in tijdens de wintermaanden.</p>
 
 <h2>Kort samengevat</h2>
 <ul>
-<li>Kies de maat op basis van het formaat van je hond — twijfel? Ga voor de grotere maat.</li>
+<li>Kies de maat op basis van het formaat van je hond. Twijfel? Ga voor de grotere maat.</li>
 <li>Let op een antislipbodem voor veilig in- en uitstappen.</li>
 <li>Geen pomp nodig: binnen enkele minuten klaar voor gebruik.</li>
 <li>Laat goed drogen voor opslag.</li>
@@ -164,23 +164,23 @@ export const blogPosts: BlogPost[] = [
     slug: 'reisbenodigdheden-voor-je-hond',
     title: '10 reisbenodigdheden die elke hondenbezitter nodig heeft',
     excerpt:
-      'Of het nu een roadtrip is of een weekendje wandelen — met de juiste spullen wordt reizen met je hond veiliger en leuker voor jullie allebei.',
+      'Of het nu een roadtrip is of een weekendje wandelen. Met de juiste spullen wordt reizen met je hond veiliger en leuker voor jullie allebei.',
     category: 'Onderweg met je hond',
     image: 'https://images.unsplash.com/photo-1452570053594-1b985d6ea890?w=1200&q=80',
     publishedAt: '2026-05-12',
     readTime: 6,
     tags: ['reizen', 'accessoires', 'roadtrip'],
     content: `
-<p>Een dagje weg of een lange autorit met je hond kan met de juiste voorbereiding stukken relaxter verlopen — voor jullie allebei. Dit zijn de reisbenodigdheden die het verschil maken.</p>
+<p>Een dagje weg of een lange autorit met je hond kan met de juiste voorbereiding stukken relaxter verlopen, voor jullie allebei. Dit zijn de reisbenodigdheden die het verschil maken.</p>
 
 <h2>1. Achterbankbeschermer</h2>
 <p>Een <a href="/dog-travel">waterdichte achterbankbeschermer</a> houdt haren, modder en krassen van je bekleding weg, en heeft vaak openingen voor de veiligheidsgordel zodat je hond ook onderweg goed vastzit.</p>
 
 <h2>2. Reisdrinkfles</h2>
-<p>Een fles met ingebouwd drinkbakje betekent dat je met één hand water kunt geven, zonder gedoe met losse bakjes — heel praktisch tijdens een wandelpauze onderweg.</p>
+<p>Een fles met ingebouwd drinkbakje betekent dat je met één hand water kunt geven, zonder gedoe met losse bakjes. Heel praktisch tijdens een wandelpauze onderweg.</p>
 
 <h2>3. Opvouwbare voer- en drinkbak</h2>
-<p>Compact, lichtgewicht en snel schoon te maken — onmisbaar voor onderweg, of je nu een dagje wandelt of een weekje op vakantie bent.</p>
+<p>Compact, lichtgewicht en snel schoon te maken. Onmisbaar voor onderweg, of je nu een dagje wandelt of een weekje op vakantie bent.</p>
 
 <h2>4. Goedzittend tuigje</h2>
 <p>Een tuigje verdeelt de druk beter over het lichaam dan een halsband, wat prettiger is bij lange wandelingen en veiliger bij een plotselinge ruk.</p>
@@ -188,11 +188,11 @@ export const blogPosts: BlogPost[] = [
 <h2>5. Kentekenplaatje met actuele gegevens</h2>
 <p>Voor het geval je hond toch even zoekraakt op een onbekende plek: zorg dat naam en telefoonnummer up-to-date zijn.</p>
 
-<h2>6. Poepzakjes — en dan wat extra</h2>
+<h2>6. Poepzakjes, en dan wat extra</h2>
 <p>Neem altijd meer mee dan je denkt nodig te hebben. Op onbekend terrein wil je nooit zonder komen te zitten.</p>
 
 <h2>7. Handdoek</h2>
-<p>Voor natte poten na een plas, een duik in het zwembad, of gewoon een regenbui — een oude handdoek in de auto bespaart je bekleding.</p>
+<p>Voor natte poten na een plas, een duik in het zwembad, of gewoon een regenbui. Een oude handdoek in de auto bespaart je bekleding.</p>
 
 <h2>8. EHBO-setje voor huisdieren</h2>
 <p>Denk aan een kleine set met pincet, ontsmettingsmiddel en verband voor kleine krasjes of splinters onderweg.</p>
@@ -211,7 +211,7 @@ export const blogPosts: BlogPost[] = [
     slug: 'kattenvoerstation-ideeen',
     title: 'Kattenvoerstation ideeën: stijlvol en stressvrij eten',
     excerpt:
-      'Een goed voerstation gaat niet alleen om uiterlijk — het kan snorharenmoeheid verminderen, voedselcompetitie voorkomen en je vloer schoon houden. Dit zijn onze favoriete opstellingen.',
+      'Een goed voerstation gaat niet alleen om uiterlijk. Het kan snorharenmoeheid verminderen, voedselcompetitie voorkomen en je vloer schoon houden. Dit zijn onze favoriete opstellingen.',
     category: 'Kattenvoeding',
     image: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=1200&q=80',
     publishedAt: '2026-05-05',
@@ -221,20 +221,20 @@ export const blogPosts: BlogPost[] = [
 <p>Bij katten is de voerplek net zo belangrijk als het voer zelf. De juiste bak en plaatsing kunnen het verschil maken tussen een ontspannen etende kat en een kat die haar eten links laat liggen.</p>
 
 <h2>Wat is snorharenmoeheid?</h2>
-<p>Katten hebben zeer gevoelige snorharen. Een diepe, smalle bak kan de snorharen tegen de randen laten drukken, wat voor sommige katten onprettig is. Dit heet snorharenmoeheid en kan ervoor zorgen dat een kat voer uit de bak haalt om er dan pas van te eten — of de bak zelfs mijdt.</p>
+<p>Katten hebben zeer gevoelige snorharen. Een diepe, smalle bak kan de snorharen tegen de randen laten drukken, wat voor sommige katten onprettig is. Dit heet snorharenmoeheid en kan ervoor zorgen dat een kat voer uit de bak haalt om er dan pas van te eten, of de bak zelfs mijdt.</p>
 <p>Kies daarom voor een <strong>brede, ondiepe bak</strong>, zoals onze mangohouten kattenbakken met RVS inzet: breed genoeg zodat de snorharen vrij blijven.</p>
 
 <h2>Voer en water gescheiden</h2>
-<p>Katten geven er in de natuur de voorkeur aan om niet vlak bij hun waterbron te eten. Een dubbele bak met twee gescheiden compartimenten — zoals onze <a href="/cat-bowls">dubbele kattenvoerbakken</a> — combineert het gemak van één station met voldoende afstand tussen voer en water.</p>
+<p>Katten geven er in de natuur de voorkeur aan om niet vlak bij hun waterbron te eten. Een dubbele bak met twee gescheiden compartimenten. Zoals onze <a href="/cat-bowls">dubbele kattenvoerbakken</a>. Combineert het gemak van één station met voldoende afstand tussen voer en water.</p>
 
 <h2>Bij meerdere katten: verspreid de stations</h2>
 <p>Heb je meerdere katten? Zet dan niet alle bakken naast elkaar. Katten zijn van nature solitaire eters en voelen zich prettiger als ze niet met elkaar hoeven te "delen" of concurreren om een voerplek. Een station per kat, verspreid over de ruimte, voorkomt onnodige spanning.</p>
 
 <h2>Materiaal en hoogte</h2>
-<p>Een verhoogd stationnetje, zoals onze mangohouten voerbak, zorgt voor een prettige, natuurlijke eethouding en voorkomt dat de bak steeds wegschuift over de vloer. Het hout geeft bovendien een warme, stijlvolle uitstraling die past in vrijwel elk interieur — geen plastic bakjes die de woonkamer ontsieren.</p>
+<p>Een verhoogd stationnetje, zoals onze mangohouten voerbak, zorgt voor een prettige, natuurlijke eethouding en voorkomt dat de bak steeds wegschuift over de vloer. Het hout geeft bovendien een warme, stijlvolle uitstraling die past in vrijwel elk interieur. Geen plastic bakjes die de woonkamer ontsieren.</p>
 
 <h2>Hygiëne</h2>
-<p>Kies voor uitneembare RVS bakken die je makkelijk kunt afwassen. Spoel de bak dagelijks om, ook als er nog voer in zit — kattenvoer kan snel bacteriën aantrekken, zeker bij warm weer.</p>
+<p>Kies voor uitneembare RVS bakken die je makkelijk kunt afwassen. Spoel de bak dagelijks om, ook als er nog voer in zit. Kattenvoer kan snel bacteriën aantrekken, zeker bij warm weer.</p>
 
 <h2>Kort samengevat</h2>
 <ul>
@@ -250,14 +250,14 @@ export const blogPosts: BlogPost[] = [
     slug: 'beste-hondenbakken-voor-knoeiende-eters',
     title: 'Beste hondenbakken voor knoeiende eters: stop het voer-gestrooi',
     excerpt:
-      'Sommige honden lijken van etenstijd een wedstrijdje voerwerpen te maken. De juiste bak kan het gemors écht verminderen — dit zijn de opties die werken.',
+      'Sommige honden lijken van etenstijd een wedstrijdje voerwerpen te maken. De juiste bak kan het gemors écht verminderen. Dit zijn de opties die werken.',
     category: 'Hondenvoeding',
     image: 'https://images.unsplash.com/photo-1534361960057-19f4434e03ee?w=1200&q=80',
     publishedAt: '2026-04-28',
     readTime: 5,
     tags: ['hondenbakken', 'knoeien', 'voertips'],
     content: `
-<p>Herken je het? Elke maaltijd eindigt met brokjes verspreid over de vloer en een plas water naast de bak. Sommige honden eten nu eenmaal enthousiast — of onhandig. Gelukkig kan de juiste bak al veel schelen.</p>
+<p>Herken je het? Elke maaltijd eindigt met brokjes verspreid over de vloer en een plas water naast de bak. Sommige honden eten nu eenmaal enthousiast, of onhandig. Gelukkig kan de juiste bak al veel schelen.</p>
 
 <h2>Waarom knoeit een hond eigenlijk?</h2>
 <p>Er zijn meestal drie oorzaken: een bak die tijdens het eten wegglijdt, een bak die te diep of te smal is waardoor de hond moet "graaien", of gewoon een enthousiaste, snelle eter. Voor elk van deze situaties is een andere aanpassing zinvol.</p>
@@ -266,7 +266,7 @@ export const blogPosts: BlogPost[] = [
 <p>Als je hond de bak over de vloer duwt tijdens het eten, is een stevige, brede voet met antisliplaag de eerste stap. Onze houten voerstandaards met antislip voorkomen dat schuiven al grotendeels.</p>
 
 <h2>2. Een verhoogde bak vermindert gemors</h2>
-<p>Bij een bak op de grond moet een hond zijn kop ver naar beneden buigen, wat het risico op gemors vergroot. Een <a href="/dog-bowls">verhoogde voerbak</a> zorgt voor een stabielere, meer gecontroleerde eethouding — en dus minder morsen.</p>
+<p>Bij een bak op de grond moet een hond zijn kop ver naar beneden buigen, wat het risico op gemors vergroot. Een <a href="/dog-bowls">verhoogde voerbak</a> zorgt voor een stabielere, meer gecontroleerde eethouding, en dus minder morsen.</p>
 
 <h2>3. Kies de juiste bakdiepte en -breedte</h2>
 <p>Een te diepe of te smalle bak dwingt een hond om met zijn snuit te "graven" naar de laatste brokjes, wat voer over de rand duwt. Een bredere, ondiepere bak met rechte wanden maakt het makkelijker om alles netjes op te eten.</p>
@@ -298,18 +298,18 @@ export const blogPosts: BlogPost[] = [
     readTime: 10,
     tags: ['voedinggids', 'hondenrassen', 'voeding'],
     content: `
-<p>Er bestaat geen "one size fits all" als het gaat om hondenvoeding. Formaat, activiteitsniveau en leeftijd bepalen samen hoeveel en hoe vaak je hond zou moeten eten — en welke bak daarbij past. Dit is een algemene richtlijn per rasgrootte; raadpleeg altijd de aanbevelingen op de voerverpakking en je dierenarts voor specifiek advies.</p>
+<p>Er bestaat geen "one size fits all" als het gaat om hondenvoeding. Formaat, activiteitsniveau en leeftijd bepalen samen hoeveel en hoe vaak je hond zou moeten eten, en welke bak daarbij past. Dit is een algemene richtlijn per rasgrootte; raadpleeg altijd de aanbevelingen op de voerverpakking en je dierenarts voor specifiek advies.</p>
 
 <h2>Kleine rassen (tot 10 kg)</h2>
 <p>Denk aan Chihuahua's, Yorkshire Terriërs en Franse Bulldogs. Kleine honden hebben relatief een hoger metabolisme dan grote honden, maar hun magen zijn ook klein. Twee tot drie kleinere maaltijden per dag werken vaak beter dan één grote portie.</p>
-<p><strong>Bakkeuze:</strong> een compacte bak van 0,3–0,5 liter volstaat ruimschoots. Een lage, brede bak is prettig — kleine honden hoeven zo niet met hun hele kop in een diepe bak te duiken.</p>
+<p><strong>Bakkeuze:</strong> een compacte bak van 0,3–0,5 liter volstaat ruimschoots. Een lage, brede bak is prettig. Kleine honden hoeven zo niet met hun hele kop in een diepe bak te duiken.</p>
 
 <h2>Middelgrote rassen (10–25 kg)</h2>
 <p>Denk aan Cocker Spaniëls, Border Collies en Bulldogs. Deze groep kan doorgaans goed uit de voeten met twee maaltijden per dag, met een inhoud van ongeveer 1 tot 1,5 liter per bak, afhankelijk van het type voer en activiteitsniveau.</p>
-<p><strong>Bakkeuze:</strong> een <a href="/dog-bowls">verhoogde voerbak in maat M of L</a> is voor deze groep vaak een prettige upgrade — met name voor actieve honden die na een wandeling stevig doorbuigen naar hun bak.</p>
+<p><strong>Bakkeuze:</strong> een <a href="/dog-bowls">verhoogde voerbak in maat M of L</a> is voor deze groep vaak een prettige upgrade. Met name voor actieve honden die na een wandeling stevig doorbuigen naar hun bak.</p>
 
 <h2>Grote en reuzenrassen (25 kg en meer)</h2>
-<p>Denk aan Labradors, Duitse Herders en Bernhardiners. Deze honden hebben behoorlijk wat voer nodig, vaak verdeeld over twee maaltijden om de maag niet in één keer te veel te belasten — dat kan het risico op maagklachten verkleinen.</p>
+<p>Denk aan Labradors, Duitse Herders en Bernhardiners. Deze honden hebben behoorlijk wat voer nodig, vaak verdeeld over twee maaltijden om de maag niet in één keer te veel te belasten. Dat kan het risico op maagklachten verkleinen.</p>
 <p><strong>Bakkeuze:</strong> kies een ruime bak van 1,5 tot 2 liter, bij voorkeur verhoogd (maat XL) voor een betere eethouding en minder belasting op nek en gewrichten.</p>
 
 <h2>Puppy's: vaker, kleinere porties</h2>
