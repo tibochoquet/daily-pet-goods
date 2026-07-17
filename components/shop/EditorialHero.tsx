@@ -2,6 +2,15 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 
+export interface HeroTag {
+  label: string
+  price: number
+  href: string
+  /** Position as a percentage of the image, e.g. "35%" */
+  top: string
+  left: string
+}
+
 interface EditorialHeroProps {
   eyebrow: string
   title: string
@@ -11,8 +20,7 @@ interface EditorialHeroProps {
   breadcrumbLabel: string
   image: string
   imageAlt: string
-  /** Tailwind object-position class, defaults to object-center. Tune per photo so the subject stays in frame on narrow (mobile) crops. */
-  imagePosition?: string
+  tags?: HeroTag[]
 }
 
 export default function EditorialHero({
@@ -24,45 +32,64 @@ export default function EditorialHero({
   breadcrumbLabel,
   image,
   imageAlt,
-  imagePosition = 'object-center',
+  tags,
 }: EditorialHeroProps) {
   return (
-    <section className="relative min-h-[70vh] flex items-end overflow-hidden group">
+    <section className="relative w-full aspect-video overflow-hidden bg-[#1F3329]">
       <Image
         src={image}
         alt={imageAlt}
         fill
-        className={`object-cover ${imagePosition} transition-transform duration-700 ease-out group-hover:scale-105`}
+        className="object-cover"
         priority
         sizes="100vw"
-        quality={88}
+        quality={90}
       />
-      {/* Gradient for legibility, intensifies slightly on hover so the name reads clearly */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-black/5 transition-opacity duration-500 opacity-90 group-hover:opacity-100" />
+      {/* Gradient for legibility of the headline */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-black/20" />
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-14 md:pb-20">
-        <p className="text-sm text-white/50 mb-6">
-          <Link href="/" className="hover:text-white/80 transition-colors">Home</Link>
-          {' / '}
-          <Link href="/shop" className="hover:text-white/80 transition-colors">Shop</Link>
-          {' / '}
-          <span className="text-white/80">{breadcrumbLabel}</span>
-        </p>
+      {/* Breadcrumb */}
+      <p className="absolute top-6 left-4 sm:left-6 lg:left-8 z-20 text-sm text-white/60">
+        <Link href="/" className="hover:text-white/90 transition-colors">Home</Link>
+        {' / '}
+        <Link href="/shop" className="hover:text-white/90 transition-colors">Shop</Link>
+        {' / '}
+        <span className="text-white/90">{breadcrumbLabel}</span>
+      </p>
 
-        <div className="max-w-xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#D4956B] mb-4 opacity-90 translate-y-1 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+      {/* Product tags */}
+      {tags?.map((tag) => (
+        <Link
+          key={tag.label}
+          href={tag.href}
+          className="group absolute z-20 -translate-x-1/2 -translate-y-1/2"
+          style={{ top: tag.top, left: tag.left }}
+        >
+          <span className="relative flex items-center justify-center w-3 h-3 rounded-full bg-white shadow-md">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-60" />
+          </span>
+          <span className="pointer-events-none absolute left-1/2 top-full mt-2 -translate-x-1/2 whitespace-nowrap rounded-full bg-white/95 backdrop-blur-sm px-3.5 py-1.5 text-xs font-medium text-[#1A1A1A] shadow-lg opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 sm:opacity-100 sm:translate-y-0">
+            {tag.label} <span className="text-[#9CA3AF]">· vanaf €{tag.price.toFixed(2)}</span>
+          </span>
+        </Link>
+      ))}
+
+      {/* Headline */}
+      <div className="absolute inset-x-0 bottom-0 z-10 px-4 sm:px-6 lg:px-8 pb-8 sm:pb-10">
+        <div className="max-w-lg">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#D4956B] mb-3">
             {eyebrow}
           </p>
-          <h1 className="font-serif text-4xl sm:text-5xl lg:text-[3.25rem] font-bold text-white leading-[1.08] mb-5">
+          <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-[1.08] mb-3">
             {title}
           </h1>
-          <p className="text-lg text-white/70 leading-relaxed mb-8">
+          <p className="hidden sm:block text-base text-white/70 leading-relaxed mb-6 max-w-md">
             {description}
           </p>
           {ctaLabel && ctaHref && (
             <Link
               href={ctaHref}
-              className="inline-flex items-center gap-2 bg-white text-[#2C4A3E] font-semibold px-7 py-3.5 rounded-full hover:bg-[#F3EDE3] transition-colors text-sm shadow-lg"
+              className="inline-flex items-center gap-2 bg-white text-[#2C4A3E] font-semibold px-6 py-3 rounded-full hover:bg-[#F3EDE3] transition-colors text-sm shadow-lg"
             >
               {ctaLabel}
               <ArrowRight size={16} />

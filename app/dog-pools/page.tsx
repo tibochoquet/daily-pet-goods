@@ -22,8 +22,11 @@ export default function DogPoolsPage() {
         ctaLabel: 'Shop de collectie',
         ctaHref: '/dog-pools#collectie',
         image: brandImages.dogPoolsCover,
-        imagePosition: 'object-[50%_75%]',
         imageAlt: 'Hond naast een opvouwbaar zwembad en koelmat in de tuin',
+        tags: [
+          { label: 'Opvouwbaar Hondenzwembad', price: 37.99, href: '/products/opvouwbaar-hondenzwembad', top: '75%', left: '32%' },
+          { label: 'Zelfkoelende Koelmat', price: 29.95, href: '/products/koelmat-hond', top: '85%', left: '84%' },
+        ],
       }}
       breadcrumbLabel="Zwembaden & koelmatten"
       products={products}

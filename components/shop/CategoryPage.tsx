@@ -1,6 +1,6 @@
 import type { Product } from '@/lib/types'
 import ProductCard from './ProductCard'
-import EditorialHero from './EditorialHero'
+import EditorialHero, { type HeroTag } from './EditorialHero'
 import NewsletterSignup from '@/components/home/NewsletterSignup'
 
 interface HeroContent {
@@ -11,7 +11,7 @@ interface HeroContent {
   ctaHref?: string
   image: string
   imageAlt: string
-  imagePosition?: string
+  tags?: HeroTag[]
 }
 
 interface CategoryPageProps {

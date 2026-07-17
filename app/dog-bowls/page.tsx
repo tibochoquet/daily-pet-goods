@@ -22,8 +22,11 @@ export default function DogBowlsPage() {
         ctaLabel: 'Bekijk de collectie',
         ctaHref: '/dog-bowls#collectie',
         image: brandImages.dogBowlsCover,
-        imagePosition: 'object-[58%_65%]',
         imageAlt: 'Hond naast houten voerbakken met roestvrijstalen inzet',
+        tags: [
+          { label: 'Verhoogde Hondenbak', price: 34.99, href: '/products/verhoogde-hondenbak', top: '58%', left: '34%' },
+          { label: 'Voerbak Mangohout', price: 24.99, href: '/products/voerbak-mangohout', top: '78%', left: '50%' },
+        ],
       }}
       breadcrumbLabel="Hondenbakken"
       products={products}

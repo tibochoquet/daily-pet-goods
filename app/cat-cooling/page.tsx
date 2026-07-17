@@ -22,8 +22,10 @@ export default function CatCoolingPage() {
         ctaLabel: 'Bekijk de mat',
         ctaHref: '/cat-cooling#collectie',
         image: brandImages.catCoolingCover,
-        imagePosition: 'object-[58%_60%]',
         imageAlt: 'Kat ligt ontspannen op een zelfkoelende mat',
+        tags: [
+          { label: 'Koelmat voor Katten', price: 29.99, href: '/products/koelmat-kat', top: '78%', left: '55%' },
+        ],
       }}
       breadcrumbLabel="Koelmatten katten"
       products={products}

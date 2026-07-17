@@ -22,8 +22,10 @@ export default function CatBowlsPage() {
         ctaLabel: 'Bekijk de collectie',
         ctaHref: '/cat-bowls#collectie',
         image: brandImages.catBowlsCover,
-        imagePosition: 'object-[62%_55%]',
         imageAlt: 'Kat naast een mangohouten voerstation in een lichte woonkamer',
+        tags: [
+          { label: 'Dubbele Kattenvoerbak Metaal', price: 34.99, href: '/products/dubbele-kattenvoerbak-metaal', top: '76%', left: '45%' },
+        ],
       }}
       breadcrumbLabel="Kattenbakken"
       products={products}

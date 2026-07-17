@@ -23,6 +23,9 @@ export default function DogTravelPage() {
         ctaHref: '/dog-travel#collectie',
         image: brandImages.dogTravelCover,
         imageAlt: 'Hond op een waterdichte achterbankbeschermer in de auto',
+        tags: [
+          { label: 'Achterbankbeschermer Auto', price: 34.99, href: '/products/achterbankbeschermer-auto', top: '65%', left: '50%' },
+        ],
       }}
       breadcrumbLabel="Onderweg met je hond"
       products={products}

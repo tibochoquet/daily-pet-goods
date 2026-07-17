@@ -23,6 +23,10 @@ export default function DogBedsPage() {
         ctaHref: '/dog-beds#collectie',
         image: brandImages.dogBedsCover,
         imageAlt: 'Honden rustend in pluche donut- en loungemanden in een woonkamer',
+        tags: [
+          { label: 'Hondenmand Donut', price: 49.99, href: '/products/hondenmand-donut', top: '70%', left: '37%' },
+          { label: 'Hondenmand Lounge', price: 49.99, href: '/products/hondenmand-lounge', top: '75%', left: '77%' },
+        ],
       }}
       breadcrumbLabel="Hondenmanden"
       products={products}
