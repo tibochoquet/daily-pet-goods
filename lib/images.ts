@@ -19,6 +19,24 @@ export const brandImages = {
 
   /** Travel scene — woman with golden retriever on harness, car & collapsible bowl. Used: dog travel category. */
   travelHero: '/assets/images/travel-hero.jpg',
+
+  /** Category tile — dachshund with elevated wood feeders. Used: homepage "Shop per categorie" tile. */
+  dogBowlsCover: '/assets/images/hondenbakken_cover.png',
+
+  /** Category tile — grey cat with mango wood feeding station. Used: homepage "Shop per categorie" tile. */
+  catBowlsCover: '/assets/images/kattenbakken_cover.png',
+
+  /** Category tile — golden retrievers in donut/lounge beds. Used: homepage "Shop per categorie" tile. */
+  dogBedsCover: '/assets/images/hondenmanden_cover.png',
+
+  /** Category tile — dachshund in car with travel cover & bottle. Used: homepage "Shop per categorie" tile. */
+  dogTravelCover: '/assets/images/travel_cover.png',
+
+  /** Category tile — dachshund beside foldable pool & cooling mats in garden. Used: homepage "Shop per categorie" tile. */
+  dogPoolsCover: '/assets/images/zwembaden-koelmat.png',
+
+  /** Category tile — general lifestyle scene, dog bed + cat + bowls. Used: homepage "Shop per categorie" cat cooling tile. */
+  catCoolingCover: '/assets/images/vanalles.png',
 } as const
 
 export type BrandImageKey = keyof typeof brandImages

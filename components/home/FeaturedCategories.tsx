@@ -1,60 +1,56 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { ArrowRight } from 'lucide-react'
+import { brandImages } from '@/lib/images'
 
 const categories = [
   {
     title: 'Hondenbakken',
     description: 'Verhoogde voerbakken, mangohout & metaal',
     href: '/dog-bowls',
-    bg: 'bg-[#C8745A]',
-    text: 'text-white',
-    sub: 'text-white/70',
-    span: 'lg:col-span-2 lg:row-span-2',
+    image: brandImages.dogBowlsCover,
+    imagePosition: 'object-[55%_70%]',
+    alt: 'Hond naast houten voerbakken met roestvrijstalen inzet',
   },
   {
     title: 'Kattenbakken',
     description: 'Mangohout & minimalistisch metaal',
     href: '/cat-bowls',
-    bg: 'bg-[#3D6456]',
-    text: 'text-white',
-    sub: 'text-white/70',
-    span: '',
+    image: brandImages.catBowlsCover,
+    imagePosition: 'object-[62%_55%]',
+    alt: 'Kat naast een houten voerstation met roestvrijstalen bakken',
   },
   {
     title: 'Hondenmanden',
     description: 'Pluche donuts, lounge & Sambo manden',
     href: '/dog-beds',
-    bg: 'bg-[#F3EDE3]',
-    text: 'text-[#1A1A1A]',
-    sub: 'text-[#6B7280]',
-    span: '',
+    image: brandImages.dogBedsCover,
+    imagePosition: 'object-center',
+    alt: 'Honden rustend in pluche donut- en loungemanden in een woonkamer',
   },
   {
     title: 'Onderweg met je hond',
     description: 'Achterbankbeschermers, tuigjes & flessen',
     href: '/dog-travel',
-    bg: 'bg-[#2C4A3E]',
-    text: 'text-white',
-    sub: 'text-white/70',
-    span: '',
+    image: brandImages.dogTravelCover,
+    imagePosition: 'object-center',
+    alt: 'Hond op een waterdichte achterbankbeschermer in de auto',
   },
   {
     title: 'Zwembaden & koelmatten',
     description: 'Opvouwbare zomerzwembaden voor honden',
     href: '/dog-pools',
-    bg: 'bg-[#1F3329]',
-    text: 'text-white',
-    sub: 'text-white/70',
-    span: '',
+    image: brandImages.dogPoolsCover,
+    imagePosition: 'object-[50%_75%]',
+    alt: 'Hond naast een opvouwbaar zwembad en koelmat in de tuin',
   },
   {
     title: 'Koelmatten katten',
     description: 'Zelfkoelend, zonder water of stroom',
     href: '/cat-cooling',
-    bg: 'bg-[#D4956B]',
-    text: 'text-white',
-    sub: 'text-white/70',
-    span: '',
+    image: brandImages.catCoolingCover,
+    imagePosition: 'object-[50%_65%]',
+    alt: 'Hond en kat ontspannen tussen voerbakken en een hondenmand in huis',
   },
 ]
 
@@ -88,21 +84,29 @@ export default function FeaturedCategories() {
           {/* Featured large tile */}
           <Link
             href={featured.href}
-            className={`group flex flex-col justify-between p-7 rounded-3xl ${featured.bg} lg:col-span-2 lg:row-span-2 hover:opacity-95 transition-opacity`}
+            className="group relative flex flex-col justify-between p-7 rounded-3xl overflow-hidden lg:col-span-2 lg:row-span-2"
           >
-            <div className="flex items-start justify-between">
-              <span className={`text-xs font-semibold uppercase tracking-wider ${featured.sub}`}>
+            <Image
+              src={featured.image}
+              alt={featured.alt}
+              fill
+              className={`object-cover ${featured.imagePosition} group-hover:scale-105 transition-transform duration-500`}
+              sizes="(max-width: 1024px) 100vw, 66vw"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-black/35" />
+            <div className="relative flex items-start justify-between">
+              <span className="text-xs font-semibold uppercase tracking-wider text-white/75">
                 Uitgelicht
               </span>
-              <span className={`w-9 h-9 rounded-full border ${featured.text === 'text-white' ? 'border-white/25 text-white' : 'border-black/15 text-[#1A1A1A]'} flex items-center justify-center group-hover:bg-white/10 transition-colors`}>
+              <span className="w-9 h-9 rounded-full border border-white/25 text-white flex items-center justify-center group-hover:bg-white/10 transition-colors">
                 <ArrowRight size={14} />
               </span>
             </div>
-            <div>
-              <h3 className={`font-serif font-bold text-3xl sm:text-4xl ${featured.text} mb-2`}>
+            <div className="relative">
+              <h3 className="font-serif font-bold text-3xl sm:text-4xl text-white mb-2">
                 {featured.title}
               </h3>
-              <p className={`text-sm ${featured.sub}`}>{featured.description}</p>
+              <p className="text-sm text-white/75">{featured.description}</p>
             </div>
           </Link>
 
@@ -111,19 +115,27 @@ export default function FeaturedCategories() {
             <Link
               key={cat.href}
               href={cat.href}
-              className={`group flex flex-col justify-between p-6 rounded-3xl ${cat.bg} hover:opacity-95 transition-opacity`}
+              className="group relative flex flex-col justify-between p-6 rounded-3xl overflow-hidden"
             >
-              <div className="flex items-start justify-between">
+              <Image
+                src={cat.image}
+                alt={cat.alt}
+                fill
+                className={`object-cover ${cat.imagePosition} group-hover:scale-105 transition-transform duration-500`}
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/25" />
+              <div className="relative flex items-start justify-between">
                 <div />
-                <span className={`w-8 h-8 rounded-full border ${cat.text === 'text-white' ? 'border-white/25 text-white' : 'border-black/15 text-[#1A1A1A]'} flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity`}>
+                <span className="w-8 h-8 rounded-full border border-white/25 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                   <ArrowRight size={13} />
                 </span>
               </div>
-              <div>
-                <h3 className={`font-serif font-bold text-xl ${cat.text} mb-1`}>
+              <div className="relative">
+                <h3 className="font-serif font-bold text-xl text-white mb-1">
                   {cat.title}
                 </h3>
-                <p className={`text-xs ${cat.sub}`}>{cat.description}</p>
+                <p className="text-xs text-white/75">{cat.description}</p>
               </div>
             </Link>
           ))}
