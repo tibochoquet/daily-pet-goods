@@ -43,7 +43,7 @@ export default function EditorialHero({
   quickNav,
 }: EditorialHeroProps) {
   return (
-    <section className="relative w-full aspect-video overflow-hidden bg-[#1F3329]">
+    <section className="relative w-full min-h-[500px] sm:min-h-[460px] lg:min-h-0 lg:aspect-video overflow-hidden bg-[#1F3329]">
       <Image
         src={image}
         alt={imageAlt}
@@ -57,7 +57,7 @@ export default function EditorialHero({
       <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/25 to-transparent" />
 
       {/* Top-left: breadcrumb + headline, sized and spaced like the homepage hero */}
-      <div className="absolute inset-0 z-10 flex flex-col justify-center px-5 sm:px-8 lg:px-14">
+      <div className="relative z-10 flex min-h-[500px] sm:min-h-[460px] lg:min-h-0 lg:absolute lg:inset-0 flex-col justify-center px-5 sm:px-8 lg:px-14 py-10">
         <div className="max-w-xl">
           <p className="text-xs sm:text-sm text-white/55 mb-4 sm:mb-6">
             <Link href="/" className="hover:text-white/90 transition-colors">Home</Link>
@@ -89,17 +89,32 @@ export default function EditorialHero({
               <ArrowRight size={16} />
             </Link>
           )}
+
+          {/* Quick nav, mobile: in-flow below the CTA so it never overlaps the headline */}
+          {quickNav && quickNav.length > 0 && (
+            <div className="flex sm:hidden flex-wrap gap-2 mt-6">
+              {quickNav.map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className="px-3.5 py-1.5 rounded-full bg-white/90 backdrop-blur-sm text-xs font-medium text-[#1A1A1A] shadow-md"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
-      {/* Quick nav: jump to a specific sub-category, overlaid on the photo */}
+      {/* Quick nav, sm and up: overlaid top-right on the photo */}
       {quickNav && quickNav.length > 0 && (
-        <div className="absolute top-0 right-0 z-10 px-4 sm:px-8 lg:px-14 pt-4 sm:pt-8 flex flex-wrap justify-end gap-1.5 sm:gap-2 max-w-[55%] sm:max-w-[260px]">
+        <div className="hidden sm:flex absolute top-0 right-0 z-10 px-8 lg:px-14 pt-8 flex-wrap justify-end gap-2 max-w-[260px]">
           {quickNav.map((item) => (
             <a
               key={item.href}
               href={item.href}
-              className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white/90 backdrop-blur-sm text-[11px] sm:text-xs font-medium text-[#1A1A1A] hover:bg-white transition-colors shadow-md"
+              className="px-4 py-2 rounded-full bg-white/90 backdrop-blur-sm text-xs font-medium text-[#1A1A1A] hover:bg-white transition-colors shadow-md"
             >
               {item.label}
             </a>
@@ -107,22 +122,24 @@ export default function EditorialHero({
         </div>
       )}
 
-      {/* Product tags */}
-      {tags?.map((tag) => (
-        <Link
-          key={tag.label}
-          href={tag.href}
-          className="group absolute z-20 -translate-x-1/2 -translate-y-1/2"
-          style={{ top: tag.top, left: tag.left }}
-        >
-          <span className="relative flex items-center justify-center w-3 h-3 rounded-full bg-white shadow-md transition-transform duration-200 group-hover:scale-125">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-60" />
-          </span>
-          <span className="absolute left-1/2 top-full mt-2 -translate-x-1/2 whitespace-nowrap rounded-full bg-white/90 backdrop-blur-sm px-3.5 py-1.5 text-xs font-medium text-[#1A1A1A] shadow-md transition-all duration-200 group-hover:bg-white group-hover:shadow-xl group-hover:scale-105">
-            {tag.label} <span className="text-[#9CA3AF] group-hover:text-[#6B7280]">· vanaf €{tag.price.toFixed(2)}</span>
-          </span>
-        </Link>
-      ))}
+      {/* Product tags: sm and up only, positions are tuned against the wider photo crop */}
+      <div className="hidden sm:contents">
+        {tags?.map((tag) => (
+          <Link
+            key={tag.label}
+            href={tag.href}
+            className="group absolute z-20 -translate-x-1/2 -translate-y-1/2"
+            style={{ top: tag.top, left: tag.left }}
+          >
+            <span className="relative flex items-center justify-center w-3 h-3 rounded-full bg-white shadow-md transition-transform duration-200 group-hover:scale-125">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-60" />
+            </span>
+            <span className="absolute left-1/2 top-full mt-2 -translate-x-1/2 whitespace-nowrap rounded-full bg-white/90 backdrop-blur-sm px-3.5 py-1.5 text-xs font-medium text-[#1A1A1A] shadow-md transition-all duration-200 group-hover:bg-white group-hover:shadow-xl group-hover:scale-105">
+              {tag.label} <span className="text-[#9CA3AF] group-hover:text-[#6B7280]">· vanaf €{tag.price.toFixed(2)}</span>
+            </span>
+          </Link>
+        ))}
+      </div>
     </section>
   )
 }
