@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import { products } from '@/lib/products'
+import { brandImages } from '@/lib/images'
 import ProductCard from '@/components/shop/ProductCard'
+import EditorialHero from '@/components/shop/EditorialHero'
 import NewsletterSignup from '@/components/home/NewsletterSignup'
 
 export const metadata: Metadata = {
@@ -23,27 +24,27 @@ const categoryLabels: Record<string, string> = {
 export default function ShopPage() {
   return (
     <>
-      <section className="bg-[#F3EDE3] py-14 md:py-20">
+      <EditorialHero
+        eyebrow="Complete collectie"
+        title="Alles voor jouw huisdier"
+        description="Elk product uit de Daily Pet Goods-collectie, zorgvuldig geselecteerd op kwaliteit, design en de dagelijkse behoeften van jouw hond of kat."
+        ctaLabel="Bekijk de collectie"
+        ctaHref="/shop#collectie"
+        breadcrumbLabel="Alle producten"
+        image={brandImages.lifestyleGeneral}
+        imageAlt="Hond en kat ontspannen tussen voerbakken en een hondenmand in een lichte woonkamer"
+        tags={[
+          { label: 'Verhoogde Hondenbak', price: 34.99, href: '/products/verhoogde-hondenbak', top: '61%', left: '25%' },
+          { label: 'Voerbak Mangohout', price: 24.99, href: '/products/voerbak-mangohout', top: '78%', left: '19%' },
+          { label: 'Hondenmand Lounge', price: 49.99, href: '/products/hondenmand-lounge', top: '68%', left: '63%' },
+        ]}
+      />
+
+      <section id="collectie" className="py-16 md:py-20 bg-[#FAFAF7] scroll-mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-sm text-[#6B7280] mb-3">
-            <Link href="/" className="hover:text-[#2C4A3E] transition-colors">Home</Link>
-            {' / '}
-            <span className="text-[#1A1A1A] font-medium">Shop</span>
-          </p>
-          <h1 className="font-serif text-4xl md:text-5xl font-bold text-[#1A1A1A] mb-4">
-            Alle producten
-          </h1>
-          <p className="text-lg text-[#6B7280] max-w-xl">
-            Elk product uit de Daily Pet Goods-collectie, zorgvuldig geselecteerd op kwaliteit, design en de dagelijkse behoeften van jouw huisdier.
-          </p>
-          <p className="mt-4 text-sm text-[#6B7280]">
+          <p className="text-sm text-[#6B7280] mb-10">
             <span className="font-semibold text-[#1A1A1A]">{products.length} producten</span> met gratis verzending
           </p>
-        </div>
-      </section>
-
-      <section className="py-16 md:py-20 bg-[#FAFAF7]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {Object.entries(categoryLabels).map(([categoryId, label]) => {
             const categoryProducts = products.filter((p) => p.category === categoryId)
             if (!categoryProducts.length) return null
