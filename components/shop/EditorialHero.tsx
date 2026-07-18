@@ -11,6 +11,11 @@ export interface HeroTag {
   left: string
 }
 
+export interface QuickNavLink {
+  label: string
+  href: string
+}
+
 interface EditorialHeroProps {
   eyebrow: string
   title: string
@@ -21,6 +26,8 @@ interface EditorialHeroProps {
   image: string
   imageAlt: string
   tags?: HeroTag[]
+  /** Optional pill links overlaid top-right, used to jump between sub-categories on grouped pages. */
+  quickNav?: QuickNavLink[]
 }
 
 export default function EditorialHero({
@@ -33,6 +40,7 @@ export default function EditorialHero({
   image,
   imageAlt,
   tags,
+  quickNav,
 }: EditorialHeroProps) {
   return (
     <section className="relative w-full aspect-video overflow-hidden bg-[#1F3329]">
@@ -83,6 +91,21 @@ export default function EditorialHero({
           )}
         </div>
       </div>
+
+      {/* Quick nav: jump to a specific sub-category, overlaid on the photo */}
+      {quickNav && quickNav.length > 0 && (
+        <div className="absolute top-0 right-0 z-10 px-4 sm:px-8 lg:px-14 pt-4 sm:pt-8 flex flex-wrap justify-end gap-1.5 sm:gap-2 max-w-[55%] sm:max-w-[260px]">
+          {quickNav.map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white/90 backdrop-blur-sm text-[11px] sm:text-xs font-medium text-[#1A1A1A] hover:bg-white transition-colors shadow-md"
+            >
+              {item.label}
+            </a>
+          ))}
+        </div>
+      )}
 
       {/* Product tags */}
       {tags?.map((tag) => (

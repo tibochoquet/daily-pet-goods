@@ -13,8 +13,6 @@ export const metadata: Metadata = {
 export default function HondenPage() {
   return (
     <CategoryGroupPage
-      title="Honden"
-      intro="Van eten en slapen tot onderweg en verkoeling in de zomer: alles voor jouw hond, zorgvuldig samengebracht op één plek."
       sections={[
         {
           id: 'hondenbakken',

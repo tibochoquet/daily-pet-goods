@@ -1,6 +1,6 @@
 import type { Product } from '@/lib/types'
 import ProductCard from './ProductCard'
-import EditorialHero, { type HeroTag } from './EditorialHero'
+import EditorialHero, { type HeroTag, type QuickNavLink } from './EditorialHero'
 import NewsletterSignup from '@/components/home/NewsletterSignup'
 
 interface HeroContent {
@@ -22,6 +22,8 @@ interface CategoryPageProps {
   sectionId?: string
   /** Set to false when this block is stacked inside a grouped category page, so the newsletter only shows once. */
   showNewsletter?: boolean
+  /** Pill links overlaid on the hero photo to jump to other sub-categories on a grouped page. */
+  quickNav?: QuickNavLink[]
 }
 
 export default function CategoryPage({
@@ -30,10 +32,11 @@ export default function CategoryPage({
   products,
   sectionId = 'collectie',
   showNewsletter = true,
+  quickNav,
 }: CategoryPageProps) {
   return (
     <>
-      <EditorialHero {...hero} breadcrumbLabel={breadcrumbLabel} />
+      <EditorialHero {...hero} breadcrumbLabel={breadcrumbLabel} quickNav={quickNav} />
 
       {/* Products grid */}
       <section id={sectionId} className="py-16 md:py-20 bg-[#FAFAF7] scroll-mt-20">

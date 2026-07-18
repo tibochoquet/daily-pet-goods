@@ -50,7 +50,7 @@ export default function FeaturedCategories() {
             <Link
               key={cat.href}
               href={cat.href}
-              className="group relative flex flex-col justify-between p-8 rounded-3xl overflow-hidden aspect-[4/5] sm:aspect-[3/4]"
+              className="group relative flex flex-col justify-between p-8 rounded-3xl overflow-hidden aspect-[4/5]"
             >
               <Image
                 src={cat.image}
