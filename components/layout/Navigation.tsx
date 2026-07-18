@@ -8,12 +8,8 @@ import { useCart } from '@/components/cart/CartProvider'
 
 const shopLinks = [
   { href: '/shop', label: 'Alle producten' },
-  { href: '/dog-bowls', label: 'Hondenbakken' },
-  { href: '/cat-bowls', label: 'Kattenbakken' },
-  { href: '/dog-beds', label: 'Hondenmanden' },
-  { href: '/dog-travel', label: 'Onderweg met je hond' },
-  { href: '/dog-pools', label: 'Zwembaden & koelmatten hond' },
-  { href: '/cat-cooling', label: 'Koelmatten voor katten' },
+  { href: '/honden', label: 'Honden' },
+  { href: '/katten', label: 'Katten' },
 ]
 
 const navLinks = [

@@ -20,25 +20,25 @@ export const brandImages = {
   /** Travel scene - woman with golden retriever on harness, car & collapsible bowl. Used: dog travel category. */
   travelHero: '/assets/images/travel-hero.jpg',
 
-  /** Category tile - dachshund with elevated wood feeders. Used: homepage "Shop per categorie" tile. */
+  /** Dachshund with elevated wood feeders. Used: /honden hondenbakken section hero. */
   dogBowlsCover: '/assets/images/hondenbakken_cover.png',
 
-  /** Category tile - grey cat with mango wood feeding station. Used: homepage "Shop per categorie" tile. */
+  /** Grey cat with mango wood feeding station. Used: homepage category tile + /katten kattenbakken section hero. */
   catBowlsCover: '/assets/images/kattenbakken_cover.png',
 
-  /** Category tile - golden retrievers in donut/lounge beds. Used: homepage "Shop per categorie" tile. */
+  /** Golden retrievers in donut/lounge beds. Used: homepage category tile + /honden hondenmanden section hero. */
   dogBedsCover: '/assets/images/hondenmanden_cover.png',
 
-  /** Category tile - dachshund in car with travel cover & bottle. Used: homepage "Shop per categorie" tile. */
+  /** Dachshund in car with travel cover & bottle. Used: /honden onderweg section hero. */
   dogTravelCover: '/assets/images/travel_cover.png',
 
-  /** Category tile - dachshund beside foldable pool & cooling mats in garden. Used: homepage "Shop per categorie" tile. */
+  /** Dachshund beside foldable pool & cooling mats in garden. Used: /honden zwembaden section hero. */
   dogPoolsCover: '/assets/images/zwembaden-koelmat.png',
 
-  /** Category tile - tabby cat lying on a cooling mat. Used: homepage "Shop per categorie" cat cooling tile. */
+  /** Tabby cat lying on a cooling mat. Used: /katten koelmatten section hero. */
   catCoolingCover: '/assets/images/koelmatkat.png',
 
-  /** General lifestyle scene - dog bed, cat and bowls. Used: WhyChooseUs section background. */
+  /** General lifestyle scene - dog bed, cat and bowls. Used: shop page hero. */
   lifestyleGeneral: '/assets/images/vanalles.png',
 } as const
 

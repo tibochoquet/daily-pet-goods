@@ -54,7 +54,7 @@ export default function Hero() {
               <ArrowRight size={15} />
             </Link>
             <Link
-              href="/dog-bowls"
+              href="/honden#hondenbakken"
               className="inline-flex items-center gap-2 border border-white/35 text-white font-medium px-7 py-4 rounded-full hover:bg-white/10 transition-colors text-sm"
             >
               Hondenbakken

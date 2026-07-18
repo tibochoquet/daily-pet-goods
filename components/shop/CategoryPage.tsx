@@ -18,19 +18,25 @@ interface CategoryPageProps {
   hero: HeroContent
   breadcrumbLabel: string
   products: Product[]
+  /** Anchor id for the product grid section, used by the CTA and quick-nav links. Defaults to "collectie". */
+  sectionId?: string
+  /** Set to false when this block is stacked inside a grouped category page, so the newsletter only shows once. */
+  showNewsletter?: boolean
 }
 
 export default function CategoryPage({
   hero,
   breadcrumbLabel,
   products,
+  sectionId = 'collectie',
+  showNewsletter = true,
 }: CategoryPageProps) {
   return (
     <>
       <EditorialHero {...hero} breadcrumbLabel={breadcrumbLabel} />
 
       {/* Products grid */}
-      <section id="collectie" className="py-16 md:py-20 bg-[#FAFAF7] scroll-mt-20">
+      <section id={sectionId} className="py-16 md:py-20 bg-[#FAFAF7] scroll-mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-baseline justify-between mb-10">
             <h2 className="font-serif text-2xl md:text-3xl font-bold text-[#1A1A1A]">
@@ -46,7 +52,7 @@ export default function CategoryPage({
         </div>
       </section>
 
-      <NewsletterSignup />
+      {showNewsletter && <NewsletterSignup />}
     </>
   )
 }
