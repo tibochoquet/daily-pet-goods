@@ -91,12 +91,9 @@ export default function EditorialHero({
 }: EditorialHeroProps) {
   return (
     <section className="w-full">
-      {/* Mobile & tablet (< lg): photo card on top, content in a solid block below. Fully independent from the desktop layout. */}
+      {/* Mobile & tablet (< lg): text-only block, no photo. Fully independent from the desktop layout. */}
       <div className="lg:hidden">
-        <div className="relative w-full aspect-[4/5] sm:aspect-[16/9]">
-          <Image src={image} alt={imageAlt} fill className="object-cover" priority sizes="100vw" quality={90} />
-        </div>
-        <div className="bg-[#1F3329] px-5 sm:px-8 py-8 sm:py-10">
+        <div className="bg-[#1F3329] px-5 sm:px-8 py-10 sm:py-12">
           <Breadcrumb breadcrumbLabel={breadcrumbLabel} className="text-xs text-white/55 mb-4" />
           <Eyebrow eyebrow={eyebrow} className="inline-flex items-center gap-2 border border-white/25 text-white/80 text-xs font-semibold uppercase tracking-wider px-4 py-2 rounded-full mb-4" />
           <h1 className="font-serif text-2xl sm:text-3xl font-bold text-white leading-[1.1] tracking-tight mb-3">
