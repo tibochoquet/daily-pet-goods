@@ -8,17 +8,17 @@ const categories = [
     title: 'Honden',
     description: 'Voerbakken, manden, reisbenodigdheden & zwembaden',
     href: '/honden',
-    image: brandImages.dogBedsCover,
+    image: brandImages.hondenTile,
     imagePosition: 'object-center',
-    alt: 'Honden rustend in pluche donut- en loungemanden in een lichte woonkamer',
+    alt: 'Golden retriever slaapt in een pluche donutmand, met een houten voerstation op de achtergrond',
   },
   {
     title: 'Katten',
     description: 'Voerstations & zelfkoelende matten',
     href: '/katten',
-    image: brandImages.catBowlsCover,
-    imagePosition: 'object-[62%_55%]',
-    alt: 'Kat naast een houten voerstation met roestvrijstalen bakken',
+    image: brandImages.kattenTile,
+    imagePosition: 'object-center',
+    alt: 'Grijze kat naast een houten voerstation met roestvrijstalen bakken',
   },
 ]
 

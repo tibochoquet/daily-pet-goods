@@ -23,10 +23,10 @@ export const brandImages = {
   /** Dachshund with elevated wood feeders. Used: /honden hondenbakken section hero. */
   dogBowlsCover: '/assets/images/hondenbakken_cover.png',
 
-  /** Grey cat with mango wood feeding station. Used: homepage category tile + /katten kattenbakken section hero. */
+  /** Grey cat with mango wood feeding station. Used: /katten kattenbakken section hero. */
   catBowlsCover: '/assets/images/kattenbakken_cover.png',
 
-  /** Golden retrievers in donut/lounge beds. Used: homepage category tile + /honden hondenmanden section hero. */
+  /** Golden retrievers in donut/lounge beds. Used: /honden hondenmanden section hero. */
   dogBedsCover: '/assets/images/hondenmanden_cover.png',
 
   /** Dachshund in car with travel cover & bottle. Used: /honden onderweg section hero. */
@@ -40,6 +40,12 @@ export const brandImages = {
 
   /** General lifestyle scene - dog bed, cat and bowls. Used: shop page hero. */
   lifestyleGeneral: '/assets/images/vanalles.png',
+
+  /** Golden retriever asleep in a donut bed, feeding station in the background. Used: homepage "Honden" category tile. */
+  hondenTile: '/assets/images/honden_cover.png',
+
+  /** Grey British Shorthair beside a mango wood feeding station. Used: homepage "Katten" category tile. */
+  kattenTile: '/assets/images/katten_cover.png',
 } as const
 
 export type BrandImageKey = keyof typeof brandImages
