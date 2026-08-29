@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { Mail, MapPin } from 'lucide-react'
+import { business } from '@/lib/business'
 
 const shopLinks = [
   { href: '/honden', label: 'Honden' },
@@ -92,13 +93,13 @@ export default function Footer() {
             <ul className="space-y-3">
               <li className="flex items-start gap-2.5 text-sm text-white/70">
                 <Mail size={14} className="mt-0.5 shrink-0 text-white/40" />
-                <a href="mailto:lifegoods.daily@gmail.com" className="hover:text-white transition-colors">
-                  lifegoods.daily@gmail.com
+                <a href={`mailto:${business.email}`} className="hover:text-white transition-colors">
+                  {business.email}
                 </a>
               </li>
               <li className="flex items-start gap-2.5 text-sm text-white/70">
                 <MapPin size={14} className="mt-0.5 shrink-0 text-white/40" />
-                <span>Nederland</span>
+                <span>{business.address ?? 'Adres volgt binnenkort'}</span>
               </li>
             </ul>
             <div className="mt-6 p-4 bg-white/5 rounded-xl border border-white/10">
@@ -109,17 +110,31 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* Bedrijfsgegevens - vereist op een commerciële site, niet alleen op de contactpagina */}
+        <div className="border-t border-white/10 py-5">
+          <p className="text-xs text-white/40 leading-relaxed">
+            {business.brandName} is een handelsnaam van {business.tradingName} · KVK {business.kvkNumber} · BTW{' '}
+            {business.btwNumber}
+          </p>
+        </div>
+
         {/* Bottom bar */}
         <div className="border-t border-white/10 py-6 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-xs text-white/40">
-            © {new Date().getFullYear()} Daily Pet Goods. Alle rechten voorbehouden.
+            © {new Date().getFullYear()} {business.brandName}. Alle rechten voorbehouden.
           </p>
-          <div className="flex gap-4">
+          <div className="flex flex-wrap justify-center gap-4">
+            <Link href="/algemene-voorwaarden" className="text-xs text-white/40 hover:text-white/70 transition-colors">
+              Algemene voorwaarden
+            </Link>
             <Link href="/privacy" className="text-xs text-white/40 hover:text-white/70 transition-colors">
               Privacybeleid
             </Link>
-            <Link href="/terms" className="text-xs text-white/40 hover:text-white/70 transition-colors">
-              Voorwaarden
+            <Link href="/retourneren" className="text-xs text-white/40 hover:text-white/70 transition-colors">
+              Retourneren
+            </Link>
+            <Link href="/verzending" className="text-xs text-white/40 hover:text-white/70 transition-colors">
+              Verzending
             </Link>
           </div>
         </div>

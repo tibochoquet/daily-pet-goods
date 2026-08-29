@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Mail, MessageCircle, Clock } from 'lucide-react'
 import ContactForm from './ContactForm'
+import { business } from '@/lib/business'
 
 export const metadata: Metadata = {
   title: 'Contact',
@@ -58,6 +59,19 @@ export default function ContactPage() {
                 <h3 className="font-semibold text-[#1A1A1A] mb-1">Vragen over je bestelling</h3>
                 <p className="text-sm text-[#6B7280]">
                   Voor vragen over een bestelling, levering of retour mail je gewoon rechtstreeks naar ons.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-2xl p-6 border border-[#E8E2D9]">
+                <h3 className="font-semibold text-[#1A1A1A] mb-2 text-sm">Bedrijfsgegevens</h3>
+                <p className="text-xs text-[#6B7280] leading-relaxed">
+                  {business.brandName} is een handelsnaam van {business.tradingName}
+                  <br />
+                  KVK: {business.kvkNumber}
+                  <br />
+                  BTW-id: {business.btwNumber}
+                  <br />
+                  {business.address ?? 'Adres volgt binnenkort'}
                 </p>
               </div>
             </div>
