@@ -1,12 +1,34 @@
 'use client'
 
+import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Minus, Plus, Trash2, ShoppingBag } from 'lucide-react'
 import { useCart } from '@/components/cart/CartProvider'
+import { btwAmount } from '@/lib/business'
 
 export default function CartPage() {
   const { items, subtotal, removeItem, setQuantity } = useCart()
+  const [checkingOut, setCheckingOut] = useState(false)
+  const [error, setError] = useState('')
+
+  async function handleCheckout() {
+    setCheckingOut(true)
+    setError('')
+    try {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items: items.map((i) => ({ id: i.id, quantity: i.quantity })) }),
+      })
+      const data = await res.json()
+      if (!res.ok || !data.url) throw new Error(data.error || 'Checkout mislukt')
+      window.location.href = data.url
+    } catch {
+      setError('Er ging iets mis bij het starten van de betaling. Probeer het opnieuw.')
+      setCheckingOut(false)
+    }
+  }
 
   if (items.length === 0) {
     return (
@@ -106,24 +128,41 @@ export default function CartPage() {
                 <span>€{subtotal.toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-[#6B7280]">
-                <span>Verzending</span>
+                <span>Verzending (NL &amp; BE)</span>
                 <span className="text-[#2C4A3E] font-medium">Gratis</span>
               </div>
               <div className="border-t border-[#E8E2D9] pt-3 flex justify-between font-semibold text-[#1A1A1A] text-base">
                 <span>Totaal</span>
                 <span>€{subtotal.toFixed(2)}</span>
               </div>
+              <p className="text-xs text-[#9CA3AF]">Inclusief €{btwAmount(subtotal).toFixed(2)} btw (21%)</p>
             </div>
 
-            <Link
-              href="/checkout"
-              className="block w-full text-center bg-[#C8745A] text-white font-semibold py-3.5 rounded-full hover:bg-[#A85E45] transition-colors"
+            <p className="text-xs text-[#6B7280] mb-4">
+              Betalen via iDEAL, creditcard, Bancontact, Klarna en meer.
+            </p>
+
+            {error && <p className="text-xs text-[#C8745A] mb-3">{error}</p>}
+
+            <button
+              type="button"
+              onClick={handleCheckout}
+              disabled={checkingOut}
+              className="block w-full text-center bg-[#C8745A] text-white font-semibold py-3.5 rounded-full hover:bg-[#A85E45] transition-colors disabled:opacity-60"
             >
-              Naar checkout
-            </Link>
+              {checkingOut ? 'Bezig...' : 'Bestelling met betaalverplichting'}
+            </button>
+
+            <p className="text-xs text-[#6B7280] text-center mt-3">
+              Je hebt 14 dagen bedenktijd.{' '}
+              <Link href="/retourneren" className="text-[#2C4A3E] hover:underline">
+                Bekijk ons retourbeleid
+              </Link>
+            </p>
+
             <Link
               href="/shop"
-              className="block w-full text-center text-sm text-[#6B7280] hover:text-[#2C4A3E] transition-colors mt-3"
+              className="block w-full text-center text-sm text-[#6B7280] hover:text-[#2C4A3E] transition-colors mt-4"
             >
               Verder shoppen
             </Link>

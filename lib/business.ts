@@ -19,3 +19,15 @@ export const business = {
    */
   address: null as string | null,
 } as const
+
+/**
+ * Standard Dutch VAT rate for general goods. Prices shown to consumers are
+ * always VAT-inclusive (a legal requirement, not a display choice) - this
+ * is only used to back the VAT amount OUT of an already-inclusive price
+ * for disclosure, never added on top.
+ */
+export const BTW_RATE = 0.21
+
+export function btwAmount(inclusivePrice: number): number {
+  return inclusivePrice - inclusivePrice / (1 + BTW_RATE)
+}

@@ -22,18 +22,12 @@ export default function CheckoutCancelledPage() {
         staat nog klaar, dus je kunt gerust opnieuw afrekenen.
       </p>
 
-      <div className="flex flex-col sm:flex-row gap-3 justify-center">
-        <Link
-          href="/checkout"
-          className="inline-flex items-center justify-center gap-2 bg-[#2C4A3E] text-white font-medium px-6 py-3 rounded-full hover:bg-[#3D6456] transition-colors"
-        >
-          Opnieuw afrekenen
-        </Link>
+      <div className="flex justify-center">
         <Link
           href="/winkelwagen"
-          className="inline-flex items-center justify-center gap-2 text-[#6B7280] font-medium px-6 py-3 rounded-full border border-[#E8E2D9] hover:border-[#2C4A3E] hover:text-[#2C4A3E] transition-colors"
+          className="inline-flex items-center justify-center gap-2 bg-[#2C4A3E] text-white font-medium px-6 py-3 rounded-full hover:bg-[#3D6456] transition-colors"
         >
-          Naar winkelwagen
+          Terug naar winkelwagen
         </Link>
       </div>
     </div>

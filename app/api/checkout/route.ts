@@ -94,9 +94,15 @@ export async function POST(req: NextRequest) {
           },
         },
       ],
-      // Geen automatic_tax: Daily Pet Goods valt onder de
-      // kleineondernemersregeling (KOR) en brengt geen btw in rekening.
-      // Prijzen zijn all-in; er wordt geen btw-regel getoond.
+      // Geen automatic_tax hier: Daily Lifegoods heeft een BTW-id
+      // (NL004426224B17) en rekent gewoon btw - maar de weergegeven
+      // prijzen zijn al btw-inclusief (verplicht bij consumentenprijzen),
+      // dus er hoeft niets bovenop het bedrag berekend te worden. De
+      // btw-component wordt puur informatief getoond (zie lib/business.ts
+      // btwAmount() en de winkelwagenpagina), niet door Stripe Tax
+      // berekend. Wil je Stripe Tax later wel gebruiken, zorg dan dat de
+      // belastinginstellingen op "tax inclusive" staan, anders rekent
+      // Stripe btw BOVENOP deze al-inclusieve prijzen.
       success_url: `${baseUrl}/checkout/succes?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${baseUrl}/checkout/geannuleerd`,
       metadata: { orderRef },
