@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
       { source: '/dog-pools', destination: '/honden#zwembaden', permanent: true },
       { source: '/cat-bowls', destination: '/katten#kattenbakken', permanent: true },
       { source: '/cat-cooling', destination: '/katten#koelmatten', permanent: true },
+      { source: '/terms', destination: '/algemene-voorwaarden', permanent: true },
     ]
   },
   images: {
