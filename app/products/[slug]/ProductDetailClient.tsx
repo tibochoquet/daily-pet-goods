@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ChevronLeft, ShoppingCart, Check, Play, ChevronLeft as Prev, ChevronRight as Next } from 'lucide-react'
+import { ChevronLeft, ShoppingCart, Check, Play, Truck, RotateCcw, MessageCircle, ChevronLeft as Prev, ChevronRight as Next } from 'lucide-react'
 import type { Product } from '@/lib/types'
 import { useCart } from '@/components/cart/CartProvider'
 
@@ -82,7 +82,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
             ) : (
               <Image
                 src={active.src}
-                alt={product.name}
+                alt={`${product.name} - ${variant.label}`}
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
@@ -121,17 +121,22 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                       ? 'border-[#2C4A3E]'
                       : 'border-[#E8E2D9] hover:border-[#C8745A]'
                   }`}
-                  aria-label={item.type === 'video' ? 'Video' : `Foto ${i + 1}`}
                 >
                   {item.type === 'video' ? (
                     <>
-                      <Image src={variant.image} alt="" fill className="object-cover" sizes="64px" />
+                      <Image src={variant.image} alt={`Video van ${product.name} - ${variant.label}`} fill className="object-cover" sizes="64px" />
                       <span className="absolute inset-0 flex items-center justify-center bg-black/30">
                         <Play size={18} className="text-white fill-white" />
                       </span>
                     </>
                   ) : (
-                    <Image src={item.src} alt="" fill className="object-cover" sizes="64px" />
+                    <Image
+                      src={item.src}
+                      alt={`${product.name} - ${variant.label} - foto ${i + 1}`}
+                      fill
+                      className="object-cover"
+                      sizes="64px"
+                    />
                   )}
                 </button>
               ))}
@@ -201,6 +206,38 @@ export default function ProductDetailClient({ product }: { product: Product }) {
               </>
             )}
           </button>
+
+          {/* Trust signals - delivery, returns, payment, human contact.
+              Belongs here, on the product page, not only at checkout: a
+              first-time visitor deciding whether to trust an unfamiliar
+              shop over a marketplace needs this before adding to cart. */}
+          <div className="mb-10 space-y-3 border-t border-b border-[#E8E2D9] py-6">
+            <div className="flex items-start gap-2.5 text-sm text-[#4B5563]">
+              <Truck size={16} className="mt-0.5 shrink-0 text-[#2C4A3E]" />
+              <span>Gratis verzending binnen NL &amp; BE, verzonden binnen 1-2 werkdagen.</span>
+            </div>
+            <div className="flex items-start gap-2.5 text-sm text-[#4B5563]">
+              <RotateCcw size={16} className="mt-0.5 shrink-0 text-[#2C4A3E]" />
+              <span>
+                14 dagen bedenktijd.{' '}
+                <Link href="/retourneren" className="text-[#2C4A3E] hover:underline">
+                  Bekijk ons retourbeleid
+                </Link>
+              </span>
+            </div>
+            <div className="flex items-start gap-2.5 text-sm text-[#4B5563]">
+              <MessageCircle size={16} className="mt-0.5 shrink-0 text-[#2C4A3E]" />
+              <span>
+                Vraag over dit product?{' '}
+                <Link href="/contact" className="text-[#2C4A3E] hover:underline">
+                  Neem contact op
+                </Link>
+              </span>
+            </div>
+            <p className="text-xs text-[#9CA3AF] pt-1">
+              Betalen via iDEAL, creditcard, Bancontact, Klarna en meer.
+            </p>
+          </div>
 
           {/* Description */}
           <div className="mb-8 pt-8 border-t border-[#E8E2D9]">
