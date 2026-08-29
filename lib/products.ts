@@ -1,4 +1,4 @@
-import type { Product, Category } from './types'
+import type { Product, Category, ProductVariant } from './types'
 
 export const products: Product[] = [
   {
@@ -667,4 +667,19 @@ export function getBestSellers(): Product[] {
 
 export function getCategoryBySlug(slug: string): Category | undefined {
   return categories.find((c) => c.slug === slug)
+}
+
+/**
+ * Looks up a variant by its id, together with the product it belongs to.
+ * Used by the checkout API to resolve authoritative prices server-side -
+ * never trust a price sent by the client.
+ */
+export function getVariantById(
+  variantId: string
+): { product: Product; variant: ProductVariant } | undefined {
+  for (const product of products) {
+    const variant = product.variants.find((v) => v.id === variantId)
+    if (variant) return { product, variant }
+  }
+  return undefined
 }

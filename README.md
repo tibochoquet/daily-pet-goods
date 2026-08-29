@@ -20,6 +20,56 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Stripe Checkout testen
+
+De webshop rekent af via [Stripe Checkout](https://stripe.com/docs/payments/checkout) (`app/api/checkout/route.ts`). Betalingen worden pas als definitief beschouwd via de webhook (`app/api/webhooks/stripe/route.ts`) - **nooit** op basis van het bereiken van de success-pagina alleen, want die kan ook zonder geslaagde betaling bereikt worden (bv. een teruggekeerde tab).
+
+### 1. Env-variabelen
+
+Kopieer `.env.example` naar `.env.local` en vul aan met je **test-mode** keys uit [dashboard.stripe.com](https://dashboard.stripe.com) (schakelaar "Test mode" linksonder):
+
+- `STRIPE_SECRET_KEY` - Developers → API keys → Secret key
+- `STRIPE_WEBHOOK_SECRET` - zie stap 2 hieronder
+- `NEXT_PUBLIC_BASE_URL` - `http://localhost:3000` lokaal
+
+### 2. Webhook lokaal doorsturen met de Stripe CLI
+
+Installeer de [Stripe CLI](https://docs.stripe.com/stripe-cli) (bv. `brew install stripe/stripe-cli/stripe`), log in met `stripe login`, en laat 'm meeluisteren terwijl je lokaal draait:
+
+```bash
+stripe listen --forward-to localhost:3000/api/webhooks/stripe
+```
+
+Dit commando print een `whsec_...` - zet die in `.env.local` als `STRIPE_WEBHOOK_SECRET` en herstart `npm run dev`. Zolang `stripe listen` draait, stuurt Stripe elke test-event naar je lokale webhook door.
+
+### 3. Een testbetaling doen
+
+Start de dev server (`npm run dev`), leg een product in de winkelwagen en reken af. Je komt op de gehoste Stripe Checkout-pagina terecht.
+
+**Testkaart** (lukt altijd):
+
+```
+Kaartnummer: 4242 4242 4242 4242
+Vervaldatum: elke datum in de toekomst
+CVC:         elke 3 cijfers
+Postcode:    elke geldige postcode
+```
+
+**iDEAL in sandbox**: kies iDEAL als betaalmethode, selecteer een testbank uit de lijst, en de sandboxflow simuleert direct een geslaagde (of, als je "Failed" kiest, een mislukte) betaling - geen echte bank nodig.
+
+> Zie je geen iDEAL als optie bij het afrekenen? Dat komt niet door de code - `/api/checkout` vraagt bewust geen vaste lijst betaalmethodes op, Stripe toont automatisch alles wat je in het Dashboard hebt ingeschakeld. Zet iDEAL aan via Dashboard → Settings → Payment methods.
+
+Na een geslaagde testbetaling:
+- je wordt doorgestuurd naar `/checkout/succes`
+- in het terminalvenster waar `stripe listen` draait zie je het `checkout.session.completed`-event voorbijkomen
+- in je `npm run dev`-terminal zie je (bij een geldige `RESEND_API_KEY`) de orderbevestiging verstuurd worden naar `lifegoods.daily@gmail.com`
+
+Klik "Cancel" op de Checkout-pagina om de geannuleerd-pagina (`/checkout/geannuleerd`) te zien - er wordt dan niets afgeschreven.
+
+### 4. Live gaan
+
+Maak in [Dashboard → Developers → Webhooks](https://dashboard.stripe.com/webhooks) een endpoint aan dat naar `https://jouw-domein.nl/api/webhooks/stripe` wijst, met in elk geval de events `checkout.session.completed` en `payment_intent.payment_failed`. Het signing secret van dát endpoint - niet het `whsec_...` van `stripe listen` - wordt de productie-waarde van `STRIPE_WEBHOOK_SECRET`. Vergeet niet ook `STRIPE_SECRET_KEY` te vervangen door de live key zodra je echt geld wilt ontvangen.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
