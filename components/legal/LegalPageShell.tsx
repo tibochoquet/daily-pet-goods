@@ -1,4 +1,5 @@
 import { AlertTriangle } from 'lucide-react'
+import { business, formatAddress } from '@/lib/business'
 
 interface LegalSection {
   heading: string
@@ -47,6 +48,16 @@ export default function LegalPageShell({ title, lastUpdated, intro, sections }: 
             </ul>
           </section>
         ))}
+      </div>
+
+      {/* Live business identity, read from lib/business.ts - never retype
+          these values into the legal text itself, reference this instead. */}
+      <div className="mt-10 pt-6 border-t border-[#E8E2D9] text-xs text-[#9CA3AF] leading-relaxed">
+        {business.brandName} is een handelsnaam van {business.tradingName}
+        <br />
+        {formatAddress()}
+        <br />
+        KVK {business.kvkNumber} · BTW {business.btwNumber}
       </div>
     </div>
   )

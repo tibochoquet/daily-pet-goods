@@ -4,7 +4,7 @@ import LegalPageShell from '@/components/legal/LegalPageShell'
 export const metadata: Metadata = {
   title: 'Verzending',
   description: 'Verzendkosten en levertijden van de Daily Pet Goods webshop.',
-  alternates: { canonical: 'https://www.dailypetgoods.nl/verzending' },
+  alternates: { canonical: '/verzending' },
   robots: { index: false, follow: true },
 }
 

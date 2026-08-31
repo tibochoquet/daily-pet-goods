@@ -6,7 +6,7 @@ import LegalPageShell from '@/components/legal/LegalPageShell'
 export const metadata: Metadata = {
   title: 'Retourneren',
   description: 'Retourbeleid en herroepingsrecht van de Daily Pet Goods webshop.',
-  alternates: { canonical: 'https://www.dailypetgoods.nl/retourneren' },
+  alternates: { canonical: '/retourneren' },
   robots: { index: false, follow: true },
 }
 

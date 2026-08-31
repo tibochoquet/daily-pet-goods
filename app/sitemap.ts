@@ -1,8 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { products } from '@/lib/products'
 import { blogPosts } from '@/lib/blog'
-
-const BASE_URL = 'https://www.dailypetgoods.nl'
+import { SITE_URL } from '@/lib/business'
 
 /**
  * Only real, indexable content routes go here. Legal pages are deliberately
@@ -13,23 +12,23 @@ const BASE_URL = 'https://www.dailypetgoods.nl'
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
-    { url: BASE_URL, changeFrequency: 'weekly', priority: 1 },
-    { url: `${BASE_URL}/shop`, changeFrequency: 'daily', priority: 0.9 },
-    { url: `${BASE_URL}/honden`, changeFrequency: 'weekly', priority: 0.8 },
-    { url: `${BASE_URL}/katten`, changeFrequency: 'weekly', priority: 0.8 },
-    { url: `${BASE_URL}/about`, changeFrequency: 'monthly', priority: 0.5 },
-    { url: `${BASE_URL}/blog`, changeFrequency: 'weekly', priority: 0.6 },
-    { url: `${BASE_URL}/contact`, changeFrequency: 'yearly', priority: 0.4 },
+    { url: SITE_URL, changeFrequency: 'weekly', priority: 1 },
+    { url: `${SITE_URL}/shop`, changeFrequency: 'daily', priority: 0.9 },
+    { url: `${SITE_URL}/honden`, changeFrequency: 'weekly', priority: 0.8 },
+    { url: `${SITE_URL}/katten`, changeFrequency: 'weekly', priority: 0.8 },
+    { url: `${SITE_URL}/about`, changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${SITE_URL}/blog`, changeFrequency: 'weekly', priority: 0.6 },
+    { url: `${SITE_URL}/contact`, changeFrequency: 'yearly', priority: 0.4 },
   ]
 
   const productRoutes: MetadataRoute.Sitemap = products.map((product) => ({
-    url: `${BASE_URL}/products/${product.slug}`,
+    url: `${SITE_URL}/products/${product.slug}`,
     changeFrequency: 'weekly',
     priority: 0.7,
   }))
 
   const blogRoutes: MetadataRoute.Sitemap = blogPosts.map((post) => ({
-    url: `${BASE_URL}/blog/${post.slug}`,
+    url: `${SITE_URL}/blog/${post.slug}`,
     lastModified: post.publishedAt,
     changeFrequency: 'monthly',
     priority: 0.5,

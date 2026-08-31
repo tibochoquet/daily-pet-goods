@@ -6,6 +6,7 @@ import AnnouncementBar from '@/components/layout/AnnouncementBar'
 import Footer from '@/components/layout/Footer'
 import JsonLd from '@/components/JsonLd'
 import { CartProvider } from '@/components/cart/CartProvider'
+import { business, SITE_URL } from '@/lib/business'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -20,7 +21,7 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.dailypetgoods.nl'),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: 'Daily Pet Goods: Premium huisdierproducten voor honden & katten',
     template: '%s | Daily Pet Goods',
@@ -65,12 +66,26 @@ export default function RootLayout({
   const organizationSchema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'Daily Pet Goods',
-    url: 'https://www.dailypetgoods.nl',
-    logo: 'https://www.dailypetgoods.nl/logo.png',
+    name: business.brandName,
+    legalName: business.tradingName,
+    url: SITE_URL,
+    logo: `${SITE_URL}/logo.png`,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: business.address.street,
+      postalCode: business.address.postalCode,
+      addressLocality: business.address.city,
+      addressCountry: 'NL',
+    },
+    vatID: business.btwNumber,
+    identifier: {
+      '@type': 'PropertyValue',
+      propertyID: 'KVK',
+      value: business.kvkNumber,
+    },
     contactPoint: {
       '@type': 'ContactPoint',
-      email: 'lifegoods.daily@gmail.com',
+      email: business.email,
       contactType: 'customer service',
     },
     sameAs: [],

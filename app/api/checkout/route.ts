@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { getStripe } from '@/lib/stripe'
 import { getVariantById } from '@/lib/products'
+import { SITE_URL } from '@/lib/business'
 
 /**
  * Creates a Stripe Checkout Session for a one-time order and returns its
@@ -31,12 +32,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Winkelwagen is leeg' }, { status: 400 })
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
-  if (!baseUrl) {
-    console.error('Checkout: NEXT_PUBLIC_BASE_URL ontbreekt.')
-    return NextResponse.json({ error: 'Server niet correct geconfigureerd' }, { status: 500 })
-  }
-
   const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = []
 
   for (const item of items) {
@@ -53,6 +48,12 @@ export async function POST(req: NextRequest) {
     }
     const { product, variant } = found
 
+    // Mirror the client-side check in ProductDetailClient - a disabled
+    // button only stops the normal UI path, not a direct POST here.
+    if (!(variant.inStock ?? true)) {
+      return NextResponse.json({ error: `Niet op voorraad: ${product.name} - ${variant.label}` }, { status: 409 })
+    }
+
     line_items.push({
       quantity: item.quantity,
       price_data: {
@@ -60,7 +61,7 @@ export async function POST(req: NextRequest) {
         unit_amount: Math.round(variant.price * 100),
         product_data: {
           name: `${product.name} - ${variant.label}`,
-          images: [new URL(variant.image, baseUrl).toString()],
+          images: [new URL(variant.image, SITE_URL).toString()],
           metadata: { variantId: variant.id, productSlug: product.slug },
         },
       },
@@ -103,8 +104,8 @@ export async function POST(req: NextRequest) {
       // berekend. Wil je Stripe Tax later wel gebruiken, zorg dan dat de
       // belastinginstellingen op "tax inclusive" staan, anders rekent
       // Stripe btw BOVENOP deze al-inclusieve prijzen.
-      success_url: `${baseUrl}/checkout/succes?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${baseUrl}/checkout/geannuleerd`,
+      success_url: `${SITE_URL}/checkout/succes?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${SITE_URL}/checkout/geannuleerd`,
       metadata: { orderRef },
     })
 

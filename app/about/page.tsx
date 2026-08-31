@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: 'Over ons: Het verhaal achter Daily Pet Goods',
   description:
     'Daily Pet Goods werd opgericht door een huisdiereigenaar die betere producten wilde. Zonder de overweldigende keuze van generieke marktplaatsen. Lees ons verhaal en waarom we doen wat we doen.',
-  alternates: { canonical: 'https://www.dailypetgoods.nl/about' },
+  alternates: { canonical: '/about' },
 }
 
 const values = [

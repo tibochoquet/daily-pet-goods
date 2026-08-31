@@ -4,7 +4,7 @@ import LegalPageShell from '@/components/legal/LegalPageShell'
 export const metadata: Metadata = {
   title: 'Privacybeleid',
   description: 'Lees hoe Daily Pet Goods omgaat met jouw persoonsgegevens.',
-  alternates: { canonical: 'https://www.dailypetgoods.nl/privacy' },
+  alternates: { canonical: '/privacy' },
   robots: { index: false, follow: true },
 }
 

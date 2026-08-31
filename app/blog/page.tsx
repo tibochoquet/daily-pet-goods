@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: 'Blog: Tips & gidsen over huisdierverzorging',
   description:
     'Praktische adviezen en gidsen voor hond- en katteneigenaren. Vergelijkingen van hondenbakken, mandenreviews, reistips en meer, van het Daily Pet Goods team.',
-  alternates: { canonical: 'https://www.dailypetgoods.nl/blog' },
+  alternates: { canonical: '/blog' },
 }
 
 export default function BlogPage() {

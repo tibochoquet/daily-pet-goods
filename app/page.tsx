@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: 'Daily Pet Goods: Premium huisdierproducten voor honden & katten',
   description:
     'Zorgvuldig geselecteerde premium producten voor honden en katten. Verhoogde voerbakken, mangohouten bakken, knusse manden, reisbenodigdheden en zwembaden.',
-  alternates: { canonical: 'https://www.dailypetgoods.nl' },
+  alternates: { canonical: '/' },
 }
 
 export default function HomePage() {

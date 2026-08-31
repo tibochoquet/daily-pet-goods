@@ -6,7 +6,7 @@ import { generateWithdrawalFormText } from '@/lib/withdrawal-form'
 export const metadata: Metadata = {
   title: 'Modelformulier voor herroeping',
   description: 'Download het modelformulier voor herroeping van je bestelling.',
-  alternates: { canonical: 'https://www.dailypetgoods.nl/retourneren/modelformulier-herroeping' },
+  alternates: { canonical: '/retourneren/modelformulier-herroeping' },
   robots: { index: false, follow: true },
 }
 

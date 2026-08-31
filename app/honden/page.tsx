@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: 'Honden, alle producten voor jouw hond',
   description:
     'Alles voor jouw hond op één plek: verhoogde voerbakken, hondenmanden, reisbenodigdheden en zomerse zwembaden & koelmatten.',
-  alternates: { canonical: 'https://www.dailypetgoods.nl/honden' },
+  alternates: { canonical: '/honden' },
 }
 
 export default function HondenPage() {

@@ -15,8 +15,10 @@ export default function ProductDetailClient({ product }: { product: Product }) {
   const hasVariants = product.variants.length > 1
   const { addItem } = useCart()
   const [added, setAdded] = useState(false)
+  const inStock = variant.inStock ?? true
 
   function handleAdd() {
+    if (!inStock) return
     addItem({
       id: variant.id,
       name: product.name,
@@ -188,13 +190,18 @@ export default function ProductDetailClient({ product }: { product: Product }) {
           {/* Add to cart */}
           <button
             onClick={handleAdd}
+            disabled={!inStock}
             className={`flex items-center justify-center gap-2.5 w-full sm:w-auto px-8 py-4 rounded-full font-semibold text-sm transition-all duration-200 mb-10 ${
-              added
-                ? 'bg-[#2C4A3E] text-white'
-                : 'bg-[#C8745A] text-white hover:bg-[#A85E45]'
+              !inStock
+                ? 'bg-[#E8E2D9] text-[#9CA3AF] cursor-not-allowed'
+                : added
+                  ? 'bg-[#2C4A3E] text-white'
+                  : 'bg-[#C8745A] text-white hover:bg-[#A85E45]'
             }`}
           >
-            {added ? (
+            {!inStock ? (
+              'Tijdelijk uitverkocht'
+            ) : added ? (
               <>
                 <Check size={16} />
                 Toegevoegd aan winkelwagen

@@ -7,6 +7,14 @@ export interface ProductVariant {
   images?: string[]
   video?: string
   specs?: Record<string, string>
+  /**
+   * Real stock flag - drives both the Product JSON-LD `availability` value
+   * and whether the variant can be added to the cart. Defaults to true via
+   * `?? true` wherever it's read, since there's no inventory system behind
+   * this yet and every existing variant is actually sellable; set to
+   * `false` on a specific variant the moment it actually sells out.
+   */
+  inStock?: boolean
 }
 
 export interface Product {

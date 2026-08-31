@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { Resend } from 'resend'
 import { getStripe } from '@/lib/stripe'
-import { business } from '@/lib/business'
+import { business, formatAddress, SITE_URL } from '@/lib/business'
 
 /**
  * Stripe webhook endpoint. This is the ONLY place an order is considered
@@ -222,12 +222,18 @@ async function sendCustomerConfirmationEmail(session: Stripe.Checkout.Session, l
       <p style="font-size:14px;color:#4B5563;margin:0;">
         Je hebt het recht om deze bestelling binnen 14 dagen na ontvangst zonder opgaaf van reden te
         herroepen. Lees ons volledige retourbeleid en het modelformulier voor herroeping op
-        <a href="https://www.dailypetgoods.nl/retourneren" style="color:#2C4A3E;">dailypetgoods.nl/retourneren</a>.
+        <a href="${SITE_URL}/retourneren" style="color:#2C4A3E;">${SITE_URL.replace(/^https?:\/\//, '')}/retourneren</a>.
       </p>
 
       <p style="font-size:13px;color:#6B7280;margin-top:24px;">
         Vragen over je bestelling? Mail ons op
         <a href="mailto:${business.email}" style="color:#2C4A3E;">${business.email}</a>.
+      </p>
+
+      <p style="font-size:11px;color:#9CA3AF;margin-top:24px;border-top:1px solid #E8E2D9;padding-top:12px;">
+        ${business.brandName} is een handelsnaam van ${business.tradingName}<br/>
+        ${formatAddress()}<br/>
+        KVK ${business.kvkNumber}
       </p>
     </div>
   `

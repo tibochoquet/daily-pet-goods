@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { Mail, MapPin } from 'lucide-react'
-import { business } from '@/lib/business'
+import { business, formatAddress } from '@/lib/business'
 
 const shopLinks = [
   { href: '/honden', label: 'Honden' },
@@ -99,7 +99,7 @@ export default function Footer() {
               </li>
               <li className="flex items-start gap-2.5 text-sm text-white/70">
                 <MapPin size={14} className="mt-0.5 shrink-0 text-white/40" />
-                <span>{business.address ?? 'Adres volgt binnenkort'}</span>
+                <span>{formatAddress()}</span>
               </li>
             </ul>
             <div className="mt-6 p-4 bg-white/5 rounded-xl border border-white/10">

@@ -30,7 +30,7 @@ Kopieer `.env.example` naar `.env.local` en vul aan met je **test-mode** keys ui
 
 - `STRIPE_SECRET_KEY` - Developers → API keys → Secret key
 - `STRIPE_WEBHOOK_SECRET` - zie stap 2 hieronder
-- `NEXT_PUBLIC_BASE_URL` - `http://localhost:3000` lokaal
+- `NEXT_PUBLIC_SITE_URL` - `http://localhost:3000` lokaal, `https://dailypetgoods.nl` in productie
 
 ### 2. Webhook lokaal doorsturen met de Stripe CLI
 

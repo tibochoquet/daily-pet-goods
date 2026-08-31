@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: 'Katten, alle producten voor jouw kat',
   description:
     'Alles voor jouw kat op één plek: mangohouten en metalen voerstations en zelfkoelende matten voor warme dagen.',
-  alternates: { canonical: 'https://www.dailypetgoods.nl/katten' },
+  alternates: { canonical: '/katten' },
 }
 
 export default function KattenPage() {

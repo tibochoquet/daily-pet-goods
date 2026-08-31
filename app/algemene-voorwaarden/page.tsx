@@ -4,7 +4,7 @@ import LegalPageShell from '@/components/legal/LegalPageShell'
 export const metadata: Metadata = {
   title: 'Algemene voorwaarden',
   description: 'Algemene voorwaarden van de Daily Pet Goods webshop.',
-  alternates: { canonical: 'https://www.dailypetgoods.nl/algemene-voorwaarden' },
+  alternates: { canonical: '/algemene-voorwaarden' },
   robots: { index: false, follow: true },
 }
 

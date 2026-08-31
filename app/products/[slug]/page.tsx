@@ -3,8 +3,7 @@ import { notFound } from 'next/navigation'
 import { products, startingPrice } from '@/lib/products'
 import ProductDetailClient from './ProductDetailClient'
 import JsonLd from '@/components/JsonLd'
-
-const BASE_URL = 'https://www.dailypetgoods.nl'
+import { SITE_URL } from '@/lib/business'
 
 interface Props {
   params: Promise<{ slug: string }>
@@ -21,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: product.name,
     description: product.shortDescription,
-    alternates: { canonical: `${BASE_URL}/products/${product.slug}` },
+    alternates: { canonical: `/products/${product.slug}` },
   }
 }
 
@@ -33,18 +32,19 @@ export default async function ProductPage({ params }: Props) {
   const prices = product.variants.map((v) => v.price)
   const lowPrice = Math.min(...prices)
   const highPrice = Math.max(...prices)
+  // No variant carries inStock: false today (no real inventory system
+  // behind this yet), so this reads as available - but it's a real flag
+  // now, not a hardcoded string. Any variant in the group being in stock
+  // is enough to advertise the product as available.
+  const anyInStock = product.variants.some((v) => v.inStock ?? true)
+  const availability = anyInStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock'
 
-  // No stock/availability field exists anywhere in the product data model -
-  // every product is implicitly always purchasable in this codebase, so
-  // InStock is the only value that's actually true today. Flagged
-  // separately: there's no real inventory tracking to keep this honest if
-  // something actually sells out.
   const productSchema = {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: product.name,
     description: product.shortDescription,
-    image: product.variants.map((v) => `${BASE_URL}${v.image}`),
+    image: product.variants.map((v) => `${SITE_URL}${v.image}`),
     offers:
       product.variants.length > 1
         ? {
@@ -53,15 +53,15 @@ export default async function ProductPage({ params }: Props) {
             lowPrice: lowPrice.toFixed(2),
             highPrice: highPrice.toFixed(2),
             offerCount: product.variants.length,
-            availability: 'https://schema.org/InStock',
-            url: `${BASE_URL}/products/${product.slug}`,
+            availability,
+            url: `${SITE_URL}/products/${product.slug}`,
           }
         : {
             '@type': 'Offer',
             priceCurrency: 'EUR',
             price: startingPrice(product).toFixed(2),
-            availability: 'https://schema.org/InStock',
-            url: `${BASE_URL}/products/${product.slug}`,
+            availability,
+            url: `${SITE_URL}/products/${product.slug}`,
           },
   }
 

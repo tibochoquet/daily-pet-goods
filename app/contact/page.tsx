@@ -1,13 +1,13 @@
 import type { Metadata } from 'next'
 import { Mail, MessageCircle, Clock } from 'lucide-react'
 import ContactForm from './ContactForm'
-import { business } from '@/lib/business'
+import { business, formatAddress } from '@/lib/business'
 
 export const metadata: Metadata = {
   title: 'Contact',
   description:
     'Heb je een vraag over een product, je bestelling, of iets anders? We horen graag van je. Neem contact op met het Daily Pet Goods team.',
-  alternates: { canonical: 'https://www.dailypetgoods.nl/contact' },
+  alternates: { canonical: '/contact' },
 }
 
 export default function ContactPage() {
@@ -67,11 +67,15 @@ export default function ContactPage() {
                 <p className="text-xs text-[#6B7280] leading-relaxed">
                   {business.brandName} is een handelsnaam van {business.tradingName}
                   <br />
+                  {formatAddress()}
+                  <br />
                   KVK: {business.kvkNumber}
                   <br />
                   BTW-id: {business.btwNumber}
                   <br />
-                  {business.address ?? 'Adres volgt binnenkort'}
+                  <a href={`mailto:${business.email}`} className="text-[#2C4A3E] hover:underline">
+                    {business.email}
+                  </a>
                 </p>
               </div>
             </div>
