@@ -3,7 +3,6 @@ import Hero from '@/components/home/Hero'
 import FeaturedCategories from '@/components/home/FeaturedCategories'
 import BestSellers from '@/components/home/BestSellers'
 import EditorialBanner from '@/components/home/EditorialBanner'
-import WhyChooseUs from '@/components/home/WhyChooseUs'
 import CustomerReviews from '@/components/home/CustomerReviews'
 import FAQ from '@/components/home/FAQ'
 import NewsletterSignup from '@/components/home/NewsletterSignup'
@@ -22,7 +21,6 @@ export default function HomePage() {
       <FeaturedCategories />
       <BestSellers />
       <EditorialBanner />
-      <WhyChooseUs />
       <CustomerReviews />
       <FAQ />
       <NewsletterSignup />
