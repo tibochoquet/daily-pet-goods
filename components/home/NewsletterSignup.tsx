@@ -1,17 +1,29 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, FormEvent } from 'react'
 import Link from 'next/link'
 import { Mail, ArrowRight, CheckCircle2 } from 'lucide-react'
+import { business } from '@/lib/business'
 
 export default function NewsletterSignup() {
   const [email, setEmail] = useState('')
-  const [submitted, setSubmitted] = useState(false)
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault()
-    if (email) {
-      setSubmitted(true)
+    if (!email || status === 'sending') return
+    setStatus('sending')
+    try {
+      const res = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      })
+      if (!res.ok) throw new Error('Aanmelden mislukt')
+      setStatus('sent')
+      setEmail('')
+    } catch {
+      setStatus('error')
     }
   }
 
@@ -29,7 +41,7 @@ export default function NewsletterSignup() {
           Nieuwe producten, seizoensuitjes en praktische tips voor huisdierverzorging, rechtstreeks in je inbox. Geen spam, ooit. Altijd op te zeggen.
         </p>
 
-        {submitted ? (
+        {status === 'sent' ? (
           <div className="flex items-center justify-center gap-3 bg-[#2C4A3E]/10 text-[#2C4A3E] rounded-2xl py-5 px-6">
             <CheckCircle2 size={20} />
             <span className="font-medium">Je bent aangemeld! We houden je op de hoogte.</span>
@@ -46,12 +58,19 @@ export default function NewsletterSignup() {
             />
             <button
               type="submit"
-              className="inline-flex items-center gap-2 bg-[#2C4A3E] text-white font-semibold px-5 py-3.5 rounded-full hover:bg-[#3D6456] transition-colors text-sm shrink-0"
+              disabled={status === 'sending'}
+              className="inline-flex items-center gap-2 bg-[#2C4A3E] text-white font-semibold px-5 py-3.5 rounded-full hover:bg-[#3D6456] transition-colors text-sm shrink-0 disabled:opacity-60"
             >
-              Aanmelden
+              {status === 'sending' ? 'Bezig…' : 'Aanmelden'}
               <ArrowRight size={14} />
             </button>
           </form>
+        )}
+
+        {status === 'error' && (
+          <p className="text-xs text-[#C8745A] mt-3">
+            Er ging iets mis bij het aanmelden. Probeer het nogmaals of mail ons op {business.email}.
+          </p>
         )}
 
         <p className="text-xs text-[#B0A898] mt-4">

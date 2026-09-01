@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import LegalPageShell from '@/components/legal/LegalPageShell'
-import { LegalTodoBanner, LegalTodoSection } from '@/components/legal/LegalTodoSection'
+import { business, formatAddress } from '@/lib/business'
 
 export const metadata: Metadata = {
   title: 'Privacybeleid',
@@ -9,73 +9,97 @@ export const metadata: Metadata = {
   robots: { index: false, follow: true },
 }
 
-/**
- * The previous version of this page described the old manual Tikkie/bank-
- * transfer flow ("we never receive payment details, payment happens
- * outside the site") - that's no longer true now that Stripe Checkout is
- * live. Rather than patch stale claims, this was reset to a structure-only
- * shell. The real, verified data inventory (what's actually collected, by
- * whom, where it's stored) was reported separately - write the policy from
- * that, not from what used to be here.
- */
 export default function PrivacyPage() {
   return (
-    <LegalPageShell
-      title="Privacybeleid"
-      lastUpdated="TODO - datum invullen zodra de echte tekst live gaat"
-      intro="Zie de aparte gegevensinventarisatie (geleverd naast deze pagina) voor wat hieronder feitelijk ingevuld moet worden - niet uit het geheugen herschrijven."
-    >
-      <LegalTodoBanner />
+    <LegalPageShell title="Privacybeleid" lastUpdated="1 september 2026">
+      <section>
+        <h2>1. Wie we zijn</h2>
+        <p>
+          {business.brandName} ({business.tradingName}), KVK {business.kvkNumber}, gevestigd aan{' '}
+          {formatAddress()}, is verantwoordelijk voor de verwerking van persoonsgegevens zoals beschreven in dit
+          privacybeleid. Vragen? Mail <a href={`mailto:${business.email}`}>{business.email}</a>.
+        </p>
+      </section>
 
-      <LegalTodoSection
-        heading="1. Wie we zijn"
-        todoPoints={['Verwijzing naar handelsnaam, KVK, BTW-id en contactgegevens (lib/business.ts)']}
-      />
+      <section>
+        <h2>2. Welke gegevens we verwerken</h2>
+        <ul>
+          <li>
+            Bij een bestelling (via Stripe Checkout): je naam, e-mailadres, verzendadres en eventueel
+            telefoonnummer. Je betaalgegevens (kaartnummer e.d.) verwerkt Stripe rechtstreeks; die ontvangen wij
+            nooit.
+          </li>
+          <li>Bij het contactformulier: je voornaam, achternaam, e-mailadres, onderwerp en bericht.</li>
+          <li>Bij aanmelding voor de nieuwsbrief: je e-mailadres.</li>
+          <li>
+            Je winkelwagen wordt alleen lokaal in je browser opgeslagen en nooit naar ons verzonden, behalve als
+            productkeuzes op het moment dat je afrekent.
+          </li>
+        </ul>
+      </section>
 
-      <LegalTodoSection
-        heading="2. Welke gegevens we verwerken"
-        todoPoints={[
-          'Bestelgegevens verzameld via Stripe Checkout (naam, e-mail, verzendadres) - Stripe zelf verwerkt betaalgegevens, wij ontvangen alleen bestel- en verzendinformatie via de webhook',
-          'Contactformulier: voornaam, achternaam, e-mail, onderwerp, bericht',
-          'Winkelwagen: alleen lokaal in de browser (localStorage), nooit naar een server behalve als product-ids + aantallen bij het afrekenen',
-          'Nieuwsbrief-aanmelding op de homepage verwerkt momenteel NIETS - het formulier slaat niets op en verstuurt niets (zie rapportage); pas deze sectie aan zodra dat verandert',
-        ]}
-      />
+      <section>
+        <h2>3. Waarvoor we deze gegevens gebruiken</h2>
+        <p>
+          We gebruiken deze gegevens om je bestelling te verwerken en te verzenden, te reageren op je vragen, en
+          - als je je hebt aangemeld - om je incidenteel te mailen met nieuws over {business.brandName}. We
+          gebruiken je gegevens niet voor andere doeleinden en verkopen ze nooit aan derden.
+        </p>
+      </section>
 
-      <LegalTodoSection
-        heading="3. Waarvoor we deze gegevens gebruiken"
-        todoPoints={['Bestelling verwerken/verzenden, reageren op contactverzoeken']}
-      />
+      <section>
+        <h2>4. Delen met derden</h2>
+        <ul>
+          <li>Stripe (betalingsverwerking) - ontvangt je naam, e-mail, verzendadres en betaalgegevens.</li>
+          <li>Resend (e-mailverzending) - verstuurt namens ons de order-, contact- en nieuwsbriefmails.</li>
+          <li>Vercel (hosting) - host de website.</li>
+        </ul>
+        <p>
+          Deze partijen kunnen gegevens ook buiten Nederland verwerken; waar dat buiten de EU is, zorgen zij voor
+          passende waarborgen (zoals EU-standaardcontractbepalingen). We delen je gegevens nooit voor
+          marketingdoeleinden van derden.
+        </p>
+      </section>
 
-      <LegalTodoSection
-        heading="4. Delen met derden"
-        todoPoints={[
-          'Stripe (betalingsverwerking) - ontvangt naam, e-mail, verzendadres, betaalgegevens',
-          'Resend (transactionele e-mail) - ontvangt inhoud van bestel- en contactmails',
-          'Geen bezorgdienst-API-koppeling gevonden in de code - handmatig proces? Bevestig dit',
-        ]}
-      />
+      <section>
+        <h2>5. Cookies en lokale opslag</h2>
+        <p>
+          Onze website gebruikt geen tracking- of advertentiecookies. We slaan alleen je winkelwagen functioneel
+          op in je browser (localStorage); daar is geen toestemming voor nodig. Tijdens het afrekenen kan Stripe
+          eigen cookies plaatsen op checkout.stripe.com - dat valt onder het privacybeleid van Stripe, niet onder
+          het onze.
+        </p>
+      </section>
 
-      <LegalTodoSection
-        heading="5. Cookies en lokale opslag"
-        todoPoints={[
-          'Eén localStorage-sleutel (dpg-cart) voor de winkelwagen - functioneel, geen toestemming vereist',
-          'Geen analytics- of trackingcookies aangetroffen in de code',
-          "Stripe Checkout zet eventuele cookies op checkout.stripe.com, niet op dailypetgoods.nl - valt onder Stripe's eigen beleid",
-        ]}
-      />
+      <section>
+        <h2>6. Bewaartermijn</h2>
+        <p>
+          Bestel- en factuurgegevens bewaren we zo lang als de wet dat van ons vraagt (de fiscale bewaarplicht is
+          7 jaar). Contact- en nieuwsbriefgegevens bewaren we niet langer dan nodig voor het doel waarvoor je ze
+          hebt gedeeld, of totdat je aangeeft dat we ze mogen verwijderen.
+        </p>
+      </section>
 
-      <LegalTodoSection heading="6. Bewaartermijn" todoPoints={['Hoe lang bestel- en contactgegevens bewaard worden']} />
+      <section>
+        <h2>7. Jouw rechten</h2>
+        <p>
+          Je hebt het recht om je gegevens in te zien, te laten corrigeren of verwijderen, en om bezwaar te maken
+          tegen het gebruik ervan. Mail daarvoor naar <a href={`mailto:${business.email}`}>{business.email}</a>.
+          Ben je het niet eens met hoe we met je gegevens omgaan, dan kun je een klacht indienen bij de{' '}
+          <a href="https://www.autoriteitpersoonsgegevens.nl" target="_blank" rel="noopener noreferrer">
+            Autoriteit Persoonsgegevens
+          </a>
+          .
+        </p>
+      </section>
 
-      <LegalTodoSection
-        heading="7. Jouw rechten"
-        todoPoints={['Inzage, correctie, verwijdering, bezwaar, klacht bij de Autoriteit Persoonsgegevens']}
-      />
-
-      <LegalTodoSection
-        heading="8. Waar gegevens gehost worden"
-        todoPoints={['Vercel (hosting), Stripe, Resend - regio/locatie per verwerker benoemen']}
-      />
+      <section>
+        <h2>8. Waar gegevens gehost worden</h2>
+        <p>
+          Onze website draait bij Vercel, e-mail wordt verstuurd via Resend en betalingen worden verwerkt door
+          Stripe. Zie sectie 4 hierboven voor wat elke partij precies ontvangt.
+        </p>
+      </section>
     </LegalPageShell>
   )
 }
