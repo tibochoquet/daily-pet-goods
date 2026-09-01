@@ -12,7 +12,7 @@ export const brandImages = {
   accessories: '/assets/images/accecoires.jpeg',
 
   /** Lifestyle - golden retriever on cream lounge bed, grey cat on armchair. Used: about page hero. */
-  lifestyleHero: '/assets/images/lifestyle-hero.png',
+  lifestyleHero: '/assets/images/lifestyle-hero.jpg',
 
   /** Feeding scene - dog + cat eating from elevated wood/steel feeders. Used: dog bowls category. */
   feedingHero: '/assets/images/feeding-hero.jpg',
@@ -21,31 +21,31 @@ export const brandImages = {
   travelHero: '/assets/images/travel-hero.jpg',
 
   /** Dachshund with elevated wood feeders. Used: /honden hondenbakken section hero. */
-  dogBowlsCover: '/assets/images/hondenbakken_cover.png',
+  dogBowlsCover: '/assets/images/hondenbakken_cover.jpg',
 
   /** Grey cat with mango wood feeding station. Used: /katten kattenbakken section hero. */
-  catBowlsCover: '/assets/images/kattenbakken_cover.png',
+  catBowlsCover: '/assets/images/kattenbakken_cover.jpg',
 
   /** Golden retrievers in donut/lounge beds. Used: /honden hondenmanden section hero. */
-  dogBedsCover: '/assets/images/hondenmanden_cover.png',
+  dogBedsCover: '/assets/images/hondenmanden_cover.jpg',
 
   /** Dachshund in car with travel cover & bottle. Used: /honden onderweg section hero. */
-  dogTravelCover: '/assets/images/travel_cover.png',
+  dogTravelCover: '/assets/images/travel_cover.jpg',
 
   /** Dachshund beside foldable pool & cooling mats in garden. Used: /honden zwembaden section hero. */
-  dogPoolsCover: '/assets/images/zwembaden-koelmat.png',
+  dogPoolsCover: '/assets/images/zwembaden-koelmat.jpg',
 
   /** Tabby cat lying on a cooling mat. Used: /katten koelmatten section hero. */
-  catCoolingCover: '/assets/images/koelmatkat.png',
+  catCoolingCover: '/assets/images/koelmatkat.jpg',
 
   /** General lifestyle scene - dog bed, cat and bowls. Used: shop page hero. */
-  lifestyleGeneral: '/assets/images/vanalles.png',
+  lifestyleGeneral: '/assets/images/vanalles.jpg',
 
   /** Golden retriever asleep in a donut bed, feeding station in the background. Used: homepage "Honden" category tile. */
-  hondenTile: '/assets/images/honden_cover.png',
+  hondenTile: '/assets/images/honden_cover.jpg',
 
   /** Grey British Shorthair beside a mango wood feeding station. Used: homepage "Katten" category tile. */
-  kattenTile: '/assets/images/katten_cover.png',
+  kattenTile: '/assets/images/katten_cover.jpg',
 } as const
 
 export type BrandImageKey = keyof typeof brandImages

@@ -624,7 +624,7 @@ export const categories: Category[] = [
     name: 'Dog Beds',
     slug: 'dog-beds',
     description: 'Van pluche donut manden tot ruime lounge beds, een knusse plek voor elke hond.',
-    image: '/assets/images/lifestyle-hero.png',
+    image: '/assets/images/lifestyle-hero.jpg',
   },
   {
     id: 'dog-travel',
@@ -638,14 +638,14 @@ export const categories: Category[] = [
     name: 'Dog Pools & Cooling',
     slug: 'dog-pools',
     description: 'Opvouwbare zwembaden en zelfkoelende mats om je hond koel te houden in de zomer.',
-    image: '/assets/images/lifestyle-hero.png',
+    image: '/assets/images/lifestyle-hero.jpg',
   },
   {
     id: 'cat-outdoor',
     name: 'Cat Cooling',
     slug: 'cat-cooling',
     description: 'Zelfkoelende mats voor katten, geen water of stroom nodig.',
-    image: '/assets/images/lifestyle-hero.png',
+    image: '/assets/images/lifestyle-hero.jpg',
   },
 ]
 
