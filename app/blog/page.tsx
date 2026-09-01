@@ -12,6 +12,38 @@ export const metadata: Metadata = {
 }
 
 export default function BlogPage() {
+  if (blogPosts.length === 0) {
+    return (
+      <>
+        <section className="bg-[#F3EDE3] py-14 md:py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <p className="text-sm font-semibold text-[#C8745A] uppercase tracking-wider mb-4">Blog</p>
+            <h1 className="font-serif text-4xl md:text-5xl font-bold text-[#1A1A1A] mb-4">
+              Tips & gidsen over huisdierverzorging
+            </h1>
+            <p className="text-lg text-[#6B7280] max-w-xl">
+              Praktisch advies om de juiste producten te kiezen en dagelijks goed voor je huisdier te zorgen.
+            </p>
+          </div>
+        </section>
+
+        <section className="py-20 md:py-28 bg-[#FAFAF7]">
+          <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 className="font-serif text-2xl font-bold text-[#1A1A1A] mb-3">Binnenkort hier</h2>
+            <p className="text-[#6B7280] leading-relaxed">
+              We werken aan onze eerste artikelen. Kom snel terug voor tips en gidsen over
+              huisdierverzorging, of bekijk in de tussentijd ons{' '}
+              <Link href="/shop" className="text-[#2C4A3E] hover:underline">
+                productaanbod
+              </Link>
+              .
+            </p>
+          </div>
+        </section>
+      </>
+    )
+  }
+
   const [featured, ...rest] = blogPosts
 
   return (

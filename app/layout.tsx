@@ -88,7 +88,7 @@ export default function RootLayout({
       email: business.email,
       contactType: 'customer service',
     },
-    sameAs: [],
+    sameAs: ['https://www.instagram.com/dailypetgoods'],
   }
 
   return (

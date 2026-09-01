@@ -31,7 +31,7 @@ export const business = {
   email: 'lifegoods.daily@gmail.com',
   address: {
     street: 'Zwembadweg 29',
-    postalCode: POSTCODE_TODO,
+    postalCode: '5491 TE',
     city: 'Sint-Oedenrode',
     country: 'Nederland',
   },
@@ -50,7 +50,7 @@ export function formatAddress(): string {
 // quietly publishing an incomplete address. Doesn't affect `next dev`
 // (NODE_ENV=development), where the TODO string just renders as-is so
 // it's visibly incomplete while working on the site.
-if (process.env.NODE_ENV === 'production' && business.address.postalCode === POSTCODE_TODO) {
+if (process.env.NODE_ENV === 'production' && (business.address.postalCode as string) === POSTCODE_TODO) {
   throw new Error(
     `lib/business.ts: postcode ontbreekt nog (${POSTCODE_TODO}). Vul het echte postcode in ` +
       'lib/business.ts in voordat je een productie-build maakt - een half verzendadres ' +

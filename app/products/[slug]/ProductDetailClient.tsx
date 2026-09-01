@@ -221,7 +221,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
           <div className="mb-10 space-y-3 border-t border-b border-[#E8E2D9] py-6">
             <div className="flex items-start gap-2.5 text-sm text-[#4B5563]">
               <Truck size={16} className="mt-0.5 shrink-0 text-[#2C4A3E]" />
-              <span>Gratis verzending binnen NL &amp; BE, verzonden binnen 1-2 werkdagen.</span>
+              <span>Gratis verzending via DHL binnen NL &amp; BE, verzonden binnen 1-2 werkdagen.</span>
             </div>
             <div className="flex items-start gap-2.5 text-sm text-[#4B5563]">
               <RotateCcw size={16} className="mt-0.5 shrink-0 text-[#2C4A3E]" />

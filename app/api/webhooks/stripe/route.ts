@@ -123,7 +123,7 @@ async function sendResendEmail(payload: Parameters<Resend['emails']['send']>[0])
   }
 }
 
-/** Internal notification to the shop owner - mirrors the existing app/api/order email. */
+/** Internal notification to the shop owner. */
 async function sendOwnerNotificationEmail(session: Stripe.Checkout.Session, lineItems: Stripe.LineItem[]) {
   const orderRef = session.metadata?.orderRef ?? session.id
   const total = (session.amount_total ?? 0) / 100

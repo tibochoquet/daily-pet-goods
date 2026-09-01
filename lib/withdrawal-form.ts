@@ -1,4 +1,4 @@
-import { business } from './business'
+import { business, formatAddress } from './business'
 
 /**
  * The statutory Dutch/EU model withdrawal form (Bijlage I, deel B van
@@ -9,7 +9,7 @@ import { business } from './business'
  * match and never drift out of sync with each other.
  */
 export function generateWithdrawalFormText(): string {
-  const addressLine = business.address ?? '[TODO: geografisch adres nog invullen]'
+  const addressLine = formatAddress()
 
   return `Modelformulier voor herroeping
 (dit formulier alleen invullen en terugzenden als u de overeenkomst wilt herroepen)

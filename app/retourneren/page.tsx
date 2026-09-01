@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { FileDown } from 'lucide-react'
 import LegalPageShell from '@/components/legal/LegalPageShell'
+import { business } from '@/lib/business'
 
 export const metadata: Metadata = {
   title: 'Retourneren',
@@ -13,41 +14,55 @@ export const metadata: Metadata = {
 export default function RetournerenPage() {
   return (
     <>
-      <LegalPageShell
-        title="Retourneren"
-        lastUpdated="TODO - datum invullen zodra de echte tekst live gaat"
-        sections={[
-          {
-            heading: '1. 14 dagen bedenktijd',
-            todoPoints: [
-              'Standaard herroepingstermijn: 14 dagen na ontvangst van het product',
-              'Vanaf wanneer de termijn precies loopt bij deelleveringen (indien van toepassing)',
-            ],
-          },
-          {
-            heading: '2. Hoe je retourneert',
-            todoPoints: [
-              'Hoe en waar de klant de herroeping meldt binnen de termijn',
-              'In welke staat het product terug moet (ongebruikt, originele verpakking, etc.)',
-              'Verwijzing naar het modelformulier hieronder',
-            ],
-          },
-          {
-            heading: '3. Wie betaalt de retourkosten',
-            todoPoints: [
-              'MOET EXPLICIET: staat de klant of de winkel garant voor de verzendkosten van een retour? Dit mag niet vaag blijven.',
-            ],
-          },
-          {
-            heading: '4. Terugbetaling',
-            todoPoints: ['Termijn (wettelijk max. 14 dagen na herroeping of ontvangst retour)', 'Terugbetaalmethode'],
-          },
-          {
-            heading: '5. Uitzonderingen',
-            todoPoints: ['Eventuele producten die zijn uitgesloten van herroeping (indien van toepassing)'],
-          },
-        ]}
-      />
+      <LegalPageShell title="Retourneren" lastUpdated="1 september 2026">
+        <section>
+          <h2>1. 14 dagen bedenktijd</h2>
+          <p>
+            Je hebt het recht om je bestelling binnen 14 dagen na ontvangst zonder opgave van reden te
+            herroepen. Bestaat je bestelling uit meerdere pakketten die apart aankomen, dan begint deze termijn
+            op de dag waarop je het laatste pakket ontvangt.
+          </p>
+        </section>
+
+        <section>
+          <h2>2. Hoe je retourneert</h2>
+          <p>
+            Neem, voordat je iets terugstuurt, eerst contact op met onze klantenservice via{' '}
+            <a href={`mailto:${business.email}`}>{business.email}</a> met je bestelnummer, zodat we de retour
+            samen met je kunnen regelen. Meld je herroeping in elk geval binnen de termijn van 14 dagen; dat kan
+            per e-mail, of met het modelformulier voor herroeping hieronder.
+          </p>
+          <p>
+            Stuur het product ongebruikt en zoveel mogelijk in de originele verpakking terug. Je bent
+            aansprakelijk voor waardevermindering van het product als die het gevolg is van gebruik dat verder
+            gaat dan nodig om de aard en werking ervan te beoordelen.
+          </p>
+        </section>
+
+        <section>
+          <h2>3. Wie betaalt de retourkosten</h2>
+          <p>
+            De kosten van het terugsturen zijn voor jouw rekening. Is het product beschadigd aangekomen, of
+            hebben wij een verkeerd product geleverd, dan nemen wij de retourkosten voor onze rekening - neem in
+            dat geval sowieso eerst contact met ons op via <a href={`mailto:${business.email}`}>{business.email}</a>,
+            dan zoeken we de snelste oplossing.
+          </p>
+        </section>
+
+        <section>
+          <h2>4. Terugbetaling</h2>
+          <p>
+            Na ontvangst van je retour, of bewijs dat je het hebt teruggestuurd, betalen we het volledige
+            aankoopbedrag (verzending was toch al gratis, dus daar valt niets op terug te betalen) binnen 14
+            dagen terug, via dezelfde betaalmethode waarmee je hebt betaald.
+          </p>
+        </section>
+
+        <section>
+          <h2>5. Uitzonderingen</h2>
+          <p>Op dit moment gelden er voor ons assortiment geen aanvullende uitzonderingen op het herroepingsrecht.</p>
+        </section>
+      </LegalPageShell>
 
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 pb-14">
         <Link

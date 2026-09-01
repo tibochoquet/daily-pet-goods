@@ -12,12 +12,12 @@ const faqs = [
   {
     question: 'Hoe werkt betalen?',
     answer:
-      'Na het plaatsen van je bestelling sturen we je binnen 24 uur een betaalverzoek (Tikkie of bankoverschrijving). Zodra de betaling binnen is, verzenden we je bestelling.',
+      'Je rekent direct veilig af via Stripe Checkout, met iDEAL, creditcard, Bancontact en meer. Zodra de betaling is gelukt, verwerken we je bestelling meteen. Je ontvangt geen apart betaalverzoek.',
   },
   {
     question: 'Hoe snel wordt mijn bestelling geleverd?',
     answer:
-      'We verzenden je bestelling binnen 1 tot 2 werkdagen nadat de betaling binnen is. Bezorging binnen Nederland duurt daarna gemiddeld 1 tot 3 werkdagen.',
+      'We verzenden je bestelling binnen 1 tot 2 werkdagen na je betaling, via DHL en gratis voor jou. Bezorging binnen Nederland duurt daarna gemiddeld 1 tot 3 werkdagen.',
   },
   {
     question: 'Hoe kies ik de juiste maat verhoogde voerbak?',
@@ -37,7 +37,7 @@ const faqs = [
   {
     question: 'Wat als een product beschadigd aankomt, of ik wil retourneren?',
     answer:
-      'Mail ons op lifegoods.daily@gmail.com met je bestelnummer en foto\'s van het product. Je hebt bovendien 14 dagen bedenktijd om een bestelling zonder opgaaf van reden te retourneren, zoals bij elke online aankoop in Nederland.',
+      'Neem eerst contact op met onze klantenservice via lifegoods.daily@gmail.com, met je bestelnummer en (bij schade) foto\'s van het product, voordat je iets terugstuurt. Je hebt 14 dagen bedenktijd om je bestelling zonder opgaaf van reden te retourneren. De kosten van het retourneren zijn voor jouw rekening, tenzij het product beschadigd of verkeerd is geleverd. Bekijk ons volledige retourbeleid voor de details.',
   },
 ]
 

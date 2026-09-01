@@ -35,13 +35,22 @@ export async function POST(req: NextRequest) {
     `
 
     const resend = new Resend(process.env.RESEND_API_KEY)
-    await resend.emails.send({
+    // resend.emails.send() does NOT throw on failure - it resolves with
+    // { data: null, error } (e.g. an invalid API key just comes back as a
+    // normal, non-throwing response). Checking `error` explicitly stops
+    // this route from reporting { ok: true } to the visitor for a message
+    // that was never actually sent.
+    const { error } = await resend.emails.send({
       from: 'Daily Pet Goods <contact@dailypetgoods.nl>',
       to: 'lifegoods.daily@gmail.com',
       replyTo: email,
       subject: `Contactformulier: ${subject || 'Nieuw bericht'}`,
       html,
     })
+    if (error) {
+      console.error('Contact e-mail versturen mislukt: Resend gaf een fout terug:', error.message)
+      return NextResponse.json({ ok: false }, { status: 502 })
+    }
 
     return NextResponse.json({ ok: true })
   } catch (err) {

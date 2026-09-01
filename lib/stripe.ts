@@ -5,9 +5,10 @@ import Stripe from 'stripe'
  *
  * Instantiated lazily (on first call, then cached) instead of at module
  * load time. Creating it eagerly at the top of this file broke the Vercel
- * build in the past for the Resend client (see app/api/order/route.ts's
- * history) because env vars aren't guaranteed to be present at build time
- * - the same risk applies here, so we sidestep it the same way.
+ * build in the past for the Resend client (the same pattern used to live
+ * in a now-removed /api/order route) because env vars aren't guaranteed
+ * to be present at build time - the same risk applies here, so we
+ * sidestep it the same way.
  */
 let stripe: Stripe | null = null
 
