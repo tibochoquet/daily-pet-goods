@@ -16,8 +16,12 @@ export default function EditorialBanner() {
         quality={88}
       />
 
-      {/* Dark overlay. Centre-to-bottom fade, keeps product details visible on top */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
+      {/* Dark overlay. Centre-to-bottom fade, keeps product details visible on top.
+          Bottom stop is fully opaque black (not black/75) so the photo's warm
+          wood tones don't show through right where this section meets the
+          solid dark green CustomerReviews section below it - a partial-opacity
+          bottom left a visible brown seam at that boundary. */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
 
       {/* Content. Anchored to bottom-left */}
       <div className="absolute inset-x-0 bottom-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 md:pb-16">
