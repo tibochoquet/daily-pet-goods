@@ -17,8 +17,8 @@ const categoryLabels: Record<string, string> = {
   'cat-feeding': 'Kattenbakken',
   'dog-beds': 'Hondenmanden',
   'dog-travel': 'Onderweg met je hond',
-  'dog-outdoor': 'Zwembaden & koelmatten hond',
-  'cat-outdoor': 'Koelmatten voor katten',
+  'dog-outdoor': 'Zomerartikelen hond',
+  'cat-outdoor': 'Zomerartikelen kat',
 }
 
 export default function ShopPage() {

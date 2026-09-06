@@ -35,8 +35,8 @@ export default function KattenPage() {
         },
         {
           id: 'koelmatten',
-          navLabel: 'Koelmatten',
-          breadcrumbLabel: 'Koelmatten katten',
+          navLabel: 'Zomerartikelen',
+          breadcrumbLabel: 'Zomerartikelen katten',
           hero: {
             eyebrow: 'Zomerse verkoeling',
             title: 'Cool blijven, moeiteloos',

@@ -1,4 +1,4 @@
-import { business, formatAddress } from '@/lib/business'
+import { business } from '@/lib/business'
 
 interface LegalPageShellProps {
   title: string
@@ -33,11 +33,14 @@ export default function LegalPageShell({ title, lastUpdated, intro, children }: 
       </div>
 
       {/* Live business identity, read from lib/business.ts - never retype
-          these values into the legal text itself, reference this instead. */}
+          these values into the legal text itself, reference this instead.
+          City only, not the full street address - the full address (as
+          required for the trader-identity disclosure) lives in the "Wie we
+          zijn" prose on /algemene-voorwaarden and /privacy instead. */}
       <div className="mt-10 pt-6 border-t border-[#E8E2D9] text-xs text-[#9CA3AF] leading-relaxed">
         {business.brandName} is een handelsnaam van {business.tradingName}
         <br />
-        {formatAddress()}
+        {business.address.city}
         <br />
         KVK {business.kvkNumber} · BTW {business.btwNumber}
       </div>

@@ -6,10 +6,25 @@ import { useState } from 'react'
 import { Menu, X, ShoppingBag, ShoppingCart, ChevronDown } from 'lucide-react'
 import { useCart } from '@/components/cart/CartProvider'
 
-const shopLinks = [
-  { href: '/shop', label: 'Alle producten' },
-  { href: '/honden', label: 'Honden' },
-  { href: '/katten', label: 'Katten' },
+const shopCategories = [
+  {
+    href: '/honden',
+    label: 'Honden',
+    subLinks: [
+      { href: '/honden#hondenbakken', label: 'Hondenbakken' },
+      { href: '/honden#hondenmanden', label: 'Hondenmanden' },
+      { href: '/honden#onderweg', label: 'Onderweg met je hond' },
+      { href: '/honden#zwembaden', label: 'Zomerartikelen' },
+    ],
+  },
+  {
+    href: '/katten',
+    label: 'Katten',
+    subLinks: [
+      { href: '/katten#kattenbakken', label: 'Kattenbakken' },
+      { href: '/katten#koelmatten', label: 'Zomerartikelen' },
+    ],
+  },
 ]
 
 const navLinks = [
@@ -21,6 +36,7 @@ const navLinks = [
 export default function Navigation() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [shopOpen, setShopOpen] = useState(false)
+  const [mobileCategoryOpen, setMobileCategoryOpen] = useState<string | null>(null)
   const { itemCount } = useCart()
 
   return (
@@ -60,16 +76,34 @@ export default function Navigation() {
               </button>
               {shopOpen && (
                 <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2">
-                  <div className="bg-white border border-[#E8E2D9] rounded-xl shadow-lg py-2 w-56">
-                    {shopLinks.map((link) => (
-                      <Link
-                        key={link.href}
-                        href={link.href}
-                        className="block px-4 py-2.5 text-sm text-[#1A1A1A] hover:bg-[#F3EDE3] hover:text-[#2C4A3E] transition-colors"
-                      >
-                        {link.label}
-                      </Link>
+                  <div className="bg-white border border-[#E8E2D9] rounded-xl shadow-lg p-5 w-[440px] grid grid-cols-2 gap-6">
+                    {shopCategories.map((category) => (
+                      <div key={category.href}>
+                        <Link
+                          href={category.href}
+                          className="block text-sm font-semibold text-[#1A1A1A] hover:text-[#2C4A3E] transition-colors mb-2.5"
+                        >
+                          {category.label}
+                        </Link>
+                        <ul className="space-y-1.5">
+                          {category.subLinks.map((sub) => (
+                            <li key={sub.href}>
+                              <Link
+                                href={sub.href}
+                                className="block text-sm text-[#6B7280] hover:text-[#2C4A3E] transition-colors"
+                              >
+                                {sub.label}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     ))}
+                    <div className="col-span-2 pt-3 border-t border-[#E8E2D9]">
+                      <Link href="/shop" className="text-sm font-medium text-[#2C4A3E] hover:underline">
+                        Alle producten
+                      </Link>
+                    </div>
                   </div>
                 </div>
               )}
@@ -129,16 +163,51 @@ export default function Navigation() {
             <p className="text-xs font-semibold text-[#6B7280] uppercase tracking-wider px-3 py-2">
               Shop
             </p>
-            {shopLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="block px-3 py-2.5 text-sm font-medium text-[#1A1A1A] hover:bg-[#F3EDE3] hover:text-[#2C4A3E] rounded-lg transition-colors"
-                onClick={() => setMobileOpen(false)}
-              >
-                {link.label}
-              </Link>
-            ))}
+            {shopCategories.map((category) => {
+              const isOpen = mobileCategoryOpen === category.href
+              return (
+                <div key={category.href}>
+                  <div className="flex items-center">
+                    <Link
+                      href={category.href}
+                      className="flex-1 block px-3 py-2.5 text-sm font-medium text-[#1A1A1A] hover:bg-[#F3EDE3] hover:text-[#2C4A3E] rounded-lg transition-colors"
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      {category.label}
+                    </Link>
+                    <button
+                      onClick={() => setMobileCategoryOpen(isOpen ? null : category.href)}
+                      className="p-2.5 text-[#6B7280] hover:text-[#2C4A3E]"
+                      aria-label={`${category.label} categorieën ${isOpen ? 'inklappen' : 'uitklappen'}`}
+                      aria-expanded={isOpen}
+                    >
+                      <ChevronDown size={16} className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+                    </button>
+                  </div>
+                  {isOpen && (
+                    <div className="pl-4 space-y-1 mb-1">
+                      {category.subLinks.map((sub) => (
+                        <Link
+                          key={sub.href}
+                          href={sub.href}
+                          className="block px-3 py-2 text-sm text-[#6B7280] hover:bg-[#F3EDE3] hover:text-[#2C4A3E] rounded-lg transition-colors"
+                          onClick={() => setMobileOpen(false)}
+                        >
+                          {sub.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )
+            })}
+            <Link
+              href="/shop"
+              className="block px-3 py-2.5 text-sm font-medium text-[#1A1A1A] hover:bg-[#F3EDE3] hover:text-[#2C4A3E] rounded-lg transition-colors"
+              onClick={() => setMobileOpen(false)}
+            >
+              Alle producten
+            </Link>
             <div className="border-t border-[#E8E2D9] my-2" />
             {navLinks.map((link) => (
               <Link

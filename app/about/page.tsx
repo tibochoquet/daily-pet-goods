@@ -71,7 +71,7 @@ export default function AboutPage() {
       <section className="py-16 md:py-24 bg-[#FAFAF7]">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-xl text-[#2C4A3E] font-serif font-medium leading-relaxed mb-6">
-            Mooie, kwalitatieve producten vinden voor onze hond betekende óf luxe prijzen betalen, óf je een weg banen door pagina&apos;s vol goedkope, wegwerpproducten op generieke marktplaatsen.
+            Mooie, kwalitatieve producten vinden voor onze huisdieren betekende óf luxe prijzen betalen, óf je een weg banen door pagina&apos;s vol goedkope, wegwerpproducten op generieke marktplaatsen.
           </p>
           <p className="text-[#6B7280] leading-relaxed mb-5">
             Wij wilden de middenweg: producten die goed gemaakt waren, er mooi uitzagen in huis, en niet een fortuin kostten. Dus gingen we op zoek, testten we alles, en bouwden we een kleine, zorgvuldig samengestelde collectie rond de dingen die echt werkten.

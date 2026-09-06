@@ -75,8 +75,8 @@ export default function HondenPage() {
         },
         {
           id: 'zwembaden',
-          navLabel: 'Zwembaden & koelmatten',
-          breadcrumbLabel: 'Zwembaden & koelmatten',
+          navLabel: 'Zomerartikelen',
+          breadcrumbLabel: 'Zomerartikelen',
           hero: {
             eyebrow: 'Zomer essentials',
             title: 'De zomer begint hier',

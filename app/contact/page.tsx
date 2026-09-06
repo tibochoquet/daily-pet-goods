@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Mail, MessageCircle, Clock } from 'lucide-react'
 import ContactForm from './ContactForm'
-import { business, formatAddress } from '@/lib/business'
+import { business } from '@/lib/business'
 
 export const metadata: Metadata = {
   title: 'Contact',
@@ -67,7 +67,7 @@ export default function ContactPage() {
                 <p className="text-xs text-[#6B7280] leading-relaxed">
                   {business.brandName} is een handelsnaam van {business.tradingName}
                   <br />
-                  {formatAddress()}
+                  {business.address.city}
                   <br />
                   KVK: {business.kvkNumber}
                   <br />
