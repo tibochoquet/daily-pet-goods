@@ -5,6 +5,7 @@ import Navigation from '@/components/layout/Navigation'
 import AnnouncementBar from '@/components/layout/AnnouncementBar'
 import Footer from '@/components/layout/Footer'
 import JsonLd from '@/components/JsonLd'
+import GoogleTag from '@/components/GoogleTag'
 import { CartProvider } from '@/components/cart/CartProvider'
 import { business, SITE_URL } from '@/lib/business'
 
@@ -94,6 +95,7 @@ export default function RootLayout({
   return (
     <html lang="nl" className={`${inter.variable} ${playfair.variable}`}>
       <body className="font-sans antialiased bg-[#FAFAF7]">
+        {process.env.NODE_ENV === 'production' && <GoogleTag />}
         <JsonLd data={organizationSchema} />
         <CartProvider>
           <AnnouncementBar />

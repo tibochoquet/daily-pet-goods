@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { CheckCircle2 } from 'lucide-react'
 import Stripe from 'stripe'
 import { getStripe } from '@/lib/stripe'
+import ConversionTracker from '@/components/ConversionTracker'
 
 /**
  * Landing page after a successful Stripe Checkout redirect. This page is
@@ -31,11 +32,19 @@ export default async function CheckoutSuccessPage({
   const { session_id: sessionId } = await searchParams
   const session = sessionId ? await getSession(sessionId) : null
 
-  const total = session?.amount_total != null ? (session.amount_total / 100).toFixed(2) : null
+  const amountTotal = session?.amount_total != null ? session.amount_total / 100 : null
+  const total = amountTotal != null ? amountTotal.toFixed(2) : null
   const email = session?.customer_details?.email
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-24 text-center">
+      {/* Only report a conversion for a session Stripe actually confirms as
+          paid - reaching this URL alone isn't proof of payment (see the
+          file comment above), so an unpaid or stale session must never
+          fire one. */}
+      {session != null && session.payment_status === 'paid' && amountTotal != null && (
+        <ConversionTracker value={amountTotal} transactionId={session.metadata?.orderRef ?? session.id} />
+      )}
       <div className="w-16 h-16 bg-[#F0F7F4] rounded-full flex items-center justify-center mx-auto mb-6">
         <CheckCircle2 size={32} className="text-[#2C4A3E]" />
       </div>
