@@ -1,12 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 import { business } from '@/lib/business'
+import { isValidEmail } from '@/lib/validation'
 
 interface NewsletterBody {
   email: string
 }
-
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 /**
  * There's no mailing-list tool wired up yet, so a signup is just a
@@ -19,7 +18,7 @@ export async function POST(req: NextRequest) {
     const body: NewsletterBody = await req.json()
     const email = body.email?.trim()
 
-    if (!email || !EMAIL_PATTERN.test(email)) {
+    if (!isValidEmail(email)) {
       return NextResponse.json({ ok: false, error: 'Ongeldig e-mailadres' }, { status: 400 })
     }
 

@@ -149,6 +149,9 @@ export default function Footer() {
             <Link href="/verzending" className="text-xs text-white/40 hover:text-white/70 transition-colors">
               Verzending
             </Link>
+            <Link href="/mijn-bestelling" className="text-xs text-white/40 hover:text-white/70 transition-colors">
+              Mijn bestelling
+            </Link>
           </div>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
+import { randomBytes } from 'crypto'
 import { getStripe } from '@/lib/stripe'
 import { getVariantById } from '@/lib/products'
 import { SITE_URL } from '@/lib/business'
@@ -68,7 +69,11 @@ export async function POST(req: NextRequest) {
     })
   }
 
-  const orderRef = `DPG-${Date.now().toString(36).toUpperCase()}`
+  // Random suffix (not just the timestamp) so an order number can't be
+  // guessed from roughly when someone ordered - it's now a real lookup
+  // key via /mijn-bestelling, paired with the customer's email as a
+  // second factor.
+  const orderRef = `DPG-${Date.now().toString(36).toUpperCase()}-${randomBytes(3).toString('hex').toUpperCase()}`
 
   try {
     const stripe = getStripe()

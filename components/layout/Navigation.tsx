@@ -31,6 +31,7 @@ const navLinks = [
   { href: '/about', label: 'Over ons' },
   { href: '/blog', label: 'Blog' },
   { href: '/contact', label: 'Contact' },
+  { href: '/mijn-bestelling', label: 'Mijn bestelling' },
 ]
 
 export default function Navigation() {
