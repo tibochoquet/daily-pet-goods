@@ -5,8 +5,11 @@
  */
 
 export const brandImages = {
-  /** Homepage hero - golden retriever on dark grey lounge bed, grey cat beside him. Used: homepage hero only. */
+  /** Homepage hero - golden retriever on dark grey lounge bed, grey cat beside him. Used: homepage hero, desktop only. */
   heroMain: '/assets/images/heromain.jpeg',
+
+  /** Homepage hero - Cavalier King Charles spaniel and grey British Shorthair on a dog bed. Used: homepage hero, phone only. */
+  heroMobile: '/assets/images/hero-mobile-lifestyle.jpg',
 
   /** Flat-lay of premium pet accessories: bed, bag, harness, bowls, leash. Used: editorial section homepage. */
   accessories: '/assets/images/accecoires.jpeg',

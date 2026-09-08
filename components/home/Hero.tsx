@@ -50,8 +50,38 @@ function TrustBar() {
 export default function Hero() {
   return (
     <section className="w-full">
-      {/* Mobile & tablet (< lg): text-only block, no photo. Fully independent from the desktop layout. */}
-      <div className="lg:hidden bg-[#1F3329] px-5 sm:px-8 py-16 sm:py-20">
+      {/* Phone only (< sm): full-bleed photo hero, separate from the tablet
+          block below - a photo this tall works on a phone's narrow-and-tall
+          viewport but would crop badly across a wider tablet width. */}
+      <div className="sm:hidden relative overflow-hidden min-h-[640px]">
+        <Image
+          src={brandImages.heroMobile}
+          alt="Cavalier King Charles spaniël en Britse korthaar kat samen op een hondenmand"
+          fill
+          className="object-cover"
+          priority
+          sizes="100vw"
+          quality={85}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#1F3329]/95 via-[#1F3329]/55 to-[#1F3329]/15" />
+        <div className="relative z-10 px-5 py-16">
+          <Eyebrow />
+          <h1 className="font-serif text-3xl font-bold text-white leading-[1.1] tracking-tight mb-4">
+            Dagelijkse essentials{' '}
+            <em className="not-italic text-[#D4956B]">waar ze dol op zijn.</em>
+          </h1>
+          <p className="text-base text-white/70 leading-relaxed mb-8">
+            Premium, zorgvuldig geselecteerde producten voor honden en katten. Mooi in huis, praktisch elke dag.
+          </p>
+          <Ctas />
+          <TrustBar />
+        </div>
+      </div>
+
+      {/* Tablet only (sm to lg): text-only block, no photo. Unchanged from
+          before - the new phone photo hero above is scoped to phone width
+          only. */}
+      <div className="hidden sm:block lg:hidden bg-[#1F3329] px-5 sm:px-8 py-16 sm:py-20">
         <Eyebrow />
         <h1 className="font-serif text-3xl sm:text-4xl font-bold text-white leading-[1.1] tracking-tight mb-4">
           Dagelijkse essentials{' '}
