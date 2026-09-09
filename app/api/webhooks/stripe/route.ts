@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { Resend } from 'resend'
 import { getStripe } from '@/lib/stripe'
-import { business, formatAddress, SITE_URL } from '@/lib/business'
+import { business, SITE_URL } from '@/lib/business'
+import { renderBestelmail, estimateDeliveryRange } from '@/lib/mailTemplate'
 
 /**
  * Stripe webhook endpoint. This is the ONLY place an order is considered
@@ -182,61 +183,37 @@ async function sendOwnerNotificationEmail(session: Stripe.Checkout.Session, line
 }
 
 /**
- * Customer-facing order confirmation - repeats what was bought, the
- * total, the delivery estimate, and the 14-day withdrawal right, per the
- * pre-launch checkout requirements. Nothing else in this codebase emails
- * the customer after a Stripe payment; the on-site /checkout/succes page
- * alone is not a substitute for this.
+ * Customer-facing order confirmation, rendered from emails/bestelmail.html
+ * (a table-based template designed for email clients - never rebuild this
+ * as inline HTML here). Nothing else in this codebase emails the customer
+ * after a Stripe payment; the on-site /checkout/succes page alone is not
+ * a substitute for this.
+ *
+ * KNOWN GAP: unlike the email this replaced, bestelmail.html has no
+ * herroepingsrecht (14-day withdrawal right) text or business-identity
+ * footer (KVK/BTW/address). Dutch consumer law (art. 6:230v BW) expects
+ * that confirmed on a durable medium after the contract is concluded -
+ * flagged to the site owner, not silently dropped or added by rewriting
+ * their template.
  */
 async function sendCustomerConfirmationEmail(session: Stripe.Checkout.Session, lineItems: Stripe.LineItem[]) {
   const customerEmail = session.customer_details?.email
   if (!customerEmail) return
 
   const orderRef = session.metadata?.orderRef ?? session.id
-  const total = (session.amount_total ?? 0) / 100
+  const firstName = session.customer_details?.name?.trim().split(/\s+/)[0] || 'daar'
+  // "Verhoogde Hondenbak - M, voor kleine honden" -> "Verhoogde Hondenbak",
+  // matching how app/api/checkout/route.ts builds the line item name.
+  const firstProductName = lineItems[0]?.description?.split(' - ')[0]
 
-  const html = `
-    <div style="font-family:sans-serif;max-width:560px;margin:0 auto;color:#1A1A1A;">
-      <h2 style="color:#2C4A3E;margin-bottom:4px;">Bedankt voor je bestelling!</h2>
-      <p style="color:#6B7280;margin-top:0;font-size:14px;">Ordernummer ${orderRef} - ${business.brandName}</p>
-
-      <h3 style="font-size:14px;color:#1A1A1A;margin-top:20px;margin-bottom:8px;">Wat je hebt besteld</h3>
-      <table style="width:100%;border-collapse:collapse;">
-        <tbody>${itemRowsHtml(lineItems)}</tbody>
-      </table>
-
-      <table style="width:100%;margin-top:12px;">
-        <tr>
-          <td style="font-size:15px;font-weight:600;padding-top:8px;">Totaal (incl. btw)</td>
-          <td style="font-size:15px;font-weight:600;text-align:right;padding-top:8px;">€${total.toFixed(2)}</td>
-        </tr>
-      </table>
-
-      <h3 style="font-size:14px;color:#1A1A1A;margin-top:20px;margin-bottom:8px;">Levering</h3>
-      <p style="font-size:14px;color:#4B5563;margin:0;">
-        We versturen je bestelling naar verwachting binnen 1-2 werkdagen. Gratis verzending binnen
-        Nederland en België.
-      </p>
-
-      <h3 style="font-size:14px;color:#1A1A1A;margin-top:20px;margin-bottom:8px;">Herroepingsrecht</h3>
-      <p style="font-size:14px;color:#4B5563;margin:0;">
-        Je hebt het recht om deze bestelling binnen 14 dagen na ontvangst zonder opgaaf van reden te
-        herroepen. Lees ons volledige retourbeleid en het modelformulier voor herroeping op
-        <a href="${SITE_URL}/retourneren" style="color:#2C4A3E;">${SITE_URL.replace(/^https?:\/\//, '')}/retourneren</a>.
-      </p>
-
-      <p style="font-size:13px;color:#6B7280;margin-top:24px;">
-        Vragen over je bestelling? Mail ons op
-        <a href="mailto:${business.email}" style="color:#2C4A3E;">${business.email}</a>.
-      </p>
-
-      <p style="font-size:11px;color:#9CA3AF;margin-top:24px;border-top:1px solid #E8E2D9;padding-top:12px;">
-        ${business.brandName} is een handelsnaam van ${business.tradingName}<br/>
-        ${formatAddress()}<br/>
-        KVK ${business.kvkNumber}
-      </p>
-    </div>
-  `
+  const html = renderBestelmail({
+    voornaam: firstName,
+    bestelnummer: orderRef,
+    leverdatum: estimateDeliveryRange(),
+    trackTraceUrl: session.metadata?.trackingUrl || undefined,
+    reviewUrl: firstProductName ? `${SITE_URL}/review?product=${encodeURIComponent(firstProductName)}` : `${SITE_URL}/review`,
+    unsubscribeUrl: `mailto:${business.email}?subject=${encodeURIComponent('Uitschrijven')}`,
+  })
 
   await sendResendEmail({
     from: `${business.brandName} <orders@dailypetgoods.nl>`,
