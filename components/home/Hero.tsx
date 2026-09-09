@@ -63,7 +63,6 @@ export default function Hero() {
           sizes="100vw"
           quality={85}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#1F3329]/95 via-[#1F3329]/55 to-[#1F3329]/15" />
         <div className="relative z-10 px-5 py-16">
           <Eyebrow />
           <h1 className="font-serif text-3xl font-bold text-white leading-[1.1] tracking-tight mb-4">
