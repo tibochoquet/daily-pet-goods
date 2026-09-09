@@ -187,14 +187,8 @@ async function sendOwnerNotificationEmail(session: Stripe.Checkout.Session, line
  * (a table-based template designed for email clients - never rebuild this
  * as inline HTML here). Nothing else in this codebase emails the customer
  * after a Stripe payment; the on-site /checkout/succes page alone is not
- * a substitute for this.
- *
- * KNOWN GAP: unlike the email this replaced, bestelmail.html has no
- * herroepingsrecht (14-day withdrawal right) text or business-identity
- * footer (KVK/BTW/address). Dutch consumer law (art. 6:230v BW) expects
- * that confirmed on a durable medium after the contract is concluded -
- * flagged to the site owner, not silently dropped or added by rewriting
- * their template.
+ * a substitute for this. Includes the herroepingsrecht (14-day withdrawal
+ * right) and business-identity footer required by art. 6:230v BW.
  */
 async function sendCustomerConfirmationEmail(session: Stripe.Checkout.Session, lineItems: Stripe.LineItem[]) {
   const customerEmail = session.customer_details?.email

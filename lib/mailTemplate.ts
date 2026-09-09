@@ -1,5 +1,6 @@
 import { readFileSync } from 'fs'
 import path from 'path'
+import { business, formatAddress } from './business'
 
 interface BestelmailValues {
   voornaam: string
@@ -42,6 +43,15 @@ export function renderBestelmail(values: BestelmailValues): string {
     '{{track_trace_url}}': values.trackTraceUrl ?? '',
     '{{review_url}}': values.reviewUrl,
     '{{unsubscribe_url}}': values.unsubscribeUrl,
+    // Herroepingsrecht + bedrijfsgegevens block - always the same fixed
+    // values, so sourced directly from lib/business.ts (the single
+    // source of truth used everywhere else) rather than threaded through
+    // every caller of renderBestelmail().
+    '{{bedrijfsnaam}}': escapeHtml(business.brandName),
+    '{{handelsnaam}}': escapeHtml(business.tradingName),
+    '{{adres}}': escapeHtml(formatAddress()),
+    '{{kvk}}': escapeHtml(business.kvkNumber),
+    '{{btw}}': escapeHtml(business.btwNumber),
   }
 
   for (const [placeholder, value] of Object.entries(replacements)) {
