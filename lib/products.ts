@@ -18,7 +18,7 @@ export const products: Product[] = [
     variants: [
       {
         id: "9300000271745950",
-        label: "S, voor kleine honden zoals Chihuahua",
+        label: "S",
         price: 35.99,
         bolUrl: "https://www.bol.com/nl/p/-/9300000271745950",
         specs: { "Afmetingen standaard": "32 x 17 x 10 cm", "Inhoud": "2 x 0,5 liter", "Materiaal": "hout / RVS" },
@@ -27,7 +27,7 @@ export const products: Product[] = [
       },
       {
         id: "9300000271740188",
-        label: "M, voor middelgrote honden zoals Cocker Spaniel",
+        label: "M",
         price: 49.99,
         bolUrl: "https://www.bol.com/nl/p/-/9300000271740188",
         specs: { "Afmetingen standaard": "40 x 21 x 12 cm", "Inhoud": "2 x 1 liter", "Materiaal": "hout / RVS" },
@@ -36,7 +36,7 @@ export const products: Product[] = [
       },
       {
         id: "9300000279049983",
-        label: "L, voor grote honden zoals Australian Shepherd",
+        label: "L",
         price: 59.99,
         bolUrl: "https://www.bol.com/nl/p/-/9300000279049983",
         specs: { "Afmetingen standaard": "50 x 27 x 16 cm", "Inhoud": "2 x 2 liter", "Materiaal": "hout / RVS" },
@@ -62,7 +62,7 @@ export const products: Product[] = [
     variants: [
       {
         id: "9300000318561941",
-        label: "S, voor kleine honden en katten",
+        label: "S",
         price: 39.99,
         bolUrl: "https://www.bol.com/nl/p/-/9300000318561941",
         specs: { "Afmetingen": "29 x 15 x 8 cm", "Materiaal": "metaal / RVS" },
@@ -71,7 +71,7 @@ export const products: Product[] = [
       },
       {
         id: "9300000318638430",
-        label: "L, voor middelgrote en grote honden",
+        label: "L",
         price: 69.99,
         bolUrl: "https://www.bol.com/nl/p/-/9300000318638430",
         specs: { "Afmetingen": "47 x 25 x 14 cm", "Materiaal": "metaal / RVS" },
@@ -96,7 +96,7 @@ export const products: Product[] = [
     variants: [
       {
         id: "9300000291844620",
-        label: "0,5 L, kleine honden & katten",
+        label: "0,5 L",
         price: 24.99,
         bolUrl: "https://www.bol.com/nl/p/-/9300000291844620",
         specs: { "Inhoud": "0,5 liter", "Materiaal": "mangohout / RVS" },
@@ -105,7 +105,7 @@ export const products: Product[] = [
       },
       {
         id: "9300000291847351",
-        label: "1 L, middelgrote honden",
+        label: "1 L",
         price: 34.99,
         bolUrl: "https://www.bol.com/nl/p/-/9300000291847351",
         specs: { "Inhoud": "1 liter", "Materiaal": "mangohout / RVS" },
@@ -114,7 +114,7 @@ export const products: Product[] = [
       },
       {
         id: "9300000291848114",
-        label: "2 L, grote honden",
+        label: "2 L",
         price: 44.99,
         bolUrl: "https://www.bol.com/nl/p/-/9300000291848114",
         specs: { "Inhoud": "2 liter", "Materiaal": "mangohout / RVS" },
@@ -287,19 +287,19 @@ export const products: Product[] = [
     variants: [
       {
         id: "9300000288696966",
-        label: "80 cm, Grijs, middelgrote tot grote honden",
+        label: "80 cm",
         price: 49.99,
         bolUrl: "https://www.bol.com/nl/p/-/9300000288696966",
-        specs: { "Afmetingen": "circa 80 x 80 x 23 cm", "Materiaal": "zachte pluche stof" },
+        specs: { "Afmetingen": "circa 80 x 80 x 23 cm", "Materiaal": "zachte pluche stof", "Kleur": "grijs" },
         image: "/assets/products/9300000288696966/img_1.jpg",
         images: Array.from({ length: 6 }, (_, i) => `/assets/products/9300000288696966/img_${i + 1}.jpg`),
       },
       {
         id: "9300000288771332",
-        label: "90 cm, Beige, middelgrote tot grote honden",
+        label: "90 cm",
         price: 64.99,
         bolUrl: "https://www.bol.com/nl/p/-/9300000288771332",
-        specs: { "Afmetingen": "circa 90 x 90 x 23 cm", "Materiaal": "zachte pluche stof" },
+        specs: { "Afmetingen": "circa 90 x 90 x 23 cm", "Materiaal": "zachte pluche stof", "Kleur": "beige" },
         image: "/assets/products/9300000288771332/img_1.jpg",
         images: Array.from({ length: 6 }, (_, i) => `/assets/products/9300000288771332/img_${i + 1}.jpg`),
       },
@@ -321,7 +321,7 @@ export const products: Product[] = [
     variants: [
       {
         id: "9300000304598169",
-        label: "145 x 150 cm, Zwart",
+        label: "145 x 150 cm",
         price: 34.99,
         bolUrl: "https://www.bol.com/nl/p/-/9300000304598169",
         specs: { "Afmetingen": "145 x 150 cm", "Kleur": "zwart" },
@@ -345,7 +345,7 @@ export const products: Product[] = [
     variants: [
       {
         id: "9300000318895992",
-        label: "80 cm, kleine honden",
+        label: "80 cm",
         price: 37.95,
         bolUrl: "https://www.bol.com/nl/p/-/9300000318895992",
         specs: { "Diameter": "80 cm", "Vorm": "rond", "Kleur": "blauw" },
@@ -354,7 +354,7 @@ export const products: Product[] = [
       },
       {
         id: "9300000318956812",
-        label: "120 cm, kleine en middelgrote honden",
+        label: "120 cm",
         price: 39.95,
         bolUrl: "https://www.bol.com/nl/p/-/9300000318956812",
         specs: { "Diameter": "120 cm", "Vorm": "rond", "Kleur": "blauw" },
@@ -363,7 +363,7 @@ export const products: Product[] = [
       },
       {
         id: "9300000318962700",
-        label: "160 cm, grote honden",
+        label: "160 cm",
         price: 59.99,
         bolUrl: "https://www.bol.com/nl/p/-/9300000318962700",
         specs: { "Diameter": "160 cm", "Vorm": "rond", "Materiaal": "stevig PVC", "Kleur": "blauw" },
@@ -387,7 +387,7 @@ export const products: Product[] = [
     variants: [
       {
         id: "9300000327606365",
-        label: "30 x 40 cm, kleine en middelgrote honden",
+        label: "30 x 40 cm",
         price: 29.95,
         bolUrl: "https://www.bol.com/nl/nl/p/zelfkoelende-koelmat-voor-honden-verkoelende-ligmat-zomer-mat-30x40-cm/9300000327606365/",
         specs: { "Afmetingen": "30 x 40 cm", "Kleur": "Blauw", "Zelfkoelend": "ja", "Waterafstotend": "ja", "Opvouwbaar": "ja" },
@@ -397,7 +397,7 @@ export const products: Product[] = [
       },
       {
         id: "9300000327599671",
-        label: "65 x 50 cm, kleine honden en puppy's",
+        label: "65 x 50 cm",
         price: 34.99,
         bolUrl: "https://www.bol.com/nl/nl/p/koelmat-hond-s-zelfkoelende-koelmat-voor-honden-verkoelende-ligmat-zomer-mat-40x50-cm/9300000327599671/",
         specs: { "Afmetingen": "65 x 50 cm", "Kleur": "Blauw", "Zelfkoelend": "ja", "Waterafstotend": "ja", "Opvouwbaar": "ja" },
@@ -471,7 +471,7 @@ export const products: Product[] = [
     variants: [
       {
         id: "9300000386568309",
-        label: "25 cm, kleine honden zoals Chihuahua",
+        label: "25 cm",
         price: 39.99,
         bolUrl: "https://www.bol.com/nl/nl/p/hondenjas-25-cm-waterdicht-windbestendig-winterjas-kleine-hond-chihuahua-reflecterend/9300000386568309/",
         specs: { "Jaslengte": "25 cm", "Materiaal voering": "fleece", "Sluiting": "rits op de rug", "Waterdicht": "ja", "Windbestendig": "ja", "Reflecterend": "ja" },
@@ -480,7 +480,7 @@ export const products: Product[] = [
       },
       {
         id: "9300000386598590",
-        label: "35 cm, middelgrote honden zoals Beagle",
+        label: "35 cm",
         price: 41.99,
         bolUrl: "https://www.bol.com/nl/nl/p/hondenjas-35-cm-middelgrote-hond-beagle-waterdicht-windbestendig-warme-winterjas-reflecterend/9300000386598590/",
         specs: { "Jaslengte": "35 cm", "Materiaal voering": "fleece", "Sluiting": "rits op de rug", "Waterdicht": "ja", "Windbestendig": "ja", "Reflecterend": "ja" },
