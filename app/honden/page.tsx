@@ -94,24 +94,23 @@ export default function HondenPage() {
           products: getProductsByCategory('dog-outdoor'),
         },
         {
-          id: 'kleding-accessoires',
-          navLabel: 'Kleding & accessoires',
-          breadcrumbLabel: 'Kleding & accessoires',
+          id: 'hondenkleding',
+          navLabel: 'Hondenkleding',
+          breadcrumbLabel: 'Hondenkleding',
           hero: {
             eyebrow: 'Klaar voor elk weer',
-            title: 'Warm, droog en veilig onderweg',
+            title: 'Warm, droog en goed zichtbaar',
             description:
-              'Een waterdichte, winddichte hondenjas met fleecevoering voor natte en koude wandelingen, en een verstelbaar anti-trek harnas voor comfortabele controle tijdens elke wandeling.',
+              'Een waterdichte, windbestendige hondenjas met zachte fleecevoering en een reflecterende strook op de rug. Verkrijgbaar in vijf jaslengtes, van 25 tot 45 cm.',
             ctaLabel: 'Bekijk de collectie',
-            ctaHref: '/honden#kleding-accessoires',
-            image: '/assets/products/9300000386568309/img_5.jpg',
-            imageAlt: 'Chihuahua met waterdichte hondenjas tijdens een wandeling in de regen',
+            ctaHref: '/honden#hondenkleding',
+            image: '/assets/products/9300000386598590/img_6.jpg',
+            imageAlt: 'Beagle met waterdichte hondenjas tijdens een winterse wandeling',
             tags: [
-              { label: 'Hondenjas', price: 39.99, href: '/products/hondenjas', top: '65%', left: '40%' },
-              { label: 'Luxe Hondentuig', price: 19.99, href: '/products/luxe-hondentuig', top: '80%', left: '68%' },
+              { label: 'Hondenjas', price: 39.99, href: '/products/hondenjas', top: '70%', left: '45%' },
             ],
           },
-          products: [...getProductsByCategory('dog-clothing'), ...getProductsByCategory('dog-accessories')],
+          products: getProductsByCategory('dog-clothing'),
         },
       ]}
     />

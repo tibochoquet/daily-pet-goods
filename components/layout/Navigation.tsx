@@ -15,7 +15,7 @@ const shopCategories = [
       { href: '/honden#hondenmanden', label: 'Hondenmanden' },
       { href: '/honden#onderweg', label: 'Onderweg met je hond' },
       { href: '/honden#zwembaden', label: 'Zomerartikelen' },
-      { href: '/honden#kleding-accessoires', label: 'Kleding & accessoires' },
+      { href: '/honden#hondenkleding', label: 'Hondenkleding' },
     ],
   },
   {

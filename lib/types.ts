@@ -36,7 +36,6 @@ export type ProductCategory =
   | 'dog-outdoor'
   | 'cat-outdoor'
   | 'dog-clothing'
-  | 'dog-accessories'
   | 'cat-clothing'
 
 export interface Category {

@@ -66,7 +66,8 @@ export default function KattenPage() {
             image: '/assets/products/9300000386611069/img_6.jpg',
             imageAlt: 'Kat met waterdichte kattenjas buiten in de winterkou',
             tags: [
-              { label: 'Kattenjas', price: 39.99, href: '/products/kattenjas', top: '70%', left: '50%' },
+              { label: 'Kattenjas', price: 39.99, href: '/products/kattenjas', top: '68%', left: '40%' },
+              { label: 'Kattenjas Naaktkat', price: 39.99, href: '/products/kattenjas-naaktkat', top: '82%', left: '66%' },
             ],
           },
           products: getProductsByCategory('cat-clothing'),
