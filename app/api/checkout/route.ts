@@ -3,6 +3,7 @@ import Stripe from 'stripe'
 import { randomBytes } from 'crypto'
 import { getStripe } from '@/lib/stripe'
 import { getVariantById } from '@/lib/products'
+import { calculateDiscount } from '@/lib/discounts'
 import { SITE_URL } from '@/lib/business'
 
 /**
@@ -11,6 +12,11 @@ import { SITE_URL } from '@/lib/business'
  * always resolved server-side from lib/products.ts, never trusted from
  * the request body. This is what stops someone from tampering with the
  * price in devtools before checking out.
+ *
+ * The same rule applies to discounts: the client sends only a code, and
+ * the amount is recomputed here from the authoritative cart (see
+ * lib/discounts.ts) right before the session is created - never taken
+ * from whatever /api/discount/validate returned earlier.
  */
 
 interface CheckoutItem {
@@ -21,7 +27,7 @@ interface CheckoutItem {
 const MAX_QUANTITY_PER_ITEM = 20
 
 export async function POST(req: NextRequest) {
-  let body: { items?: CheckoutItem[] }
+  let body: { items?: CheckoutItem[]; discountCode?: unknown }
   try {
     body = await req.json()
   } catch {
@@ -75,8 +81,43 @@ export async function POST(req: NextRequest) {
   // second factor.
   const orderRef = `DPG-${Date.now().toString(36).toUpperCase()}-${randomBytes(3).toString('hex').toUpperCase()}`
 
+  // Re-derive the discount from the cart we just validated above. If the
+  // code no longer applies (e.g. the only jacket was removed after the
+  // code was entered) checkout continues at full price rather than
+  // failing - the summary the customer saw is re-rendered from the same
+  // rule, so this can only ever mean "no discount", never a surprise one.
+  const discountCodeInput = typeof body.discountCode === 'string' ? body.discountCode : ''
+  const discountResult = discountCodeInput
+    ? calculateDiscount(discountCodeInput, items.map((i) => ({ id: i.id, quantity: i.quantity })))
+    : null
+  const discount = discountResult?.ok ? discountResult.discount : null
+
   try {
     const stripe = getStripe()
+
+    // Stripe can only restrict a coupon to specific products via stored
+    // Product objects, and this shop uses inline price_data (no stored
+    // products). So the eligible-items-only rule is enforced here and
+    // handed to Stripe as an already-computed fixed amount. Doing it as a
+    // coupon rather than by discounting the line items keeps the discount
+    // visible as its own line on the payment page, the receipt and in
+    // amount_total - which the confirmation email and refunds rely on.
+    let discounts: Stripe.Checkout.SessionCreateParams.Discount[] | undefined
+    if (discount) {
+      const coupon = await stripe.coupons.create({
+        amount_off: Math.round(discount.amountOff * 100),
+        currency: 'eur',
+        duration: 'once',
+        name: `Korting (${discount.code})`,
+        max_redemptions: 1,
+        // This coupon is created for this one checkout only. Expiring it
+        // keeps the Stripe account from filling up with dead one-off
+        // coupons; abandoned checkouts simply lapse.
+        redeem_by: Math.floor(Date.now() / 1000) + 24 * 60 * 60,
+      })
+      discounts = [{ coupon: coupon.id }]
+    }
+
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
       currency: 'eur',
@@ -111,7 +152,13 @@ export async function POST(req: NextRequest) {
       // Stripe btw BOVENOP deze al-inclusieve prijzen.
       success_url: `${SITE_URL}/checkout/succes?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${SITE_URL}/checkout/geannuleerd`,
-      metadata: { orderRef },
+      ...(discounts ? { discounts } : {}),
+      // discountCode is stored on the order so you can filter in Stripe on
+      // how many orders a code actually produced.
+      metadata: {
+        orderRef,
+        ...(discount ? { discountCode: discount.code } : {}),
+      },
     })
 
     if (!session.url) {

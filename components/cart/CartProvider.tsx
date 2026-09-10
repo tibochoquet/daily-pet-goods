@@ -13,6 +13,12 @@ export interface CartItem {
 
 interface CartState {
   items: CartItem[]
+  /**
+   * The code the customer typed, nothing more. The discount amount is
+   * never stored client-side - it's recomputed server-side on every
+   * render of the summary and again at checkout (see lib/discounts.ts).
+   */
+  discountCode: string | null
 }
 
 type CartAction =
@@ -21,11 +27,16 @@ type CartAction =
   | { type: 'SET_QTY'; id: string; quantity: number }
   | { type: 'CLEAR' }
   | { type: 'HYDRATE'; state: CartState }
+  | { type: 'SET_DISCOUNT'; code: string | null }
 
 function reducer(state: CartState, action: CartAction): CartState {
   switch (action.type) {
     case 'HYDRATE':
-      return action.state
+      // discountCode may be absent in carts saved before codes existed.
+      return {
+        items: action.state.items ?? [],
+        discountCode: action.state.discountCode ?? null,
+      }
     case 'ADD': {
       const existing = state.items.find((i) => i.id === action.item.id)
       if (existing) {
@@ -50,7 +61,9 @@ function reducer(state: CartState, action: CartAction): CartState {
         ),
       }
     case 'CLEAR':
-      return { items: [] }
+      return { items: [], discountCode: null }
+    case 'SET_DISCOUNT':
+      return { ...state, discountCode: action.code }
     default:
       return state
   }
@@ -60,16 +73,18 @@ interface CartContextType {
   items: CartItem[]
   itemCount: number
   subtotal: number
+  discountCode: string | null
   addItem: (item: Omit<CartItem, 'quantity'>) => void
   removeItem: (id: string) => void
   setQuantity: (id: string, quantity: number) => void
   clearCart: () => void
+  setDiscountCode: (code: string | null) => void
 }
 
 const CartContext = createContext<CartContextType | null>(null)
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(reducer, { items: [] })
+  const [state, dispatch] = useReducer(reducer, { items: [], discountCode: null })
 
   useEffect(() => {
     try {
@@ -93,10 +108,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
         items: state.items,
         itemCount,
         subtotal,
+        discountCode: state.discountCode,
         addItem: (item) => dispatch({ type: 'ADD', item }),
         removeItem: (id) => dispatch({ type: 'REMOVE', id }),
         setQuantity: (id, quantity) => dispatch({ type: 'SET_QTY', id, quantity }),
         clearCart: () => dispatch({ type: 'CLEAR' }),
+        setDiscountCode: (code) => dispatch({ type: 'SET_DISCOUNT', code }),
       }}
     >
       {children}

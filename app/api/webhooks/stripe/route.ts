@@ -128,6 +128,10 @@ async function sendResendEmail(payload: Parameters<Resend['emails']['send']>[0])
 async function sendOwnerNotificationEmail(session: Stripe.Checkout.Session, lineItems: Stripe.LineItem[]) {
   const orderRef = session.metadata?.orderRef ?? session.id
   const total = (session.amount_total ?? 0) / 100
+  // Line rows below are per-item list prices; without this row they would
+  // not add up to the (discounted) total.
+  const discountAmount = (session.total_details?.amount_discount ?? 0) / 100
+  const discountCode = session.metadata?.discountCode
   const shipping = session.collected_information?.shipping_details
   const customer = session.customer_details
 
@@ -161,6 +165,14 @@ async function sendOwnerNotificationEmail(session: Stripe.Checkout.Session, line
       </table>
 
       <table style="width:100%;margin-top:12px;">
+        ${
+          discountAmount > 0
+            ? `<tr>
+                 <td style="font-size:14px;color:#2C4A3E;padding-top:4px;">Korting${discountCode ? ` (${discountCode})` : ''}</td>
+                 <td style="font-size:14px;color:#2C4A3E;text-align:right;padding-top:4px;">&minus; €${discountAmount.toFixed(2)}</td>
+               </tr>`
+            : ''
+        }
         <tr>
           <td style="font-size:15px;font-weight:600;padding-top:8px;">Totaal</td>
           <td style="font-size:15px;font-weight:600;text-align:right;padding-top:8px;">€${total.toFixed(2)}</td>

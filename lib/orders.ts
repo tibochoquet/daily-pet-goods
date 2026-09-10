@@ -35,6 +35,14 @@ export interface Order {
   items: OrderItem[]
   total: number
   currency: string
+  /**
+   * Discount actually applied to this order, if any. Kept because
+   * `items[].amountTotal` are list prices: on a discounted order they add
+   * up to more than `total`, so a refund has to be worked out from what
+   * was really paid, not from the item price alone.
+   */
+  discountCode: string | null
+  discountAmount: number
   paymentStatus: Stripe.Checkout.Session.PaymentStatus
   refunded: boolean
   returnStatus: ReturnStatus
@@ -88,6 +96,8 @@ async function toOrder(session: Stripe.Checkout.Session): Promise<Order> {
     }),
     total: (session.amount_total ?? 0) / 100,
     currency: (session.currency ?? 'eur').toUpperCase(),
+    discountCode: session.metadata?.discountCode ?? null,
+    discountAmount: (session.total_details?.amount_discount ?? 0) / 100,
     paymentStatus: session.payment_status,
     refunded,
     returnStatus: (session.metadata?.returnStatus as ReturnStatus) ?? null,

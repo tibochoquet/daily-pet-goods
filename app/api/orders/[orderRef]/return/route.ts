@@ -63,6 +63,18 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ ord
             <strong>Reden:</strong> ${reason}
             ${note ? `<br/><strong>Toelichting:</strong> ${note}` : ''}
           </p>
+          ${
+            order.discountAmount > 0
+              ? `<p style="font-size:13px;color:#4B5563;background:#F3EDE3;padding:12px;border-radius:8px;">
+                   <strong>Let op bij terugbetalen:</strong> op deze bestelling is
+                   ${order.discountCode ? `kortingscode ${order.discountCode} ` : 'een korting '}
+                   toegepast (&minus; €${order.discountAmount.toFixed(2)} over de hele bestelling).
+                   De klant heeft in totaal €${order.total.toFixed(2)} betaald, niet
+                   €${(order.total + order.discountAmount).toFixed(2)}. Betaal naar rato
+                   van de werkelijk betaalde prijs terug, niet de oorspronkelijke prijs van het product.
+                 </p>`
+              : ''
+          }
         </div>
       `,
     })

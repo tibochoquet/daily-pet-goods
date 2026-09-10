@@ -22,12 +22,6 @@ function Ctas() {
         Bekijk alle producten
         <ArrowRight size={15} />
       </Link>
-      <Link
-        href="/honden#hondenbakken"
-        className="inline-flex items-center gap-2 border border-white/35 text-white font-medium px-6 sm:px-7 py-3.5 sm:py-4 rounded-full hover:bg-white/10 transition-colors text-sm"
-      >
-        Hondenbakken
-      </Link>
     </div>
   )
 }
