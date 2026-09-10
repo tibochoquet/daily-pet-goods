@@ -658,7 +658,7 @@ export const products: Product[] = [
     variants: [
       {
         id: "9300000386568309",
-        label: "XXXS",
+        label: "XXS",
         price: 39.99,
         bolUrl: "https://www.bol.com/nl/p/-/9300000386568309",
         specs: { "Jaslengte": "25 cm", "Rasvoorbeeld": "kleine honden, zoals een Chihuahua", "Materiaal voering": "fleece", "Sluiting": "rits op de rug", "Waterdicht": "ja", "Windbestendig": "ja", "Reflecterend": "ja" },
