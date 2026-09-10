@@ -28,7 +28,7 @@ export default function HondenPage() {
             image: brandImages.dogBowlsCover,
             imageAlt: 'Hond naast houten voerbakken met roestvrijstalen inzet',
             tags: [
-              { label: 'Verhoogde Hondenbak', price: 34.99, href: '/products/verhoogde-hondenbak', top: '58%', left: '34%' },
+              { label: 'Verhoogde Hondenbak', price: 35.99, href: '/products/verhoogde-hondenbak', top: '58%', left: '34%' },
               { label: 'Voerbak Mangohout', price: 24.99, href: '/products/voerbak-mangohout', top: '78%', left: '50%' },
             ],
           },
@@ -87,11 +87,31 @@ export default function HondenPage() {
             image: brandImages.dogPoolsCover,
             imageAlt: 'Hond naast een opvouwbaar zwembad en koelmat in de tuin',
             tags: [
-              { label: 'Opvouwbaar Hondenzwembad', price: 37.99, href: '/products/opvouwbaar-hondenzwembad', top: '75%', left: '32%' },
+              { label: 'Opvouwbaar Hondenzwembad', price: 37.95, href: '/products/opvouwbaar-hondenzwembad', top: '75%', left: '32%' },
               { label: 'Zelfkoelende Koelmat', price: 29.95, href: '/products/koelmat-hond', top: '85%', left: '84%' },
             ],
           },
           products: getProductsByCategory('dog-outdoor'),
+        },
+        {
+          id: 'kleding-accessoires',
+          navLabel: 'Kleding & accessoires',
+          breadcrumbLabel: 'Kleding & accessoires',
+          hero: {
+            eyebrow: 'Klaar voor elk weer',
+            title: 'Warm, droog en veilig onderweg',
+            description:
+              'Een waterdichte, winddichte hondenjas met fleecevoering voor natte en koude wandelingen, en een verstelbaar anti-trek harnas voor comfortabele controle tijdens elke wandeling.',
+            ctaLabel: 'Bekijk de collectie',
+            ctaHref: '/honden#kleding-accessoires',
+            image: '/assets/products/9300000386568309/img_5.jpg',
+            imageAlt: 'Chihuahua met waterdichte hondenjas tijdens een wandeling in de regen',
+            tags: [
+              { label: 'Hondenjas', price: 39.99, href: '/products/hondenjas', top: '65%', left: '40%' },
+              { label: 'Luxe Hondentuig', price: 19.99, href: '/products/luxe-hondentuig', top: '80%', left: '68%' },
+            ],
+          },
+          products: [...getProductsByCategory('dog-clothing'), ...getProductsByCategory('dog-accessories')],
         },
       ]}
     />

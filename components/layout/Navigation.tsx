@@ -15,6 +15,7 @@ const shopCategories = [
       { href: '/honden#hondenmanden', label: 'Hondenmanden' },
       { href: '/honden#onderweg', label: 'Onderweg met je hond' },
       { href: '/honden#zwembaden', label: 'Zomerartikelen' },
+      { href: '/honden#kleding-accessoires', label: 'Kleding & accessoires' },
     ],
   },
   {
@@ -23,6 +24,7 @@ const shopCategories = [
     subLinks: [
       { href: '/katten#kattenbakken', label: 'Kattenbakken' },
       { href: '/katten#koelmatten', label: 'Zomerartikelen' },
+      { href: '/katten#kattenkleding', label: 'Kattenkleding' },
     ],
   },
 ]

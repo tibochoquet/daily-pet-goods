@@ -19,6 +19,9 @@ const categoryLabels: Record<string, string> = {
   'dog-travel': 'Onderweg met je hond',
   'dog-outdoor': 'Zomerartikelen hond',
   'cat-outdoor': 'Zomerartikelen kat',
+  'dog-clothing': 'Hondenkleding',
+  'dog-accessories': 'Hondenaccessoires',
+  'cat-clothing': 'Kattenkleding',
 }
 
 export default function ShopPage() {
@@ -34,7 +37,7 @@ export default function ShopPage() {
         image={brandImages.lifestyleGeneral}
         imageAlt="Hond en kat ontspannen tussen voerbakken en een hondenmand in een lichte woonkamer"
         tags={[
-          { label: 'Verhoogde Hondenbak', price: 34.99, href: '/products/verhoogde-hondenbak', top: '61%', left: '25%' },
+          { label: 'Verhoogde Hondenbak', price: 35.99, href: '/products/verhoogde-hondenbak', top: '61%', left: '25%' },
           { label: 'Voerbak Mangohout', price: 24.99, href: '/products/voerbak-mangohout', top: '78%', left: '19%' },
           { label: 'Hondenmand Lounge', price: 49.99, href: '/products/hondenmand-lounge', top: '68%', left: '63%' },
         ]}
