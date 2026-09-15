@@ -101,7 +101,7 @@ export default function HondenPage() {
             eyebrow: 'Klaar voor elk weer',
             title: 'Warm, droog en goed zichtbaar',
             description:
-              'Een waterdichte, windbestendige hondenjas met zachte fleecevoering en een reflecterende strook op de rug. Verkrijgbaar in vijf jaslengtes, van 25 tot 45 cm.',
+              'Een waterdichte, windbestendige hondenjas met zachte fleecevoering en een reflecterende strook op de rug. Verkrijgbaar in zes jaslengtes, van 25 tot 50 cm.',
             ctaLabel: 'Bekijk de collectie',
             ctaHref: '/honden#hondenkleding',
             image: '/assets/products/9300000386598590/img_6.jpg',
