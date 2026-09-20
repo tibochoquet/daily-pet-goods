@@ -780,6 +780,35 @@ export const products: Product[] = [
     ],
   },
   {
+    slug: "dierenharen-verwijderaar",
+    name: "Dierenharen Verwijderaar",
+    category: "pet-care",
+    description: "Honden- en kattenharen op je bank, kleding, meubels of in de auto? Met deze dierenharen verwijderaar haal je losse haren eenvoudig van stoffen oppervlakken. De verwijderaar heeft een ruim werkoppervlak van 21 x 16,5 cm en een geïntegreerd handvat aan de achterzijde, waardoor je hem stevig vasthoudt en gecontroleerd over het oppervlak beweegt. Geschikt voor banken en fauteuils, honden- en kattenmanden, kleding en jassen, stoffen meubels, autostoelen en dekens. De verwijderaar is herbruikbaar, dus je kunt hem steeds opnieuw gebruiken. Eén tool voor huishoudens met een hond, een kat of allebei.",
+    shortDescription: "Herbruikbare haarverwijderaar met handvat, 21 x 16,5 cm, voor bank, kleding en auto.",
+    features: [
+      "Voor honden- én kattenharen: één tool voor alle losse huisdierharen.",
+      "Ruim werkoppervlak van 21 x 16,5 cm: behandel grotere vlakken zoals een bank of hondenmand efficiënt.",
+      "Geïntegreerd handvat: stevige grip tijdens het gebruik, compact op te bergen.",
+      "Herbruikbaar: gemaakt voor herhaald gebruik, geen navullingen nodig.",
+      "Let op: bedoeld voor oppervlakken, niet om rechtstreeks over de vacht van je huisdier te gebruiken.",
+    ],
+    variants: [
+      {
+        id: "9300000394744627",
+        label: "21 x 16,5 cm",
+        price: 19.95,
+        bolUrl: "https://www.bol.com/nl/p/-/9300000394744627",
+        specs: { "Afmetingen": "21 x 16,5 cm", "Handvat": "geïntegreerd", "Aantal": "1 stuk", "Herbruikbaar": "ja", "Geschikt voor": "honden- en kattenharen" },
+        image: "/assets/products/9300000394744627/img_1.jpg",
+        images: [
+          "/assets/products/9300000394744627/img_1.jpg",
+          "/assets/products/9300000394744627/img_2.jpg",
+          "/assets/products/9300000394744627/img_3.jpg",
+        ],
+      },
+    ],
+  },
+  {
     slug: "kattentunnel",
     name: "Kattentunnel met Kussen",
     category: "cat-play",
@@ -947,6 +976,13 @@ export const categories: Category[] = [
     slug: 'cat-play',
     description: 'Speeltunnels en knusse plekken waar je kat zich kan uitleven en uitrusten.',
     image: '/assets/products/9300000390727042/img_1.jpg',
+  },
+  {
+    id: 'pet-care',
+    name: 'Verzorging & schoonmaak',
+    slug: 'pet-care',
+    description: 'Praktische hulp tegen losse haren op de bank, in de auto en op je kleding.',
+    image: '/assets/products/9300000394744627/img_1.jpg',
   },
 ]
 

@@ -112,6 +112,25 @@ export default function HondenPage() {
           },
           products: getProductsByCategory('dog-clothing'),
         },
+        {
+          id: 'verzorging',
+          navLabel: 'Verzorging',
+          breadcrumbLabel: 'Verzorging',
+          hero: {
+            eyebrow: 'Na de wandeling',
+            title: 'Haren op de bank horen erbij',
+            description:
+              'Een herbruikbare haarverwijderaar met geïntegreerd handvat en een ruim werkoppervlak van 21 x 16,5 cm, voor de bank, de hondenmand, je kleding en de autostoelen.',
+            ctaLabel: 'Bekijk de collectie',
+            ctaHref: '/honden#verzorging',
+            image: '/assets/products/9300000394744627/img_2.jpg',
+            imageAlt: 'Golden retriever naast een dierenharen verwijderaar van 21 x 16,5 cm',
+            tags: [
+              { label: 'Dierenharen Verwijderaar', price: 19.95, href: '/products/dierenharen-verwijderaar', top: '70%', left: '55%' },
+            ],
+          },
+          products: getProductsByCategory('pet-care'),
+        },
       ]}
     />
   )

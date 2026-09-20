@@ -91,6 +91,25 @@ export default function KattenPage() {
           },
           products: getProductsByCategory('cat-play'),
         },
+        {
+          id: 'verzorging',
+          navLabel: 'Verzorging',
+          breadcrumbLabel: 'Verzorging',
+          hero: {
+            eyebrow: 'Kattenharen, overal',
+            title: 'Weg met haren op de bank',
+            description:
+              'Een herbruikbare haarverwijderaar met geïntegreerd handvat en een ruim werkoppervlak van 21 x 16,5 cm, voor de bank, de kattenmand, je kleding en de autostoelen.',
+            ctaLabel: 'Bekijk de collectie',
+            ctaHref: '/katten#verzorging',
+            image: '/assets/products/9300000394744627/img_3.jpg',
+            imageAlt: 'Kat naast een dierenharen verwijderaar van 21 x 16,5 cm',
+            tags: [
+              { label: 'Dierenharen Verwijderaar', price: 19.95, href: '/products/dierenharen-verwijderaar', top: '70%', left: '45%' },
+            ],
+          },
+          products: getProductsByCategory('pet-care'),
+        },
       ]}
     />
   )
