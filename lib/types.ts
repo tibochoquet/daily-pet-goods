@@ -38,6 +38,8 @@ export type ProductCategory =
   | 'dog-clothing'
   | 'cat-clothing'
   | 'cat-play'
+  | 'dog-care'
+  | 'cat-care'
   /** Serves dogs and cats both, so it shows on /honden as well as /katten. */
   | 'pet-care'
 
