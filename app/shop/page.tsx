@@ -21,6 +21,7 @@ const categoryLabels: Record<string, string> = {
   'cat-outdoor': 'Zomerartikelen kat',
   'dog-clothing': 'Hondenkleding',
   'cat-clothing': 'Kattenkleding',
+  'cat-play': 'Spelen & rusten',
 }
 
 export default function ShopPage() {

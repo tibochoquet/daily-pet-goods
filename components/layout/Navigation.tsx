@@ -25,6 +25,7 @@ const shopCategories = [
       { href: '/katten#kattenbakken', label: 'Kattenbakken' },
       { href: '/katten#koelmatten', label: 'Zomerartikelen' },
       { href: '/katten#kattenkleding', label: 'Kattenkleding' },
+      { href: '/katten#spelen', label: 'Spelen & rusten' },
     ],
   },
 ]

@@ -72,6 +72,25 @@ export default function KattenPage() {
           },
           products: getProductsByCategory('cat-clothing'),
         },
+        {
+          id: 'spelen',
+          navLabel: 'Spelen & rusten',
+          breadcrumbLabel: 'Spelen & rusten',
+          hero: {
+            eyebrow: 'Nieuwsgierig van nature',
+            title: 'Eerst spelen, dan lekker languit',
+            description:
+              'Een kattentunnel van 95 cm om doorheen te kruipen en je in te verstoppen, met een zacht kussen erbij voor het dutje dat daarna komt.',
+            ctaLabel: 'Bekijk de collectie',
+            ctaHref: '/katten#spelen',
+            image: '/assets/products/9300000390727042/img_7.jpg',
+            imageAlt: 'Kat ligt in een grijze kattentunnel met kussen in de woonkamer',
+            tags: [
+              { label: 'Kattentunnel met Kussen', price: 34.99, href: '/products/kattentunnel', top: '72%', left: '48%' },
+            ],
+          },
+          products: getProductsByCategory('cat-play'),
+        },
       ]}
     />
   )

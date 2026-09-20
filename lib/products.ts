@@ -780,6 +780,38 @@ export const products: Product[] = [
     ],
   },
   {
+    slug: "kattentunnel",
+    name: "Kattentunnel met Kussen",
+    category: "cat-play",
+    description: "Geef je kat een heerlijke plek om te spelen, verstoppen en ontspannen met deze grijze kattentunnel van 95 cm. De tunnel combineert een speelplek met een comfortabel kussen, waardoor je kat zowel actief bezig kan zijn als kan uitrusten. Met een lengte van 95 cm is de tunnel ruim genoeg om doorheen te kruipen en zich in te verstoppen. Het meegeleverde kussen maakt de tunnel daarnaast geschikt als rustplek. De grijze uitvoering past gemakkelijk in verschillende interieurstijlen.",
+    shortDescription: "Grijze kattentunnel van 95 cm, inclusief kussen. Speelplek en rustplek in één.",
+    features: [
+      "Spelen en ontspannen: een plek om doorheen te kruipen, zich te verstoppen en te rusten.",
+      "Inclusief kussen: de tunnel wordt geleverd met een kussen als extra rustplek.",
+      "95 cm lang: voldoende ruimte om lekker doorheen te bewegen.",
+      "Grijze uitvoering: past gemakkelijk in verschillende interieurstijlen.",
+    ],
+    variants: [
+      {
+        id: "9300000390727042",
+        label: "95 cm, Grijs",
+        price: 34.99,
+        bolUrl: "https://www.bol.com/nl/p/-/9300000390727042",
+        specs: { "Lengte": "95 cm", "Kleur": "grijs", "Inclusief kussen": "ja", "Geschikt voor": "katten" },
+        image: "/assets/products/9300000390727042/img_1.jpg",
+        images: [
+          "/assets/products/9300000390727042/img_1.jpg",
+          "/assets/products/9300000390727042/img_2.jpg",
+          "/assets/products/9300000390727042/img_3.jpg",
+          "/assets/products/9300000390727042/img_4.jpg",
+          "/assets/products/9300000390727042/img_5.jpg",
+          "/assets/products/9300000390727042/img_6.jpg",
+          "/assets/products/9300000390727042/img_7.jpg",
+        ],
+      },
+    ],
+  },
+  {
     slug: "kattenjas",
     name: "Kattenjas",
     category: "cat-clothing",
@@ -908,6 +940,13 @@ export const categories: Category[] = [
     slug: 'cat-clothing',
     description: 'Warme, waterdichte kattenjassen, ook speciaal voor naaktkatten zoals de Sphynx.',
     image: '/assets/products/9300000386611069/img_1.jpg',
+  },
+  {
+    id: 'cat-play',
+    name: 'Spelen & rusten',
+    slug: 'cat-play',
+    description: 'Speeltunnels en knusse plekken waar je kat zich kan uitleven en uitrusten.',
+    image: '/assets/products/9300000390727042/img_1.jpg',
   },
 ]
 

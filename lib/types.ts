@@ -37,6 +37,7 @@ export type ProductCategory =
   | 'cat-outdoor'
   | 'dog-clothing'
   | 'cat-clothing'
+  | 'cat-play'
 
 export interface Category {
   id: ProductCategory
