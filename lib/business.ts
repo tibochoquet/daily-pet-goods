@@ -9,6 +9,25 @@
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
 
 /**
+ * True only on a deployment served from a `test.` host, e.g.
+ * https://test.dailypetgoods.nl - a copy of the shop running against
+ * Stripe test keys.
+ *
+ * Deliberately opt-IN on the "test." prefix rather than opt-out on the
+ * live domain: if NEXT_PUBLIC_SITE_URL is ever missing or wrong in
+ * production, this returns false and production keeps behaving exactly as
+ * it does today. The reverse (defaulting to "treat as test") could
+ * silently deindex the real shop.
+ */
+export function isTestEnvironment(): boolean {
+  try {
+    return new URL(SITE_URL).hostname.startsWith('test.')
+  } catch {
+    return false
+  }
+}
+
+/**
  * Sentinel for the still-missing postcode. Deliberately not a plain empty
  * string or null: it needs to (a) render visibly in development so a
  * half-finished address is obvious while working on the site, and (b) be
