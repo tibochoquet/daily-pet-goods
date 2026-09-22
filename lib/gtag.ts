@@ -1,4 +1,10 @@
-export const GTAG_ID = process.env.NEXT_PUBLIC_GTAG_ID
+/**
+ * Trimmed, because a stray space pasted into the env var silently breaks
+ * the tag: the id ends up inside the gtag.js URL and in gtag('config'),
+ * so Google receives an id it doesn't recognise and nothing is measured -
+ * with no error anywhere to point at the cause.
+ */
+export const GTAG_ID = process.env.NEXT_PUBLIC_GTAG_ID?.trim() || undefined
 
 /**
  * "AW-<id>/<label>" for the Aankoop (Purchase) conversion action in Google
