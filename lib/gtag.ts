@@ -7,12 +7,19 @@
 export const GTAG_ID = process.env.NEXT_PUBLIC_GTAG_ID?.trim() || undefined
 
 /**
- * "AW-<id>/<label>" for the Aankoop (Purchase) conversion action in Google
- * Ads. Hardcoded rather than an env var because it's tied 1:1 to one
- * specific conversion action already created in the Ads account - if that
- * action is ever recreated, update the label here.
+ * "AW-<id>/<label>" for the "Aankoop (2)" conversion action in Google Ads
+ * - the tag/event based one. Hardcoded rather than an env var because
+ * it's tied 1:1 to one specific conversion action in the Ads account; if
+ * that action is ever recreated, update the label here.
+ *
+ * The older "Aankoop" action is a page-load URL rule on /checkout/succes
+ * and fires on its own, without our involvement. Keep that one on
+ * Secondary in Google Ads: it counts every view of the thank-you page,
+ * including refreshes and visits without a payment, and carries no
+ * transaction_id. Only this event is gated on a Stripe-confirmed payment
+ * and carries the real order value and reference.
  */
-export const PURCHASE_CONVERSION = 'AW-18434030281/0-0jCKy04u8cEMn1g9ZE'
+export const PURCHASE_CONVERSION = 'AW-18434030281/rSqsCJPU14YdEMn1g9ZE'
 
 declare global {
   interface Window {
