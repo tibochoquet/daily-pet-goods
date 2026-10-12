@@ -5,6 +5,8 @@
   "description": "Geef jouw kat een stijlvolle en praktische eetplek met deze luxe dubbele kattenvoerbak van mangohout. Deze elegante voer- en drinkbak combineert een natuurlijke houten uitstraling met twee uitneembare roestvrijstalen bakken van elk 300 ml. Perfect voor het combineren van voer en water of twee verschillende soorten voeding. Dankzij de stevige mangohouten houder blijft de voerbak stabiel staan tijdens het eten en drinken. De RVS bakken zijn hygiënisch, roestvrij en eenvoudig schoon te maken voor dagelijks gebruik. De subtiele kattenoren in het ontwerp geven deze voerbak een unieke uitstraling die perfect past in moderne interieurs. Voordelen Dubbele voer- en drinkbak \nIdeaal voor voer en water of verschillende soorten voeding. Luxe mangohout \nStevig natuurlijk hout met een warme en stijlvolle uitstraling. Hygiënische RVS bakken \nUitneembaar, roestvrij en eenvoudig schoon te maken. Stabiel ontwerp \nDe houten houder helpt verschuiven tijdens gebruik te verminderen. Uniek kattenontwerp \nVoorzien van subtiele uitgesneden kattenoren voor een speelse en luxe uitstraling. Specificaties Materiaal houder: mangohout Materiaal bakken: roestvrij staal (RVS) Aantal bakken: 2 Inhoud per bak: 300 ml Totale inhoud: 600 ml Kleur: hout / zilver Geschikt voor voer en water Geschikt voor Katten Kittens Britse Korthaar Europese Korthaar Ragdoll Maine Coon Siamees Pers Noorse Boskat Bengaal Ook geschikt voor kleine hondenrassen. Toepassing Geschikt voor dagelijks gebruik met droogvoer, natvoer en water. Ideaal voor gebruik in keuken, woonkamer of vaste voerhoek. Zoekwoorden kattenvoerbak, kattenvoerbak dubbel, dubbele kattenvoerbak, voerbak kat, katten drinkbak, katten eetbak, mangohout kattenvoerbak, luxe kattenvoerbak, kattenbak met RVS bakken, houten kattenvoerbak, voerbak kitten, dubbele voerbak kat, design kattenvoerbak",
   "price_jsonld": "39.99",
   "price_shown": 39.99,
+  "price_trusted": true,
+  "unavailable": false,
   "gtin13": null,
   "schema": "ProductGroup",
   "photos": [
@@ -25,19 +27,24 @@
     },
     {
       "file": "img_4.jpg",
+      "url": "https://media.s-bol.com/B3jRxJRrlAVn/99Oqyjz/550x550.jpg",
+      "alt": "Dubbele voerbak van mangohout op een zwart metalen frame met twee roestvrijstalen bakjes van 0,3L, afmetingen 32x17x10 cm."
+    },
+    {
+      "file": "img_5.jpg",
       "url": "https://media.s-bol.com/7480ZKoQ8rBG/KZw41xG/1200x1200.jpg",
       "alt": "Dubbele voerbak met een RVS bak gevuld met brokjes en een RVS bak met water, op een houten standaard met zwarte pootjes."
     },
     {
-      "file": "img_5.jpg",
+      "file": "img_6.jpg",
       "url": "https://media.s-bol.com/jDQK1JxKYkOl/KZw41xG/1200x1200.jpg",
       "alt": "Grijze tabby kat eet uit een dubbele RVS voerbak op een houten standaard in een keuken."
     },
     {
-      "file": "img_6.jpg",
+      "file": "img_7.jpg",
       "url": "https://media.s-bol.com/qNRnBW0BjVWy/KZw41xG/1200x1200.jpg",
       "alt": "Bovenaanzicht van een dubbele RVS voerbak op een houten plank."
     }
   ],
-  "photo_count": 6
+  "photo_count": 7
 }

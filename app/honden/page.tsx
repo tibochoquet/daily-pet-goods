@@ -28,8 +28,8 @@ export default function HondenPage() {
             image: brandImages.dogBowlsCover,
             imageAlt: 'Hond naast houten voerbakken met roestvrijstalen inzet',
             tags: [
-              { label: 'Verhoogde Hondenbak', price: 35.99, href: '/products/verhoogde-hondenbak', top: '58%', left: '34%' },
-              { label: 'Voerbak Mangohout', price: 24.99, href: '/products/voerbak-mangohout', top: '78%', left: '50%' },
+              { label: 'Verhoogde Hondenbak', price: 39.99, href: '/products/verhoogde-hondenbak', top: '58%', left: '34%' },
+              { label: 'Voerbak Mangohout', price: 29.99, href: '/products/voerbak-mangohout', top: '78%', left: '50%' },
             ],
           },
           products: getProductsByCategory('dog-feeding'),

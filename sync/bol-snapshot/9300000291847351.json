@@ -5,6 +5,8 @@
   "description": "Geef jouw hond een stijlvolle en praktische eetplek met deze luxe hondenvoerbak van mangohout en roestvrij staal. Deze premium voerbak combineert een natuurlijke houten uitstraling met dagelijks gebruiksgemak. Dankzij het ruime formaat van 0,8 liter is deze voerbak ideaal voor middelgrote honden. De stevige mangohouten houder zorgt voor stabiliteit tijdens het eten en drinken, terwijl de uitneembare RVS bak eenvoudig schoon te maken is en geschikt is voor zowel voer als water. Voordelen Luxe uitstraling \nDe combinatie van mangohout en RVS zorgt voor een moderne en warme uitstraling. Hygiënisch en praktisch \nDe roestvrijstalen bak is uitneembaar en eenvoudig schoon te maken. Stevig ontwerp \nDe houten houder helpt schuiven tijdens gebruik te verminderen. Ruime inhoud van 0,8 liter \nIdeaal voor middelgrote honden. Veelzijdig gebruik \nGeschikt voor droogvoer, natvoer en water. Specificaties Materiaal houder: mangohout Materiaal bak: roestvrij staal (RVS) Inhoud: 0,8 liter Aantal bakken: 1 Kleur: hout / zilver Gebruik: binnen Geschikt voor Cocker Spaniel Beagle Franse Bulldog Border Terrier Shiba Inu Cavalier King Charles Spaniel Australian Cobberdog Middenslag Poedel Staffordshire Bull Terrier Ook geschikt voor katten die grotere voerbakken prettig vinden. Zoekwoorden hondenvoerbak, voerbak hond, mangohout voerbak, RVS voerbak hond, luxe hondenbak, voerbak middelgrote hond, drinkbak hond, houten voerbak, design voerbak hond, hondenbak 0,8L",
   "price_jsonld": "34.99",
   "price_shown": 34.99,
+  "price_trusted": true,
+  "unavailable": false,
   "gtin13": null,
   "schema": "ProductGroup",
   "photos": [
@@ -30,19 +32,29 @@
     },
     {
       "file": "img_5.jpg",
+      "url": "https://media.s-bol.com/mvgMlPny7KNA/LZnQ23W/550x550.jpg",
+      "alt": "Ronde voerbak van 0,8L met een natuurlijke houten buitenkant en een glanzende roestvrijstalen kom."
+    },
+    {
+      "file": "img_6.jpg",
       "url": "https://media.s-bol.com/E5E41BBK1MlN/BLGA132/1200x1200.jpg",
       "alt": "Een houten voerbak gevuld met hondenvoer, met een metalen inzetstuk."
     },
     {
-      "file": "img_6.jpg",
+      "file": "img_7.jpg",
       "url": "https://media.s-bol.com/xDAX8mmVlyWJ/BLGA132/1200x1200.jpg",
       "alt": "Een hond likt uit een metalen voerbak in een houten houder. De setting is een keuken."
     },
     {
-      "file": "img_7.jpg",
+      "file": "img_8.jpg",
+      "url": "https://media.s-bol.com/gmNQ1PG27vGY/LZnQ23W/550x550.jpg",
+      "alt": "Drie houten voerbakken van 0,3L, 0,8L en 1,7L met een RVS binnenkant naast een kat, een spaniël en een golden retriever."
+    },
+    {
+      "file": "img_9.jpg",
       "url": "https://media.s-bol.com/MpP4N667Nn0R/BLGA132/1200x1200.jpg",
       "alt": "Een metalen voerbak in een houten houder met een natuurlijke afwerking."
     }
   ],
-  "photo_count": 7
+  "photo_count": 9
 }

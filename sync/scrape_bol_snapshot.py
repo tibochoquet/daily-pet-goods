@@ -60,17 +60,26 @@ def clean(fragment: str) -> str:
     return text.strip()
 
 
-def hi_res(url: str) -> str:
-    return re.sub(r'/\d+x\d+\.jpg$', '/1200x1200.jpg', url)
-
-
 def fetch_image(url: str):
-    """1200x1200 bestaat alleen voor vierkante originelen; anders terug
-    naar de variant die de pagina zelf gebruikt."""
-    candidates = [url]
+    """Pak het grootste formaat dat bol van deze foto heeft.
+
+    Niet elke foto bestaat op 1200x1200: van recent geuploade foto's
+    heeft bol vaak alleen 550x550, en dan geeft 1200x1200 een 404. Loop
+    daarom een ladder af en val altijd terug op de url die de pagina
+    zelf gebruikt, anders verdwijnt zo'n foto geruisloos uit de galerij.
+    """
+    candidates = []
     m = re.search(r'^(.*)/(\d+)x(\d+)\.jpg$', url)
-    if m and m.group(2) == m.group(3):
-        candidates = [f'{m.group(1)}/1200x1200.jpg', url]
+    if m:
+        base = m.group(1)
+        if m.group(2) == m.group(3):
+            candidates.append(f'{base}/1200x1200.jpg')
+        else:
+            scale = 1200 / max(int(m.group(2)), int(m.group(3)))
+            candidates.append(
+                f'{base}/{round(int(m.group(2))*scale)}x{round(int(m.group(3))*scale)}.jpg')
+        candidates.append(f'{base}/550x550.jpg')
+    candidates.append(url)
     for c in candidates:
         try:
             req = urllib.request.Request(c, headers={'User-Agent': UA})
@@ -125,7 +134,10 @@ async def scrape_one(page, ean: str):
     group = next((b for b in ld if isinstance(b, dict) and b.get('@type') == 'ProductGroup'), None)
     node = product or group or {}
 
-    # prijs van dit artikel
+    # Prijs van DIT artikel, uitsluitend uit de gestructureerde data.
+    # De prijs die de pagina toont is bewust geen terugvaloptie: bij een
+    # variant die niet leverbaar is toont bol daar de prijs van een ander
+    # product uit "Bekijk ook eens", en die varianten heten vaak hetzelfde.
     price = None
     if product:
         offers = product.get('offers') or {}
@@ -141,6 +153,29 @@ async def scrape_one(page, ean: str):
         const m = document.body.innerText.match(/De prijs van dit product is (\\d+) euro(?: en (\\d+) cent)?/);
         return m ? parseFloat(m[1]) + (m[2] ? parseInt(m[2]) / 100 : 0) : null;
     }""")
+    unavailable = 'niet leverbaar' in (await page.evaluate(
+        "() => document.body.innerText")).lower()
+
+    # De carousel laadt zijn miniaturen pas als je er doorheen scrollt.
+    # Zonder dit krijg je alleen de eerste zes a acht foto's, en juist
+    # achteraan staan de maatfoto's.
+    COUNT_LOADED = """() => [...document.querySelectorAll('ul.snap-x li img')]
+        .filter(i => ((i.currentSrc || i.src || '')).includes('media.s-bol.com')).length"""
+    stable = 0
+    for _ in range(14):
+        before = await page.evaluate(COUNT_LOADED)
+        await page.evaluate("""() => {
+            const ul = document.querySelector('ul.snap-x');
+            if (ul) ul.scrollLeft += 600;
+        }""")
+        await page.mouse.wheel(0, 400)
+        await page.wait_for_timeout(450)
+        after = await page.evaluate(COUNT_LOADED)
+        stable = stable + 1 if after == before else 0
+        if stable >= 3:
+            break
+    await page.evaluate("() => window.scrollTo(0, 0)")
+    await page.wait_for_timeout(700)
 
     # galerij in bol's eigen volgorde
     gallery = await page.evaluate("""() => {
@@ -176,7 +211,7 @@ async def scrape_one(page, ean: str):
     d.mkdir(parents=True, exist_ok=True)
     photos = []
     for i, g in enumerate(gallery, 1):
-        data, used = fetch_image(hi_res(g['src']))
+        data, used = fetch_image(g['src'])
         if data is None:
             continue
         name = f'img_{len(photos) + 1}.jpg'
@@ -190,18 +225,28 @@ async def scrape_one(page, ean: str):
         'description': clean(node.get('description', '')),
         'price_jsonld': price,
         'price_shown': shown,
+        'price_trusted': price is not None,
+        'unavailable': unavailable,
         'gtin13': node.get('gtin13'),
         'schema': node.get('@type'),
         'photos': photos,
         'photo_count': len(photos),
     }
     (SNAP / f'{ean}.json').write_text(json.dumps(record, indent=2, ensure_ascii=False))
-    print(f'[{ean}] prijs={price or shown}  fotos={len(photos)}  {title[:50]!r}')
+    label = f'{price}' if price is not None else f'GEEN EIGEN PRIJS (pagina toont {shown})'
+    print(f'[{ean}] prijs={label}  fotos={len(photos)}  {title[:50]!r}')
     return record
 
 
 async def main():
     SNAP.mkdir(parents=True, exist_ok=True)
+    # Optioneel een of meer EANs meegeven, zodat je voor een enkele
+    # variant niet de hele lijst opnieuw hoeft op te halen.
+    wanted = [a for a in sys.argv[1:] if a.isdigit()]
+    todo = [p for p in PRODUCTS if not wanted or p[0] in wanted]
+    if wanted and not todo:
+        print(f'geen van {wanted} staat in PRODUCTS', file=sys.stderr)
+        sys.exit(1)
     async with async_playwright() as pw:
         browser = await pw.chromium.launch(headless=True)
         ctx = await browser.new_context(
@@ -209,14 +254,14 @@ async def main():
             locale='nl-NL', timezone_id='Europe/Amsterdam',
             extra_http_headers={'Accept-Language': 'nl-NL,nl;q=0.9,en;q=0.8'})
         page = await ctx.new_page()
-        for i, (ean, _slug) in enumerate(PRODUCTS):
+        for i, (ean, _slug) in enumerate(todo):
             try:
                 await scrape_one(page, ean)
             except RuntimeError as e:
                 print(f'\nGESTOPT: {e}', file=sys.stderr)
                 await browser.close()
                 sys.exit(2)
-            if i < len(PRODUCTS) - 1:
+            if i < len(todo) - 1:
                 await asyncio.sleep(DELAY_SECONDS)
         await browser.close()
     print(f'\nSnapshot opgeslagen in {SNAP}')

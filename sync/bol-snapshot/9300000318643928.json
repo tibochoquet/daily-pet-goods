@@ -5,6 +5,8 @@
   "description": "Geef jouw kat een comfortabele en stijlvolle eetplek met deze dubbele kattenvoerbak van metaal en roestvrij staal. Deze praktische voer- en drinkbak bestaat uit een stevig metalen frame met twee uitneembare RVS bakken. Ideaal voor het combineren van voer en water of twee verschillende soorten voeding. Dankzij het compacte formaat is deze voerbak perfect geschikt voor katten en kittens. De roestvrijstalen bakken zijn hygiënisch, roestvrij en eenvoudig schoon te maken. Het stevige metalen frame zorgt voor extra stabiliteit tijdens het eten en drinken. Voordelen Dubbele voer- en drinkbak \nIdeaal voor voer en water in één praktische oplossing. Stevig metalen frame \nDuurzaam ontwerp voor dagelijks gebruik. Uitneembare RVS bakken \nHygiënisch, roestvrij en eenvoudig schoon te maken. Compact formaat \nPerfect voor katten en kittens. Modern design \nStrakke uitstraling die past in vrijwel ieder interieur. Specificaties Materiaal frame: metaal Materiaal bakken: roestvrij staal (RVS) Aantal bakken: 2 Afmetingen: 29 x 15 x 8 cm Inhoud: 2x 0,3L Kleur: zwart / zilver Uitneembare bakken: ja Geschikt voor voer en water Geschikt voor Britse Korthaar Europese Korthaar Ragdoll Maine Coon Siamees Bengaal Noorse Boskat Pers Russische Blauwe Kittens",
   "price_jsonld": "34.99",
   "price_shown": 34.99,
+  "price_trusted": true,
+  "unavailable": false,
   "gtin13": null,
   "schema": "ProductGroup",
   "photos": [
@@ -30,14 +32,19 @@
     },
     {
       "file": "img_5.jpg",
+      "url": "https://media.s-bol.com/gmNQByAr4ZE6/qQDOr02/550x550.jpg",
+      "alt": "Dubbele voerbak met houten bovenkant, zwart metalen frame en twee rvs bakjes van 0,3 liter. Afmetingen: 29x15x8 cm."
+    },
+    {
+      "file": "img_6.jpg",
       "url": "https://media.s-bol.com/xXqrWZr4PXwr/YvOggD9/1200x1200.jpg",
       "alt": "Een schildpadkat eet uit een roestvrijstalen voerbak op een houten verhoogd rek met zwart metalen frame."
     },
     {
-      "file": "img_6.jpg",
+      "file": "img_7.jpg",
       "url": "https://media.s-bol.com/xXqr06RnJyWJ/YvOggD9/1200x1200.jpg",
       "alt": "Houten verhoogd rek met zwart metalen frame, met twee uitneembare roestvrijstalen voerbakken; één gevuld met kattenvoer."
     }
   ],
-  "photo_count": 6
+  "photo_count": 7
 }

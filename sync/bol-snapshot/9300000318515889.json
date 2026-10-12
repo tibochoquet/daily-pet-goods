@@ -5,6 +5,8 @@
   "description": "Geef jouw kat een stijlvolle en praktische eetplek met deze luxe dubbele kattenvoerbak van mangohout. Deze elegante dinerset combineert een natuurlijke houten uitstraling met twee uitneembare roestvrijstalen bakken van elk 300 ml. Ideaal voor het combineren van voer en water of voor twee verschillende soorten voeding. De stevige mangohouten houder zorgt voor stabiliteit tijdens het eten en drinken, terwijl de RVS bakken eenvoudig uitneembaar en schoon te maken zijn. Dankzij het moderne design past deze voerbak perfect in vrijwel ieder interieur. De voerbak bevat twee bakken van 300 ml. Voordelen Luxe uitstraling dankzij echt mangohout Inclusief 2 uitneembare RVS bakken Geschikt voor voer én water Stevig en stabiel ontwerp Eenvoudig schoon te maken Perfect voor katten en kleine huisdieren Specificaties Materiaal houder: mangohout Materiaal bakken: roestvrij staal (RVS) Aantal bakken: 2 Inhoud per bak: 300 ml Totale inhoud: 600 ml Kleur: hout / zilver Geschikt voor: katten en kleine huisdieren Geschikt voor Katten Kittens Britse Korthaar Europese Korthaar Ragdoll Maine Coon Pers Siamees Kleine hondenrassen Zoekwoorden kattenvoerbak, dubbele kattenvoerbak, voerbak kat, mangohout voerbak, katten eetbak, katten drinkbak, RVS voerbak kat, luxe kattenvoerbak, dubbele voerbak kat, houten kattenvoerbak",
   "price_jsonld": "39.99",
   "price_shown": 39.99,
+  "price_trusted": true,
+  "unavailable": false,
   "gtin13": null,
   "schema": "ProductGroup",
   "photos": [
@@ -35,19 +37,24 @@
     },
     {
       "file": "img_6.jpg",
+      "url": "https://media.s-bol.com/R3D54RPG6J6E/lRDJmw6/550x550.jpg",
+      "alt": "Dubbele voerbak van mangohout met twee roestvrijstalen schaaltjes van 300 ml."
+    },
+    {
+      "file": "img_7.jpg",
       "url": "https://media.s-bol.com/rOZolYz1KzOK/Jqv56KJ/1200x1200.jpg",
       "alt": "Dubbele RVS voerbak op een houten standaard, met één kom gevuld met kattenbrokjes."
     },
     {
-      "file": "img_7.jpg",
+      "file": "img_8.jpg",
       "url": "https://media.s-bol.com/7480B4mmOx7r/Jqv56KJ/1200x1200.jpg",
       "alt": "Gevlokte kat eet uit een dubbele RVS voerbak op een houten standaard in een keuken."
     },
     {
-      "file": "img_8.jpg",
+      "file": "img_9.jpg",
       "url": "https://media.s-bol.com/qNRnk2y1JyNG/Jqv56KJ/1200x1200.jpg",
       "alt": "Close-up van de houten standaard van de dubbele voerbak."
     }
   ],
-  "photo_count": 8
+  "photo_count": 9
 }

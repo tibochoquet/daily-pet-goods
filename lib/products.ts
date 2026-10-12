@@ -28,9 +28,9 @@ export const products: Product[] = [
       {
         id: "9300000271745950",
         label: "S",
-        price: 35.99,
+        price: 39.99,
         bolUrl: "https://www.bol.com/nl/p/-/9300000271745950",
-        specs: { "Afmetingen standaard": "32 x 17 x 10 cm", "Inhoud": "2 x 0,5 liter", "Materiaal standaard": "hout", "Materiaal bakken": "roestvrij staal (RVS)", "Antislip": "ja" },
+        specs: { "Afmetingen standaard": "32 x 17 x 10 cm", "Inhoud": "2 x 0,3 liter", "Materiaal standaard": "hout", "Materiaal bakken": "roestvrij staal (RVS)", "Antislip": "ja" },
         image: "/assets/products/9300000271745950/img_1.jpg",
         images: [
           "/assets/products/9300000271745950/img_1.jpg",
@@ -50,7 +50,7 @@ export const products: Product[] = [
         label: "M",
         price: 49.99,
         bolUrl: "https://www.bol.com/nl/p/-/9300000271740188",
-        specs: { "Afmetingen standaard": "40 x 21 x 12 cm", "Inhoud": "2 x 1 liter", "Materiaal standaard": "hout", "Materiaal bakken": "roestvrij staal (RVS)", "Antislip": "ja" },
+        specs: { "Afmetingen standaard": "40 x 21 x 12 cm", "Inhoud": "2 x 0,8 liter", "Materiaal standaard": "hout", "Materiaal bakken": "roestvrij staal (RVS)", "Antislip": "ja" },
         image: "/assets/products/9300000271740188/img_1.jpg",
         images: [
           "/assets/products/9300000271740188/img_1.jpg",
@@ -69,7 +69,7 @@ export const products: Product[] = [
         label: "L",
         price: 59.99,
         bolUrl: "https://www.bol.com/nl/p/-/9300000279049983",
-        specs: { "Afmetingen standaard": "50 x 27 x 16 cm", "Inhoud": "2 x 2 liter", "Materiaal standaard": "hout", "Materiaal bakken": "roestvrij staal (RVS)", "Antislip": "ja" },
+        specs: { "Afmetingen standaard": "50 x 27 x 16 cm", "Inhoud": "2 x 1,7 liter", "Materiaal standaard": "hout", "Materiaal bakken": "roestvrij staal (RVS)", "Antislip": "ja" },
         image: "/assets/products/9300000279049983/img_1.jpg",
         images: [
           "/assets/products/9300000279049983/img_1.jpg",
@@ -105,7 +105,7 @@ export const products: Product[] = [
         label: "S",
         price: 39.99,
         bolUrl: "https://www.bol.com/nl/p/-/9300000318561941",
-        specs: { "Afmetingen": "29 x 15 x 8 cm", "Materiaal frame": "metaal", "Materiaal bakken": "roestvrij staal (RVS)", "Aantal bakken": "2" },
+        specs: { "Afmetingen": "29 x 15 x 8 cm", "Inhoud": "2 x 0,3 liter", "Materiaal frame": "metaal", "Materiaal bakken": "roestvrij staal (RVS)", "Aantal bakken": "2" },
         image: "/assets/products/9300000318561941/img_1.jpg",
         images: [
           "/assets/products/9300000318561941/img_1.jpg",
@@ -123,7 +123,7 @@ export const products: Product[] = [
         label: "L",
         price: 69.99,
         bolUrl: "https://www.bol.com/nl/p/-/9300000318638430",
-        specs: { "Afmetingen": "47 x 25 x 14 cm", "Materiaal frame": "metaal", "Materiaal bakken": "roestvrij staal (RVS)", "Aantal bakken": "2" },
+        specs: { "Afmetingen": "47 x 25 x 14 cm", "Inhoud": "2 x 1,7 liter", "Materiaal frame": "metaal", "Materiaal bakken": "roestvrij staal (RVS)", "Aantal bakken": "2" },
         image: "/assets/products/9300000318638430/img_1.jpg",
         images: [
           "/assets/products/9300000318638430/img_1.jpg",
@@ -155,9 +155,9 @@ export const products: Product[] = [
       {
         id: "9300000291844620",
         label: "S",
-        price: 24.99,
+        price: 29.99,
         bolUrl: "https://www.bol.com/nl/p/-/9300000291844620",
-        specs: { "Inhoud": "0,5 liter", "Aantal bakken": "1", "Materiaal houder": "mangohout", "Materiaal bak": "roestvrij staal (RVS)" },
+        specs: { "Inhoud": "0,3 liter", "Aantal bakken": "1", "Materiaal houder": "mangohout", "Materiaal bak": "roestvrij staal (RVS)" },
         image: "/assets/products/9300000291844620/img_1.jpg",
         images: [
           "/assets/products/9300000291844620/img_1.jpg",
@@ -176,7 +176,7 @@ export const products: Product[] = [
         label: "M",
         price: 34.99,
         bolUrl: "https://www.bol.com/nl/p/-/9300000291847351",
-        specs: { "Inhoud": "1 liter", "Aantal bakken": "1", "Materiaal houder": "mangohout", "Materiaal bak": "roestvrij staal (RVS)" },
+        specs: { "Inhoud": "0,8 liter", "Aantal bakken": "1", "Materiaal houder": "mangohout", "Materiaal bak": "roestvrij staal (RVS)" },
         image: "/assets/products/9300000291847351/img_1.jpg",
         images: [
           "/assets/products/9300000291847351/img_1.jpg",
@@ -195,7 +195,7 @@ export const products: Product[] = [
         label: "L",
         price: 44.99,
         bolUrl: "https://www.bol.com/nl/p/-/9300000291848114",
-        specs: { "Inhoud": "2 liter", "Aantal bakken": "1", "Materiaal houder": "mangohout", "Materiaal bak": "roestvrij staal (RVS)" },
+        specs: { "Inhoud": "1,7 liter", "Aantal bakken": "1", "Materiaal houder": "mangohout", "Materiaal bak": "roestvrij staal (RVS)" },
         image: "/assets/products/9300000291848114/img_1.jpg",
         images: [
           "/assets/products/9300000291848114/img_1.jpg",
@@ -229,7 +229,7 @@ export const products: Product[] = [
         label: "29 x 15 x 8 cm",
         price: 34.99,
         bolUrl: "https://www.bol.com/nl/p/-/9300000318643928",
-        specs: { "Afmetingen": "29 x 15 x 8 cm", "Materiaal frame": "metaal", "Materiaal bakken": "roestvrij staal (RVS)", "Aantal bakken": "2" },
+        specs: { "Afmetingen": "29 x 15 x 8 cm", "Inhoud": "2 x 0,3 liter", "Materiaal frame": "metaal", "Materiaal bakken": "roestvrij staal (RVS)", "Aantal bakken": "2" },
         image: "/assets/products/9300000318643928/img_1.jpg",
         images: [
           "/assets/products/9300000318643928/img_1.jpg",
@@ -247,8 +247,8 @@ export const products: Product[] = [
     slug: "kattenvoerbak-mangohout-kattenoren",
     name: "Kattenvoerbak Mangohout Kattenoren",
     category: "cat-feeding",
-    description: "Geef jouw kat een stijlvolle en praktische eetplek met deze luxe dubbele kattenvoerbak van mangohout. Deze voer- en drinkbak combineert een natuurlijke houten uitstraling met twee uitneembare roestvrijstalen bakken van elk 250 ml. Dankzij de stevige mangohouten houder blijft de voerbak stabiel staan tijdens het eten en drinken. De subtiele uitgesneden kattenoren in het ontwerp geven deze voerbak een unieke uitstraling die past in moderne interieurs.",
-    shortDescription: "Dubbele kattenvoerbak van mangohout met kattenoren-motief, 2 x 250 ml.",
+    description: "Geef jouw kat een stijlvolle en praktische eetplek met deze luxe dubbele kattenvoerbak van mangohout. Deze voer- en drinkbak combineert een natuurlijke houten uitstraling met twee uitneembare roestvrijstalen bakken van elk 300 ml. Dankzij de stevige mangohouten houder blijft de voerbak stabiel staan tijdens het eten en drinken. De subtiele uitgesneden kattenoren in het ontwerp geven deze voerbak een unieke uitstraling die past in moderne interieurs.",
+    shortDescription: "Dubbele kattenvoerbak van mangohout met kattenoren-motief, 2 x 300 ml.",
     features: [
       "Dubbele voer- en drinkbak: ideaal voor voer en water of verschillende soorten voeding.",
       "Luxe mangohout: stevig natuurlijk hout met een warme en stijlvolle uitstraling.",
@@ -258,10 +258,10 @@ export const products: Product[] = [
     variants: [
       {
         id: "9300000318542325",
-        label: "2 x 250 ml",
-        price: 34.99,
+        label: "2 x 300 ml",
+        price: 39.99,
         bolUrl: "https://www.bol.com/nl/p/-/9300000318542325",
-        specs: { "Inhoud per bak": "250 ml", "Totale inhoud": "500 ml", "Materiaal houder": "mangohout", "Materiaal bakken": "roestvrij staal (RVS)" },
+        specs: { "Inhoud per bak": "300 ml", "Totale inhoud": "600 ml", "Materiaal houder": "mangohout", "Materiaal bakken": "roestvrij staal (RVS)" },
         image: "/assets/products/9300000318542325/img_1.jpg",
         images: [
           "/assets/products/9300000318542325/img_1.jpg",
@@ -279,21 +279,21 @@ export const products: Product[] = [
     slug: "kattenvoerbak-mangohout-dinerset",
     name: "Kattenvoerbak Mangohout Dinerset",
     category: "cat-feeding",
-    description: "Geef jouw kat een stijlvolle en praktische eetplek met deze luxe dubbele kattenvoerbak van mangohout. Deze dinerset combineert een natuurlijke houten uitstraling met twee uitneembare roestvrijstalen bakken van elk 250 ml. De stevige mangohouten houder zorgt voor stabiliteit tijdens het eten en drinken, terwijl de RVS bakken eenvoudig uitneembaar en schoon te maken zijn. Dankzij het moderne design past deze voerbak in vrijwel ieder interieur.",
-    shortDescription: "Dubbele kattenvoerbak van mangohout als houten dinerset, 2 x 250 ml.",
+    description: "Geef jouw kat een stijlvolle en praktische eetplek met deze luxe dubbele kattenvoerbak van mangohout. Deze dinerset combineert een natuurlijke houten uitstraling met twee uitneembare roestvrijstalen bakken van elk 300 ml. De stevige mangohouten houder zorgt voor stabiliteit tijdens het eten en drinken, terwijl de RVS bakken eenvoudig uitneembaar en schoon te maken zijn. Dankzij het moderne design past deze voerbak in vrijwel ieder interieur.",
+    shortDescription: "Dubbele kattenvoerbak van mangohout als houten dinerset, 2 x 300 ml.",
     features: [
       "Luxe uitstraling dankzij echt mangohout.",
-      "Inclusief twee uitneembare RVS bakken van elk 250 ml.",
+      "Inclusief twee uitneembare RVS bakken van elk 300 ml.",
       "Geschikt voor voer én water.",
       "Stevig en stabiel ontwerp, eenvoudig schoon te maken.",
     ],
     variants: [
       {
         id: "9300000318515889",
-        label: "2 x 250 ml",
+        label: "2 x 300 ml",
         price: 39.99,
         bolUrl: "https://www.bol.com/nl/p/-/9300000318515889",
-        specs: { "Inhoud per bak": "250 ml", "Totale inhoud": "500 ml", "Materiaal houder": "mangohout", "Materiaal bakken": "roestvrij staal (RVS)" },
+        specs: { "Inhoud per bak": "300 ml", "Totale inhoud": "600 ml", "Materiaal houder": "mangohout", "Materiaal bakken": "roestvrij staal (RVS)" },
         image: "/assets/products/9300000318515889/img_1.jpg",
         images: [
           "/assets/products/9300000318515889/img_1.jpg",

@@ -159,9 +159,15 @@ def main():
     for ean, (slug, label) in MAPPING.items():
         s = site[ean]
         snap = snaps[ean]
-        new = snap['price_jsonld'] or snap['price_shown']
-        new = float(new)
         old = s['price']
+        # Alleen de prijs die bij dit artikel hoort telt. Valt die weg, dan
+        # is de variant niet leverbaar en laat de site zijn prijs staan;
+        # de prijs die de pagina toont is dan die van een ander product.
+        if snap.get('price_jsonld') is None:
+            A(f'| {slug} — {label} | €{old:.2f} | *niet leverbaar* | — | '
+              f'**ongemoeid laten** |')
+            continue
+        new = float(snap['price_jsonld'])
         if abs(new - old) < 0.005:
             A(f'| {slug} — {label} | €{old:.2f} | €{new:.2f} | — | ongewijzigd |')
         else:
