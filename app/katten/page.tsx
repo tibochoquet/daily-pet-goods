@@ -60,14 +60,15 @@ export default function KattenPage() {
             eyebrow: 'Warm door de winter',
             title: 'Een extra warme laag voor koude dagen',
             description:
-              'Een waterdichte, winddichte kattenjas met zachte fleecevoering - met een uitvoering speciaal voor naaktkatten zoals de Sphynx, die geen vacht hebben om hen tegen de kou te beschermen.',
+              'Een waterdichte, winddichte kattenjas met zachte fleecevoering - met een uitvoering speciaal voor naaktkatten zoals de Sphynx, die geen vacht hebben om hen tegen de kou te beschermen, en een fluo geelgroene jas met reflecterende banden voor wandelingen aan het tuigje.',
             ctaLabel: 'Bekijk de collectie',
             ctaHref: '/katten#kattenkleding',
             image: '/assets/products/9300000386611069/img_6.jpg',
             imageAlt: 'Kat met waterdichte kattenjas buiten in de winterkou',
             tags: [
-              { label: 'Kattenjas', price: 39.99, href: '/products/kattenjas', top: '68%', left: '40%' },
-              { label: 'Kattenjas Naaktkat', price: 39.99, href: '/products/kattenjas-naaktkat', top: '82%', left: '66%' },
+              { label: 'Kattenjas', price: 39.99, href: '/products/kattenjas', top: '64%', left: '32%' },
+              { label: 'Kattenjas Naaktkat', price: 39.99, href: '/products/kattenjas-naaktkat', top: '76%', left: '62%' },
+              { label: 'Kattenjas Fluo Geelgroen', price: 39.99, href: '/products/kattenjas-fluo-geelgroen', top: '88%', left: '38%' },
             ],
           },
           products: getProductsByCategory('cat-clothing'),

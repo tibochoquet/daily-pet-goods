@@ -101,13 +101,14 @@ export default function HondenPage() {
             eyebrow: 'Klaar voor elk weer',
             title: 'Warm, droog en goed zichtbaar',
             description:
-              'Een waterdichte, windbestendige hondenjas met zachte fleecevoering en een reflecterende strook op de rug. Verkrijgbaar in zes jaslengtes, van 25 tot 50 cm.',
+              'Twee winterjassen met zachte fleecevoering, allebei in zes jaslengtes van 25 tot 50 cm: de waterdichte groene jas met reflecterende strook, en een fluo geelgroene jas met reflecterende banden en een opening voor het tuigje.',
             ctaLabel: 'Bekijk de collectie',
             ctaHref: '/honden#hondenkleding',
             image: '/assets/products/9300000386598590/img_6.jpg',
-            imageAlt: 'Beagle met waterdichte hondenjas tijdens een winterse wandeling',
+            imageAlt: 'Jack Russell met groene hondenjas tijdens een winterse wandeling',
             tags: [
-              { label: 'Hondenjas', price: 39.99, href: '/products/hondenjas', top: '70%', left: '45%' },
+              { label: 'Hondenjas', price: 39.99, href: '/products/hondenjas', top: '70%', left: '32%' },
+              { label: 'Hondenjas Fluo Geelgroen', price: 39.99, href: '/products/hondenjas-fluo-geelgroen', top: '82%', left: '62%' },
             ],
           },
           products: getProductsByCategory('dog-clothing'),
