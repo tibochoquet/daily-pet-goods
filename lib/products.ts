@@ -785,12 +785,12 @@ export const products: Product[] = [
     slug: "hondenjas-fluo-geelgroen",
     name: "Hondenjas Fluo Geelgroen",
     category: "dog-clothing",
-    description: "Geef je hond extra warmte en zorg tegelijk voor betere zichtbaarheid met deze fluo geelgroene hondenjas. De opvallende fluorescerende kleur valt overdag al op, en de reflecterende banden rond borst en buik kaatsen het licht van koplampen, straatverlichting of een zaklamp terug. Daardoor is je hond beter te zien tijdens wandelingen in de schemering en op donkere ochtenden en avonden. De binnenzijde heeft een zachte fleecevoering, met een extra fleece flap in de nek. De buitenzijde is van 100% polyester, beperkt de invloed van wind en is waterafstotend. Op de rug zit een opening voor de lijn, zodat je een tuigje onder de jas kunt laten zitten en de jas tijdens het uitlaten gewoon aan kan blijven. De jas sluit met verstelbaar klittenband bij borst en buik. Verkrijgbaar in zes jaslengtes van 25 tot 50 cm. Kies op ruglengte, gemeten van de basis van de nek tot de staartaanzet; het ras is slechts een voorbeeld.",
-    shortDescription: "Fluo geelgroene winterjas met reflecterende banden, fleecevoering en tuigopening, in zes maten.",
+    description: "Geef je hond extra warmte en zorg tegelijk voor betere zichtbaarheid met deze fluo geelgroene hondenjas. De opvallende fluorescerende kleur valt overdag al op, en de reflecterende banden rond borst en buik kaatsen het licht van koplampen, straatverlichting of een zaklamp terug. Daardoor is je hond beter te zien tijdens wandelingen in de schemering en op donkere ochtenden en avonden. De binnenzijde heeft een zachte fleecevoering, met een extra fleece flap in de nek. De buitenzijde is van 100% polyester, is waterdicht en beperkt de invloed van wind. Op de rug zit een opening voor de lijn, zodat je een tuigje onder de jas kunt laten zitten en de jas tijdens het uitlaten gewoon aan kan blijven. De jas sluit met verstelbaar klittenband bij borst en buik. Verkrijgbaar in zes jaslengtes van 25 tot 50 cm. Kies op ruglengte, gemeten van de basis van de nek tot de staartaanzet; het ras is slechts een voorbeeld.",
+    shortDescription: "Waterdichte fluo geelgroene winterjas met reflecterende banden, fleecevoering en tuigopening, in zes maten.",
     features: [
       "Fluo geelgroen met reflecterende banden rond borst en buik: overdag opvallend, in het donker goed zichtbaar wanneer er licht op valt.",
       "Zachte fleecevoering met extra fleece flap in de nek: houdt je hond warm op koude dagen.",
-      "Buitenzijde van 100% polyester: waterafstotend en windbeperkend. Niet omschreven als volledig waterdicht.",
+      "Waterdicht en windbestendig: de buitenzijde van 100% polyester houdt regen en wind tegen.",
       "Opening op de rug voor een tuigje: bevestig de lijn zonder de jas uit te trekken.",
       "Verstelbaar klittenband bij borst en buik: eenvoudig aan- en uittrekken en aan te passen aan de bouw van je hond.",
       "Zes jaslengtes van 25 tot 50 cm: meet de ruglengte van je hond voor de juiste maat.",
@@ -802,7 +802,7 @@ export const products: Product[] = [
         label: "XXS",
         price: 39.99,
         bolUrl: "https://www.bol.com/nl/p/-/9300000412821828",
-        specs: { "Jaslengte": "25 cm", "Past bij ruglengte": "23 tot 27 cm", "Rasvoorbeeld": "kleine honden, zoals een Chihuahua of Dwergpinscher", "Kleur": "fluo geelgroen", "Materiaal buitenzijde": "100% polyester", "Materiaal voering": "fleece", "Sluiting": "verstelbaar klittenband bij borst en buik", "Tuigopening op de rug": "ja", "Waterafstotend": "ja", "Windbestendig": "ja", "Reflecterend": "ja" },
+        specs: { "Jaslengte": "25 cm", "Past bij ruglengte": "23 tot 27 cm", "Rasvoorbeeld": "kleine honden, zoals een Chihuahua of Dwergpinscher", "Kleur": "fluo geelgroen", "Materiaal buitenzijde": "100% polyester", "Materiaal voering": "fleece", "Sluiting": "verstelbaar klittenband bij borst en buik", "Tuigopening op de rug": "ja", "Waterdicht": "ja", "Windbestendig": "ja", "Reflecterend": "ja" },
         image: "/assets/products/9300000412821828/img_1.jpg",
         images: [
           "/assets/products/9300000412821828/img_1.jpg",
@@ -821,7 +821,7 @@ export const products: Product[] = [
         label: "XS",
         price: 40.99,
         bolUrl: "https://www.bol.com/nl/p/-/9300000412826633",
-        specs: { "Jaslengte": "30 cm", "Past bij ruglengte": "28 tot 32 cm", "Rasvoorbeeld": "kleine honden, zoals een Maltezer of Yorkshire Terriër", "Kleur": "fluo geelgroen", "Materiaal buitenzijde": "100% polyester", "Materiaal voering": "fleece", "Sluiting": "verstelbaar klittenband bij borst en buik", "Tuigopening op de rug": "ja", "Waterafstotend": "ja", "Windbestendig": "ja", "Reflecterend": "ja" },
+        specs: { "Jaslengte": "30 cm", "Past bij ruglengte": "28 tot 32 cm", "Rasvoorbeeld": "kleine honden, zoals een Maltezer of Yorkshire Terriër", "Kleur": "fluo geelgroen", "Materiaal buitenzijde": "100% polyester", "Materiaal voering": "fleece", "Sluiting": "verstelbaar klittenband bij borst en buik", "Tuigopening op de rug": "ja", "Waterdicht": "ja", "Windbestendig": "ja", "Reflecterend": "ja" },
         image: "/assets/products/9300000412826633/img_1.jpg",
         images: [
           "/assets/products/9300000412826633/img_1.jpg",
@@ -840,7 +840,7 @@ export const products: Product[] = [
         label: "S",
         price: 41.99,
         bolUrl: "https://www.bol.com/nl/p/-/9300000412827663",
-        specs: { "Jaslengte": "35 cm", "Past bij ruglengte": "33 tot 37 cm", "Rasvoorbeeld": "middelgrote honden, zoals een Jack Russell of Shih Tzu", "Kleur": "fluo geelgroen", "Materiaal buitenzijde": "100% polyester", "Materiaal voering": "fleece", "Sluiting": "verstelbaar klittenband bij borst en buik", "Tuigopening op de rug": "ja", "Waterafstotend": "ja", "Windbestendig": "ja", "Reflecterend": "ja" },
+        specs: { "Jaslengte": "35 cm", "Past bij ruglengte": "33 tot 37 cm", "Rasvoorbeeld": "middelgrote honden, zoals een Jack Russell of Shih Tzu", "Kleur": "fluo geelgroen", "Materiaal buitenzijde": "100% polyester", "Materiaal voering": "fleece", "Sluiting": "verstelbaar klittenband bij borst en buik", "Tuigopening op de rug": "ja", "Waterdicht": "ja", "Windbestendig": "ja", "Reflecterend": "ja" },
         image: "/assets/products/9300000412827663/img_1.jpg",
         images: [
           "/assets/products/9300000412827663/img_1.jpg",
@@ -859,7 +859,7 @@ export const products: Product[] = [
         label: "M",
         price: 42.99,
         bolUrl: "https://www.bol.com/nl/p/-/9300000412828922",
-        specs: { "Jaslengte": "40 cm", "Past bij ruglengte": "38 tot 42 cm", "Rasvoorbeeld": "middelgrote honden, zoals een Dwergschnauzer of Cavalier King Charles", "Kleur": "fluo geelgroen", "Materiaal buitenzijde": "100% polyester", "Materiaal voering": "fleece", "Sluiting": "verstelbaar klittenband bij borst en buik", "Tuigopening op de rug": "ja", "Waterafstotend": "ja", "Windbestendig": "ja", "Reflecterend": "ja" },
+        specs: { "Jaslengte": "40 cm", "Past bij ruglengte": "38 tot 42 cm", "Rasvoorbeeld": "middelgrote honden, zoals een Dwergschnauzer of Cavalier King Charles", "Kleur": "fluo geelgroen", "Materiaal buitenzijde": "100% polyester", "Materiaal voering": "fleece", "Sluiting": "verstelbaar klittenband bij borst en buik", "Tuigopening op de rug": "ja", "Waterdicht": "ja", "Windbestendig": "ja", "Reflecterend": "ja" },
         image: "/assets/products/9300000412828922/img_1.jpg",
         images: [
           "/assets/products/9300000412828922/img_1.jpg",
@@ -878,7 +878,7 @@ export const products: Product[] = [
         label: "L",
         price: 43.99,
         bolUrl: "https://www.bol.com/nl/p/-/9300000412830723",
-        specs: { "Jaslengte": "45 cm", "Past bij ruglengte": "43 tot 47 cm", "Rasvoorbeeld": "middelgrote honden, zoals een Beagle of Cocker Spaniel", "Kleur": "fluo geelgroen", "Materiaal buitenzijde": "100% polyester", "Materiaal voering": "fleece", "Sluiting": "verstelbaar klittenband bij borst en buik", "Tuigopening op de rug": "ja", "Waterafstotend": "ja", "Windbestendig": "ja", "Reflecterend": "ja" },
+        specs: { "Jaslengte": "45 cm", "Past bij ruglengte": "43 tot 47 cm", "Rasvoorbeeld": "middelgrote honden, zoals een Beagle of Cocker Spaniel", "Kleur": "fluo geelgroen", "Materiaal buitenzijde": "100% polyester", "Materiaal voering": "fleece", "Sluiting": "verstelbaar klittenband bij borst en buik", "Tuigopening op de rug": "ja", "Waterdicht": "ja", "Windbestendig": "ja", "Reflecterend": "ja" },
         image: "/assets/products/9300000412830723/img_1.jpg",
         images: [
           "/assets/products/9300000412830723/img_1.jpg",
@@ -897,7 +897,7 @@ export const products: Product[] = [
         label: "XL",
         price: 44.99,
         bolUrl: "https://www.bol.com/nl/p/-/9300000412833243",
-        specs: { "Jaslengte": "50 cm", "Past bij ruglengte": "48 tot 52 cm", "Rasvoorbeeld": "middelgrote honden, zoals een Border Collie", "Kleur": "fluo geelgroen", "Materiaal buitenzijde": "100% polyester", "Materiaal voering": "fleece", "Sluiting": "verstelbaar klittenband bij borst en buik", "Tuigopening op de rug": "ja", "Waterafstotend": "ja", "Windbestendig": "ja", "Reflecterend": "ja" },
+        specs: { "Jaslengte": "50 cm", "Past bij ruglengte": "48 tot 52 cm", "Rasvoorbeeld": "middelgrote honden, zoals een Border Collie", "Kleur": "fluo geelgroen", "Materiaal buitenzijde": "100% polyester", "Materiaal voering": "fleece", "Sluiting": "verstelbaar klittenband bij borst en buik", "Tuigopening op de rug": "ja", "Waterdicht": "ja", "Windbestendig": "ja", "Reflecterend": "ja" },
         image: "/assets/products/9300000412833243/img_1.jpg",
         images: [
           "/assets/products/9300000412833243/img_1.jpg",
