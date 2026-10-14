@@ -300,7 +300,7 @@ export default function CartPage() {
               disabled={checkingOut}
               className="block w-full text-center bg-[#C8745A] text-white font-semibold py-3.5 rounded-full hover:bg-[#A85E45] transition-colors disabled:opacity-60"
             >
-              {checkingOut ? 'Bezig...' : 'Bestelling met betaalverplichting'}
+              {checkingOut ? 'Bezig...' : 'Doorgaan naar betalen'}
             </button>
 
             <p className="text-xs text-[#6B7280] text-center mt-3">
