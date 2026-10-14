@@ -7,6 +7,7 @@ import Footer from '@/components/layout/Footer'
 import JsonLd from '@/components/JsonLd'
 import GoogleTag from '@/components/GoogleTag'
 import { CartProvider } from '@/components/cart/CartProvider'
+import { Analytics } from '@vercel/analytics/next'
 import { business, SITE_URL } from '@/lib/business'
 
 const inter = Inter({
@@ -103,6 +104,7 @@ export default function RootLayout({
           <main>{children}</main>
           <Footer />
         </CartProvider>
+        <Analytics />
       </body>
     </html>
   )
