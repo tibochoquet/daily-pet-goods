@@ -5,9 +5,16 @@ import { useRouter } from 'next/navigation'
 
 const NOT_FOUND_MESSAGE = 'We konden geen bestelling vinden met deze gegevens. Controleer je bestelnummer en probeer het opnieuw.'
 
-export default function OrderLookupForm() {
+export default function OrderLookupForm({
+  defaultOrderRef = '',
+  defaultEmail = '',
+}: {
+  /** Vooringevuld vanuit de link in de bestelbevestiging. */
+  defaultOrderRef?: string
+  defaultEmail?: string
+}) {
   const router = useRouter()
-  const [form, setForm] = useState({ orderRef: '', email: '' })
+  const [form, setForm] = useState({ orderRef: defaultOrderRef, email: defaultEmail })
   const [status, setStatus] = useState<'idle' | 'sending' | 'error'>('idle')
   const [error, setError] = useState('')
 

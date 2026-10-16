@@ -14,9 +14,9 @@ export const metadata: Metadata = {
 export default async function MijnBestellingPage({
   searchParams,
 }: {
-  searchParams: Promise<{ fout?: string }>
+  searchParams: Promise<{ fout?: string; ref?: string; email?: string }>
 }) {
-  const { fout } = await searchParams
+  const { fout, ref, email } = await searchParams
   const linkExpired = fout === 'link-verlopen'
 
   return (
@@ -53,7 +53,7 @@ export default async function MijnBestellingPage({
               <p className="text-sm text-[#6B7280] mb-5">
                 Vul je bestelnummer en e-mailadres in om direct je bestelling te bekijken.
               </p>
-              <OrderLookupForm />
+              <OrderLookupForm defaultOrderRef={ref ?? ''} defaultEmail={email ?? ''} />
             </div>
           </div>
 
