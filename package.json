@@ -9,7 +9,8 @@
     "lint": "eslint",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "pdf:legal": "python3 scripts/generate_legal_pdfs.py"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.2.0",

@@ -5,6 +5,7 @@ import { getStripe } from '@/lib/stripe'
 import { business } from '@/lib/business'
 import { orderConfirmationEmail } from '@/lib/emails'
 import { buildOrderEmailData } from '@/lib/orderEmailData'
+import { loadLegalAttachments } from '@/lib/legalAttachments'
 import { isDbConfigured } from '@/lib/db'
 import { claimEmailSend, releaseEmailClaim, upsertOrder } from '@/lib/db/orders'
 
@@ -327,10 +328,11 @@ async function sendCustomerConfirmationEmail(session: Stripe.Checkout.Session) {
 
   try {
     const data = await buildOrderEmailData(session)
-    // public/legal/ bestaat nog niet, dus de voorwaarden en het
-    // herroepingsformulier gaan niet als bijlage mee. De template laat
-    // de bijbehorende zin dan weg in plaats van te liegen.
-    const mail = orderConfirmationEmail(data, { attachmentsIncluded: false })
+    // De mailtekst belooft de bijlagen alleen als ze er echt zijn.
+    // Lukt het inlezen niet, dan gaat de bevestiging gewoon de deur uit
+    // zonder die belofte - liever geen bijlage dan een loze zin.
+    const bijlagen = await loadLegalAttachments()
+    const mail = orderConfirmationEmail(data, { attachmentsIncluded: bijlagen.length > 0 })
 
     await sendResendEmail({
       from: `${business.brandName} <orders@dailypetgoods.nl>`,
@@ -339,6 +341,7 @@ async function sendCustomerConfirmationEmail(session: Stripe.Checkout.Session) {
       subject: mail.subject,
       html: mail.html,
       text: mail.text,
+      attachments: bijlagen.length ? bijlagen : undefined,
     })
   } catch (err) {
     // Alleen terugdraaien wat we zelf geclaimd hebben.
