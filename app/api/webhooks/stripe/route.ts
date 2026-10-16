@@ -2,8 +2,11 @@ import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { Resend } from 'resend'
 import { getStripe } from '@/lib/stripe'
-import { business, SITE_URL } from '@/lib/business'
-import { renderBestelmail, estimateDeliveryRange } from '@/lib/mailTemplate'
+import { business } from '@/lib/business'
+import { orderConfirmationEmail } from '@/lib/emails'
+import { buildOrderEmailData } from '@/lib/orderEmailData'
+import { isDbConfigured } from '@/lib/db'
+import { claimEmailSend, releaseEmailClaim, upsertOrder } from '@/lib/db/orders'
 
 /**
  * Stripe webhook endpoint. This is the ONLY place an order is considered
@@ -23,14 +26,43 @@ import { renderBestelmail, estimateDeliveryRange } from '@/lib/mailTemplate'
 const processedEventIds = new Map<string, true>()
 const MAX_TRACKED_EVENTS = 500
 
-function alreadyProcessed(eventId: string): boolean {
-  if (processedEventIds.has(eventId)) return true
+function wasProcessed(eventId: string): boolean {
+  return processedEventIds.has(eventId)
+}
+
+/**
+ * Pas markeren als het event echt is afgehandeld. Zou dit meteen bij
+ * binnenkomst gebeuren, dan zou een retry van Stripe - met hetzelfde
+ * event-id - op een warme instance worden overgeslagen, en juist die
+ * retry is wat een tijdelijke databasestoring moet opvangen.
+ */
+function markProcessed(eventId: string): void {
   processedEventIds.set(eventId, true)
   if (processedEventIds.size > MAX_TRACKED_EVENTS) {
     const oldest = processedEventIds.keys().next().value
     if (oldest) processedEventIds.delete(oldest)
   }
-  return false
+}
+
+/** Fout waarbij de database niet kon garanderen dat er maar één mail uitgaat. */
+class DatabaseGuaranteeError extends Error {
+  constructor(message: string, options?: { cause?: unknown }) {
+    super(message, options)
+    this.name = 'DatabaseGuaranteeError'
+  }
+}
+
+/**
+ * In productie mag een bestelbevestiging nooit uitgaan zonder dat de
+ * database heeft vastgelegd dat hij uitgaat. Valt de database weg, dan
+ * is een 500 het juiste antwoord: Stripe probeert het later opnieuw, en
+ * de klant krijgt zijn mail dan alsnog - precies één keer.
+ *
+ * Lokaal is dat onnodig streng; daar mag je testen zonder database,
+ * zolang luid gelogd wordt dat de dubbelcheck is overgeslagen.
+ */
+function requiresDatabaseGuarantee(): boolean {
+  return process.env.NODE_ENV === 'production'
 }
 
 export async function POST(req: NextRequest) {
@@ -59,27 +91,53 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Ongeldige handtekening' }, { status: 400 })
   }
 
-  if (alreadyProcessed(event.id)) {
+  if (wasProcessed(event.id)) {
     return NextResponse.json({ received: true, duplicate: true })
   }
 
   switch (event.type) {
-    case 'checkout.session.completed': {
+    // Bij iDEAL staat de betaling bij `completed` soms nog op 'unpaid';
+    // Stripe stuurt dan later `async_payment_succeeded`. Allebei afhandelen,
+    // allebei pas handelen als er echt betaald is. De idempotentie in de
+    // database zorgt dat dit nooit twee bevestigingen oplevert.
+    case 'checkout.session.completed':
+    case 'checkout.session.async_payment_succeeded': {
       const session = event.data.object as Stripe.Checkout.Session
+      if (session.payment_status !== 'paid') {
+        console.info('Stripe webhook: sessie nog niet betaald, wachten op async bevestiging.', {
+          sessionId: session.id,
+          paymentStatus: session.payment_status,
+        })
+        break
+      }
       const lineItems = await stripe.checkout.sessions.listLineItems(session.id, { limit: 100 })
 
-      // Two separate emails, both best-effort: a failure in one must not
-      // block the other, and neither may fail the webhook response (Stripe
-      // would keep retrying an already-paid order forever otherwise - the
-      // payment itself is already safely recorded on Stripe's side).
+      // De interne melding aan de winkel staat los van de rest: die mag
+      // nooit de klantbevestiging of het webhook-antwoord tegenhouden.
       try {
         await sendOwnerNotificationEmail(session, lineItems.data)
       } catch (err) {
         console.error('Stripe webhook: interne orderbevestiging versturen mislukt:', err)
       }
+
       try {
-        await sendCustomerConfirmationEmail(session, lineItems.data)
+        await recordPaidOrder(session)
+        await sendCustomerConfirmationEmail(session)
       } catch (err) {
+        if (err instanceof DatabaseGuaranteeError) {
+          // Geen 2xx: Stripe biedt het event later opnieuw aan. De
+          // betaling staat veilig bij Stripe, dus uitstel kost niets -
+          // een dubbele mail bij de klant wel.
+          console.error('Stripe webhook: database niet beschikbaar, 500 zodat Stripe het opnieuw aanbiedt.', {
+            sessionId: session.id,
+            eventId: event.id,
+            oorzaak: err.cause instanceof Error ? err.cause.message : String(err.cause ?? err.message),
+          })
+          return NextResponse.json({ error: 'Database niet beschikbaar' }, { status: 500 })
+        }
+        // Alles wat niet de database is (bijvoorbeeld Resend) mag de
+        // order niet laten vastlopen. De claim is al teruggedraaid, dus
+        // een volgende poging mag opnieuw.
         console.error('Stripe webhook: klantbevestiging versturen mislukt:', err)
       }
       break
@@ -96,6 +154,7 @@ export async function POST(req: NextRequest) {
       break
   }
 
+  markProcessed(event.id)
   return NextResponse.json({ received: true })
 }
 
@@ -202,30 +261,92 @@ async function sendOwnerNotificationEmail(session: Stripe.Checkout.Session, line
  * a substitute for this. Includes the herroepingsrecht (14-day withdrawal
  * right) and business-identity footer required by art. 6:230v BW.
  */
-async function sendCustomerConfirmationEmail(session: Stripe.Checkout.Session, lineItems: Stripe.LineItem[]) {
+/** Legt de betaalde bestelling vast, zodat de rest van de keten erop kan bouwen. */
+async function recordPaidOrder(session: Stripe.Checkout.Session) {
+  if (!isDbConfigured()) {
+    if (requiresDatabaseGuarantee()) {
+      throw new DatabaseGuaranteeError('DATABASE_URL ontbreekt in productie')
+    }
+    console.warn('[lokaal] Order niet vastgelegd: geen DATABASE_URL. In productie zou dit een 500 geven.')
+    return
+  }
+  try {
+    await upsertOrder({
+      stripeSessionId: session.id,
+      orderRef: session.metadata?.orderRef ?? session.id,
+      email: session.customer_details?.email ?? '',
+      placedAt: new Date(session.created * 1000),
+      totalAmount: session.amount_total ?? null,
+    })
+  } catch (err) {
+    if (requiresDatabaseGuarantee()) {
+      throw new DatabaseGuaranteeError('order vastleggen mislukt', { cause: err })
+    }
+    console.warn('[lokaal] Order vastleggen mislukt, ga door zonder:', err)
+  }
+}
+
+/**
+ * De bestelbevestiging naar de klant.
+ *
+ * Het recht om te versturen wordt eerst geclaimd in de database: een
+ * UPDATE die alleen slaagt als de vlag nog leeg is. Komt dezelfde
+ * webhook twee keer binnen, dan wint er precies één. Mislukt het
+ * versturen daarna, dan gaat de claim terug zodat een volgende poging
+ * het opnieuw mag proberen.
+ */
+async function sendCustomerConfirmationEmail(session: Stripe.Checkout.Session) {
   const customerEmail = session.customer_details?.email
   if (!customerEmail) return
 
-  const orderRef = session.metadata?.orderRef ?? session.id
-  const firstName = session.customer_details?.name?.trim().split(/\s+/)[0] || 'daar'
-  // "Verhoogde Hondenbak - M, voor kleine honden" -> "Verhoogde Hondenbak",
-  // matching how app/api/checkout/route.ts builds the line item name.
-  const firstProductName = lineItems[0]?.description?.split(' - ')[0]
+  let claimedInDb = false
+  if (isDbConfigured()) {
+    let maySend: boolean
+    try {
+      maySend = await claimEmailSend(session.id, 'confirmationEmailSentAt')
+    } catch (err) {
+      if (requiresDatabaseGuarantee()) {
+        throw new DatabaseGuaranteeError('mailclaim mislukt', { cause: err })
+      }
+      console.warn('[lokaal] Mailclaim mislukt, verstuur zonder dubbelcheck:', err)
+      maySend = true
+    }
+    if (!maySend) {
+      console.info('Stripe webhook: bevestiging al verstuurd, overgeslagen.', { sessionId: session.id })
+      return
+    }
+    claimedInDb = true
+  } else if (requiresDatabaseGuarantee()) {
+    throw new DatabaseGuaranteeError('DATABASE_URL ontbreekt in productie')
+  } else {
+    console.warn(
+      '[lokaal] Mailclaim OVERGESLAGEN: geen DATABASE_URL, dus geen bescherming tegen een dubbele mail. ' +
+        'In productie zou dit een 500 geven zodat Stripe het later opnieuw aanbiedt.'
+    )
+  }
 
-  const html = renderBestelmail({
-    voornaam: firstName,
-    bestelnummer: orderRef,
-    leverdatum: estimateDeliveryRange(),
-    trackTraceUrl: session.metadata?.trackingUrl || undefined,
-    reviewUrl: firstProductName ? `${SITE_URL}/review?product=${encodeURIComponent(firstProductName)}` : `${SITE_URL}/review`,
-    unsubscribeUrl: `mailto:${business.email}?subject=${encodeURIComponent('Uitschrijven')}`,
-  })
+  try {
+    const data = await buildOrderEmailData(session)
+    // public/legal/ bestaat nog niet, dus de voorwaarden en het
+    // herroepingsformulier gaan niet als bijlage mee. De template laat
+    // de bijbehorende zin dan weg in plaats van te liegen.
+    const mail = orderConfirmationEmail(data, { attachmentsIncluded: false })
 
-  await sendResendEmail({
-    from: `${business.brandName} <orders@dailypetgoods.nl>`,
-    to: customerEmail,
-    replyTo: business.email,
-    subject: `Je bestelling bij ${business.brandName} - ${orderRef}`,
-    html,
-  })
+    await sendResendEmail({
+      from: `${business.brandName} <orders@dailypetgoods.nl>`,
+      to: customerEmail,
+      replyTo: business.email,
+      subject: mail.subject,
+      html: mail.html,
+      text: mail.text,
+    })
+  } catch (err) {
+    // Alleen terugdraaien wat we zelf geclaimd hebben.
+    if (claimedInDb) {
+      await releaseEmailClaim(session.id, 'confirmationEmailSentAt').catch((releaseErr) =>
+        console.error('Stripe webhook: claim terugdraaien mislukt:', releaseErr)
+      )
+    }
+    throw err
+  }
 }

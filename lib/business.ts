@@ -43,8 +43,12 @@ export const POSTCODE_TODO = 'TODO: postcode ontbreekt'
 export const business = {
   /** Consumer-facing brand name, used everywhere in the UI. */
   brandName: 'Daily Pet Goods',
-  /** KVK-registered trading name. Daily Pet Goods trades under this name. */
-  tradingName: 'Daily Lifegoods',
+  /**
+   * De bij de KVK ingeschreven rechtspersoon. "Daily Pet Goods" is de
+   * handelsnaam waaronder deze onderneming naar buiten treedt, en wordt
+   * overal getoond als "handelsnaam van <tradingName>".
+   */
+  tradingName: 'Umber Studio',
   kvkNumber: '99864819',
   btwNumber: 'NL004426224B17',
   email: 'lifegoods.daily@gmail.com',
