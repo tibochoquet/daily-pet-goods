@@ -1,6 +1,14 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
+  /**
+   * public/ zit niet vanzelf in de serverless bundel. De webhook leest
+   * deze twee pdf's om ze als bijlage bij de bestelbevestiging te doen,
+   * dus die moeten expliciet mee.
+   */
+  outputFileTracingIncludes: {
+    '/api/webhooks/stripe': ['./public/legal/**/*'],
+  },
   async redirects() {
     return [
       { source: '/dog-bowls', destination: '/honden#hondenbakken', permanent: true },
