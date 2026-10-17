@@ -150,7 +150,11 @@ async function main() {
         .set({ status: 'betaald', confirmationEmailSentAt: nu, updatedAt: nu })
         .where(eq(orders.stripeSessionId, session.id))
     } else {
-      const verzondenOp = new Date(betaaldOp.getTime() + AANNAME_VERZENDDAGEN * 24 * 60 * 60 * 1000)
+      // Betaaldatum plus drie dagen, maar nooit in de toekomst: bij een
+      // bestelling van gisteren zou dat een verzenddatum opleveren die
+      // nog moet komen, en daar rekent de reviewcron mee.
+      const geschat = betaaldOp.getTime() + AANNAME_VERZENDDAGEN * 24 * 60 * 60 * 1000
+      const verzondenOp = new Date(Math.min(geschat, Date.now()))
       await db
         .update(orders)
         .set({

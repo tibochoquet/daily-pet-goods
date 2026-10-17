@@ -47,7 +47,7 @@ async function isTerugbetaald(stripeSessionId: string): Promise<boolean> {
 }
 
 export async function GET(req: NextRequest) {
-  const secret = process.env.CRON_SECRET
+  const secret = process.env.CRON_SECRET?.trim()
   if (!secret) {
     console.error('CRON_SECRET ontbreekt - cron geweigerd.')
     return NextResponse.json({ error: 'Niet geconfigureerd' }, { status: 500 })
