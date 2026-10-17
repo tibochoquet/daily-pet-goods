@@ -27,6 +27,8 @@ export interface AdminOrder {
   }
   regels: { naam: string; aantal: number }[]
   totaal: number
+  /** Terugbetaald of betwist: zo'n order hoef je niet meer te verzenden. */
+  terugbetaald: boolean
 }
 
 const LEEG = { naam: '', straat: '', postcode: '', plaats: '', land: '' }
@@ -40,6 +42,7 @@ export async function enrichOrders(rows: OrderRow[]): Promise<AdminOrder[]> {
     rows.map(async (row): Promise<AdminOrder> => {
       let klant = { ...LEEG }
       let regels: { naam: string; aantal: number }[] = []
+      let terugbetaald = false
       try {
         const session = await stripe.checkout.sessions.retrieve(row.stripeSessionId)
         const verzend = session.collected_information?.shipping_details
@@ -53,6 +56,14 @@ export async function enrichOrders(rows: OrderRow[]): Promise<AdminOrder[]> {
         }
         const items = await stripe.checkout.sessions.listLineItems(row.stripeSessionId, { limit: 100 })
         regels = items.data.map((r) => ({ naam: r.description ?? '', aantal: r.quantity ?? 1 }))
+
+        // Een terugbetaalde bestelling hoort niet in je werklijst.
+        const pi = typeof session.payment_intent === 'string' ? session.payment_intent : session.payment_intent?.id
+        if (pi) {
+          const charges = await stripe.charges.list({ payment_intent: pi, limit: 1 })
+          const c = charges.data[0]
+          terugbetaald = Boolean(c?.refunded || c?.disputed)
+        }
       } catch (err) {
         // Een order zonder Stripe-gegevens mag de hele lijst niet
         // onbruikbaar maken; je ziet dan nog steeds het bestelnummer.
@@ -72,6 +83,7 @@ export async function enrichOrders(rows: OrderRow[]): Promise<AdminOrder[]> {
         klant,
         regels,
         totaal: row.totalAmount ?? 0,
+        terugbetaald,
       }
     })
   )

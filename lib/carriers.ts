@@ -2,9 +2,9 @@
  * De twee vervoerders waarmee we verzenden, en hoe je bij hun
  * trackingpagina komt.
  *
- * Beide URL-vormen zijn nagelopen: ze geven een 200 terug. Dat bewijst
- * dat de pagina bestaat, niet dat een specifiek nummer klopt - de
- * vervoerder toont bij een onbekend nummer gewoon een nette melding.
+ * De DHL-link is getoetst met een echt zendingsnummer (3SDFC...): het
+ * portaal toont dan het volledige traject. De DPD-link geeft een 200,
+ * maar is nog niet met een echte zending nagelopen.
  */
 
 export const CARRIERS = ['DHL', 'DPD'] as const
@@ -18,7 +18,10 @@ export function trackingUrl(carrier: Carrier, trackingNumber: string): string {
   const nr = trackingNumber.trim()
   switch (carrier) {
     case 'DHL':
-      return `https://www.dhl.com/nl-nl/home/tracking/tracking-ecommerce.html?tracking-id=${encodeURIComponent(nr)}`
+      // DHL Parcel Benelux, het portaal dat bij 3S-nummers hoort.
+      // Nagelopen met een echt zendingsnummer: toont het traject en de
+      // bezorgdatum. De tracker op dhl.com is voor andere nummerreeksen.
+      return `https://my.dhlparcel.nl/home/tracktrace/${encodeURIComponent(nr)}`
     case 'DPD':
       return `https://tracking.dpd.de/status/nl_NL/parcel/${encodeURIComponent(nr)}`
   }

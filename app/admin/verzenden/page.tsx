@@ -21,10 +21,16 @@ export default async function VerzendenPage() {
     )
   }
 
-  const [teVerzenden, mailOpen] = await Promise.all([
+  const [alleTeVerzenden, mailOpen] = await Promise.all([
     findOrdersAwaitingTracking().then(enrichOrders),
     findOrdersAwaitingShippingEmail().then(enrichOrders),
   ])
+
+  // Terugbetaald of betwist? Dan hoeft er niets meer de deur uit. Ze
+  // worden niet stilletjes verborgen maar geteld, zodat je niet gaat
+  // zoeken waar een bestelling gebleven is.
+  const teVerzenden = alleTeVerzenden.filter((o) => !o.terugbetaald)
+  const terugbetaald = alleTeVerzenden.length - teVerzenden.length
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
@@ -39,7 +45,15 @@ export default async function VerzendenPage() {
           Klaar om te verzenden{' '}
           <span className="text-sm font-normal text-[#9CA3AF]">({teVerzenden.length})</span>
         </h2>
-        <p className="text-sm text-[#6B7280] mb-5">Betaald, nog geen trackingnummer.</p>
+        <p className="text-sm text-[#6B7280] mb-5">
+          Betaald, nog geen trackingnummer.
+          {terugbetaald > 0 && (
+            <span className="text-[#9CA3AF]">
+              {' '}
+              ({terugbetaald} terugbetaalde {terugbetaald === 1 ? 'bestelling' : 'bestellingen'} niet getoond)
+            </span>
+          )}
+        </p>
         {teVerzenden.length === 0 ? (
           <p className="text-sm text-[#9CA3AF] bg-white border border-[#E8E2D9] rounded-2xl p-5">
             Niets te verzenden. Alles is de deur uit.
