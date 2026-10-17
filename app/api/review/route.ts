@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 import { business } from '@/lib/business'
 import { products } from '@/lib/products'
+import { isDbConfigured } from '@/lib/db'
+import { findOrderByReviewToken } from '@/lib/db/orders'
 
 const MAX_NAME_LENGTH = 80
 const MAX_TEXT_LENGTH = 2000
@@ -23,6 +25,21 @@ export async function POST(req: NextRequest) {
     const rating = Number(formData.get('rating'))
     const text = formData.get('text')?.toString().trim()
     const photo = formData.get('photo')
+    const token = formData.get('token')?.toString().trim()
+
+    // Het token komt uit de reviewmail en is aan een bestelling
+    // gekoppeld. Klopt het, dan weten we dat deze persoon echt gekocht
+    // heeft. Klopt het niet, dan weigeren we de review niet - iedereen
+    // mag er een achterlaten - maar dan staat er geen keurmerk bij.
+    let geverifieerdeOrder: string | null = null
+    if (token && isDbConfigured()) {
+      try {
+        const order = await findOrderByReviewToken(token)
+        geverifieerdeOrder = order?.orderRef ?? null
+      } catch (err) {
+        console.error('Review: token controleren mislukt:', err)
+      }
+    }
 
     if (!name || name.length > MAX_NAME_LENGTH) {
       return NextResponse.json({ ok: false, error: 'Vul je naam in' }, { status: 400 })
@@ -53,14 +70,15 @@ export async function POST(req: NextRequest) {
     const { error } = await resend.emails.send({
       from: `${business.brandName} <contact@dailypetgoods.nl>`,
       to: business.email,
-      subject: `Nieuwe review: ${product} (${rating}/5)${attachments.length ? ' [+foto]' : ''}`,
+      subject: `Nieuwe review: ${product} (${rating}/5)${geverifieerdeOrder ? ' [geverifieerd]' : ''}${attachments.length ? ' [+foto]' : ''}`,
       html: `
         <div style="font-family:sans-serif;max-width:560px;margin:0 auto;color:#1A1A1A;">
           <h2 style="color:#2E4A3C;margin-bottom:4px;">Nieuwe review</h2>
           <p style="font-size:14px;color:#4B5563;">
             <strong>Van:</strong> ${name}<br/>
             <strong>Product:</strong> ${product}<br/>
-            <strong>Beoordeling:</strong> ${rating}/5
+            <strong>Beoordeling:</strong> ${rating}/5<br/>
+            <strong>Geverifieerde koper:</strong> ${geverifieerdeOrder ? `ja, bestelling ${geverifieerdeOrder}` : 'niet aangetoond'}
           </p>
           <p style="font-size:14px;color:#4B5563;white-space:pre-wrap;">${text}</p>
           ${attachments.length ? '<p style="font-size:12px;color:#9CA3AF;">Foto als bijlage meegestuurd - maakt automatisch kans op de maandelijkse favoriet.</p>' : ''}

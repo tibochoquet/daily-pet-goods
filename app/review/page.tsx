@@ -10,11 +10,11 @@ export const metadata: Metadata = {
 }
 
 interface Props {
-  searchParams: Promise<{ product?: string }>
+  searchParams: Promise<{ product?: string; t?: string; rating?: string }>
 }
 
 export default async function ReviewPage({ searchParams }: Props) {
-  const { product } = await searchParams
+  const { product, t, rating } = await searchParams
   const productNames = products.map((p) => p.name)
 
   return (
@@ -28,7 +28,12 @@ export default async function ReviewPage({ searchParams }: Props) {
           <p className="text-sm text-[#4A5A50] leading-relaxed mb-8 text-center">
             Een review met foto maakt elke maand kans op onze favoriete inzending.
           </p>
-          <ReviewSubmitForm products={productNames} initialProduct={product} />
+          <ReviewSubmitForm
+            products={productNames}
+            initialProduct={product}
+            reviewToken={t}
+            initialRating={rating ? Number(rating) : undefined}
+          />
         </div>
       </div>
     </div>

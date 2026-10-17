@@ -17,7 +17,7 @@ const faqs = [
   {
     question: 'Hoe snel wordt mijn bestelling geleverd?',
     answer:
-      'We verzenden je bestelling binnen 1 tot 2 werkdagen na je betaling, via DHL en gratis voor jou. Bezorging binnen Nederland duurt daarna gemiddeld 1 tot 3 werkdagen.',
+      'We verzenden je bestelling binnen 1 tot 2 werkdagen na je betaling, met DHL of DPD en gratis voor jou. Je krijgt van ons een e-mail met een track & trace-link. Bezorging binnen Nederland duurt daarna gemiddeld 1 tot 3 werkdagen.',
   },
   {
     question: 'Hoe kies ik de juiste maat verhoogde voerbak?',

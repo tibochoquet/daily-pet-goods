@@ -1,4 +1,4 @@
-import { and, eq, isNull, sql } from 'drizzle-orm'
+import { and, eq, isNotNull, isNull, lte, sql } from 'drizzle-orm'
 import type { AnyPgColumn } from 'drizzle-orm/pg-core'
 import { getDb } from './index'
 import { orders, type OrderRow } from './schema'
@@ -145,4 +145,101 @@ export async function pingDb(): Promise<boolean> {
   const db = getDb()
   await db.execute(sql`select 1`)
   return true
+}
+
+// ---------------------------------------------------------------------
+// Verzenden en reviews
+// ---------------------------------------------------------------------
+
+/** Betaald, maar nog geen trackingnummer: deze moeten nog de deur uit. */
+export async function findOrdersAwaitingTracking(): Promise<OrderRow[]> {
+  const db = getDb()
+  return db
+    .select()
+    .from(orders)
+    .where(and(eq(orders.status, 'betaald'), isNull(orders.trackingNumber)))
+    .orderBy(orders.placedAt)
+}
+
+/**
+ * Nummer staat er wel in, maar de mail is niet verstuurd. Dat gebeurt
+ * als Resend hapert nadat het nummer al is opgeslagen - de claim wordt
+ * dan teruggedraaid en de order belandt hier.
+ */
+export async function findOrdersAwaitingShippingEmail(): Promise<OrderRow[]> {
+  const db = getDb()
+  return db
+    .select()
+    .from(orders)
+    .where(and(isNotNull(orders.trackingNumber), isNull(orders.shippingEmailSentAt)))
+    .orderBy(orders.placedAt)
+}
+
+/**
+ * Verzonden, lang genoeg geleden, nog geen reviewmail en niet
+ * afgemeld. Oudste eerst, zodat een achterstand vooraan leegloopt.
+ */
+export async function findOrdersDueForReview(daysAfterShipping: number, limit: number): Promise<OrderRow[]> {
+  const db = getDb()
+  const grens = new Date(Date.now() - daysAfterShipping * 24 * 60 * 60 * 1000)
+  return db
+    .select()
+    .from(orders)
+    .where(
+      and(
+        eq(orders.status, 'verzonden'),
+        isNotNull(orders.shippedAt),
+        lte(orders.shippedAt, grens),
+        isNull(orders.reviewEmailSentAt),
+        eq(orders.reviewOptOut, false)
+      )
+    )
+    .orderBy(orders.shippedAt)
+    .limit(limit)
+}
+
+/**
+ * Corrigeert alleen de trackinggegevens. Raakt `shippingEmailSentAt`
+ * niet aan, dus een verbeterd nummer levert nooit een tweede mail op.
+ */
+export async function correctTracking(
+  stripeSessionId: string,
+  data: { carrier: string; trackingNumber: string; trackingUrl: string }
+): Promise<void> {
+  const db = getDb()
+  await db
+    .update(orders)
+    .set({ ...data, updatedAt: new Date() })
+    .where(eq(orders.stripeSessionId, stripeSessionId))
+}
+
+export async function findOrderByReviewToken(token: string): Promise<OrderRow | null> {
+  const db = getDb()
+  const [row] = await db.select().from(orders).where(eq(orders.reviewToken, token)).limit(1)
+  return row ?? null
+}
+
+/** Afmelden voor reviewverzoeken. Alleen via een POST aanroepen. */
+export async function setReviewOptOut(token: string): Promise<boolean> {
+  const db = getDb()
+  const bijgewerkt = await db
+    .update(orders)
+    .set({ reviewOptOut: true, updatedAt: new Date() })
+    .where(eq(orders.reviewToken, token))
+    .returning({ id: orders.id })
+  return bijgewerkt.length > 0
+}
+
+/** Geeft het bestaande reviewtoken terug, of maakt er een als het er nog niet is. */
+export async function ensureReviewToken(stripeSessionId: string, maakToken: () => string): Promise<string | null> {
+  const db = getDb()
+  const bestaand = await findOrderBySessionId(stripeSessionId)
+  if (!bestaand) return null
+  if (bestaand.reviewToken) return bestaand.reviewToken
+  const token = maakToken()
+  await db
+    .update(orders)
+    .set({ reviewToken: token, updatedAt: new Date() })
+    .where(eq(orders.stripeSessionId, stripeSessionId))
+  return token
 }
