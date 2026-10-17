@@ -30,7 +30,10 @@ function vraagOmWachtwoord(): NextResponse {
 }
 
 export function proxy(request: NextRequest) {
-  const wachtwoord = process.env.ADMIN_PASSWORD
+  // Trimmen, want een meegeplakte spatie of regeleinde in de
+  // omgevingsvariabele maakt het wachtwoord anders onvindbaar - dat is
+  // op dit project eerder gebeurd met de Google-tag.
+  const wachtwoord = process.env.ADMIN_PASSWORD?.trim()
   if (!wachtwoord) {
     console.error('ADMIN_PASSWORD ontbreekt - beheerpagina geweigerd.')
     return new NextResponse('Beheer is niet geconfigureerd', { status: 500, headers: { 'Cache-Control': 'no-store' } })
