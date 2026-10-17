@@ -24,10 +24,10 @@ export default function VerzendingPage() {
         <h2>2. Levertijden</h2>
         <p>
           We verwerken en verzenden je bestelling binnen 1 tot 2 werkdagen nadat je betaling is gelukt. Daarna
-          doet DHL er gemiddeld nog 1 tot 3 werkdagen over om je pakket te bezorgen.
+          doet de vervoerder er gemiddeld nog 1 tot 3 werkdagen over om je pakket te bezorgen.
         </p>
         <p>
-          Deze termijnen zijn indicatief: bij onvoorziene vertraging bij DHL, of drukte rond bijvoorbeeld
+          Deze termijnen zijn indicatief: bij onvoorziene vertraging bij de vervoerder, of drukte rond bijvoorbeeld
           feestdagen, kan de bezorging iets langer duren. Verwachten we dat een levering merkbaar langer gaat
           duren, dan laten we je dat zo snel mogelijk weten.
         </p>
@@ -41,8 +41,8 @@ export default function VerzendingPage() {
       <section>
         <h2>4. Track &amp; trace</h2>
         <p>
-          Zodra DHL je pakket heeft opgehaald, ontvang je van DHL een track &amp; trace-code waarmee je de
-          bezorging kunt volgen.
+          Zodra we je pakket hebben verzonden, ontvang je van ons een e-mail met een track &amp; trace-link
+          van DHL of DPD. Daarna doet de vervoerder er gemiddeld nog 1 tot 3 werkdagen over.
         </p>
       </section>
 

@@ -6,14 +6,17 @@ import { Star, CheckCircle2 } from 'lucide-react'
 interface ReviewSubmitFormProps {
   products: string[]
   initialProduct?: string
+  /** Komt uit de reviewmail; bewijst dat deze persoon echt besteld heeft. */
+  reviewToken?: string
+  initialRating?: number
 }
 
-export default function ReviewSubmitForm({ products, initialProduct }: ReviewSubmitFormProps) {
+export default function ReviewSubmitForm({ products, initialProduct, reviewToken, initialRating }: ReviewSubmitFormProps) {
   const [name, setName] = useState('')
   const [product, setProduct] = useState(
     initialProduct && products.includes(initialProduct) ? initialProduct : (products[0] ?? '')
   )
-  const [rating, setRating] = useState(5)
+  const [rating, setRating] = useState(initialRating && initialRating >= 1 && initialRating <= 5 ? initialRating : 5)
   const [text, setText] = useState('')
   const [photo, setPhoto] = useState<File | null>(null)
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
@@ -37,6 +40,7 @@ export default function ReviewSubmitForm({ products, initialProduct }: ReviewSub
       formData.set('name', name)
       formData.set('product', product)
       formData.set('rating', String(rating))
+      if (reviewToken) formData.set('token', reviewToken)
       formData.set('text', text)
       if (photo) formData.set('photo', photo)
 
