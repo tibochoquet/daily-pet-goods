@@ -15,6 +15,13 @@
       "when": 1792314334455,
       "tag": "0001_regular_bullseye",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1792317232405,
+      "tag": "0002_workable_ender_wiggin",
+      "breakpoints": true
     }
   ]
 }

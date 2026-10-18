@@ -3,7 +3,7 @@ import { timingSafeEqual } from 'node:crypto'
 import { getStripe } from '@/lib/stripe'
 import { isDbConfigured } from '@/lib/db'
 import { findOrdersDueForReview } from '@/lib/db/orders'
-import { AlVerstuurdError, sendReviewRequestEmail } from '@/lib/mailSenders'
+import { AlVerstuurdError, GeblokkeerdeMailError, sendReviewRequestEmail } from '@/lib/mailSenders'
 import {
   REVIEW_EMAIL_PAUSE_MS,
   REVIEW_EMAILS_PER_CRON_RUN,
@@ -69,6 +69,7 @@ export async function GET(req: NextRequest) {
   const kandidaten = await findOrdersDueForReview(DAGEN_NA_VERZENDING, MAX_PER_RUN)
   let verstuurd = 0
   let overgeslagen = 0
+  let geblokkeerd = 0
   const fouten: string[] = []
 
   for (const order of kandidaten) {
@@ -85,13 +86,19 @@ export async function GET(req: NextRequest) {
         overgeslagen++
         continue
       }
+      if (err instanceof GeblokkeerdeMailError) {
+        // Buiten productie: geen echte klant mailen. De claim is al
+        // teruggedraaid, dus in productie gaat hij alsnog uit.
+        geblokkeerd++
+        continue
+      }
       fouten.push(order.orderRef)
       console.error(`Reviewcron: ${order.orderRef} mislukt:`, err)
     }
     await new Promise((r) => setTimeout(r, PAUZE_MS))
   }
 
-  const samenvatting = { gevonden: kandidaten.length, verstuurd, overgeslagen, mislukt: fouten.length }
+  const samenvatting = { gevonden: kandidaten.length, verstuurd, overgeslagen, geblokkeerd, mislukt: fouten.length }
   console.info('Reviewcron klaar:', samenvatting)
   return NextResponse.json({ ok: true, ...samenvatting, fouten })
 }

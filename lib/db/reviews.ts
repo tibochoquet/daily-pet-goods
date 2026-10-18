@@ -97,3 +97,13 @@ export async function findPaidOrderByRefAndEmail(orderRef: string, email: string
     .limit(1)
   return row ?? null
 }
+
+/** Welke producten al beoordeeld zijn voor deze bestelling. */
+export async function findReviewedSlugsForOrder(orderId: number): Promise<string[]> {
+  const db = getDb()
+  const rijen = await db
+    .select({ slug: reviews.productSlug })
+    .from(reviews)
+    .where(eq(reviews.orderId, orderId))
+  return rijen.map((r) => r.slug)
+}

@@ -1,35 +1,59 @@
 import 'server-only'
+import { and, eq, gt, lt, sql } from 'drizzle-orm'
+import { getDb, isDbConfigured } from './db'
+import { rateLimitHits } from './db/schema'
 
 /**
- * Eenvoudige snelheidsbegrenzing per IP.
+ * Snelheidsbegrenzing per sleutel, geteld in de database.
  *
- * Bewust in het geheugen: er is geen gedeelde opslag voor dit soort
- * korte tellingen, dus de teller reset bij een koude start en wordt
- * niet gedeeld tussen instances. Dat maakt hem niet waterdicht, maar
- * wel goed genoeg om geautomatiseerd gehamer af te remmen. Wie dit
- * steviger wil, zet de teller in Vercel KV of Upstash.
+ * Eerder stond deze teller in het geheugen van de server. Dat leek te
+ * werken maar deed op Vercel bijna niets: elke aanroep kan op een
+ * andere instance landen, en instances worden voortdurend opgeruimd, dus
+ * de teller begon telkens opnieuw. Juist bij geautomatiseerd gehamer -
+ * precies waar hij voor is - hielp hij dus niet.
  *
- * Dit stond eerder los in twee routes; hier staat het één keer.
+ * Nu is het één rij per poging, geteld over een tijdvenster. Dat kost
+ * een paar milliseconden extra per verzoek en dat is het waard.
  */
 
-const MAX_TRACKED_KEYS = 500
-
-interface Begrenzer {
-  (sleutel: string): boolean
+export interface Begrenzing {
+  bucket: string
+  maxPerWindow: number
+  windowMs: number
 }
 
-export function createRateLimiter(maxPerWindow: number, windowMs: number): Begrenzer {
-  const pogingen = new Map<string, number>()
+/**
+ * Telt deze poging mee en zegt of de grens bereikt is.
+ *
+ * Zonder database laten we het verzoek door in plaats van het te
+ * blokkeren: een kapotte teller mag geen klanten buitensluiten. Dat
+ * wordt wel gelogd, want het hoort niet voor te komen.
+ */
+export async function teVeelPogingen(sleutel: string, { bucket, maxPerWindow, windowMs }: Begrenzing): Promise<boolean> {
+  if (!isDbConfigured()) {
+    console.error(`Snelheidsbegrenzing "${bucket}" overgeslagen: geen DATABASE_URL.`)
+    return false
+  }
 
-  return function teVeelPogingen(sleutel: string): boolean {
-    const aantal = pogingen.get(sleutel) ?? 0
+  try {
+    const db = getDb()
+    const grens = new Date(Date.now() - windowMs)
+
+    // Oude pogingen van deze sleutel opruimen, zodat de tabel niet
+    // ongemerkt volloopt.
+    await db.delete(rateLimitHits).where(and(eq(rateLimitHits.key, sleutel), lt(rateLimitHits.createdAt, grens)))
+
+    const [{ aantal }] = await db
+      .select({ aantal: sql<number>`count(*)::int` })
+      .from(rateLimitHits)
+      .where(and(eq(rateLimitHits.bucket, bucket), eq(rateLimitHits.key, sleutel), gt(rateLimitHits.createdAt, grens)))
+
     if (aantal >= maxPerWindow) return true
-    pogingen.set(sleutel, aantal + 1)
-    if (pogingen.size > MAX_TRACKED_KEYS) {
-      const oudste = pogingen.keys().next().value
-      if (oudste) pogingen.delete(oudste)
-    }
-    setTimeout(() => pogingen.delete(sleutel), windowMs).unref?.()
+
+    await db.insert(rateLimitHits).values({ bucket, key: sleutel })
+    return false
+  } catch (err) {
+    console.error(`Snelheidsbegrenzing "${bucket}" mislukt:`, err)
     return false
   }
 }

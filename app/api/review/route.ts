@@ -6,7 +6,7 @@ import { products } from '@/lib/products'
 import { isDbConfigured } from '@/lib/db'
 import { findOrderByReviewToken } from '@/lib/db/orders'
 import { createReview, DubbeleReviewError, findPaidOrderByRefAndEmail } from '@/lib/db/reviews'
-import { clientIp, createRateLimiter } from '@/lib/rateLimit'
+import { clientIp, teVeelPogingen } from '@/lib/rateLimit'
 import { isAllowedPhotoType, MAX_NAME_LENGTH, MAX_TEXT_LENGTH, PHOTO_MAX_BYTES, PHOTO_TYPES } from '@/lib/reviews'
 
 /**
@@ -28,7 +28,7 @@ const NIET_GEVONDEN = 'We kunnen deze bestelling niet vinden. Controleer je best
 
 // Tien pogingen per kwartier: ruim voor wie zich vertypt, krap voor wie
 // bestelnummers zit te raden.
-const teVeelPogingen = createRateLimiter(10, 15 * 60 * 1000)
+const BEGRENZING = { bucket: 'review', maxPerWindow: 10, windowMs: 15 * 60 * 1000 }
 
 const PRODUCT_BY_NAME = new Map(products.map((p) => [p.name, p]))
 
@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
     console.error('Review: DATABASE_URL ontbreekt.')
     return NextResponse.json({ ok: false, error: 'Even niet beschikbaar. Probeer het later opnieuw.' }, { status: 503 })
   }
-  if (teVeelPogingen(clientIp(req))) {
+  if (await teVeelPogingen(clientIp(req), BEGRENZING)) {
     return NextResponse.json(
       { ok: false, error: 'Te veel pogingen. Probeer het over een kwartier opnieuw.' },
       { status: 429 }

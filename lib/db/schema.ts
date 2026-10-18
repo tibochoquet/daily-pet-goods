@@ -107,3 +107,25 @@ export const reviews = pgTable(
 
 export type ReviewRow = typeof reviews.$inferSelect
 export type NewReviewRow = typeof reviews.$inferInsert
+
+/**
+ * Pogingen per sleutel, voor de snelheidsbegrenzing.
+ *
+ * Dit stond eerder in het geheugen van de server. Op Vercel draait elke
+ * aanroep mogelijk op een andere instance, en die worden voortdurend
+ * opgeruimd, dus zo'n teller begon telkens opnieuw - precies wanneer je
+ * hem nodig hebt werkte hij niet. Eén rij per poging; tellen gebeurt
+ * over een tijdvenster.
+ */
+export const rateLimitHits = pgTable(
+  'rate_limit_hits',
+  {
+    id: serial('id').primaryKey(),
+    /** Waarvoor geteld wordt, bijvoorbeeld 'review'. */
+    bucket: text('bucket').notNull(),
+    /** Waarop geteld wordt, meestal een IP-adres. */
+    key: text('key').notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [index('rate_limit_hits_lookup_idx').on(t.bucket, t.key, t.createdAt)]
+)

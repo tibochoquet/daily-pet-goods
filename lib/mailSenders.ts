@@ -20,6 +20,48 @@ import { trackingUrl, type Carrier } from './carriers'
 
 const AFZENDER = `${business.brandName} <orders@dailypetgoods.nl>`
 
+/**
+ * Buiten productie mag er nooit een mail bij een echte klant belanden.
+ *
+ * Een previewdeploy en een lokale run praten met dezelfde database als
+ * productie, dus zonder deze rem zou een testje met de cron zo tien
+ * echte klanten mailen. Alleen adressen van de winkel zelf gaan door.
+ * Wil je dat bewust doorbreken, zet dan ALLOW_REAL_MAILS=1.
+ */
+function magMailen(ontvanger: string): boolean {
+  if (process.env.ALLOW_REAL_MAILS === '1') return true
+  // VERCEL_ENV en niet NODE_ENV: een previewdeploy wordt door Vercel
+  // gebouwd met NODE_ENV=production, dus daarop afgaan zou de rem juist
+  // op preview uitschakelen - precies waar hij nodig is, want preview
+  // deelt de productiedatabase.
+  const omgeving = process.env.VERCEL_ENV ?? (process.env.NODE_ENV === 'production' ? 'production' : 'development')
+  if (omgeving === 'production') return true
+
+  const adres = ontvanger.trim().toLowerCase()
+  const eigen = business.email.toLowerCase()
+  // Ook plusadressen van de winkel zelf, zoals naam+DPG-123@gmail.com.
+  const basis = eigen.split('@')[0].split('+')[0]
+  const domein = eigen.split('@')[1]
+  const isEigen = adres === eigen || (adres.startsWith(`${basis}+`) && adres.endsWith(`@${domein}`))
+
+  if (!isEigen) {
+    console.warn(
+      `Mail naar ${adres} geblokkeerd: buiten productie versturen we alleen naar de winkel zelf. ` +
+        'Zet ALLOW_REAL_MAILS=1 als je dit bewust wilt doorbreken.'
+    )
+  }
+  return isEigen
+}
+
+class GeblokkeerdeMailError extends Error {
+  constructor(ontvanger: string) {
+    super(`Mail naar ${ontvanger} geblokkeerd buiten productie.`)
+    this.name = 'GeblokkeerdeMailError'
+  }
+}
+
+export { GeblokkeerdeMailError }
+
 export function nieuwReviewToken(): string {
   return randomBytes(24).toString('base64url')
 }
@@ -50,6 +92,7 @@ export async function sendShippingEmail(
       trackingUrl: trackingUrl(carrier, trackingNumber),
     })
 
+    if (!magMailen(data.email)) throw new GeblokkeerdeMailError(data.email)
     await sendResendEmail({
       from: AFZENDER,
       to: data.email,
@@ -87,6 +130,7 @@ export async function sendReviewRequestEmail(stripeSessionId: string): Promise<v
       unsubscribeUrl: `${SITE_URL}/afmelden?t=${encodeURIComponent(token)}`,
     })
 
+    if (!magMailen(data.email)) throw new GeblokkeerdeMailError(data.email)
     await sendResendEmail({
       from: AFZENDER,
       to: data.email,

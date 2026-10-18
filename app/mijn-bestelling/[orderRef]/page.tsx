@@ -12,7 +12,11 @@ import { business } from '@/lib/business'
 import Badge from '@/components/ui/Badge'
 import OrderAccessGate from '@/components/orders/OrderAccessGate'
 import ReturnRequestFlow from '@/components/orders/ReturnRequestFlow'
-import ReviewForm from '@/components/orders/ReviewForm'
+import ReviewLinks from '@/components/orders/ReviewLinks'
+import { isDbConfigured } from '@/lib/db'
+import { ensureReviewToken, findOrderBySessionId } from '@/lib/db/orders'
+import { findReviewedSlugsForOrder } from '@/lib/db/reviews'
+import { nieuwReviewToken } from '@/lib/mailSenders'
 
 export const metadata: Metadata = {
   title: 'Bestelling bekijken',
@@ -31,6 +35,21 @@ export default async function OrderDetailPage({ params }: Props) {
   const orderAccessEmail = verifyOrderAccessToken(cookieStore.get(orderAccessCookieName(orderRef))?.value, orderRef)
   const accountEmail = verifyAccountSessionToken(cookieStore.get(ACCOUNT_SESSION_COOKIE)?.value)
   const order = await resolveAuthorizedOrder(orderRef, { orderAccessEmail, accountEmail })
+
+  // Het reviewtoken en wat er al beoordeeld is komen uit onze eigen
+  // database; Stripe weet daar niets van. Zonder database tonen we
+  // gewoon geen reviewlinks in plaats van de pagina te laten vallen.
+  let reviewToken: string | null = null
+  let reviewedSlugs: string[] = []
+  if (order && isDbConfigured()) {
+    try {
+      reviewToken = await ensureReviewToken(order.sessionId, nieuwReviewToken)
+      const rij = await findOrderBySessionId(order.sessionId)
+      if (rij) reviewedSlugs = await findReviewedSlugsForOrder(rij.id)
+    } catch (err) {
+      console.error('Bestelpagina: reviewgegevens ophalen mislukt:', err)
+    }
+  }
 
   if (!order) {
     return (
@@ -129,7 +148,7 @@ export default async function OrderDetailPage({ params }: Props) {
           <Star size={18} className="text-[#2C4A3E]" />
           Review schrijven
         </h2>
-        <ReviewForm order={order} />
+        <ReviewLinks items={order.items} reviewToken={reviewToken} reviewedSlugs={reviewedSlugs} />
       </div>
 
       {/* Contact */}
