@@ -19,14 +19,20 @@ export default function ReviewSubmitForm({ products, initialProduct, reviewToken
   const [rating, setRating] = useState(initialRating && initialRating >= 1 && initialRating <= 5 ? initialRating : 5)
   const [text, setText] = useState('')
   const [photo, setPhoto] = useState<File | null>(null)
+  const [photoConsent, setPhotoConsent] = useState(false)
+  // Zonder token moet de klant zich aan een bestelling koppelen. Dat is
+  // de weg voor wie via de flyer in de doos hier terechtkomt.
+  const [orderRef, setOrderRef] = useState('')
+  const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
   const [error, setError] = useState('')
+  const heeftToken = Boolean(reviewToken)
 
   if (status === 'sent') {
     return (
       <div className="flex items-center gap-3 bg-[#2E4A3C]/10 text-[#2E4A3C] rounded-md p-4 text-sm">
         <CheckCircle2 size={20} className="shrink-0" />
-        <span>Bedankt voor je review!</span>
+        <span>Bedankt voor je review! We kijken hem na en plaatsen hem daarna op de site.</span>
       </div>
     )
   }
@@ -41,8 +47,15 @@ export default function ReviewSubmitForm({ products, initialProduct, reviewToken
       formData.set('product', product)
       formData.set('rating', String(rating))
       if (reviewToken) formData.set('token', reviewToken)
+      else {
+        formData.set('orderRef', orderRef)
+        formData.set('email', email)
+      }
       formData.set('text', text)
-      if (photo) formData.set('photo', photo)
+      if (photo) {
+        formData.set('photo', photo)
+        formData.set('photoConsent', photoConsent ? 'true' : 'false')
+      }
 
       const res = await fetch('/api/review', { method: 'POST', body: formData })
       const data = await res.json()
@@ -60,6 +73,36 @@ export default function ReviewSubmitForm({ products, initialProduct, reviewToken
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
+      {!heeftToken && (
+        <div className="bg-white/60 border border-[#DCD5C7] rounded-md p-4 space-y-3">
+          <p className="text-sm text-[#4A5A50]">
+            Vul je bestelnummer en e-mailadres in, dan weten we zeker dat je review van een koper komt. Je
+            bestelnummer staat in je bestelbevestiging en begint met DPG.
+          </p>
+          <div>
+            <label className="block text-sm font-medium text-[#2E4A3C] mb-1.5">Bestelnummer</label>
+            <input
+              required
+              value={orderRef}
+              onChange={(e) => setOrderRef(e.target.value)}
+              placeholder="DPG-XXXXXXX"
+              className="w-full bg-white border border-[#DCD5C7] rounded-md px-4 py-3 text-sm text-[#2E4A3C] focus:outline-none focus:border-[#2E4A3C] transition-colors"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-[#2E4A3C] mb-1.5">E-mailadres van je bestelling</label>
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="jouw@email.nl"
+              className="w-full bg-white border border-[#DCD5C7] rounded-md px-4 py-3 text-sm text-[#2E4A3C] focus:outline-none focus:border-[#2E4A3C] transition-colors"
+            />
+          </div>
+        </div>
+      )}
+
       <div>
         <label className="block text-sm font-medium text-[#2E4A3C] mb-1.5">Naam</label>
         <input
@@ -111,17 +154,29 @@ export default function ReviewSubmitForm({ products, initialProduct, reviewToken
         <label className="block text-sm font-medium text-[#2E4A3C] mb-1.5">Foto (optioneel)</label>
         <input
           type="file"
-          accept="image/*"
+          accept="image/jpeg,image/png,image/heic,image/heif,image/webp"
           onChange={(e) => setPhoto(e.target.files?.[0] ?? null)}
           className="w-full text-sm text-[#4A5A50] file:mr-4 file:py-2.5 file:px-4 file:rounded-md file:border-0 file:bg-[#2E4A3C] file:text-white file:text-sm file:font-medium file:cursor-pointer"
         />
+        <p className="text-xs text-[#4A5A50]/70 mt-1.5">jpg, png, heic of webp, maximaal 5 MB.</p>
+        {photo && (
+          <label className="flex items-start gap-2.5 mt-3 text-sm text-[#4A5A50] cursor-pointer">
+            <input
+              type="checkbox"
+              checked={photoConsent}
+              onChange={(e) => setPhotoConsent(e.target.checked)}
+              className="mt-0.5 shrink-0 accent-[#2E4A3C]"
+            />
+            <span>Ik geef toestemming om mijn foto bij mijn review te tonen.</span>
+          </label>
+        )}
       </div>
 
       {status === 'error' && <p className="text-sm text-[#C0764C]">{error}</p>}
 
       <button
         type="submit"
-        disabled={status === 'sending'}
+        disabled={status === 'sending' || (Boolean(photo) && !photoConsent)}
         className="w-full bg-[#C0764C] text-white font-semibold py-3.5 rounded-md hover:opacity-90 transition-opacity text-sm disabled:opacity-60"
       >
         {status === 'sending' ? 'Bezig…' : 'Review versturen'}

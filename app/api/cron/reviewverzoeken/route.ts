@@ -4,6 +4,11 @@ import { getStripe } from '@/lib/stripe'
 import { isDbConfigured } from '@/lib/db'
 import { findOrdersDueForReview } from '@/lib/db/orders'
 import { AlVerstuurdError, sendReviewRequestEmail } from '@/lib/mailSenders'
+import {
+  REVIEW_EMAIL_PAUSE_MS,
+  REVIEW_EMAILS_PER_CRON_RUN,
+  REVIEW_REQUEST_DAYS_AFTER_SHIPPING,
+} from '@/lib/reviews'
 
 /**
  * Dagelijkse reviewverzoeken, 8 dagen na verzending.
@@ -16,10 +21,11 @@ import { AlVerstuurdError, sendReviewRequestEmail } from '@/lib/mailSenders'
  * over een paar dagen leeg zonder dat Resend wordt overvraagd.
  */
 
-const DAGEN_NA_VERZENDING = 8
-const MAX_PER_RUN = 15
-// Resend staat een paar mails per seconde toe; 400 ms ertussen is ruim.
-const PAUZE_MS = 400
+// De termijn en de limieten staan in lib/reviews.ts, zodat ze ook
+// kloppen met wat we klanten vertellen.
+const DAGEN_NA_VERZENDING = REVIEW_REQUEST_DAYS_AFTER_SHIPPING
+const MAX_PER_RUN = REVIEW_EMAILS_PER_CRON_RUN
+const PAUZE_MS = REVIEW_EMAIL_PAUSE_MS
 
 function bevoegd(req: NextRequest, secret: string): boolean {
   const header = req.headers.get('authorization') ?? ''
