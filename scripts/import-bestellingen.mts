@@ -14,15 +14,40 @@
  * met --allow-test, bedoeld om eerst te oefenen op een Neon-branch.
  */
 import Stripe from 'stripe'
-import { readEnvLocal } from './env-local.mjs'
+import { createInterface } from 'node:readline/promises'
 import { upsertOrder, findOrderBySessionId } from '../lib/db/orders.js'
 import { getDb } from '../lib/db/index.js'
 import { orders } from '../lib/db/schema.js'
-import { eq } from 'drizzle-orm'
+import { eq, sql } from 'drizzle-orm'
 import { randomBytes } from 'node:crypto'
 
 const APPLY = process.argv.includes('--apply')
 const ALLOW_TEST = process.argv.includes('--allow-test')
+/**
+ * Zet elk klantadres om naar tibo.choquet+<bestelnummer>@gmail.com.
+ * Zo kun je op een dev-database de hele keten uitproberen zonder dat
+ * er ook maar één mail bij een echte klant kan belanden.
+ */
+const TEST_MAILS = process.argv.includes('--test-mails')
+/**
+ * Alleen bestellingen van vóór deze datum importeren.
+ *
+ * Dit script bestaat voor de achterstand van vóórdat de webhook orders
+ * ging wegschrijven. Alles wat daarna binnenkomt regelt de webhook zelf.
+ * Zonder deze grens zou een verse bestelling als 'verzonden' en 'al
+ * gemaild' worden weggeschreven, en dan krijgt die klant nooit een
+ * verzendmail en verschijnt hij niet in /admin/verzenden.
+ */
+const VOOR_ARG = process.argv.find((a) => a.startsWith('--before='))
+const VOOR: Date | null = VOOR_ARG ? new Date(VOOR_ARG.split('=')[1]) : null
+const TEST_MAIL_BASIS = 'tibo.choquet'
+const TEST_MAIL_DOMEIN = 'gmail.com'
+
+function mailAdresVoor(echt: string, orderRef: string): string {
+  if (!TEST_MAILS) return echt
+  const veiligeRef = orderRef.replace(/[^A-Za-z0-9-]/g, '')
+  return `${TEST_MAIL_BASIS}+${veiligeRef}@${TEST_MAIL_DOMEIN}`
+}
 
 /** De enige bestelling die nog verzonden moet worden. */
 const NOG_TE_VERZENDEN = 'manou baert'
@@ -47,9 +72,29 @@ async function isTerugbetaaldOfBetwist(stripe: Stripe, s: Stripe.Checkout.Sessio
   return Boolean(c?.refunded || c?.disputed)
 }
 
+/** Host uit een connectiestring, zonder het wachtwoord te tonen. */
+function hostVan(url: string): string {
+  const m = url.match(/@([^/]+)\//)
+  return m ? m[1] : '(onbekend)'
+}
+
 async function main() {
-  const env = readEnvLocal()
-  const key = process.env.STRIPE_LIVE_SECRET_KEY ?? env.STRIPE_LIVE_SECRET_KEY
+  // Bewust NIET uit .env.local: daar staat de database waar je toevallig
+  // lokaal mee werkt, en dat is precies hoe je per ongeluk in productie
+  // schrijft. De doeldatabase geef je expliciet mee.
+  const doelUrl = process.env.IMPORT_DATABASE_URL
+  if (!doelUrl) {
+    console.error(
+      'IMPORT_DATABASE_URL ontbreekt.\n' +
+        'Geef expliciet op in welke database je importeert, bijvoorbeeld:\n' +
+        '  export IMPORT_DATABASE_URL="postgresql://...neon.tech/neondb?sslmode=require"'
+    )
+    process.exit(1)
+  }
+  // De databaselaag leest DATABASE_URL; we zetten die hier eenmalig.
+  process.env.DATABASE_URL = doelUrl
+
+  const key = process.env.STRIPE_LIVE_SECRET_KEY
   if (!key) {
     console.error('STRIPE_LIVE_SECRET_KEY ontbreekt. Zonder live-sleutel valt er niets te importeren.')
     process.exit(1)
@@ -59,10 +104,26 @@ async function main() {
     console.error('Dit is een testsleutel. Wegschrijven met testdata kan alleen met --allow-test.')
     process.exit(1)
   }
+  if (APPLY && !VOOR) {
+    console.error(
+      'Geef --before=JJJJ-MM-DD mee bij --apply.\n' +
+        'Zonder grens zouden verse bestellingen als al verzonden en al gemaild worden weggeschreven,\n' +
+        'waardoor die klanten nooit een verzendmail krijgen. Gebruik de datum waarop de webhook\n' +
+        'orders ging wegschrijven.'
+    )
+    process.exit(1)
+  }
 
   const stripe = new Stripe(key)
+  const host = hostVan(doelUrl)
   console.log(`Modus: ${APPLY ? 'WEGSCHRIJVEN' : 'DROOGLOOP (er wordt niets opgeslagen)'}`)
-  console.log(`Stripe: ${isTestSleutel ? 'TESTMODUS' : 'LIVE'}\n`)
+  console.log(`Doel  : ${host}`)
+  console.log(`Stripe: ${isTestSleutel ? 'TESTMODUS' : 'LIVE'}`)
+  console.log(`Grens : ${VOOR ? `alleen bestellingen van vóór ${VOOR.toLocaleDateString('nl-NL')}` : 'GEEN (--before ontbreekt)'}`)
+  if (TEST_MAILS) {
+    console.log(`E-mail: OMGELEID naar ${TEST_MAIL_BASIS}+<bestelnummer>@${TEST_MAIL_DOMEIN}`)
+  }
+  console.log()
 
   // Alle checkout sessions doorlopen, nieuwste eerst, met paginatie.
   const betaald: Stripe.Checkout.Session[] = []
@@ -78,6 +139,10 @@ async function main() {
     const ref = s.metadata?.orderRef ?? s.id
     const email = s.customer_details?.email ?? ''
 
+    if (VOOR && new Date(s.created * 1000) >= VOOR) {
+      overgeslagen.push({ ref, email, reden: 'nieuwer dan --before, webhook handelt die af' })
+      continue
+    }
     if (!s.livemode && !ALLOW_TEST) {
       overgeslagen.push({ ref, email, reden: 'testdata' })
       continue
@@ -110,7 +175,9 @@ async function main() {
   console.log(`\nKrijgen te zijner tijd een reviewmail (${krijgenReviewmail.length}):`)
   for (const { session } of krijgenReviewmail) {
     const ref = session.metadata?.orderRef ?? session.id
-    console.log(`   ${ref.padEnd(26)} ${session.customer_details?.email}`)
+    const echt = session.customer_details?.email ?? ''
+    const naartoe = mailAdresVoor(echt, ref)
+    console.log(`   ${ref.padEnd(26)} ${naartoe}${TEST_MAILS ? `   (echt: ${echt})` : ''}`)
   }
 
   const handmatig = teImporteren.filter((t) => t.nogTeVerzenden)
@@ -125,8 +192,24 @@ async function main() {
     return
   }
 
-  // ---- wegschrijven
+  // ---- bevestiging: je typt zelf de hostnaam over
   const db = getDb()
+  const [{ aantal }] = await db.select({ aantal: sql<number>`count(*)::int` }).from(orders)
+  console.log('\n' + '-'.repeat(64))
+  console.log(`Je staat op het punt ${teImporteren.length} order(s) weg te schrijven naar:`)
+  console.log(`   host            : ${host}`)
+  console.log(`   orders nu       : ${aantal}`)
+  console.log(`   straks ongeveer : ${aantal + teImporteren.length}`)
+  console.log('-'.repeat(64))
+
+  const rl = createInterface({ input: process.stdin, output: process.stdout })
+  const antwoord = (await rl.question('Typ de hostnaam over om door te gaan: ')).trim()
+  rl.close()
+  if (antwoord !== host) {
+    console.error(`\nAfgebroken: "${antwoord}" is niet de hostnaam. Er is niets weggeschreven.`)
+    process.exit(1)
+  }
+  console.log()
   let geschreven = 0
   for (const { session, nogTeVerzenden } of teImporteren) {
     const ref = session.metadata?.orderRef ?? session.id
@@ -135,7 +218,7 @@ async function main() {
     await upsertOrder({
       stripeSessionId: session.id,
       orderRef: ref,
-      email: session.customer_details!.email!,
+      email: mailAdresVoor(session.customer_details!.email!, ref),
       placedAt: betaaldOp,
       totalAmount: session.amount_total ?? null,
     })

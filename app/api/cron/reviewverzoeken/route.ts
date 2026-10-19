@@ -3,7 +3,12 @@ import { timingSafeEqual } from 'node:crypto'
 import { getStripe } from '@/lib/stripe'
 import { isDbConfigured } from '@/lib/db'
 import { findOrdersDueForReview } from '@/lib/db/orders'
-import { AlVerstuurdError, sendReviewRequestEmail } from '@/lib/mailSenders'
+import { AlVerstuurdError, GeblokkeerdeMailError, sendReviewRequestEmail } from '@/lib/mailSenders'
+import {
+  REVIEW_EMAIL_PAUSE_MS,
+  REVIEW_EMAILS_PER_CRON_RUN,
+  REVIEW_REQUEST_DAYS_AFTER_SHIPPING,
+} from '@/lib/reviews'
 
 /**
  * Dagelijkse reviewverzoeken, 8 dagen na verzending.
@@ -16,10 +21,11 @@ import { AlVerstuurdError, sendReviewRequestEmail } from '@/lib/mailSenders'
  * over een paar dagen leeg zonder dat Resend wordt overvraagd.
  */
 
-const DAGEN_NA_VERZENDING = 8
-const MAX_PER_RUN = 15
-// Resend staat een paar mails per seconde toe; 400 ms ertussen is ruim.
-const PAUZE_MS = 400
+// De termijn en de limieten staan in lib/reviews.ts, zodat ze ook
+// kloppen met wat we klanten vertellen.
+const DAGEN_NA_VERZENDING = REVIEW_REQUEST_DAYS_AFTER_SHIPPING
+const MAX_PER_RUN = REVIEW_EMAILS_PER_CRON_RUN
+const PAUZE_MS = REVIEW_EMAIL_PAUSE_MS
 
 function bevoegd(req: NextRequest, secret: string): boolean {
   const header = req.headers.get('authorization') ?? ''
@@ -63,6 +69,7 @@ export async function GET(req: NextRequest) {
   const kandidaten = await findOrdersDueForReview(DAGEN_NA_VERZENDING, MAX_PER_RUN)
   let verstuurd = 0
   let overgeslagen = 0
+  let geblokkeerd = 0
   const fouten: string[] = []
 
   for (const order of kandidaten) {
@@ -79,13 +86,19 @@ export async function GET(req: NextRequest) {
         overgeslagen++
         continue
       }
+      if (err instanceof GeblokkeerdeMailError) {
+        // Buiten productie: geen echte klant mailen. De claim is al
+        // teruggedraaid, dus in productie gaat hij alsnog uit.
+        geblokkeerd++
+        continue
+      }
       fouten.push(order.orderRef)
       console.error(`Reviewcron: ${order.orderRef} mislukt:`, err)
     }
     await new Promise((r) => setTimeout(r, PAUZE_MS))
   }
 
-  const samenvatting = { gevonden: kandidaten.length, verstuurd, overgeslagen, mislukt: fouten.length }
+  const samenvatting = { gevonden: kandidaten.length, verstuurd, overgeslagen, geblokkeerd, mislukt: fouten.length }
   console.info('Reviewcron klaar:', samenvatting)
   return NextResponse.json({ ok: true, ...samenvatting, fouten })
 }

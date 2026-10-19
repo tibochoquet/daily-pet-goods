@@ -47,6 +47,12 @@ export interface Order {
   refunded: boolean
   returnStatus: ReturnStatus
   returnReason: string | null
+  /**
+   * Historisch: hier stond welke producten al beoordeeld waren, in de
+   * Stripe-metadata. Sinds reviews in onze eigen database staan is de
+   * reviews-tabel daarvoor de bron. Dit veld blijft nog even staan voor
+   * bestellingen waar die metadata al in zit.
+   */
   reviewedProductSlugs: string[]
   trackingUrl: string | null
   shippingAddress: {
@@ -191,14 +197,3 @@ export function resolveStatusBadgeVariant(order: Order): StatusBadgeVariant {
   return 'betaald'
 }
 
-export async function markProductReviewed(
-  sessionId: string,
-  alreadyReviewed: string[],
-  productSlug: string
-): Promise<void> {
-  if (alreadyReviewed.includes(productSlug)) return
-  const stripe = getStripe()
-  await stripe.checkout.sessions.update(sessionId, {
-    metadata: { reviewedProducts: [...alreadyReviewed, productSlug].join(',') },
-  })
-}

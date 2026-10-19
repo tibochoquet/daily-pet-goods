@@ -59,3 +59,73 @@ export const orders = pgTable(
 
 export type OrderRow = typeof orders.$inferSelect
 export type NewOrderRow = typeof orders.$inferInsert
+
+/**
+ * Reviews. Tot nu toe bestond een review alleen als mail in de inbox;
+ * nu is hij op te zoeken, te modereren en straks te tonen.
+ *
+ * `verified` betekent: we konden deze inzending aan een betaalde
+ * bestelling koppelen, via het token uit de reviewmail of doordat de
+ * klant bestelnummer en e-mailadres invulde die bij elkaar horen.
+ *
+ * De unieke index op (orderId, productSlug) zorgt dat je per bestelling
+ * één review per product kunt achterlaten. Dat is een databaseregel en
+ * geen controle in de code, zodat twee gelijktijdige inzendingen het
+ * niet alsnog voor elkaar krijgen.
+ */
+export const reviews = pgTable(
+  'reviews',
+  {
+    id: serial('id').primaryKey(),
+
+    /** Verwijst naar orders.id; leeg bij een niet-geverifieerde inzending. */
+    orderId: integer('order_id'),
+    orderRef: text('order_ref'),
+    productSlug: text('product_slug').notNull(),
+    productName: text('product_name').notNull(),
+
+    rating: integer('rating').notNull(),
+    text: text('text').notNull(),
+    name: text('name').notNull(),
+
+    photoUrl: text('photo_url'),
+    /** Expliciet aangevinkt dat de foto getoond mag worden. */
+    photoConsent: boolean('photo_consent').notNull().default(false),
+
+    verified: boolean('verified').notNull().default(false),
+    status: text('status').notNull().default('pending'),
+
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [
+    uniqueIndex('reviews_order_product_key').on(t.orderId, t.productSlug),
+    index('reviews_status_idx').on(t.status, t.createdAt),
+    index('reviews_product_idx').on(t.productSlug, t.status),
+  ]
+)
+
+export type ReviewRow = typeof reviews.$inferSelect
+export type NewReviewRow = typeof reviews.$inferInsert
+
+/**
+ * Pogingen per sleutel, voor de snelheidsbegrenzing.
+ *
+ * Dit stond eerder in het geheugen van de server. Op Vercel draait elke
+ * aanroep mogelijk op een andere instance, en die worden voortdurend
+ * opgeruimd, dus zo'n teller begon telkens opnieuw - precies wanneer je
+ * hem nodig hebt werkte hij niet. Eén rij per poging; tellen gebeurt
+ * over een tijdvenster.
+ */
+export const rateLimitHits = pgTable(
+  'rate_limit_hits',
+  {
+    id: serial('id').primaryKey(),
+    /** Waarvoor geteld wordt, bijvoorbeeld 'review'. */
+    bucket: text('bucket').notNull(),
+    /** Waarop geteld wordt, meestal een IP-adres. */
+    key: text('key').notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [index('rate_limit_hits_lookup_idx').on(t.bucket, t.key, t.createdAt)]
+)

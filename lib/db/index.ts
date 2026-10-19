@@ -9,9 +9,27 @@ import * as schema from './schema'
  */
 let db: ReturnType<typeof drizzle<typeof schema>> | null = null
 
+/**
+ * Welke database we gebruiken.
+ *
+ * DATABASE_URL wordt beheerd door de Neon-integratie en staat daardoor
+ * vast op Preview en Production tegelijk; in Vercel is dat niet te
+ * splitsen. PREVIEW_DATABASE_URL is een gewone variabele die je zelf
+ * wel kunt zetten, en op een previewdeploy gaat die voor. Zo kan een
+ * preview nooit per ongeluk in de productiedatabase schrijven.
+ */
+function databaseUrl(): string | undefined {
+  // Trimmen: een meegeplakte spatie of regeleinde maakt de
+  // connectiestring ongeldig, en de foutmelding die je dan krijgt wijst
+  // nergens naar. Dat is op dit project al twee keer gebeurd.
+  const preview = process.env.PREVIEW_DATABASE_URL?.trim()
+  if (process.env.VERCEL_ENV === 'preview' && preview) return preview
+  return process.env.DATABASE_URL?.trim()
+}
+
 export function getDb() {
   if (!db) {
-    const url = process.env.DATABASE_URL
+    const url = databaseUrl()
     if (!url) {
       throw new Error('DATABASE_URL ontbreekt. Zet hem in .env.local (zie .env.example).')
     }
@@ -22,7 +40,7 @@ export function getDb() {
 
 /** Of de database überhaupt geconfigureerd is, zonder te verbinden. */
 export function isDbConfigured(): boolean {
-  return Boolean(process.env.DATABASE_URL)
+  return Boolean(databaseUrl())
 }
 
 export { schema }

@@ -235,7 +235,10 @@ ${main.imageUrl ? `<img src="${esc(productThumb(main.imageUrl, 256))}" width="11
     : '';
 
   const incentive = note(
-    `<p style="margin:0;font-family:${f.sans};font-size:14px;line-height:22px;color:${c.body};"><strong style="color:${c.ink};font-weight:600;">Met een foto van je huisdier erbij maak je kans op een cadeautje.</strong> Elke maand kiezen we een inzending uit. We kiezen op de foto, niet op je oordeel: ook kritische reviews doen gewoon mee.</p>
+    `<p style="margin:0;font-family:${f.sans};font-size:14px;line-height:22px;color:${c.body};"><strong style="color:${c.ink};font-weight:600;">Deel een foto van je huisdier bij je review en maak kans op een pakket t.w.v. € 100.</strong> Elke maand kiezen we een winnaar. ${link(
+      `${brand.siteUrl}/actievoorwaarden`,
+      'Bekijk de actievoorwaarden',
+    )}</p>
 <p style="margin:10px 0 0;font-family:${f.sans};font-size:13px;line-height:20px;color:${c.muted};">Omdat je review via je bestelling binnenkomt, tonen we hem met het label ‘Geverifieerde koper’.</p>`,
   );
 
@@ -243,7 +246,7 @@ ${main.imageUrl ? `<img src="${esc(productThumb(main.imageUrl, 256))}" width="11
     spacer(36),
     row(
       `${eyebrow('Even checken')}${h1(`Hoe bevalt je nieuwe ${esc(main.name)}?`)}${p(
-        `Hoi ${esc(order.firstName)}, je bestelling is nu een paar dagen binnen. We zijn benieuwd wat je ervan vindt, en andere baasjes ook: een eerlijke review helpt hen kiezen. Het kost je een minuut.`,
+        `Hoi ${esc(order.firstName)}, je bestelling is inmiddels binnen. We zijn benieuwd wat je ervan vindt, en andere baasjes ook: een eerlijke review helpt hen kiezen. Het kost je een minuut.`,
       )}`,
     ),
     spacer(28),
@@ -266,12 +269,15 @@ ${main.imageUrl ? `<img src="${esc(productThumb(main.imageUrl, 256))}" width="11
 
   const text = `Hoe bevalt je nieuwe ${main.name}?
 
-Hoi ${order.firstName}, je bestelling is nu een paar dagen binnen. We zijn benieuwd wat je ervan vindt, en andere baasjes ook: een eerlijke review helpt hen kiezen. Het kost je een minuut.
+Hoi ${order.firstName}, je bestelling is inmiddels binnen. We zijn benieuwd wat je ervan vindt, en andere baasjes ook: een eerlijke review helpt hen kiezen. Het kost je een minuut.
 
 Schrijf je review: ${reviewLink(main.slug)}
 ${others.map((i) => `Ook beoordelen, ${i.name}: ${reviewLink(i.slug)}`).join('\n')}
 
-Met een foto van je huisdier erbij maak je kans op een cadeautje. Elke maand kiezen we een inzending uit. We kiezen op de foto, niet op je oordeel: ook kritische reviews doen gewoon mee.
+Deel een foto van je huisdier bij je review en maak kans op een pakket t.w.v. € 100. Elke maand kiezen we een winnaar.
+Actievoorwaarden: ${brand.siteUrl}/actievoorwaarden
+
+Omdat je review via je bestelling binnenkomt, tonen we hem met het label 'Geverifieerde koper'.
 
 Niet helemaal tevreden? Antwoord op deze mail, dan lossen we het samen op.
 
