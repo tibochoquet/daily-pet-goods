@@ -19,10 +19,12 @@ let db: ReturnType<typeof drizzle<typeof schema>> | null = null
  * preview nooit per ongeluk in de productiedatabase schrijven.
  */
 function databaseUrl(): string | undefined {
-  if (process.env.VERCEL_ENV === 'preview' && process.env.PREVIEW_DATABASE_URL) {
-    return process.env.PREVIEW_DATABASE_URL
-  }
-  return process.env.DATABASE_URL
+  // Trimmen: een meegeplakte spatie of regeleinde maakt de
+  // connectiestring ongeldig, en de foutmelding die je dan krijgt wijst
+  // nergens naar. Dat is op dit project al twee keer gebeurd.
+  const preview = process.env.PREVIEW_DATABASE_URL?.trim()
+  if (process.env.VERCEL_ENV === 'preview' && preview) return preview
+  return process.env.DATABASE_URL?.trim()
 }
 
 export function getDb() {
