@@ -12,7 +12,8 @@
     "db:studio": "drizzle-kit studio",
     "pdf:legal": "python3 scripts/generate_legal_pdfs.py",
     "preview:mails": "tsx scripts/preview-emails.mts",
-    "db:migrate:build": "tsx scripts/migrate-build.mts"
+    "db:migrate:build": "tsx scripts/migrate-build.mts",
+    "mail:test": "tsx scripts/mail-test.mts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.2.0",

@@ -14,11 +14,11 @@
  * met --allow-test, bedoeld om eerst te oefenen op een Neon-branch.
  */
 import Stripe from 'stripe'
-import { readEnvLocal } from './env-local.mjs'
+import { createInterface } from 'node:readline/promises'
 import { upsertOrder, findOrderBySessionId } from '../lib/db/orders.js'
 import { getDb } from '../lib/db/index.js'
 import { orders } from '../lib/db/schema.js'
-import { eq } from 'drizzle-orm'
+import { eq, sql } from 'drizzle-orm'
 import { randomBytes } from 'node:crypto'
 
 const APPLY = process.argv.includes('--apply')
@@ -72,9 +72,29 @@ async function isTerugbetaaldOfBetwist(stripe: Stripe, s: Stripe.Checkout.Sessio
   return Boolean(c?.refunded || c?.disputed)
 }
 
+/** Host uit een connectiestring, zonder het wachtwoord te tonen. */
+function hostVan(url: string): string {
+  const m = url.match(/@([^/]+)\//)
+  return m ? m[1] : '(onbekend)'
+}
+
 async function main() {
-  const env = readEnvLocal()
-  const key = process.env.STRIPE_LIVE_SECRET_KEY ?? env.STRIPE_LIVE_SECRET_KEY
+  // Bewust NIET uit .env.local: daar staat de database waar je toevallig
+  // lokaal mee werkt, en dat is precies hoe je per ongeluk in productie
+  // schrijft. De doeldatabase geef je expliciet mee.
+  const doelUrl = process.env.IMPORT_DATABASE_URL
+  if (!doelUrl) {
+    console.error(
+      'IMPORT_DATABASE_URL ontbreekt.\n' +
+        'Geef expliciet op in welke database je importeert, bijvoorbeeld:\n' +
+        '  export IMPORT_DATABASE_URL="postgresql://...neon.tech/neondb?sslmode=require"'
+    )
+    process.exit(1)
+  }
+  // De databaselaag leest DATABASE_URL; we zetten die hier eenmalig.
+  process.env.DATABASE_URL = doelUrl
+
+  const key = process.env.STRIPE_LIVE_SECRET_KEY
   if (!key) {
     console.error('STRIPE_LIVE_SECRET_KEY ontbreekt. Zonder live-sleutel valt er niets te importeren.')
     process.exit(1)
@@ -95,7 +115,9 @@ async function main() {
   }
 
   const stripe = new Stripe(key)
+  const host = hostVan(doelUrl)
   console.log(`Modus: ${APPLY ? 'WEGSCHRIJVEN' : 'DROOGLOOP (er wordt niets opgeslagen)'}`)
+  console.log(`Doel  : ${host}`)
   console.log(`Stripe: ${isTestSleutel ? 'TESTMODUS' : 'LIVE'}`)
   console.log(`Grens : ${VOOR ? `alleen bestellingen van vóór ${VOOR.toLocaleDateString('nl-NL')}` : 'GEEN (--before ontbreekt)'}`)
   if (TEST_MAILS) {
@@ -170,8 +192,24 @@ async function main() {
     return
   }
 
-  // ---- wegschrijven
+  // ---- bevestiging: je typt zelf de hostnaam over
   const db = getDb()
+  const [{ aantal }] = await db.select({ aantal: sql<number>`count(*)::int` }).from(orders)
+  console.log('\n' + '-'.repeat(64))
+  console.log(`Je staat op het punt ${teImporteren.length} order(s) weg te schrijven naar:`)
+  console.log(`   host            : ${host}`)
+  console.log(`   orders nu       : ${aantal}`)
+  console.log(`   straks ongeveer : ${aantal + teImporteren.length}`)
+  console.log('-'.repeat(64))
+
+  const rl = createInterface({ input: process.stdin, output: process.stdout })
+  const antwoord = (await rl.question('Typ de hostnaam over om door te gaan: ')).trim()
+  rl.close()
+  if (antwoord !== host) {
+    console.error(`\nAfgebroken: "${antwoord}" is niet de hostnaam. Er is niets weggeschreven.`)
+    process.exit(1)
+  }
+  console.log()
   let geschreven = 0
   for (const { session, nogTeVerzenden } of teImporteren) {
     const ref = session.metadata?.orderRef ?? session.id
