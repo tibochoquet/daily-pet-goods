@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { Resend } from 'resend'
 import { getStripe } from '@/lib/stripe'
-import { business } from '@/lib/business'
+import { business, formatPrice } from '@/lib/business'
 import { orderConfirmationEmail } from '@/lib/emails'
 import { buildOrderEmailData } from '@/lib/orderEmailData'
 import { loadLegalAttachments } from '@/lib/legalAttachments'
@@ -166,7 +166,7 @@ function itemRowsHtml(lineItems: Stripe.LineItem[]): string {
         `<tr>
           <td style="padding:8px 0;border-bottom:1px solid #E8E2D9;font-size:13px;color:#4B5563;">${item.description}</td>
           <td style="padding:8px 0;border-bottom:1px solid #E8E2D9;font-size:13px;color:#4B5563;text-align:center;">×${item.quantity}</td>
-          <td style="padding:8px 0;border-bottom:1px solid #E8E2D9;font-size:13px;color:#1A1A1A;text-align:right;">€${((item.amount_total ?? 0) / 100).toFixed(2)}</td>
+          <td style="padding:8px 0;border-bottom:1px solid #E8E2D9;font-size:13px;color:#1A1A1A;text-align:right;">${formatPrice((item.amount_total ?? 0) / 100)}</td>
         </tr>`
     )
     .join('')
@@ -229,13 +229,13 @@ async function sendOwnerNotificationEmail(session: Stripe.Checkout.Session, line
           discountAmount > 0
             ? `<tr>
                  <td style="font-size:14px;color:#2C4A3E;padding-top:4px;">Korting${discountCode ? ` (${discountCode})` : ''}</td>
-                 <td style="font-size:14px;color:#2C4A3E;text-align:right;padding-top:4px;">&minus; €${discountAmount.toFixed(2)}</td>
+                 <td style="font-size:14px;color:#2C4A3E;text-align:right;padding-top:4px;">&minus; ${formatPrice(discountAmount)}</td>
                </tr>`
             : ''
         }
         <tr>
           <td style="font-size:15px;font-weight:600;padding-top:8px;">Totaal</td>
-          <td style="font-size:15px;font-weight:600;text-align:right;padding-top:8px;">€${total.toFixed(2)}</td>
+          <td style="font-size:15px;font-weight:600;text-align:right;padding-top:8px;">${formatPrice(total)}</td>
         </tr>
       </table>
 
@@ -249,7 +249,7 @@ async function sendOwnerNotificationEmail(session: Stripe.Checkout.Session, line
     from: `${business.brandName} <orders@dailypetgoods.nl>`,
     to: business.email,
     replyTo: customer?.email ?? undefined,
-    subject: `Betaalde bestelling ${orderRef}, €${total.toFixed(2)}`,
+    subject: `Betaalde bestelling ${orderRef}, ${formatPrice(total)}`,
     html,
   })
 }

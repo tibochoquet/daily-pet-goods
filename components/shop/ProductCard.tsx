@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { formatPrice } from '@/lib/business'
 import Link from 'next/link'
 import type { Product } from '@/lib/types'
 import { startingPrice } from '@/lib/products'
@@ -43,7 +44,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         <div className="flex items-center justify-between">
           <span className="text-sm text-[#1A1A1A]">
             <span className="text-[#9CA3AF]">Vanaf </span>
-            <span className="font-medium">€{price.toFixed(2)}</span>
+            <span className="font-medium">{formatPrice(price)}</span>
           </span>
           {multipleVariants && (
             <span className="text-xs text-[#9CA3AF] tracking-wide">

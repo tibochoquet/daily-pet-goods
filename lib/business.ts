@@ -8,6 +8,29 @@
  */
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
 
+const PRODUCTION_URL = 'https://dailypetgoods.nl'
+
+/**
+ * De basis voor URL's die iemand anders dan de bezoeker zelf ophaalt:
+ * Stripe dat het logo voor de betaalpagina binnenhaalt, een mailclient
+ * die een plaatje laadt.
+ *
+ * Volgt SITE_URL, zodat een previewdeploy naar zichzelf wijst, maar valt
+ * terug op het echte domein zodra dat een adres oplevert dat van buiten
+ * niet te bereiken is. `http://localhost:3000/...` geeft bij de
+ * ontvanger een kapot plaatje, en Stripe weigert zo'n sessie.
+ */
+export const PUBLIC_BASE_URL = (() => {
+  try {
+    const { hostname, protocol } = new URL(SITE_URL)
+    const onbereikbaar =
+      protocol !== 'https:' || hostname === 'localhost' || hostname === '127.0.0.1' || hostname.endsWith('.local')
+    return onbereikbaar ? PRODUCTION_URL : SITE_URL
+  } catch {
+    return PRODUCTION_URL
+  }
+})()
+
 /**
  * True only on a deployment served from a `test.` host, e.g.
  * https://test.dailypetgoods.nl - a copy of the shop running against
@@ -91,4 +114,23 @@ export const BTW_RATE = 0.21
 
 export function btwAmount(inclusivePrice: number): number {
   return inclusivePrice - inclusivePrice / (1 + BTW_RATE)
+}
+
+/**
+ * Prijs zoals een Nederlandse klant hem leest: € 39,99.
+ *
+ * Alleen voor wat mensen zien. In structured data (schema.org) moet een
+ * prijs juist een punt houden en geen euroteken, anders leest Google de
+ * waarde verkeerd - daar blijft `toFixed(2)` dus staan.
+ */
+const euroFormatter = new Intl.NumberFormat('nl-NL', {
+  style: 'currency',
+  currency: 'EUR',
+  minimumFractionDigits: 2,
+})
+
+export function formatPrice(bedrag: number): string {
+  // Intl zet een smalle spatie tussen het teken en het bedrag; een
+  // gewone spatie leest in onze opmaak rustiger.
+  return euroFormatter.format(bedrag).replace(/\u00a0|\u202f/g, ' ')
 }

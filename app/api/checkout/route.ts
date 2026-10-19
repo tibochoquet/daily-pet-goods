@@ -4,7 +4,7 @@ import { randomBytes } from 'crypto'
 import { getStripe } from '@/lib/stripe'
 import { getVariantById } from '@/lib/products'
 import { calculateDiscount } from '@/lib/discounts'
-import { SITE_URL } from '@/lib/business'
+import { business, PUBLIC_BASE_URL, SITE_URL } from '@/lib/business'
 
 /**
  * Creates a Stripe Checkout Session for a one-time order and returns its
@@ -128,7 +128,37 @@ export async function POST(req: NextRequest) {
       // entirely gets the same effect: Stripe shows every payment method
       // you've enabled for this currency/country in the Dashboard (iDEAL,
       // cards, ...) without listing them here by hand.
+      // Alleen NL en BE, net als wat /verzending en de algemene
+      // voorwaarden beloven. Dit staat hier één keer - de handoff-notitie
+      // zette hem er een tweede keer bij en dat zou de eerste stil
+      // overschrijven.
       shipping_address_collection: { allowed_countries: ['NL', 'BE'] },
+      // Geruststelling op het moment van betalen. Max. 1200 tekens per
+      // bericht; deze teksten moeten dezelfde belofte doen als de site,
+      // dus pas ze samen met /verzending aan.
+      custom_text: {
+        submit: {
+          message:
+            'Gratis verzending · op werkdagen voor 15:00 besteld, dezelfde dag verzonden · 14 dagen bedenktijd',
+        },
+        shipping_address: { message: 'We verzenden met DHL of DPD naar Nederland en België.' },
+      },
+      // Huisstijl van de betaalpagina. Dezelfde waarden kun je ook één
+      // keer in Dashboard -> Instellingen -> Branding zetten; dan gelden
+      // ze ook voor Stripe's eigen mails en bonnen. Per sessie meegeven
+      // heeft voorrang op het Dashboard.
+      //
+      // Logo of icoon, niet beide: Stripe weigert een sessie waarin ze
+      // samen staan. Het logo is wat bovenaan de betaalpagina komt; het
+      // icoon (public/stripe/stripe-icon.png) is voor het Dashboard.
+      branding_settings: {
+        display_name: business.brandName,
+        background_color: '#F3EDE3',
+        button_color: '#2C4A3E',
+        font_family: 'inter',
+        border_style: 'rounded',
+        logo: { type: 'url', url: `${PUBLIC_BASE_URL}/stripe/stripe-logo.png` },
+      },
       shipping_options: [
         {
           shipping_rate_data: {

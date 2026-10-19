@@ -52,9 +52,10 @@ export default function AlgemeneVoorwaardenPage() {
       <section>
         <h2>4. Levering</h2>
         <p>
-          We verzenden binnen Nederland en België, altijd via DHL en altijd gratis. Na je betaling verwerken we
-          je bestelling binnen 1 tot 2 werkdagen; DHL doet er daarna gemiddeld nog 1 tot 3 werkdagen over om je
-          pakket te bezorgen. Zie <Link href="/verzending">onze verzendpagina</Link> voor de volledige details.
+          We verzenden binnen Nederland en België, altijd via DHL en altijd gratis. Is je betaling op een werkdag voor 15:00 bij ons
+          binnen, dan verzenden we je bestelling dezelfde dag; komt die later binnen of in het weekend, dan de
+          eerstvolgende werkdag. DHL doet er daarna gemiddeld nog 1 tot 3 werkdagen over om je pakket te
+          bezorgen. Zie <Link href="/verzending">onze verzendpagina</Link> voor de volledige details.
         </p>
         <p>
           Blijkt een besteld product onverwacht niet leverbaar, dan laten we dat zo snel mogelijk weten en

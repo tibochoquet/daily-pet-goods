@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { formatPrice } from '@/lib/business'
 import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
 import Link from 'next/link'
@@ -60,7 +61,7 @@ export default async function OverzichtPage() {
               </ul>
 
               <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[#E8E2D9] pt-4">
-                <span className="font-semibold text-[#1A1A1A]">€{order.total.toFixed(2)}</span>
+                <span className="font-semibold text-[#1A1A1A]">{formatPrice(order.total)}</span>
                 <Link
                   href={`/mijn-bestelling/${encodeURIComponent(order.orderRef)}`}
                   className="text-sm font-medium text-[#2C4A3E] hover:underline"

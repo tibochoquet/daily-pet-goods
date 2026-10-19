@@ -25,7 +25,9 @@ export default function BestSellers() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
+        {/* Drie kolommen, niet vier: de lijst in getBestSellers() is
+            kort en bewust - een vierde kolom laat een gat vallen. */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12">
           {products.map((product) => (
             <ProductCard key={product.slug} product={product} />
           ))}

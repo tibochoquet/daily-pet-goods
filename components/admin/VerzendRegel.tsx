@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import type { AdminOrder } from '@/lib/adminOrders'
 import { CARRIERS, type Carrier } from '@/lib/carriers'
+import { formatPrice } from '@/lib/business'
 
 /** Kopieert een waarde en laat kort zien dat het gelukt is. */
 function KopieerVeld({ label, waarde }: { label: string; waarde: string }) {
@@ -76,7 +77,7 @@ export default function VerzendRegel({ order, modus }: { order: AdminOrder; modu
             {new Date(order.placedAt).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' })}
           </span>
         </div>
-        <span className="text-sm text-[#4B5563]">€ {(order.totaal / 100).toFixed(2).replace('.', ',')}</span>
+        <span className="text-sm text-[#4B5563]">{formatPrice(order.totaal / 100)}</span>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">

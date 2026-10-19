@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Minus, Plus, Trash2, ShoppingBag, X } from 'lucide-react'
 import { useCart } from '@/components/cart/CartProvider'
-import { btwAmount } from '@/lib/business'
+import { btwAmount, formatPrice } from '@/lib/business'
 
 interface AppliedDiscount {
   code: string
@@ -206,7 +206,7 @@ export default function CartPage() {
 
                   <div className="flex items-center gap-3">
                     <span className="text-sm font-semibold text-[#1A1A1A]">
-                      €{(item.price * item.quantity).toFixed(2)}
+                      {formatPrice(item.price * item.quantity)}
                     </span>
                     <button
                       onClick={() => removeItem(item.id)}
@@ -232,7 +232,7 @@ export default function CartPage() {
             <div className="space-y-3 text-sm mb-5">
               <div className="flex justify-between text-[#6B7280]">
                 <span>Subtotaal</span>
-                <span>€{subtotal.toFixed(2)}</span>
+                <span>{formatPrice(subtotal)}</span>
               </div>
               {activeDiscount && (
                 <div className="flex justify-between text-[#2C4A3E]">
@@ -247,7 +247,7 @@ export default function CartPage() {
                       <X size={13} />
                     </button>
                   </span>
-                  <span className="font-medium">&minus; €{activeDiscount.amountOff.toFixed(2)}</span>
+                  <span className="font-medium">&minus; {formatPrice(activeDiscount.amountOff)}</span>
                 </div>
               )}
               <div className="flex justify-between text-[#6B7280]">
@@ -256,9 +256,9 @@ export default function CartPage() {
               </div>
               <div className="border-t border-[#E8E2D9] pt-3 flex justify-between font-semibold text-[#1A1A1A] text-base">
                 <span>Totaal</span>
-                <span>€{total.toFixed(2)}</span>
+                <span>{formatPrice(total)}</span>
               </div>
-              <p className="text-xs text-[#9CA3AF]">Inclusief €{btwAmount(total).toFixed(2)} btw (21%)</p>
+              <p className="text-xs text-[#9CA3AF]">Inclusief {formatPrice(btwAmount(total))} btw (21%)</p>
             </div>
 
             {/* Discount code */}

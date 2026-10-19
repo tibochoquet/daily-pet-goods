@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { CheckCircle2 } from 'lucide-react'
 import Stripe from 'stripe'
 import { getStripe } from '@/lib/stripe'
+import { formatPrice } from '@/lib/business'
 import ConversionTracker from '@/components/ConversionTracker'
 
 /**
@@ -33,7 +34,7 @@ export default async function CheckoutSuccessPage({
   const session = sessionId ? await getSession(sessionId) : null
 
   const amountTotal = session?.amount_total != null ? session.amount_total / 100 : null
-  const total = amountTotal != null ? amountTotal.toFixed(2) : null
+  const total = amountTotal != null ? formatPrice(amountTotal) : null
   const email = session?.customer_details?.email
 
   return (
@@ -54,7 +55,7 @@ export default async function CheckoutSuccessPage({
       </h1>
 
       <p className="text-[#6B7280] leading-relaxed mb-2">
-        Je betaling is gelukt{total ? ` (€${total})` : ''}. We hebben je bestelling ontvangen en
+        Je betaling is gelukt{total ? ` (${total})` : ''}. We hebben je bestelling ontvangen en
         gaan &apos;m zo snel mogelijk inpakken en versturen.
       </p>
       {email && (

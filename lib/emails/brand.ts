@@ -1,34 +1,11 @@
 // Daily Pet Goods: merk- en bedrijfsgegevens voor alle transactionele mails.
 // Pas gegevens hier aan, niet in de templates.
 
-import { business, formatAddress, SITE_URL as CONFIGURED_SITE_URL } from '../business';
+import { business, formatAddress, PUBLIC_BASE_URL } from '../business';
 
-const PRODUCTION_URL = 'https://dailypetgoods.nl';
-
-/**
- * Basis voor alle links en afbeeldingen in de mails.
- *
- * Volgt de rest van de site, zodat een previewdeploy naar zichzelf
- * verwijst - maar valt terug op het echte domein zodra dat een adres
- * oplevert dat een ontvanger niet kan bereiken. Een mail met
- * `http://localhost:3000/mail/logo.png` erin toont bij de klant alleen
- * kapotte plaatjes, en dat is erger dan een link naar productie.
- */
-function resolveMailBaseUrl(): string {
-  try {
-    const { hostname, protocol } = new URL(CONFIGURED_SITE_URL);
-    const unreachable =
-      protocol !== 'https:' ||
-      hostname === 'localhost' ||
-      hostname === '127.0.0.1' ||
-      hostname.endsWith('.local');
-    return unreachable ? PRODUCTION_URL : CONFIGURED_SITE_URL;
-  } catch {
-    return PRODUCTION_URL;
-  }
-}
-
-export const SITE_URL = resolveMailBaseUrl();
+// Mails worden door de client van de ontvanger geladen, dus hier geldt
+// dezelfde basis-URL als voor Stripe (zie lib/business.ts).
+export const SITE_URL = PUBLIC_BASE_URL;
 
 export const brand = {
   name: business.brandName,

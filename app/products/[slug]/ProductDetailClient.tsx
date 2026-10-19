@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { formatPrice } from '@/lib/business'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ChevronLeft, ShoppingCart, Check, Play, Truck, RotateCcw, MessageCircle, ChevronLeft as Prev, ChevronRight as Next } from 'lucide-react'
@@ -158,7 +159,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
 
           <div className="mb-8">
             <span className="text-3xl font-semibold text-[#1A1A1A]">
-              €{variant.price.toFixed(2)}
+              {formatPrice(variant.price)}
             </span>
             <span className="text-sm text-[#9CA3AF] ml-2">incl. verzending</span>
           </div>
@@ -221,7 +222,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
           <div className="mb-10 space-y-3 border-t border-b border-[#E8E2D9] py-6">
             <div className="flex items-start gap-2.5 text-sm text-[#4B5563]">
               <Truck size={16} className="mt-0.5 shrink-0 text-[#2C4A3E]" />
-              <span>Gratis verzending met DHL of DPD binnen NL &amp; BE, verzonden binnen 1-2 werkdagen.</span>
+              <span>Gratis verzending met DHL of DPD binnen NL &amp; BE. Op werkdagen voor 15:00 besteld, dezelfde dag verzonden.</span>
             </div>
             <div className="flex items-start gap-2.5 text-sm text-[#4B5563]">
               <RotateCcw size={16} className="mt-0.5 shrink-0 text-[#2C4A3E]" />

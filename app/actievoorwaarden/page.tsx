@@ -69,8 +69,7 @@ export default function ActievoorwaardenPage() {
         <h2>5. Hoe vaak en hoe we kiezen</h2>
         <p>
           We kiezen elke maand één winnaar, uit alle inzendingen met foto die in die kalendermaand zijn
-          geplaatst en goedgekeurd. We kiezen op de foto, niet op het oordeel in de review: een kritische
-          review maakt evenveel kans als een lovende.
+          geplaatst en goedgekeurd.
         </p>
         <p>
           Over de uitslag kan niet worden gecorrespondeerd.
