@@ -8,7 +8,7 @@ import {
   orderAccessCookieName,
   ACCOUNT_SESSION_COOKIE,
 } from '@/lib/session'
-import { business } from '@/lib/business'
+import { business, formatPrice } from '@/lib/business'
 import Badge from '@/components/ui/Badge'
 import OrderAccessGate from '@/components/orders/OrderAccessGate'
 import ReturnRequestFlow from '@/components/orders/ReturnRequestFlow'
@@ -89,13 +89,13 @@ export default async function OrderDetailPage({ params }: Props) {
               <span className="text-[#4B5563]">
                 {item.name} × {item.quantity}
               </span>
-              <span className="text-[#1A1A1A] font-medium">€{item.amountTotal.toFixed(2)}</span>
+              <span className="text-[#1A1A1A] font-medium">{formatPrice(item.amountTotal)}</span>
             </div>
           ))}
         </div>
         <div className="flex items-center justify-between pt-4 mt-4 border-t border-[#E8E2D9]">
           <span className="font-semibold text-[#1A1A1A]">Totaal</span>
-          <span className="font-semibold text-[#1A1A1A]">€{order.total.toFixed(2)}</span>
+          <span className="font-semibold text-[#1A1A1A]">{formatPrice(order.total)}</span>
         </div>
       </div>
 
@@ -127,7 +127,7 @@ export default async function OrderDetailPage({ params }: Props) {
           </a>
         ) : (
           <p className="text-sm text-[#6B7280]">
-            Je bestelling is onderweg 📦 We verzenden binnen 1-2 werkdagen na betaling, via DHL en gratis. Je
+            Je bestelling is onderweg 📦 Op werkdagen voor 15:00 besteld, dezelfde dag verzonden, via DHL en gratis. Je
             ontvangt de Track &amp; Trace-code rechtstreeks van DHL per e-mail zodra je bestelling is verzonden.
           </p>
         )}

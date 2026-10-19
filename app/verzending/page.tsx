@@ -23,8 +23,9 @@ export default function VerzendingPage() {
       <section>
         <h2>2. Levertijden</h2>
         <p>
-          We verwerken en verzenden je bestelling binnen 1 tot 2 werkdagen nadat je betaling is gelukt. Daarna
-          doet de vervoerder er gemiddeld nog 1 tot 3 werkdagen over om je pakket te bezorgen.
+          Is je betaling op een werkdag voor 15:00 bij ons binnen, dan verzenden we je bestelling dezelfde dag.
+          Komt je bestelling later binnen, of in het weekend, dan gaat hij de eerstvolgende werkdag op de post.
+          Daarna doet de vervoerder er gemiddeld nog 1 tot 3 werkdagen over om je pakket te bezorgen.
         </p>
         <p>
           Deze termijnen zijn indicatief: bij onvoorziene vertraging bij de vervoerder, of drukte rond bijvoorbeeld

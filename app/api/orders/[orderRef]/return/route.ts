@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 import { Resend } from 'resend'
-import { business } from '@/lib/business'
+import { business, formatPrice } from '@/lib/business'
 import { resolveAuthorizedOrder, updateReturnRequest } from '@/lib/orders'
 import { verifyOrderAccessToken, verifyAccountSessionToken, orderAccessCookieName, ACCOUNT_SESSION_COOKIE } from '@/lib/session'
 
@@ -68,9 +68,9 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ ord
               ? `<p style="font-size:13px;color:#4B5563;background:#F3EDE3;padding:12px;border-radius:8px;">
                    <strong>Let op bij terugbetalen:</strong> op deze bestelling is
                    ${order.discountCode ? `kortingscode ${order.discountCode} ` : 'een korting '}
-                   toegepast (&minus; €${order.discountAmount.toFixed(2)} over de hele bestelling).
-                   De klant heeft in totaal €${order.total.toFixed(2)} betaald, niet
-                   €${(order.total + order.discountAmount).toFixed(2)}. Betaal naar rato
+                   toegepast (&minus; ${formatPrice(order.discountAmount)} over de hele bestelling).
+                   De klant heeft in totaal ${formatPrice(order.total)} betaald, niet
+                   ${formatPrice(order.total + order.discountAmount)}. Betaal naar rato
                    van de werkelijk betaalde prijs terug, niet de oorspronkelijke prijs van het product.
                  </p>`
               : ''

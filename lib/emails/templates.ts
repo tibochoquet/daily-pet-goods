@@ -8,7 +8,6 @@ import {
   eur,
   eyebrow,
   h1,
-  h2,
   label,
   layout,
   link,
@@ -52,11 +51,11 @@ export function orderConfirmationEmail(
 ): RenderedEmail {
   const attachments = opts.attachmentsIncluded ?? true;
   const subject = `Bedankt! Je bestelling ${order.orderNumber} is bevestigd`;
-  const preheader = 'We pakken je bestelling binnen 1–2 werkdagen in. Hieronder staat alles op een rij.';
+  const preheader = 'Op werkdagen voor 15:00 besteld, dezelfde dag verzonden. Hieronder staat alles op een rij.';
 
   const delivery = `${label('Levering')}<p style="margin:0;font-family:${f.sans};font-size:14px;line-height:22px;color:${c.ink};">${
     order.shippingCost === 0 ? 'Gratis verzending' : 'Verzending'
-  } met ${brand.carriers}. We versturen binnen 1–2 werkdagen; meestal heb je je pakket binnen 2–5 werkdagen in huis.</p>`;
+  } met ${brand.carriers}. Op werkdagen voor 15:00 besteld, dezelfde dag verzonden; daarna heb je je pakket meestal binnen 1 tot 3 werkdagen in huis.</p>`;
 
   const withdrawal = note(
     `${label('Je bedenktijd')}
@@ -73,7 +72,7 @@ export function orderConfirmationEmail(
       `${eyebrow(`Bestelling ${esc(order.orderNumber)} · ${dateShort(order.placedAt)}`)}${h1(
         `Bedankt voor je bestelling, ${esc(order.firstName)}.`,
       )}${p(
-        `We hebben je betaling ontvangen. Binnen 1–2 werkdagen pakken we alles zelf voor je in en geven we het mee aan ${brand.carriers}. Zodra je pakket onderweg is, krijg je van ons een mail met je track &amp; trace.`,
+        `We hebben je betaling ontvangen. Bestel je op een werkdag voor 15:00, dan pakken we alles zelf voor je in en gaat het diezelfde dag mee met ${brand.carriers}. Zodra je pakket onderweg is, krijg je van ons een mail met je track &amp; trace.`,
       )}`,
       '4px 48px 0',
     ),
@@ -101,7 +100,7 @@ export function orderConfirmationEmail(
 
 Bestelling ${order.orderNumber} · ${dateShort(order.placedAt)}
 
-We hebben je betaling ontvangen. Binnen 1–2 werkdagen pakken we alles zelf voor je in en geven we het mee aan ${brand.carriers}. Zodra je pakket onderweg is, krijg je een mail met je track & trace.
+We hebben je betaling ontvangen. Bestel je op een werkdag voor 15:00, dan pakken we alles zelf voor je in en gaat het diezelfde dag mee met ${brand.carriers}. Zodra je pakket onderweg is, krijg je een mail met je track & trace.
 
 JE BESTELLING
 ${textItems(order)}
@@ -136,15 +135,7 @@ export function shippingConfirmationEmail(order: OrderEmailData, shipment: Shipm
     ? `Volg je pakket via ${shipment.carrier}. Verwachte bezorging: ${when}.`
     : `Volg je pakket via ${shipment.carrier}.`;
 
-  const pet = order.petType === 'kat' ? 'kat' : order.petType === 'hond' ? 'hond' : 'huisdier';
-  const petImg = order.petType === 'kat' ? brand.images.cat : brand.images.dog;
 
-  const gift = `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:separate;background-color:${c.page};border-radius:12px;"><tr>
-<td class="stack" width="200" valign="top" style="padding:0;"><img class="gift-img" src="${petImg}" width="200" height="200" alt="" style="display:block;width:200px;height:200px;border:0;border-radius:12px 0 0 12px;"></td>
-<td class="stack-pad" valign="middle" style="padding:24px 28px;">
-${eyebrow('Kijk goed in de doos')}${h2(`Er zit iets kleins bij voor je ${pet}.`)}
-<p style="margin:10px 0 0;font-family:${f.sans};font-size:14px;line-height:22px;color:${c.body};">Bij elke bestelling stoppen we een klein cadeautje in de doos. Veel plezier ermee, jullie allebei.</p>
-</td></tr></table>`;
 
   const rows = [
     row(
@@ -166,7 +157,6 @@ ${eyebrow('Kijk goed in de doos')}${h2(`Er zit iets kleins bij voor je ${pet}.`)
     spacer(32),
     row(`${label('In dit pakket')}${orderSummary(order, { compact: true })}`),
     spacer(28),
-    row(gift),
     spacer(28),
     row(
       p('Komt er iets beschadigd aan? Maak even een foto en antwoord op deze mail, dan lossen we het snel op.', {
@@ -190,8 +180,6 @@ ${shipment.carrier} · track & trace ${shipment.trackingNumber}
 
 IN DIT PAKKET
 ${order.items.map((i) => `- ${i.quantity}x ${i.name}${i.variant ? ` (${i.variant})` : ''}`).join('\n')}
-
-Kijk goed in de doos: er zit iets kleins bij voor je ${pet}.
 
 Komt er iets beschadigd aan? Maak even een foto en antwoord op deze mail, dan lossen we het snel op.
 

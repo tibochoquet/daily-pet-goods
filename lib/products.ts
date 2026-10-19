@@ -98,7 +98,6 @@ export const products: Product[] = [
       "Praktisch in gebruik: de bakken zijn eenvoudig uit het frame te nemen voor vullen en reinigen.",
       "Modern design: het metalen frame met RVS bakken past in vrijwel ieder interieur.",
     ],
-    badge: 'bestseller',
     variants: [
       {
         id: "9300000318561941",
@@ -150,7 +149,6 @@ export const products: Product[] = [
       "Stevig ontwerp: de houten houder helpt verschuiven tijdens gebruik te verminderen.",
       "Veelzijdig gebruik: geschikt voor droogvoer, natvoer en water.",
     ],
-    badge: 'bestseller',
     variants: [
       {
         id: "9300000291844620",
@@ -655,6 +653,7 @@ export const products: Product[] = [
       "Praktische ritssluiting op de rug: eenvoudig aan- en uittrekken.",
       "Zes jaslengtes van 25 tot 50 cm: meet de ruglengte van je hond voor de juiste maat.",
     ],
+    badge: 'bestseller',
     variants: [
       {
         id: "9300000386568309",
@@ -1354,8 +1353,27 @@ export function startingPrice(product: Product): number {
   return Math.min(...product.variants.map((v) => v.price))
 }
 
+/**
+ * De bestsellers op de homepage, in deze volgorde.
+ *
+ * Expliciet een lijst en geen filter op `badge`, om twee redenen. De
+ * volgorde was anders die van dit bestand, en die zegt niets over wat er
+ * verkoopt. En er stonden drie voerbakken tussen: dat zijn drie keer
+ * hetzelfde soort product, wat de rij smal maakt terwijl de klant juist
+ * de breedte van het assortiment moet zien. Dus hooguit één product per
+ * soort.
+ *
+ * De eerste twee volgen de werkelijke verkopen: jassen gaan het hardst,
+ * daarna de verhoogde voerbakken. De derde is een keuze en geen cijfer -
+ * een derde soort product om de rij te vullen. Zodra de verkopen een
+ * echte nummer drie laten zien, hoort die hier te komen.
+ */
+const BEST_SELLER_SLUGS = ['hondenjas', 'verhoogde-hondenbak', 'hondenmand-sambo'] as const
+
 export function getBestSellers(): Product[] {
-  return products.filter((p) => p.badge === 'bestseller').slice(0, 4)
+  return BEST_SELLER_SLUGS.map((slug) => products.find((p) => p.slug === slug)).filter(
+    (p): p is Product => Boolean(p)
+  )
 }
 
 export function getCategoryBySlug(slug: string): Category | undefined {

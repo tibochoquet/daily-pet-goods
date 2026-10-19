@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { formatPrice } from '@/lib/business'
 import Link from 'next/link'
 import { ArrowRight, Sparkles } from 'lucide-react'
 
@@ -147,7 +148,7 @@ export default function EditorialHero({
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-60" />
             </span>
             <span className="absolute left-1/2 top-full mt-2 -translate-x-1/2 whitespace-nowrap rounded-full bg-white/90 backdrop-blur-sm px-3.5 py-1.5 text-xs font-medium text-[#1A1A1A] shadow-md transition-all duration-200 group-hover:bg-white group-hover:shadow-xl group-hover:scale-105">
-              {tag.label} <span className="text-[#9CA3AF] group-hover:text-[#6B7280]">· vanaf €{tag.price.toFixed(2)}</span>
+              {tag.label} <span className="text-[#9CA3AF] group-hover:text-[#6B7280]">· vanaf {formatPrice(tag.price)}</span>
             </span>
           </Link>
         ))}

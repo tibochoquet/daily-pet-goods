@@ -1,5 +1,6 @@
 import { brand, productThumb } from './brand';
 import type { Address, Cents, OrderEmailData } from './types';
+import { formatPrice } from '../business';
 
 const c = brand.color;
 const f = brand.font;
@@ -15,8 +16,9 @@ export function esc(value: unknown): string {
     .replace(/'/g, '&#39;');
 }
 
-const euro = new Intl.NumberFormat('nl-NL', { style: 'currency', currency: 'EUR' });
-export const eur = (cents: Cents) => euro.format(cents / 100);
+// Zelfde formatter als de site, zodat een bedrag in de mail er niet
+// anders uitziet dan in de winkelwagen.
+export const eur = (cents: Cents) => formatPrice(cents / 100);
 
 const toDate = (d: Date | string) => (d instanceof Date ? d : new Date(d));
 export const dateLong = (d: Date | string) =>
