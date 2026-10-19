@@ -21,12 +21,31 @@ function hostVan(url: string | undefined): string {
   return url?.match(/@([^/]+)\//)?.[1] ?? '(geen url)'
 }
 
-function migreer(): never {
-  const url = process.env.DATABASE_URL?.trim()
-  if (!url) {
+/**
+ * Een connectiestring, niet een hostnaam of een branchnaam. Dat
+ * onderscheid is eerder misgegaan, en drizzle-kit meldt dan alleen
+ * "exited with 1" zonder te zeggen wat eraan mankeert.
+ */
+function controleerUrl(url: string | undefined): string {
+  const v = url?.trim()
+  if (!v) {
     console.error('Geen DATABASE_URL om tegen te migreren.')
     process.exit(1)
   }
+  if (!/^postgres(ql)?:\/\/[^@]+@[^/]+\/.+/.test(v)) {
+    console.error(
+      'DATABASE_URL is geen volledige connectiestring.\n' +
+        `Gekregen: "${v.slice(0, 40)}${v.length > 40 ? '...' : ''}"\n` +
+        'Verwacht iets als: postgresql://gebruiker:wachtwoord@host.neon.tech/neondb?sslmode=require\n' +
+        'Haal hem in Neon op via Connect, en plak hem in één keer.'
+    )
+    process.exit(1)
+  }
+  return v
+}
+
+function migreer(): never {
+  const url = controleerUrl(process.env.DATABASE_URL)
   process.env.DATABASE_URL = url
   // Zonder deze regel is een mislukte migratie in de buildlog niet te
   // duiden: je ziet alleen "exited with 1" zonder te weten waarheen.
