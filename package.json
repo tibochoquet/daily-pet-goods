@@ -13,7 +13,8 @@
     "pdf:legal": "python3 scripts/generate_legal_pdfs.py",
     "preview:mails": "tsx scripts/preview-emails.mts",
     "db:migrate:build": "tsx scripts/migrate-build.mts",
-    "mail:test": "tsx scripts/mail-test.mts"
+    "mail:test": "tsx scripts/mail-test.mts",
+    "status": "tsx scripts/status.mts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.2.0",
