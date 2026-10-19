@@ -107,3 +107,32 @@ export async function findReviewedSlugsForOrder(orderId: number): Promise<string
     .where(eq(reviews.orderId, orderId))
   return rijen.map((r) => r.slug)
 }
+
+export interface ProductReviews {
+  /** Gepubliceerde reviews, nieuwste eerst. */
+  items: ReviewRow[]
+  aantal: number
+  /** Gemiddelde op één decimaal. Precies deze waarde gaat ook in de JSON-LD. */
+  gemiddelde: number
+}
+
+/**
+ * De gepubliceerde reviews van één product, met het gemiddelde.
+ *
+ * Alleen `published`: wat nog op beoordeling wacht of is afgewezen komt
+ * de site niet op. Het gemiddelde wordt hier één keer berekend en zowel
+ * op de pagina als in de structured data gebruikt, zodat die twee nooit
+ * uiteen kunnen lopen - Google ziet dat verschil en rekent het aan.
+ */
+export async function findPublishedReviewsForProduct(productSlug: string): Promise<ProductReviews> {
+  const db = getDb()
+  const items = await db
+    .select()
+    .from(reviews)
+    .where(and(eq(reviews.productSlug, productSlug), eq(reviews.status, 'published')))
+    .orderBy(desc(reviews.createdAt))
+
+  if (items.length === 0) return { items, aantal: 0, gemiddelde: 0 }
+  const som = items.reduce((t, r) => t + r.rating, 0)
+  return { items, aantal: items.length, gemiddelde: Math.round((som / items.length) * 10) / 10 }
+}
