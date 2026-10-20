@@ -4,11 +4,13 @@ import { useState } from 'react'
 import { formatPrice } from '@/lib/business'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ChevronLeft, ShoppingCart, Check, Play, Truck, RotateCcw, MessageCircle, ChevronLeft as Prev, ChevronRight as Next } from 'lucide-react'
+import { ChevronLeft, ShoppingCart, Check, Play, Truck, RotateCcw, MessageCircle, Package, AlertTriangle, ChevronLeft as Prev, ChevronRight as Next } from 'lucide-react'
 import type { Product } from '@/lib/types'
 import { useCart } from '@/components/cart/CartProvider'
 
-type MediaItem = { type: 'video'; src: string } | { type: 'image'; src: string }
+type MediaItem =
+  | { type: 'video'; src: string; alt: string }
+  | { type: 'image'; src: string; alt: string }
 
 export default function ProductDetailClient({ product }: { product: Product }) {
   const [variantIndex, setVariantIndex] = useState(0)
@@ -17,9 +19,13 @@ export default function ProductDetailClient({ product }: { product: Product }) {
   const { addItem } = useCart()
   const [added, setAdded] = useState(false)
   const inStock = variant.inStock ?? true
+  // Nog geen prijs betekent: wel te zien, nog niet te bestellen. Dat is
+  // iets anders dan uitverkocht, dus het krijgt ook een eigen tekst.
+  const hasPrice = variant.price !== null
+  const canOrder = inStock && hasPrice
 
   function handleAdd() {
-    if (!inStock) return
+    if (!canOrder || variant.price === null) return
     addItem({
       id: variant.id,
       name: product.name,
@@ -32,9 +38,18 @@ export default function ProductDetailClient({ product }: { product: Product }) {
   }
 
   const images = variant.images && variant.images.length > 0 ? variant.images : [variant.image]
+  /**
+   * Alt-tekst per foto. Staat er een beschrijving in `imageAlts`, dan die;
+   * anders de oude terugval. "foto 3" zegt een schermlezer niets, maar
+   * het is nog altijd beter dan een lege alt.
+   */
+  const altVoor = (i: number) =>
+    variant.imageAlts?.[i] ?? `${product.name} - ${variant.label} - foto ${i + 1}`
   const media: MediaItem[] = [
-    ...(variant.video ? [{ type: 'video', src: variant.video } as const] : []),
-    ...images.map((src) => ({ type: 'image', src } as const)),
+    ...(variant.video
+      ? [{ type: 'video', src: variant.video, alt: `Video van ${product.name} - ${variant.label}` } as const]
+      : []),
+    ...images.map((src, i) => ({ type: 'image', src, alt: altVoor(i) }) as const),
   ]
   const [activeIndex, setActiveIndex] = useState(0)
   const active = media[Math.min(activeIndex, media.length - 1)]
@@ -85,7 +100,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
             ) : (
               <Image
                 src={active.src}
-                alt={`${product.name} - ${variant.label}`}
+                alt={active.alt}
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
@@ -127,7 +142,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                 >
                   {item.type === 'video' ? (
                     <>
-                      <Image src={variant.image} alt={`Video van ${product.name} - ${variant.label}`} fill className="object-cover" sizes="64px" />
+                      <Image src={variant.image} alt={item.alt} fill className="object-cover" sizes="64px" />
                       <span className="absolute inset-0 flex items-center justify-center bg-black/30">
                         <Play size={18} className="text-white fill-white" />
                       </span>
@@ -135,7 +150,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                   ) : (
                     <Image
                       src={item.src}
-                      alt={`${product.name} - ${variant.label} - foto ${i + 1}`}
+                      alt={item.alt}
                       fill
                       className="object-cover"
                       sizes="64px"
@@ -158,10 +173,21 @@ export default function ProductDetailClient({ product }: { product: Product }) {
           <p className="text-[#6B7280] leading-relaxed mb-8">{product.shortDescription}</p>
 
           <div className="mb-8">
-            <span className="text-3xl font-semibold text-[#1A1A1A]">
-              {formatPrice(variant.price)}
-            </span>
-            <span className="text-sm text-[#9CA3AF] ml-2">incl. verzending</span>
+            {variant.price !== null ? (
+              <>
+                <span className="text-3xl font-semibold text-[#1A1A1A]">
+                  {formatPrice(variant.price)}
+                </span>
+                <span className="text-sm text-[#9CA3AF] ml-2">incl. verzending</span>
+              </>
+            ) : (
+              <>
+                <span className="text-3xl font-semibold text-[#1A1A1A]">Prijs volgt</span>
+                <span className="block text-sm text-[#9CA3AF] mt-1">
+                  Dit product staat er net op en is binnenkort te bestellen.
+                </span>
+              </>
+            )}
           </div>
 
           {/* Variant selector */}
@@ -191,16 +217,18 @@ export default function ProductDetailClient({ product }: { product: Product }) {
           {/* Add to cart */}
           <button
             onClick={handleAdd}
-            disabled={!inStock}
+            disabled={!canOrder}
             className={`flex items-center justify-center gap-2.5 w-full sm:w-auto px-8 py-4 rounded-full font-semibold text-sm transition-all duration-200 mb-10 ${
-              !inStock
+              !canOrder
                 ? 'bg-[#E8E2D9] text-[#9CA3AF] cursor-not-allowed'
                 : added
                   ? 'bg-[#2C4A3E] text-white'
                   : 'bg-[#C8745A] text-white hover:bg-[#A85E45]'
             }`}
           >
-            {!inStock ? (
+            {!hasPrice ? (
+              'Binnenkort te bestellen'
+            ) : !inStock ? (
               'Tijdelijk uitverkocht'
             ) : added ? (
               <>
@@ -269,6 +297,43 @@ export default function ProductDetailClient({ product }: { product: Product }) {
             </div>
           )}
 
+          {/* Uitleg in losse kopjes, voor producten die meer vragen dan
+              een rijtje voordelen: waar past het, hoe laad je het op,
+              hoe vervang je de batterij. */}
+          {product.sections?.map((sectie) => (
+            <div key={sectie.title} className="mb-8">
+              <h3 className="font-semibold text-[#1A1A1A] text-sm mb-3">{sectie.title}</h3>
+              {sectie.body && (
+                <p className="text-sm text-[#4B5563] leading-relaxed mb-3 last:mb-0">{sectie.body}</p>
+              )}
+              {sectie.items && sectie.items.length > 0 && (
+                sectie.ordered ? (
+                  <ol className="space-y-2">
+                    {sectie.items.map((item, i) => (
+                      <li key={i} className="flex items-start gap-2.5 text-sm text-[#4B5563]">
+                        <span className="mt-0.5 w-4 h-4 rounded-full bg-[#2C4A3E]/10 text-[#2C4A3E] text-[10px] font-semibold flex items-center justify-center flex-shrink-0">
+                          {i + 1}
+                        </span>
+                        {item}
+                      </li>
+                    ))}
+                  </ol>
+                ) : (
+                  <ul className="space-y-2">
+                    {sectie.items.map((item, i) => (
+                      <li key={i} className="flex items-start gap-2.5 text-sm text-[#4B5563]">
+                        <span className="mt-0.5 w-4 h-4 rounded-full bg-[#2C4A3E]/10 flex items-center justify-center flex-shrink-0">
+                          <Check size={9} className="text-[#2C4A3E]" />
+                        </span>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                )
+              )}
+            </div>
+          ))}
+
           {/* Specs */}
           {variant.specs && Object.keys(variant.specs).length > 0 && (
             <div>
@@ -283,6 +348,36 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                   ))}
                 </tbody>
               </table>
+            </div>
+          )}
+
+          {/* Wat er in de doos zit, en net zo belangrijk: wat niet. Een
+              klant die een riem of een adapter verwacht die er niet bij
+              zit, stuurt het pakket terug. */}
+          {product.included && product.included.length > 0 && (
+            <div className="mt-8">
+              <h3 className="font-semibold text-[#1A1A1A] text-sm mb-3">Inhoud van de verpakking</h3>
+              <ul className="space-y-2">
+                {product.included.map((item, i) => (
+                  <li key={i} className="flex items-start gap-2.5 text-sm text-[#4B5563]">
+                    <Package size={14} className="mt-0.5 shrink-0 text-[#2C4A3E]" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              {product.notIncluded && (
+                <p className="text-sm text-[#6B7280] mt-3">
+                  <span className="font-medium text-[#4B5563]">Niet inbegrepen:</span>{' '}
+                  {product.notIncluded}
+                </p>
+              )}
+            </div>
+          )}
+
+          {product.safetyNote && (
+            <div className="mt-8 flex items-start gap-2.5 rounded-xl border border-[#E8D9C8] bg-[#FBF6EE] p-4">
+              <AlertTriangle size={16} className="mt-0.5 shrink-0 text-[#C8745A]" />
+              <p className="text-sm text-[#4B5563] leading-relaxed">{product.safetyNote}</p>
             </div>
           )}
         </div>

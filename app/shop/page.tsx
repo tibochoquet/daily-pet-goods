@@ -19,6 +19,8 @@ const categoryLabels: Record<string, string> = {
   'dog-travel': 'Onderweg met je hond',
   'dog-outdoor': 'Zomerartikelen hond',
   'cat-outdoor': 'Zomerartikelen kat',
+  'dog-walking': 'Uitlaten & wandelen',
+  'pet-travel': 'Vervoer & draagtassen',
   'dog-clothing': 'Hondenkleding',
   'cat-clothing': 'Kattenkleding',
   'cat-play': 'Spelen & rusten',

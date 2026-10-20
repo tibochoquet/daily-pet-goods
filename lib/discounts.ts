@@ -85,6 +85,9 @@ export function calculateDiscount(codeInput: string, items: CartLine[]): Discoun
     const found = getVariantById(item.id)
     if (!found) continue
     if (!discount.categories.includes(found.product.category)) continue
+    // Zonder prijs valt er niets te korten; zo'n variant hoort sowieso
+    // niet in een winkelwagen te zitten.
+    if (found.variant.price === null) continue
     const quantity = Number.isInteger(item.quantity) && item.quantity > 0 ? item.quantity : 0
     eligibleCents += Math.round(found.variant.price * 100) * quantity
   }
