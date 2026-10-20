@@ -61,6 +61,16 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: `Niet op voorraad: ${product.name} - ${variant.label}` }, { status: 409 })
     }
 
+    // Een variant zonder prijs is nog niet te koop. De knop op de
+    // productpagina staat al uit, maar net als hierboven geldt: dat
+    // houdt alleen de gewone route tegen, niet een directe POST.
+    if (variant.price === null) {
+      return NextResponse.json(
+        { error: `Nog niet te bestellen: ${product.name} - ${variant.label}` },
+        { status: 409 }
+      )
+    }
+
     line_items.push({
       quantity: item.quantity,
       price_data: {

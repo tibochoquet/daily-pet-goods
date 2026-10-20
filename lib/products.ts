@@ -1252,6 +1252,256 @@ export const products: Product[] = [
       },
     ],
   },
+  /**
+   * Prijzen, bol-id's en EAN's komen van de eigen bol-listings van
+   * oktober 2026, net als bij de rest van dit bestand.
+   *
+   * TODO verzendgewicht: staat niet op de bol-listing en is hier dus
+   * ook niet ingevuld.
+   * TODO reflectie: bol vermeldt bij de twee LED-producten
+   * "Reflecterend: ja". Dat staat hier bewust niet in de tekst, omdat
+   * het niet los is nagemeten.
+   */
+  {
+    slug: "led-halsband-kleine-honden-rood",
+    name: "LED Halsband Hond",
+    seoTitle: "LED Halsband Hond 20-30 cm Rood",
+    category: "dog-walking",
+    badge: 'new',
+    description:
+      "Deze LED-halsband licht fel rood op, zodat je kleine hond van ver opvalt bij fietsers en automobilisten. Ideaal voor avond- en ochtendwandelingen in de herfst en winter. De halsband is direct klaar voor gebruik: de CR2032-batterij zit er al in, opladen hoeft niet. Met één knop wissel je tussen continu aan, snel knipperen en langzaam knipperen.",
+    shortDescription:
+      "Fel rode LED-halsband voor kleine honden, 20-30 cm verstelbaar, met 3 lichtstanden en een batterij die er al in zit.",
+    features: [
+      "3 lichtstanden: continu aan, snel knipperen en langzaam knipperen.",
+      "Bediening met één knop, verwerkt in de halsband.",
+      "Direct klaar voor gebruik: de CR2032-batterij is al geplaatst, opladen is niet nodig.",
+      "Batterijduur (indicatie): ± 10-15 uur continu of ± 20-30 uur knipperend.",
+      "Batterij zelf te vervangen; een CR2032 koop je overal.",
+      "Duurzame LED in een lichtgevende buis.",
+      "Spatwaterdicht: kan tegen regen en natte grasvelden.",
+      "Traploos verstelbaar van 20 tot 30 cm halsomvang.",
+      "Stevige klikgesp en metalen D-ring voor de riem.",
+    ],
+    sections: [
+      {
+        title: "Geschikt voor",
+        body:
+          "Kleine honden met een halsomvang van 20 tot 30 cm, zoals Chihuahua, Yorkshire terriër, Maltezer en dwergpinscher. Meet de nek van je hond op en houd twee vingers ruimte tussen halsband en nek.",
+      },
+      {
+        title: "Batterij vervangen",
+        ordered: true,
+        items: [
+          "Schuif het batterijkastje uit het vakje bij de D-ring.",
+          "Draai de 4 schroefjes los met een kleine kruiskopschroevendraaier (PH00) en haal het deksel eraf.",
+          "Leg een nieuwe CR2032 onder het metalen klemmetje, met de pluskant (de kant met tekst) naar boven.",
+          "Plaats het deksel terug, draai de schroefjes vast en schuif het kastje terug in het vakje.",
+        ],
+      },
+    ],
+    included: ["1x LED-halsband met geplaatste CR2032-batterij."],
+    notIncluded: "riem, schroevendraaier en reservebatterij.",
+    safetyNote:
+      "Houd knoopcellen buiten bereik van kinderen en huisdieren. Inslikken is gevaarlijk.",
+    variants: [
+      {
+        id: "9300000430046468",
+        label: "20-30 cm",
+        price: 19.99,
+        bolUrl: "https://www.bol.com/nl/p/-/9300000430046468",
+        ean: "6156811190165",
+        specs: {
+          "Halsomvang": "20-30 cm, traploos verstelbaar",
+          "Breedte": "ca. 2,5 cm",
+          "Kleur": "zwart met rood licht",
+          "Materiaal": "nylon",
+          "Lichtstanden": "continu aan, snel knipperen, langzaam knipperen",
+          "Batterij": "1x CR2032 (3V), al geplaatst",
+          "Batterijduur (indicatie)": "± 10-15 uur continu, ± 20-30 uur knipperend",
+          "Waterbestendigheid": "spatwaterdicht, niet onderdompelen",
+        },
+        image: "/assets/products/9300000430046468/img_1.jpg",
+        images: [
+          "/assets/products/9300000430046468/img_1.jpg",
+          "/assets/products/9300000430046468/img_2.jpg",
+          "/assets/products/9300000430046468/img_3.jpg",
+          "/assets/products/9300000430046468/img_4.jpg",
+          "/assets/products/9300000430046468/img_5.jpg",
+          "/assets/products/9300000430046468/img_6.jpg",
+          "/assets/products/9300000430046468/img_7.jpg",
+          "/assets/products/9300000430046468/img_8.jpg",
+        ],
+        imageAlts: [
+          "Chihuahua met rood oplichtende LED-halsband, op een witte achtergrond",
+          "Chihuahua met oplichtende rode LED-halsband op straat in het donker",
+          "Rode LED-halsband met de drie lichtstanden: continu aan, snel knipperen en langzaam knipperen",
+          "Batterijkastje van de LED-halsband open, met CR2032-batterij, schroefjes en schroevendraaier",
+          "Details van de LED-halsband: lichtgevende buis, klikgesp, metalen D-ring en batterijvakje met drukknop",
+          "Chihuahua van opzij met de LED-halsband om, bij de uitleg over halsomvang 20 tot 30 cm",
+          "Chihuahua met oplichtende LED-halsband in de regen op natte stoeptegels",
+          "De LED-halsband uitgevouwen, zoals hij in de verpakking zit",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "led-hondenriem-usb-oplaadbaar-120-cm",
+    name: "LED Hondenriem",
+    seoTitle: "LED Hondenriem 120 cm, USB-oplaadbaar",
+    category: "dog-walking",
+    badge: 'new',
+    description:
+      "Een hondenriem van 120 cm met een blauwe LED-strip die over de hele lengte meeloopt, zodat jij en je hond in het donker beter opvallen in het verkeer. De riem laad je op via de meegeleverde USB-kabel, dus losse batterijen heb je niet nodig. Met de knop op het kastje wissel je tussen continu licht en twee knipperstanden. De gewatteerde handlus ligt prettig in de hand en de chromen karabijnhaak klik je vast aan de halsband of het tuigje van je hond.",
+    shortDescription:
+      "Hondenriem van 120 cm met blauwe LED-strip, oplaadbaar via USB, met 3 lichtstanden en een gewatteerde handlus.",
+    features: [
+      "Blauwe LED-strip over de volle lengte van de riem.",
+      "3 lichtstanden: continu aan, langzaam knipperen en snel knipperen.",
+      "Oplaadbaar via micro-USB; de USB-kabel zit erbij, losse batterijen zijn niet nodig.",
+      "Laadtijd ± 3 uur.",
+      "Brandduur (indicatie): 1-2 uur continu, 2-3 uur knipperend.",
+      "Gewatteerde handlus, prettig vast bij een trekkende hond.",
+      "Chromen karabijnhaak en 25 mm breed nylon band.",
+      "Spatwaterdicht: kan tegen regen, niet onderdompelen.",
+    ],
+    sections: [
+      {
+        title: "Geschikt voor",
+        body:
+          "Middelgrote en grote honden. De band van 25 mm en de zware karabijnhaak zijn te log voor kleine honden. Met 120 cm heeft je hond genoeg ruimte om te lopen, en houd je hem kort genoeg voor controle in het verkeer.",
+      },
+      {
+        title: "Opladen",
+        ordered: true,
+        items: [
+          "Zet de verlichting uit.",
+          "Open het klepje aan de zijkant van het bedieningskastje.",
+          "Sluit de USB-kabel aan op een laptop, pc of USB-adapter.",
+          "Na ± 3 uur: kabel eruit en het klepje weer dicht.",
+        ],
+      },
+    ],
+    included: ["1x LED-hondenriem, 120 cm x 25 mm.", "1x USB-kabel (micro-USB)."],
+    notIncluded: "halsband en USB-adapter.",
+    variants: [
+      {
+        id: "9300000429971240",
+        label: "120 cm",
+        price: 24.99,
+        bolUrl: "https://www.bol.com/nl/p/-/9300000429971240",
+        ean: "6156811070016",
+        specs: {
+          "Lengte": "120 cm",
+          "Breedte": "25 mm",
+          "Kleur": "zwart met blauw licht",
+          "Materiaal": "nylon",
+          "Lichtstanden": "continu aan, langzaam knipperen, snel knipperen",
+          "Opladen": "micro-USB, kabel meegeleverd",
+          "Laadtijd": "± 3 uur",
+          "Brandduur (indicatie)": "1-2 uur continu, 2-3 uur knipperend",
+          "Handvat": "gewatteerde handlus",
+          "Sluiting": "chromen karabijnhaak",
+          "Waterbestendigheid": "spatwaterdicht, niet onderdompelen",
+        },
+        image: "/assets/products/9300000429971240/img_1.jpg",
+        images: [
+          "/assets/products/9300000429971240/img_1.jpg",
+          "/assets/products/9300000429971240/img_2.jpg",
+          "/assets/products/9300000429971240/img_3.jpg",
+          "/assets/products/9300000429971240/img_4.jpg",
+          "/assets/products/9300000429971240/img_5.jpg",
+          "/assets/products/9300000429971240/img_6.jpg",
+          "/assets/products/9300000429971240/img_7.jpg",
+          "/assets/products/9300000429971240/img_8.jpg",
+        ],
+        imageAlts: [
+          "Labrador zittend naast de opgerolde LED-hondenriem met blauw oplichtende strip",
+          "Hand houdt de blauw oplichtende LED-hondenriem vast tijdens een avondwandeling met een labrador",
+          "De LED-hondenriem met de drie lichtstanden en de brandduur per stand",
+          "De LED-hondenriem wordt met de meegeleverde USB-kabel op een laptop opgeladen",
+          "Details van de LED-hondenriem: gewatteerde handgreep, knop op het bedieningskastje, metalen karabijnhaak en de 25 mm brede band",
+          "Iemand laat een labrador uit aan de blauw oplichtende riem van 120 cm",
+          "Labrador aan de oplichtende LED-hondenriem in de regen",
+          "De opgerolde LED-hondenriem naast de meegeleverde USB-kabel",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "draagtas-hond-kat-tot-9-kg-blauw",
+    name: "Draagtas Hond & Kat",
+    seoTitle: "Draagtas Hond en Kat tot 9 kg, 50 cm",
+    category: "pet-travel",
+    badge: 'new',
+    description:
+      "Met deze draagtas neem je je kleine hond of kat overal ontspannen mee naartoe: naar de dierenarts, in de auto, met de trein of een dagje de stad in. Door het gaas aan drie kanten krijgt je dier volop frisse lucht en kan het naar buiten kijken. Via de voorkant of de bovenkant zet je je dier er makkelijk in en haal je het er weer uit.",
+    shortDescription:
+      "Draagtas van 50 cm voor honden en katten tot 9 kg, met gaas aan drie kanten, twee openingen en een afneembare schouderband.",
+    features: [
+      "Twee openingen: de bovenkant opent als klep, de voorkant rits je open of helemaal los.",
+      "Gaas aan drie kanten voor ventilatie en zicht; de vierde kant is dicht en heeft een ritsvak.",
+      "Uitneembare bodemplaat met elastieken voor een stevige, vlakke bodem.",
+      "Extra goed dicht: draaislot op de bovenkant en ritsen die met een lusje aan elkaar vastzitten.",
+      "Kort veiligheidslijntje met karabijnhaak aan de binnenkant, plus meerdere punten om je dier extra vast te zetten.",
+      "Draag hem aan de handvatten met klittenbandgreep of aan de afneembare, verstelbare schouderband met antislip schouderstuk.",
+      "Ritsvak voor dierenpaspoort, poepzakjes of snacks.",
+      "Pootjes onder de bodem, zodat de tas niet direct op een natte of vieze ondergrond staat.",
+    ],
+    sections: [
+      {
+        title: "Welke maat past?",
+        body:
+          "Meet je dier op voordat je bestelt. Het moet in de tas rechtop kunnen staan, kunnen liggen en zich kunnen omdraaien. De tas is 50 x 28 x 30 cm en geschikt voor kleine honden, katten en andere kleine huisdieren tot 9 kg.",
+      },
+      {
+        title: "Schoonmaken",
+        body: "Wasbaar op 30 °C. Haal eerst de bodemplaat eruit.",
+      },
+    ],
+    included: ["1x draagtas met uitneembare bodemplaat.", "1x afneembare, verstelbare schouderband."],
+    notIncluded: "kussen of dekentje.",
+    variants: [
+      {
+        id: "9300000428933517",
+        label: "50 cm",
+        price: 49.99,
+        bolUrl: "https://www.bol.com/nl/p/-/9300000428933517",
+        ean: "6156810652664",
+        specs: {
+          "Afmetingen": "50 x 28 x 30 cm (l x b x h)",
+          "Geschikt voor": "kleine honden, katten en andere kleine huisdieren tot 9 kg",
+          "Materiaal": "polyester",
+          "Kleur": "blauw met zwart",
+          "Sluiting": "ritsen en draaislot",
+          "Ventilatie": "gaas aan drie kanten",
+          "Dragen": "handvatten met klittenbandgreep of afneembare schouderband",
+          "Wassen": "wasbaar op 30 °C, bodemplaat eerst verwijderen",
+        },
+        image: "/assets/products/9300000428933517/img_1.jpg",
+        images: [
+          "/assets/products/9300000428933517/img_1.jpg",
+          "/assets/products/9300000428933517/img_2.jpg",
+          "/assets/products/9300000428933517/img_3.jpg",
+          "/assets/products/9300000428933517/img_4.jpg",
+          "/assets/products/9300000428933517/img_5.jpg",
+          "/assets/products/9300000428933517/img_6.jpg",
+          "/assets/products/9300000428933517/img_7.jpg",
+          "/assets/products/9300000428933517/img_8.jpg",
+        ],
+        imageAlts: [
+          "Blauwe draagtas met een pomeriaan die door de open bovenklep naar buiten kijkt, met de schouderband ernaast",
+          "Vrouw draagt de blauwe draagtas met een pomeriaan erin langs een gracht",
+          "De draagtas met de afmetingen erbij: 50 cm lang, 28 cm breed en 30 cm hoog",
+          "De draagtas met de voorkant open en de bovenklep opzij, met een pomeriaan die eruit stapt",
+          "Details van de draagtas: draaislot, veiligheidslijntje aan de binnenkant, ritsvak en antislip schouderpad",
+          "Details van de draagtas: uitneembare bodemplaat, pootjes onder de bodem, handgreep met klittenband en het gaas aan drie kanten",
+          "De draagtas met een pomeriaan erin, vastgezet op de achterbank van een auto",
+          "Rode kat die door de open voorkant van de blauwe draagtas naar buiten kijkt",
+        ],
+      },
+    ],
+  },
 ]
 
 export const categories: Category[] = [
@@ -1333,6 +1583,20 @@ export const categories: Category[] = [
     image: '/assets/products/9300000394762586/img_1.jpg',
   },
   {
+    id: 'dog-walking',
+    name: 'Uitlaten & wandelen',
+    slug: 'dog-walking',
+    description: 'LED-verlichting die je hond zichtbaar maakt in het donker, voor de wandeling zelf.',
+    image: '/assets/products/9300000430046468/img_1.jpg',
+  },
+  {
+    id: 'pet-travel',
+    name: 'Vervoer & draagtassen',
+    slug: 'pet-travel',
+    description: 'Draagtassen voor kleine honden en katten, voor de dierenarts, de auto en de trein.',
+    image: '/assets/products/9300000428933517/img_1.jpg',
+  },
+  {
     id: 'pet-care',
     name: 'Verzorging & schoonmaak',
     slug: 'pet-care',
@@ -1349,8 +1613,14 @@ export function getProductBySlug(slug: string): Product | undefined {
   return products.find((p) => p.slug === slug)
 }
 
-export function startingPrice(product: Product): number {
-  return Math.min(...product.variants.map((v) => v.price))
+/**
+ * De laagste prijs van een product, of `null` zolang geen enkele variant
+ * een prijs heeft. Varianten zonder prijs tellen niet mee, zodat een nog
+ * niet geprijsde maat de "vanaf"-prijs niet naar beneden trekt.
+ */
+export function startingPrice(product: Product): number | null {
+  const prijzen = product.variants.map((v) => v.price).filter((p): p is number => p !== null)
+  return prijzen.length > 0 ? Math.min(...prijzen) : null
 }
 
 /**

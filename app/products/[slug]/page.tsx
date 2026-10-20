@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { products, startingPrice } from '@/lib/products'
+import { products } from '@/lib/products'
 import ProductDetailClient from './ProductDetailClient'
 import JsonLd from '@/components/JsonLd'
 import ProductReviews from '@/components/shop/ProductReviews'
-import { SITE_URL } from '@/lib/business'
+import { business, SITE_URL } from '@/lib/business'
 import { isDbConfigured } from '@/lib/db'
 import { findPublishedReviewsForProduct, type ProductReviews as Reviews } from '@/lib/db/reviews'
 
@@ -27,10 +27,33 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const product = products.find((p) => p.slug === slug)
   if (!product) return {}
+
+  // De eerste foto van de eerste variant is overal de hoofdfoto, dus ook
+  // de afbeelding die in WhatsApp, Slack of op social te zien is als
+  // iemand de link deelt. Zonder dit valt de pagina terug op de
+  // algemene site-afbeelding uit app/layout.tsx.
+  const cover = product.variants[0]
+  const title = product.seoTitle ?? product.name
+  const description = product.shortDescription
+  const canonical = `/products/${product.slug}`
+
   return {
-    title: product.name,
-    description: product.shortDescription,
-    alternates: { canonical: `/products/${product.slug}` },
+    title,
+    description,
+    alternates: { canonical },
+    openGraph: {
+      type: 'website',
+      title,
+      description,
+      url: canonical,
+      images: [{ url: cover.image, width: 1200, height: 1200, alt: product.name }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [cover.image],
+    },
   }
 }
 
@@ -39,9 +62,11 @@ export default async function ProductPage({ params }: Props) {
   const product = products.find((p) => p.slug === slug)
   if (!product) notFound()
 
-  const prices = product.variants.map((v) => v.price)
-  const lowPrice = Math.min(...prices)
-  const highPrice = Math.max(...prices)
+  // Varianten zonder prijs doen hier niet mee: die staan straks wel op de
+  // site, maar zijn nog niet te bestellen.
+  const prices = product.variants.map((v) => v.price).filter((p): p is number => p !== null)
+  const lowPrice = prices.length > 0 ? Math.min(...prices) : null
+  const highPrice = prices.length > 0 ? Math.max(...prices) : null
   // No variant carries inStock: false today (no real inventory system
   // behind this yet), so this reads as available - but it's a real flag
   // now, not a hardcoded string. Any variant in the group being in stock
@@ -59,14 +84,18 @@ export default async function ProductPage({ params }: Props) {
   const anyInStock = product.variants.some((v) => v.inStock ?? true)
   const availability = anyInStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock'
 
-  const productSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: product.name,
-    description: product.shortDescription,
-    image: product.variants.map((v) => `${SITE_URL}${v.image}`),
-    offers:
-      product.variants.length > 1
+  /**
+   * Zonder prijs geen `offers`.
+   *
+   * Een Offer moet een prijs hebben, en een verzonnen of op nul gezette
+   * prijs die niet overeenkomt met wat de bezoeker op de pagina ziet, is
+   * voor Google reden om de hele vermelding te negeren. Weglaten kost
+   * hooguit de rich result; een verkeerde prijs kost het vertrouwen.
+   */
+  const offers =
+    lowPrice === null || highPrice === null
+      ? undefined
+      : product.variants.length > 1
         ? {
             '@type': 'AggregateOffer',
             priceCurrency: 'EUR',
@@ -79,10 +108,24 @@ export default async function ProductPage({ params }: Props) {
         : {
             '@type': 'Offer',
             priceCurrency: 'EUR',
-            price: startingPrice(product).toFixed(2),
+            price: lowPrice.toFixed(2),
             availability,
             url: `${SITE_URL}/products/${product.slug}`,
-          },
+          }
+
+  const productSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.name,
+    description: product.shortDescription,
+    brand: { '@type': 'Brand', name: business.brandName },
+    // Eén product, één GTIN. Bij een product met meerdere maten hoort de
+    // EAN bij de variant en niet bij de groep, dus dan laten we hem weg.
+    ...(product.variants.length === 1 && product.variants[0].ean
+      ? { gtin13: product.variants[0].ean }
+      : {}),
+    image: product.variants.map((v) => `${SITE_URL}${v.image}`),
+    ...(offers ? { offers } : {}),
     // Alleen opnemen als er echt gepubliceerde reviews zijn. Een lege
     // aggregateRating of een waarde die afwijkt van wat de bezoeker op
     // de pagina ziet, is voor Google een reden om de hele vermelding te

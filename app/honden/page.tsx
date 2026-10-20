@@ -71,7 +71,8 @@ export default function HondenPage() {
               { label: 'Achterbankbeschermer Auto', price: 34.99, href: '/products/achterbankbeschermer-auto', top: '65%', left: '50%' },
             ],
           },
-          products: getProductsByCategory('dog-travel'),
+          // Reisspullen voor de hond plus wat hond en kat delen.
+          products: [...getProductsByCategory('dog-travel'), ...getProductsByCategory('pet-travel')],
         },
         {
           id: 'zwembaden',
@@ -92,6 +93,22 @@ export default function HondenPage() {
             ],
           },
           products: getProductsByCategory('dog-outdoor'),
+        },
+        {
+          id: 'uitlaten',
+          navLabel: 'Uitlaten & wandelen',
+          breadcrumbLabel: 'Uitlaten & wandelen',
+          hero: {
+            eyebrow: 'Zichtbaar in het donker',
+            title: 'Gezien worden telt',
+            description:
+              'In de herfst en winter wandel je in het donker. Een LED-halsband voor kleine honden en een oplaadbare LED-riem van 120 cm maken jou en je hond van ver zichtbaar voor fietsers en automobilisten.',
+            ctaLabel: 'Bekijk de collectie',
+            ctaHref: '/honden#uitlaten',
+            image: '/assets/products/led-hondenriem-usb-oplaadbaar-120-cm/img_2.jpg',
+            imageAlt: 'Labrador aan een blauw oplichtende LED-riem tijdens een avondwandeling',
+          },
+          products: getProductsByCategory('dog-walking'),
         },
         {
           id: 'hondenkleding',

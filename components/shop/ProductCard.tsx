@@ -43,8 +43,14 @@ export default function ProductCard({ product }: ProductCardProps) {
 
         <div className="flex items-center justify-between">
           <span className="text-sm text-[#1A1A1A]">
-            <span className="text-[#9CA3AF]">Vanaf </span>
-            <span className="font-medium">{formatPrice(price)}</span>
+            {price !== null ? (
+              <>
+                <span className="text-[#9CA3AF]">Vanaf </span>
+                <span className="font-medium">{formatPrice(price)}</span>
+              </>
+            ) : (
+              <span className="font-medium text-[#6B7280]">Prijs volgt</span>
+            )}
           </span>
           {multipleVariants && (
             <span className="text-xs text-[#9CA3AF] tracking-wide">

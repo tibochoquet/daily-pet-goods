@@ -44,3 +44,7 @@ yarn-error.log*
 next-env.d.ts
 
 .env.local
+# Originele, onbewerkte productfoto's zoals aangeleverd. De versies die de
+# site gebruikt staan in public/assets/products/<slug>/ en zijn wel
+# ingecheckt; deze 2048px-originelen zijn alleen de bron.
+/incoming
