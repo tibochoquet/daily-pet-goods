@@ -35,6 +35,9 @@ export const brandImages = {
   /** Dachshund in car with travel cover & bottle. Used: /honden onderweg section hero. */
   dogTravelCover: '/assets/images/travel_cover.jpg',
 
+  /** Labrador aan een blauw oplichtende LED-riem op een natte laan in de schemering. Used: /honden uitlaten section hero. */
+  dogWalkingCover: '/assets/images/uitlaten_cover.jpg',
+
   /** Dachshund beside foldable pool & cooling mats in garden. Used: /honden zwembaden section hero. */
   dogPoolsCover: '/assets/images/zwembaden-koelmat.jpg',
 

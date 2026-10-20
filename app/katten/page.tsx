@@ -103,7 +103,7 @@ export default function KattenPage() {
               'Een draagtas met gaas aan drie kanten, zodat je kat frisse lucht krijgt en naar buiten kan kijken. Via de bovenklep of de voorkant zet je haar er rustig in, en met de afneembare schouderband draag je haar makkelijk.',
             ctaLabel: 'Bekijk de collectie',
             ctaHref: '/katten#vervoer',
-            image: '/assets/products/draagtas-hond-kat-tot-9-kg-blauw/img_8.jpg',
+            image: '/assets/products/9300000428933517/img_8.jpg',
             imageAlt: 'Rode kat kijkt door de open voorkant van een blauwe draagtas naar buiten',
           },
           // Dezelfde draagtassen als op /honden: ze zijn voor allebei.
