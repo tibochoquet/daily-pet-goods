@@ -35,7 +35,7 @@ function KopieerVeld({ label, waarde }: { label: string; waarde: string }) {
 
 type Stap = 'invoer' | 'bevestigen' | 'bezig'
 
-export default function VerzendRegel({ order, modus }: { order: AdminOrder; modus: 'nieuw' | 'mail-open' }) {
+export default function VerzendRegel({ order, modus }: { order: AdminOrder; modus: 'nieuw' | 'mail-open' | 'verzonden' }) {
   const router = useRouter()
   const [carrier, setCarrier] = useState<Carrier>((order.carrier as Carrier) ?? 'DHL')
   const [nummer, setNummer] = useState(order.trackingNumber ?? '')
@@ -107,6 +107,24 @@ export default function VerzendRegel({ order, modus }: { order: AdminOrder; modu
       </div>
 
       <div className="mt-5 pt-4 border-t border-[#E8E2D9]">
+        {/* Wat de klant nu in zijn mail heeft staan. Zonder dit zie je
+            niet waar je iets aan verandert. */}
+        {modus === 'verzonden' && order.trackingUrl && (
+          <p className="text-sm text-[#6B7280] mb-4">
+            De klant kreeg <strong className="text-[#1A1A1A]">{order.carrier}</strong>{' '}
+            <strong className="text-[#1A1A1A]">{order.trackingNumber}</strong> —{' '}
+            <a href={order.trackingUrl} target="_blank" rel="noreferrer" className="text-[#2C4A3E] underline">
+              die link
+            </a>
+            {order.shippingEmailSentAt && (
+              <span className="text-[#9CA3AF]">
+                {' '}
+                op {new Date(order.shippingEmailSentAt).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long' })}
+              </span>
+            )}
+            .
+          </p>
+        )}
         {klaar ? (
           <p className="text-sm text-[#2C4A3E] font-medium">{klaar}</p>
         ) : stap === 'bevestigen' ? (
@@ -155,22 +173,31 @@ export default function VerzendRegel({ order, modus }: { order: AdminOrder; modu
                 className="w-full bg-[#FAFAF7] border border-[#E8E2D9] rounded-xl px-3 py-2.5 text-sm"
               />
             </div>
-            <button
-              disabled={!nummer.trim() || stap === 'bezig'}
-              onClick={() => setStap('bevestigen')}
-              className="bg-[#2C4A3E] text-white text-sm font-semibold px-5 py-2.5 rounded-xl hover:bg-[#3D6456] disabled:opacity-50"
-            >
-              {stap === 'bezig' ? 'Bezig…' : modus === 'mail-open' ? 'Mail opnieuw proberen' : 'Opslaan en mailen'}
-            </button>
+            {/* De mail is hier al de deur uit, dus "opslaan en mailen"
+                zou alleen maar geweigerd worden. Corrigeren is dan de
+                enige zinnige actie en dus de hoofdknop. */}
+            {modus !== 'verzonden' && (
+              <button
+                disabled={!nummer.trim() || stap === 'bezig'}
+                onClick={() => setStap('bevestigen')}
+                className="bg-[#2C4A3E] text-white text-sm font-semibold px-5 py-2.5 rounded-xl hover:bg-[#3D6456] disabled:opacity-50"
+              >
+                {stap === 'bezig' ? 'Bezig…' : modus === 'mail-open' ? 'Mail opnieuw proberen' : 'Opslaan en mailen'}
+              </button>
+            )}
             {/* Een nummer verbeteren mag nooit een tweede mail sturen,
                 dus dat is een aparte knop zonder bevestigingsstap. */}
             {order.shippingEmailSentAt && (
               <button
                 disabled={!nummer.trim() || stap === 'bezig'}
                 onClick={() => verstuur('corrigeer')}
-                className="text-sm text-[#6B7280] underline px-2 py-2.5 hover:text-[#1A1A1A] disabled:opacity-50"
+                className={
+                  modus === 'verzonden'
+                    ? 'bg-[#2C4A3E] text-white text-sm font-semibold px-5 py-2.5 rounded-xl hover:bg-[#3D6456] disabled:opacity-50'
+                    : 'text-sm text-[#6B7280] underline px-2 py-2.5 hover:text-[#1A1A1A] disabled:opacity-50'
+                }
               >
-                Alleen nummer corrigeren
+                {stap === 'bezig' ? 'Bezig…' : modus === 'verzonden' ? 'Vervoerder en nummer corrigeren' : 'Alleen nummer corrigeren'}
               </button>
             )}
           </div>

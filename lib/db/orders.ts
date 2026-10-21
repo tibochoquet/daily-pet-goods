@@ -1,4 +1,4 @@
-import { and, eq, isNotNull, isNull, lte, sql } from 'drizzle-orm'
+import { and, desc, eq, isNotNull, isNull, lte, sql } from 'drizzle-orm'
 import type { AnyPgColumn } from 'drizzle-orm/pg-core'
 import { getDb } from './index'
 import { orders, type OrderRow } from './schema'
@@ -173,6 +173,25 @@ export async function findOrdersAwaitingShippingEmail(): Promise<OrderRow[]> {
     .from(orders)
     .where(and(isNotNull(orders.trackingNumber), isNull(orders.shippingEmailSentAt)))
     .orderBy(orders.placedAt)
+}
+
+/**
+ * De laatst verzonden bestellingen, nieuwste eerst.
+ *
+ * Deze hebben een nummer en de klant heeft zijn mail gehad, dus ze
+ * staan in geen van de twee werklijsten. Toch moet je erbij kunnen:
+ * kies je per ongeluk de verkeerde vervoerder, dan is dit de enige
+ * plek waar je dat nog rechtzet. Een handvol volstaat - verder terug
+ * is het geen vergissing meer maar een zoekopdracht.
+ */
+export async function findRecentlyShipped(limiet = 10): Promise<OrderRow[]> {
+  const db = getDb()
+  return db
+    .select()
+    .from(orders)
+    .where(and(isNotNull(orders.trackingNumber), isNotNull(orders.shippingEmailSentAt)))
+    .orderBy(desc(orders.shippedAt))
+    .limit(limiet)
 }
 
 /**

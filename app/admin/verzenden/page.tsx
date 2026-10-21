@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { findOrdersAwaitingShippingEmail, findOrdersAwaitingTracking } from '@/lib/db/orders'
+import { findOrdersAwaitingShippingEmail, findOrdersAwaitingTracking, findRecentlyShipped } from '@/lib/db/orders'
 import { enrichOrders } from '@/lib/adminOrders'
 import { isDbConfigured } from '@/lib/db'
 import VerzendRegel from '@/components/admin/VerzendRegel'
@@ -21,9 +21,10 @@ export default async function VerzendenPage() {
     )
   }
 
-  const [alleTeVerzenden, mailOpen] = await Promise.all([
+  const [alleTeVerzenden, mailOpen, verzonden] = await Promise.all([
     findOrdersAwaitingTracking().then(enrichOrders),
     findOrdersAwaitingShippingEmail().then(enrichOrders),
+    findRecentlyShipped().then(enrichOrders),
   ])
 
   // Terugbetaald of betwist? Dan hoeft er niets meer de deur uit. Ze
@@ -83,6 +84,28 @@ export default async function VerzendenPage() {
           <div className="space-y-4">
             {mailOpen.map((o) => (
               <VerzendRegel key={o.stripeSessionId} order={o} modus="mail-open" />
+            ))}
+          </div>
+        )}
+      </section>
+
+      <section className="mt-14">
+        <h2 className="font-serif text-xl font-semibold text-[#1A1A1A] mb-1">
+          Al verzonden <span className="text-sm font-normal text-[#9CA3AF]">({verzonden.length})</span>
+        </h2>
+        <p className="text-sm text-[#6B7280] mb-5">
+          De laatste pakketten die de deur uit zijn. Heb je de verkeerde vervoerder gekozen of een cijfer
+          verkeerd overgenomen, dan zet je dat hier recht. Er gaat géén nieuwe mail uit: wat de klant al
+          ontvangen heeft, blijft zoals het is. Laat het hem dus zelf even weten.
+        </p>
+        {verzonden.length === 0 ? (
+          <p className="text-sm text-[#9CA3AF] bg-white border border-[#E8E2D9] rounded-2xl p-5">
+            Nog niets verzonden.
+          </p>
+        ) : (
+          <div className="space-y-4">
+            {verzonden.map((o) => (
+              <VerzendRegel key={o.stripeSessionId} order={o} modus="verzonden" />
             ))}
           </div>
         )}
