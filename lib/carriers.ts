@@ -2,9 +2,12 @@
  * De twee vervoerders waarmee we verzenden, en hoe je bij hun
  * trackingpagina komt.
  *
- * De DHL-link is getoetst met een echt zendingsnummer (3SDFC...): het
- * portaal toont dan het volledige traject. De DPD-link geeft een 200,
- * maar is nog niet met een echte zending nagelopen.
+ * Allebei getoetst met een echt zendingsnummer. DHL: 3SDFC..., het
+ * portaal toont het volledige traject en de bezorgdatum. DPD: het
+ * Nederlandse portaal van dpdgroup.com vindt zendingsnummer
+ * 05222070396223, de Duitse tracker op tracking.dpd.de niet - die
+ * antwoordt met "keine Daten zu Ihrem Paket", in het Duits. Daar stond
+ * deze link eerder naartoe, dus een DPD-klant kwam op een dode pagina.
  */
 
 export const CARRIERS = ['DHL', 'DPD'] as const
@@ -23,7 +26,9 @@ export function trackingUrl(carrier: Carrier, trackingNumber: string): string {
       // bezorgdatum. De tracker op dhl.com is voor andere nummerreeksen.
       return `https://my.dhlparcel.nl/home/tracktrace/${encodeURIComponent(nr)}`
     case 'DPD':
-      return `https://tracking.dpd.de/status/nl_NL/parcel/${encodeURIComponent(nr)}`
+      // Het Nederlandse portaal, niet de Duitse tracker: die kent onze
+      // zendingsnummers niet.
+      return `https://www.dpdgroup.com/nl/mydpd/my-parcels/incoming?parcelNumber=${encodeURIComponent(nr)}`
   }
 }
 
