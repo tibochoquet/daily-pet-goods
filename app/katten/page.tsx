@@ -120,13 +120,14 @@ export default function KattenPage() {
               'Een herbruikbare haarverwijderaar met geïntegreerd handvat en een ruim werkoppervlak van 21 x 16,5 cm, voor de bank, de kattenmand, je kleding en de autostoelen.',
             ctaLabel: 'Bekijk de collectie',
             ctaHref: '/katten#verzorging',
-            image: '/assets/products/9300000394762586/img_5.jpg',
-            imageAlt: 'Haarverwijderaar op een bank met een kat ernaast',
+            image: '/assets/products/9300000394744627/img_7.jpg',
+            imageAlt: 'Hand met haarverwijderaar haalt kattenharen van een bank, slapende cyperse kat ernaast',
             tags: [
-              { label: 'Kattenharen Verwijderaar', price: 19.95, href: '/products/kattenharen-verwijderaar', top: '70%', left: '45%' },
+              { label: 'Dierenharen Verwijderaar', price: 19.95, href: '/products/dierenharen-verwijderaar', top: '70%', left: '45%' },
             ],
           },
-          // Cat-specific removers plus the ones that serve both animals.
+          // Eén verwijderaar voor hond en kat; de aparte honden- en
+          // kattenversies zijn uit het assortiment.
           products: [...getProductsByCategory('cat-care'), ...getProductsByCategory('pet-care')],
         },
       ]}

@@ -18,6 +18,18 @@ const nextConfig: NextConfig = {
       { source: '/cat-bowls', destination: '/katten#kattenbakken', permanent: true },
       { source: '/cat-cooling', destination: '/katten#koelmatten', permanent: true },
       { source: '/terms', destination: '/algemene-voorwaarden', permanent: true },
+
+      // De aparte honden- en kattenverwijderaars (en de Rhino-versies)
+      // zijn uit het assortiment; er is nog één model voor allebei. Deze
+      // pagina's stonden in de sitemap en zijn dus geïndexeerd, dus
+      // wijzen we ze door naar het product dat er nog wel is in plaats
+      // van bezoekers op een 404 te laten lopen.
+      ...['hondenharen-verwijderaar', 'kattenharen-verwijderaar', 'hondenharen-verwijderaar-rhino',
+          'kattenharen-verwijderaar-rhino', 'dierenharen-verwijderaar-rhino'].map((slug) => ({
+        source: `/products/${slug}`,
+        destination: '/products/dierenharen-verwijderaar',
+        permanent: true,
+      })),
     ]
   },
   images: {

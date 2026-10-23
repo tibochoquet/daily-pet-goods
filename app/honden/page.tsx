@@ -141,13 +141,14 @@ export default function HondenPage() {
               'Een herbruikbare haarverwijderaar met geïntegreerd handvat en een ruim werkoppervlak van 21 x 16,5 cm, voor de bank, de hondenmand, je kleding en de autostoelen.',
             ctaLabel: 'Bekijk de collectie',
             ctaHref: '/honden#verzorging',
-            image: '/assets/products/9300000394749647/img_5.jpg',
-            imageAlt: 'Hand met haarverwijderaar haalt hondenharen van een bank, golden retriever ernaast',
+            image: '/assets/products/9300000394744627/img_5.jpg',
+            imageAlt: 'Hand met haarverwijderaar haalt hondenharen van een bank',
             tags: [
-              { label: 'Hondenharen Verwijderaar', price: 19.95, href: '/products/hondenharen-verwijderaar', top: '70%', left: '48%' },
+              { label: 'Dierenharen Verwijderaar', price: 19.95, href: '/products/dierenharen-verwijderaar', top: '70%', left: '48%' },
             ],
           },
-          // Dog-specific removers plus the ones that serve both animals.
+          // Eén verwijderaar voor hond en kat; de aparte honden- en
+          // kattenversies zijn uit het assortiment.
           products: [...getProductsByCategory('dog-care'), ...getProductsByCategory('pet-care')],
         },
       ]}
