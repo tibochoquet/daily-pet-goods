@@ -199,20 +199,32 @@ export function reviewRequestEmail(order: OrderEmailData, invite: ReviewInviteDa
   const reviewLink = (slug: string | null | undefined, rating?: number) =>
     withParams(invite.reviewUrl, { product: slug ?? undefined, rating });
 
-  const stars = [1, 2, 3, 4, 5]
+  /**
+   * De vijf sterren als tabel met vaste kolommen van 20%.
+   *
+   * Ze stonden hiervoor als inline-block naast elkaar. Op een smal
+   * scherm paste de rij net niet in de kaart en brak de vijfde ster naar
+   * een tweede regel. Een tabel kan niet afbreken: elke cel is een
+   * vijfde van de beschikbare breedte en de ster schaalt daarbinnen mee.
+   * Flex, float en inline-block zijn hier geen alternatief - de ene
+   * mailclient doet er niets mee, de andere iets anders.
+   */
+  const stars = `<table role="presentation" class="stars" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;table-layout:fixed;white-space:nowrap;margin:14px 0 0;">
+<tr>${[1, 2, 3, 4, 5]
     .map(
       (n) =>
-        `<a href="${esc(reviewLink(main.slug, n))}" title="${n} van 5" style="display:inline-block;padding:0 4px;font-family:Arial,sans-serif;font-size:38px;line-height:44px;color:${c.terracotta};text-decoration:none;">&#9733;</a>`,
+        `<td width="20%" align="center" style="padding:0;"><a href="${esc(reviewLink(main.slug, n))}" title="${n} van 5" style="display:block;font-family:Arial,sans-serif;font-size:36px;line-height:42px;color:${c.terracotta};text-decoration:none;">&#9733;</a></td>`,
     )
-    .join('');
+    .join('')}</tr>
+</table>`;
 
   const productCard = `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:separate;background-color:${c.card};border:1px solid ${c.line};border-radius:12px;">
-<tr><td align="center" style="padding:28px 24px 26px;">
+<tr><td align="center" class="card-px" style="padding:28px 24px 26px;">
 ${main.imageUrl ? `<img src="${esc(productThumb(main.imageUrl, 256))}" width="112" height="112" alt="" style="display:block;width:112px;height:112px;border-radius:10px;border:1px solid ${c.line};margin:0 auto;object-fit:cover;">` : ''}
 <p style="margin:14px 0 0;font-family:${f.sans};font-size:15px;line-height:22px;font-weight:600;color:${c.ink};">${esc(main.name)}${
     main.variant ? `<span style="font-weight:400;color:${c.muted};"> · ${esc(main.variant)}</span>` : ''
   }</p>
-<div class="stars" style="margin:14px 0 0;">${stars}</div>
+${stars}
 <p style="margin:6px 0 0;font-family:${f.sans};font-size:13px;line-height:20px;color:${c.muted};">Tik op een ster om je review te schrijven</p>
 </td></tr></table>`;
 
