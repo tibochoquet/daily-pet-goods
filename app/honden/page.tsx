@@ -42,7 +42,7 @@ export default function HondenPage() {
             eyebrow: 'Rust & comfort',
             title: 'Een plek om helemaal tot rust te komen',
             description:
-              'Van zachte pluche donut manden tot de structurele Sambo mand en een ruim loungebed. Elke mand is ontworpen voor een goede nachtrust en een mooi plekje in huis.',
+              'Van zachte pluche donut manden tot de structurele Sambo mand en een ruim loungebed, plus een zelfverwarmende mat en een hangmat voor aan de radiator voor de koude maanden. Elke plek is ontworpen voor een goede nachtrust en een mooi plekje in huis.',
             ctaLabel: 'Bekijk de collectie',
             ctaHref: '/honden#hondenmanden',
             image: brandImages.dogBedsCover,

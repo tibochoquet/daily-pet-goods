@@ -81,7 +81,7 @@ export default function KattenPage() {
             eyebrow: 'Nieuwsgierig van nature',
             title: 'Eerst spelen, dan lekker languit',
             description:
-              'Een kattentunnel van 95 cm om doorheen te kruipen en je in te verstoppen, met een zacht kussen erbij voor het dutje dat daarna komt.',
+              'Een kattentunnel van 95 cm om doorheen te kruipen en je in te verstoppen, en voor het dutje daarna een zelfverwarmende mat of een hangmat die zonder boren over de radiator haakt.',
             ctaLabel: 'Bekijk de collectie',
             ctaHref: '/katten#spelen',
             image: '/assets/products/9300000390727042/img_7.jpg',
