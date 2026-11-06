@@ -33,6 +33,25 @@ const nextConfig: NextConfig = {
     ]
   },
   images: {
+    /**
+     * De beeldoptimalisatie van Vercel staat uit.
+     *
+     * Op 6 november 2026 raakte het quotum op en gaf /_next/image overal
+     * 402 (OPTIMIZED_IMAGE_REQUEST_PAYMENT_REQUIRED) - niet alleen bij de
+     * nieuwe producten maar bij elke afbeelding die nog niet in de cache
+     * zat. De halve winkel stond daardoor zonder foto's.
+     *
+     * Zonder optimalisatie serveert next/image het bronbestand zoals het
+     * is. Dat kan hier, omdat de productfoto's al als 1200x1200 JPG van
+     * 100 tot 300 KB in de repo staan. Wat we inleveren is WebP/AVIF en
+     * het verkleinen per schermbreedte: een telefoon haalt nu hetzelfde
+     * bestand op als een desktop.
+     *
+     * Wil je het terug, dan heb je een plan met meer transformaties
+     * nodig, of minder bronafbeeldingen. Zet deze regel dan weer uit en
+     * controleer /_next/image voordat je het live laat staan.
+     */
+    unoptimized: true,
     qualities: [75, 80, 85, 88, 90],
     remotePatterns: [
       {
