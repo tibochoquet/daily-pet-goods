@@ -117,17 +117,17 @@ export default function KattenPage() {
             eyebrow: 'Kattenharen, overal',
             title: 'Weg met haren op de bank',
             description:
-              'Een herbruikbare haarverwijderaar met geïntegreerd handvat en een ruim werkoppervlak van 21 x 16,5 cm, voor de bank, de kattenmand, je kleding en de autostoelen.',
+              'Een driedelige set tegen losse haren: een borstelhandschoen voor de vacht, een haarverwijderaar voor tapijt en bank, en een textielhandschoen voor je kleding en de autostoelen.',
             ctaLabel: 'Bekijk de collectie',
             ctaHref: '/katten#verzorging',
-            image: '/assets/products/9300000394744627/img_7.jpg',
-            imageAlt: 'Hand met haarverwijderaar haalt kattenharen van een bank, slapende cyperse kat ernaast',
+            image: '/assets/products/dierenharen-verwijderaar-set/img_8.jpg',
+            imageAlt: 'De haarverwijderaar trekt losse haren van een stoffen bank',
             tags: [
-              { label: 'Dierenharen Verwijderaar', price: 19.95, href: '/products/dierenharen-verwijderaar', top: '70%', left: '45%' },
+              { label: 'Verwijderaar Set 3-delig', price: 29.99, href: '/products/dierenharen-verwijderaar-set', top: '70%', left: '45%' },
             ],
           },
-          // Eén verwijderaar voor hond en kat; de aparte honden- en
-          // kattenversies zijn uit het assortiment.
+          // Eén set voor hond en kat; de losse verwijderaar en de aparte
+          // honden- en kattenversies zijn uit het assortiment.
           products: [...getProductsByCategory('cat-care'), ...getProductsByCategory('pet-care')],
         },
       ]}

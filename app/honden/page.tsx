@@ -138,17 +138,17 @@ export default function HondenPage() {
             eyebrow: 'Na de wandeling',
             title: 'Haren op de bank horen erbij',
             description:
-              'Een herbruikbare haarverwijderaar met geïntegreerd handvat en een ruim werkoppervlak van 21 x 16,5 cm, voor de bank, de hondenmand, je kleding en de autostoelen.',
+              'Een driedelige set tegen losse haren: een borstelhandschoen voor de vacht, een haarverwijderaar voor tapijt en bank, en een textielhandschoen voor je kleding en de autostoelen.',
             ctaLabel: 'Bekijk de collectie',
             ctaHref: '/honden#verzorging',
-            image: '/assets/products/9300000394744627/img_5.jpg',
-            imageAlt: 'Hand met haarverwijderaar haalt hondenharen van een bank',
+            image: '/assets/products/dierenharen-verwijderaar-set/img_1.jpg',
+            imageAlt: 'De drie delen van de haarverwijderaar-set bij een liggende hond',
             tags: [
-              { label: 'Dierenharen Verwijderaar', price: 19.95, href: '/products/dierenharen-verwijderaar', top: '70%', left: '48%' },
+              { label: 'Verwijderaar Set 3-delig', price: 29.99, href: '/products/dierenharen-verwijderaar-set', top: '70%', left: '48%' },
             ],
           },
-          // Eén verwijderaar voor hond en kat; de aparte honden- en
-          // kattenversies zijn uit het assortiment.
+          // Eén set voor hond en kat; de losse verwijderaar en de aparte
+          // honden- en kattenversies zijn uit het assortiment.
           products: [...getProductsByCategory('dog-care'), ...getProductsByCategory('pet-care')],
         },
       ]}

@@ -85,6 +85,59 @@ export const products: Product[] = [
       },
     ],
   },
+  /**
+   * Bamboe voerbakstandaard, november 2026. Op bol staat hij twee keer:
+   * een hondenversie en een kattenversie met een eigen EAN. Het is
+   * fysiek hetzelfde product, dus de maten en de inhoud zijn gelijk - de
+   * hoofdfoto en de gebruiksfoto verschillen.
+   */
+  {
+    slug: "verhoogde-voerbak-bamboe-hond",
+    name: "Verhoogde Hondenvoerbak Bamboe",
+    category: "dog-feeding",
+    description: "Een handgemaakte voerbakstandaard van onbehandeld bamboe met twee uitneembare RVS bakjes. Het blad staat schuin naar voren: de voorkant is 10 cm hoog en de achterkant 12 cm, zodat de bakjes naar je hond toe kantelen. Door de lage standaard hoeft een kleine hond niet diep te bukken bij het eten. Het blad meet 34,5 bij 16 cm en de twee bakjes zijn 14 cm in doorsnee en 4 cm diep, goed voor 250 ml per bakje. Het bamboe is niet gelakt en de poten zijn met de hand vastgeschroefd. Er zitten een kruiskopsleutel en zelfklevende viltjes bij, zodat je de poten los kunt draaien en de vloer kunt beschermen tegen krassen.",
+    shortDescription: "Handgemaakte bamboe voerbakstandaard die schuin naar voren staat, met twee uitneembare RVS bakjes van 250 ml. Voor kleine honden.",
+    features: [
+      "Schuin naar voren: de voorkant is 2 cm lager dan de achterkant, zodat de bakjes naar je hond toe kantelen.",
+      "Twee uitneembare RVS bakjes van 14 cm doorsnee en 4 cm diep, elk goed voor 250 ml.",
+      "Handgemaakt van bamboe dat niet gelakt is.",
+      "Poten met de hand vastgeschroefd, met kruiskopsleutel om ze los te draaien.",
+      "Zelfklevende viltjes meegeleverd, tegen krassen op de vloer.",
+      "Compact blad van 34,5 bij 16 cm, voor kleine honden.",
+    ],
+    badge: 'new',
+    included: [
+      "1x voerbakstandaard van bamboe met twee RVS bakjes.",
+      "1x kruiskopsleutel om de poten los te draaien.",
+      "Zelfklevende viltjes voor onder de poten.",
+    ],
+    variants: [
+      {
+        id: "verhoogde-voerbak-bamboe-hond",
+        ean: "6156813438494",
+        label: "34,5 x 16 cm",
+        price: 44.99,
+        specs: {"Afmetingen blad": "34,5 x 16 cm", "Hoogte": "10 cm voor, 12 cm achter", "Materiaal standaard": "bamboe, niet gelakt", "Materiaal bakjes": "roestvrij staal (RVS)", "Aantal bakjes": "2", "Doorsnee bakjes": "14 cm", "Diepte bakjes": "4 cm", "Inhoud per bakje": "250 ml", "Bakjes uitneembaar": "ja", "Handgemaakt": "ja", "Geschikt voor": "kleine honden"},
+        image: "/assets/products/verhoogde-voerbak-bamboe-hond/img_1.jpg",
+        images: [
+          "/assets/products/verhoogde-voerbak-bamboe-hond/img_1.jpg",
+          "/assets/products/verhoogde-voerbak-bamboe-hond/img_2.jpg",
+          "/assets/products/verhoogde-voerbak-bamboe-hond/img_3.jpg",
+          "/assets/products/verhoogde-voerbak-bamboe-hond/img_4.jpg",
+          "/assets/products/verhoogde-voerbak-bamboe-hond/img_5.jpg",
+          "/assets/products/verhoogde-voerbak-bamboe-hond/img_6.jpg",
+        ],
+        imageAlts: [
+          "Kleine hond eet uit de bamboe voerbakstandaard met twee RVS bakjes",
+          "De afmetingen: blad van 34,5 bij 16 cm, bakjes van 14 cm doorsnee en 250 ml per bakje",
+          "De standaard staat schuin naar voren: 10 cm hoog aan de voorkant, 12 cm aan de achterkant",
+          "Kleine hond eet uit de standaard in de woonkamer",
+          "Details: de poten zijn aan de onderkant vastgeschroefd, de RVS bakjes zijn uitneembaar en er zitten viltjes tegen krassen onder",
+          "Wat er in de verpakking zit: de standaard met twee RVS bakjes, een kruiskopsleutel en zelfklevende viltjes",
+        ],
+      },
+    ],
+  },
   {
     slug: "dubbele-voerbak-metaal",
     name: "Dubbele Voerbak Metaal",
@@ -205,6 +258,53 @@ export const products: Product[] = [
           "/assets/products/9300000291848114/img_7.jpg",
           "/assets/products/9300000291848114/img_8.jpg",
           "/assets/products/9300000291848114/img_9.jpg",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "verhoogde-voerbak-bamboe-kat",
+    name: "Verhoogde Kattenvoerbak Bamboe",
+    category: "cat-feeding",
+    description: "Een handgemaakte voerbakstandaard van onbehandeld bamboe met twee uitneembare RVS bakjes. Het blad staat schuin naar voren: de voorkant is 10 cm hoog en de achterkant 12 cm, zodat de bakjes naar je kat toe kantelen. Verhoogd, dus je kat hoeft minder diep te bukken bij het eten. Het blad meet 34,5 bij 16 cm en de twee bakjes zijn 14 cm in doorsnee en 4 cm diep, goed voor 250 ml per bakje. Het bamboe is niet gelakt en de poten zijn met de hand vastgeschroefd. Er zitten een kruiskopsleutel en zelfklevende viltjes bij, zodat je de poten los kunt draaien en de vloer kunt beschermen tegen krassen.",
+    shortDescription: "Handgemaakte bamboe voerbakstandaard die schuin naar voren staat, met twee uitneembare RVS bakjes van 250 ml. Voor katten.",
+    features: [
+      "Schuin naar voren: de voorkant is 2 cm lager dan de achterkant, zodat de bakjes naar je kat toe kantelen.",
+      "Twee uitneembare RVS bakjes van 14 cm doorsnee en 4 cm diep, elk goed voor 250 ml.",
+      "Handgemaakt van bamboe dat niet gelakt is.",
+      "Poten met de hand vastgeschroefd, met kruiskopsleutel om ze los te draaien.",
+      "Zelfklevende viltjes meegeleverd, tegen krassen op de vloer.",
+      "Compact blad van 34,5 bij 16 cm, voor katten.",
+    ],
+    badge: 'new',
+    included: [
+      "1x voerbakstandaard van bamboe met twee RVS bakjes.",
+      "1x kruiskopsleutel om de poten los te draaien.",
+      "Zelfklevende viltjes voor onder de poten.",
+    ],
+    variants: [
+      {
+        id: "verhoogde-voerbak-bamboe-kat",
+        ean: "6156813355357",
+        label: "34,5 x 16 cm",
+        price: 44.99,
+        specs: {"Afmetingen blad": "34,5 x 16 cm", "Hoogte": "10 cm voor, 12 cm achter", "Materiaal standaard": "bamboe, niet gelakt", "Materiaal bakjes": "roestvrij staal (RVS)", "Aantal bakjes": "2", "Doorsnee bakjes": "14 cm", "Diepte bakjes": "4 cm", "Inhoud per bakje": "250 ml", "Bakjes uitneembaar": "ja", "Handgemaakt": "ja", "Geschikt voor": "katten"},
+        image: "/assets/products/verhoogde-voerbak-bamboe-kat/img_1.jpg",
+        images: [
+          "/assets/products/verhoogde-voerbak-bamboe-kat/img_1.jpg",
+          "/assets/products/verhoogde-voerbak-bamboe-kat/img_2.jpg",
+          "/assets/products/verhoogde-voerbak-bamboe-kat/img_3.jpg",
+          "/assets/products/verhoogde-voerbak-bamboe-kat/img_4.jpg",
+          "/assets/products/verhoogde-voerbak-bamboe-kat/img_5.jpg",
+          "/assets/products/verhoogde-voerbak-bamboe-kat/img_6.jpg",
+        ],
+        imageAlts: [
+          "Kat eet uit de bamboe voerbakstandaard met twee RVS bakjes",
+          "De afmetingen: blad van 34,5 bij 16 cm, bakjes van 14 cm doorsnee en 250 ml per bakje",
+          "De standaard staat schuin naar voren: 10 cm hoog aan de voorkant, 12 cm aan de achterkant",
+          "Kat eet uit de standaard in de keuken",
+          "Details: de poten zijn aan de onderkant vastgeschroefd, de RVS bakjes zijn uitneembaar en er zitten viltjes tegen krassen onder",
+          "Wat er in de verpakking zit: de standaard met twee RVS bakjes, een kruiskopsleutel en zelfklevende viltjes",
         ],
       },
     ],
@@ -912,39 +1012,68 @@ export const products: Product[] = [
       },
     ],
   },
+  /**
+   * De driedelige set is sinds november 2026 de enige haarverwijderaar
+   * in het assortiment; de losse verwijderaar van 19,95 is eruit. Alle
+   * maten en aantallen hier komen van de infografieken in de foto's.
+   */
   {
-    slug: "dierenharen-verwijderaar",
-    name: "Dierenharen Verwijderaar",
+    slug: "dierenharen-verwijderaar-set",
+    name: "Dierenharen Verwijderaar Set 3-delig",
     category: "pet-care",
-    description: "Honden- en kattenharen op je bank, kleding, meubels of in de auto? Met deze dierenharen verwijderaar haal je losse haren eenvoudig van stoffen oppervlakken. De verwijderaar heeft een ruim werkoppervlak van 21 x 16,5 cm en een geïntegreerd handvat aan de achterzijde, waardoor je hem stevig vasthoudt en gecontroleerd over het oppervlak beweegt. Geschikt voor banken en fauteuils, de honden- of kattenmand, kleding en jassen, stoffen meubels, autostoelen en dekens. Herbruikbaar, dus je kunt hem steeds opnieuw gebruiken. Eén tool voor huishoudens met een hond, een kat of allebei.",
-    shortDescription: "Herbruikbare haarverwijderaar met handvat, 21 x 16,5 cm, voor bank, honden- of kattenmand, kleding en auto.",
+    description: "Drie stuks tegen losse haren: in de vacht, op de bank en op je kleding. De borstelhandschoen van 14,5 bij 23 cm heeft aan de voorkant 259 zachte siliconen noppen waar de losse haren tussen blijven hangen terwijl je je hond of kat aait; de achterkant is van ademend mesh met een elastische polsband. De haarverwijderaar van 12,4 bij 14,7 cm heeft fijne noppen aan de voorkant en drie getande strips aan de achterkant, en trek je over tapijt, bank en kleding, waarna de haren zich voor de kop verzamelen. De textielhandschoen van 16,5 bij 21 cm schuif je over je hand; de grijze stof aan de achterkant vangt de haren van de bank, kleding, de mand en de autostoel. Alle drie zijn ze herbruikbaar, en de borstelhandschoen kan in de machine of met de hand gewassen worden.",
+    shortDescription: "Drie stuks tegen losse haren: een borstelhandschoen voor de vacht, een haarverwijderaar voor tapijt en bank, en een textielhandschoen voor kleding en autostoel.",
     features: [
-      "Voor honden- én kattenharen: één tool voor alle losse huisdierharen.",
-      "Ruim werkoppervlak van 21 x 16,5 cm: behandel grotere vlakken zoals een bank efficiënt.",
-      "Geïntegreerd handvat: stevige grip tijdens het gebruik, compact op te bergen.",
-      "Herbruikbaar: gemaakt voor herhaald gebruik, geen navullingen nodig.",
-      "Let op: bedoeld voor oppervlakken, niet om rechtstreeks over de vacht van je huisdier te gebruiken.",
+      "Borstelhandschoen van 14,5 x 23 cm met 259 zachte siliconen noppen: aaien is borstelen.",
+      "Haarverwijderaar van 12,4 x 14,7 cm met fijne noppen en drie getande strips, voor tapijt, bank en kleding.",
+      "Textielhandschoen van 16,5 x 21 cm: de grijze stof vangt haren van bank, kleding, mand en autostoel.",
+      "Alle drie herbruikbaar, geen navullingen nodig.",
+      "De borstelhandschoen is machine- en handwasbaar.",
+      "Let op: de haarverwijderaar en de textielhandschoen zijn voor oppervlakken, niet om rechtstreeks over de vacht van je huisdier te gebruiken.",
+    ],
+    badge: 'new',
+    sections: [
+      {
+        title: "Welke hand?",
+        body: "Er zit één borstelhandschoen in de set. Of dat de linker- of de rechterhandschoen is, wisselt per set en kun je bij het bestellen niet kiezen.",
+      },
+    ],
+    included: [
+      "1x borstelhandschoen, links of rechts.",
+      "1x haarverwijderaar.",
+      "1x textielhandschoen.",
     ],
     variants: [
       {
-        id: "9300000394744627",
-        label: "21 x 16,5 cm",
-        price: 19.95,
-        bolUrl: "https://www.bol.com/nl/p/-/9300000394744627",
-        specs: { "Afmetingen": "21 x 16,5 cm", "Handvat": "geïntegreerd", "Aantal": "1 stuk", "Herbruikbaar": "ja", "Geschikt voor": "honden- en kattenharen" },
-        image: "/assets/products/9300000394744627/img_1.jpg",
+        id: "dierenharen-verwijderaar-set",
+        ean: "6156813272272",
+        label: "3-delige set",
+        price: 29.99,
+        specs: {"Aantal delen": "3", "Borstelhandschoen": "14,5 x 23 cm, 259 siliconen noppen", "Haarverwijderaar": "12,4 x 14,7 cm, fijne noppen en drie getande strips", "Textielhandschoen": "16,5 x 21 cm", "Herbruikbaar": "ja", "Wassen": "borstelhandschoen machine- en handwasbaar", "Geschikt voor": "honden- en kattenharen"},
+        image: "/assets/products/dierenharen-verwijderaar-set/img_1.jpg",
         images: [
-          "/assets/products/9300000394744627/img_1.jpg",
-          "/assets/products/9300000394744627/img_2.jpg",
-          "/assets/products/9300000394744627/img_3.jpg",
-          "/assets/products/9300000394744627/img_4.jpg",
-          "/assets/products/9300000394744627/img_5.jpg",
-          "/assets/products/9300000394744627/img_6.jpg",
-          "/assets/products/9300000394744627/img_7.jpg",
-          "/assets/products/9300000394744627/img_8.jpg",
-          "/assets/products/9300000394744627/img_9.jpg",
-          "/assets/products/9300000394744627/img_10.jpg",
-          "/assets/products/9300000394744627/img_11.jpg",
+          "/assets/products/dierenharen-verwijderaar-set/img_1.jpg",
+          "/assets/products/dierenharen-verwijderaar-set/img_2.jpg",
+          "/assets/products/dierenharen-verwijderaar-set/img_3.jpg",
+          "/assets/products/dierenharen-verwijderaar-set/img_4.jpg",
+          "/assets/products/dierenharen-verwijderaar-set/img_5.jpg",
+          "/assets/products/dierenharen-verwijderaar-set/img_6.jpg",
+          "/assets/products/dierenharen-verwijderaar-set/img_7.jpg",
+          "/assets/products/dierenharen-verwijderaar-set/img_8.jpg",
+          "/assets/products/dierenharen-verwijderaar-set/img_9.jpg",
+          "/assets/products/dierenharen-verwijderaar-set/img_10.jpg",
+        ],
+        imageAlts: [
+          "De drie delen van de set voor een liggende golden retriever: borstelhandschoen, haarverwijderaar en textielhandschoen",
+          "Wat er in de set zit: een borstelhandschoen voor de vacht, een haarverwijderaar voor tapijt en bank, en een textielhandschoen voor bank, kleding en autostoel",
+          "De drie delen van de set naast elkaar op een witte achtergrond",
+          "De borstelhandschoen van voren en van achteren, met de maten 14,5 bij 23 cm",
+          "Losse hondenharen blijven tussen de siliconen noppen van de borstelhandschoen hangen",
+          "Details van de borstelhandschoen: de siliconen noppen, de elastische polsband, wassen onder de kraan en gebruik bij een kat",
+          "De haarverwijderaar van voren en van achteren, met de maten 12,4 bij 14,7 cm",
+          "De haarverwijderaar wordt over een stoffen bank getrokken en verzamelt de losse haren voor de kop",
+          "De textielhandschoen van voren en van achteren, met de maten 16,5 bij 21 cm",
+          "Zo werkt de textielhandschoen: hand erin, over de stof vegen, de haren blijven hangen",
         ],
       },
     ],
@@ -985,21 +1114,22 @@ export const products: Product[] = [
     slug: "kattenjas",
     name: "Kattenjas",
     category: "cat-clothing",
-    description: "Geef je kat extra warmte en bescherming tijdens koude en natte dagen met deze kattenjas. De jas is geschikt voor katten die tijdens de koudere maanden wat extra bescherming kunnen gebruiken tijdens buitenmomenten. De jas heeft een zachte fleecevoering voor extra warmte en comfort, terwijl de buitenzijde helpt beschermen tegen regen en wind. Dankzij de reflecterende details valt je kat beter op wanneer je buiten bent bij weinig licht. Let op: de maat 25 cm verwijst naar de ruglengte van de jas. Meet vanaf de nek, ongeveer ter hoogte van de halsband, tot aan de staartaanzet, en kies de maat op basis van die meting.",
-    shortDescription: "Waterdichte, windbestendige kattenjas met fleecevoering, ruglengte 25 cm.",
+    description: "Geef je kat extra warmte en bescherming tijdens koude en natte dagen met deze kattenjas. De jas is geschikt voor katten die tijdens de koudere maanden wat extra bescherming kunnen gebruiken tijdens buitenmomenten. De jas heeft een zachte fleecevoering voor extra warmte en comfort, terwijl de buitenzijde helpt beschermen tegen regen en wind. Dankzij de reflecterende details valt je kat beter op wanneer je buiten bent bij weinig licht. Let op: de maat is de jaslengte, gemeten van de nek tot de staart. Meet je kat vanaf de nek, ongeveer ter hoogte van de halsband, tot aan de staartaanzet, en kies de maat op basis van die meting. Verkrijgbaar in maat S met een jaslengte van 25 cm en maat M met een jaslengte van 30 cm.",
+    shortDescription: "Waterdichte, windbestendige kattenjas met fleecevoering, in maat S (25 cm) en M (30 cm).",
     features: [
       "Waterdicht en windbestendig: beschermt tegen regen en wind.",
       "Zachte fleecevoering: voor een comfortabele, warme laag.",
       "Reflecterende details: voor betere zichtbaarheid bij weinig licht.",
       "Geschikt voor herfst en winter, en voor katten die buiten komen.",
+      "Twee maten: jaslengte 25 cm (S) en 30 cm (M).",
     ],
     variants: [
       {
         id: "9300000386611069",
-        label: "25 cm",
+        label: "S (25 cm)",
         price: 39.99,
         bolUrl: "https://www.bol.com/nl/p/-/9300000386611069",
-        specs: { "Ruglengte": "25 cm", "Materiaal voering": "fleece", "Waterdicht": "ja", "Windbestendig": "ja", "Reflecterend": "ja" },
+        specs: { "Jaslengte": "25 cm", "Materiaal voering": "fleece", "Waterdicht": "ja", "Windbestendig": "ja", "Reflecterend": "ja" },
         image: "/assets/products/9300000386611069/img_1.jpg",
         images: [
           "/assets/products/9300000386611069/img_1.jpg",
@@ -1013,6 +1143,27 @@ export const products: Product[] = [
           "/assets/products/9300000386611069/img_9.jpg",
           "/assets/products/9300000386611069/img_10.jpg",
           "/assets/products/9300000386611069/img_11.jpg",
+        ],
+      },
+      {
+        id: "kattenjas-30cm",
+        ean: "6156813495442",
+        label: "M (30 cm)",
+        price: 40.99,
+        specs: { "Jaslengte": "30 cm", "Materiaal voering": "fleece", "Waterdicht": "ja", "Windbestendig": "ja", "Reflecterend": "ja" },
+        image: "/assets/products/kattenjas-30cm/img_1.jpg",
+        images: [
+          "/assets/products/kattenjas-30cm/img_1.jpg",
+          "/assets/products/kattenjas-30cm/img_2.jpg",
+          "/assets/products/kattenjas-30cm/img_3.jpg",
+          "/assets/products/kattenjas-30cm/img_4.jpg",
+          "/assets/products/kattenjas-30cm/img_5.jpg",
+          "/assets/products/kattenjas-30cm/img_6.jpg",
+          "/assets/products/kattenjas-30cm/img_7.jpg",
+          "/assets/products/kattenjas-30cm/img_8.jpg",
+          "/assets/products/kattenjas-30cm/img_9.jpg",
+          "/assets/products/kattenjas-30cm/img_10.jpg",
+          "/assets/products/kattenjas-30cm/img_11.jpg",
         ],
       },
     ],
@@ -1056,7 +1207,7 @@ export const products: Product[] = [
     slug: "kattenjas-fluo-geelgroen",
     name: "Kattenjas Fluo Geelgroen",
     category: "cat-clothing",
-    description: "Geef je kat extra warmte en betere zichtbaarheid tijdens begeleide buitenmomenten met deze fluo geelgroene kattenjas. De jas is bijzonder geschikt voor katten met weinig of geen vacht, zoals de Sphynx, die juist extra warmte kunnen gebruiken. De opvallende fluorescerende kleur valt overdag op, en de reflecterende banden rond borst en buik kaatsen invallend licht terug, bijvoorbeeld van koplampen of straatverlichting. De binnenzijde heeft een zachte fleecevoering met een kleine fleece flap in de nek, en de jas heeft een capuchon. Op de rug zit een opening voor de lijn, zodat je een tuigje onder de jas kunt laten zitten tijdens een wandeling. De jas sluit met verstelbaar klittenband bij borst en buik. Let op: de maat 25 cm is de ruglengte van de jas. Meet je kat staand van de basis van de nek tot de staartaanzet.",
+    description: "Geef je kat extra warmte en betere zichtbaarheid tijdens begeleide buitenmomenten met deze fluo geelgroene kattenjas. De jas is bijzonder geschikt voor katten met weinig of geen vacht, zoals de Sphynx, die juist extra warmte kunnen gebruiken. De opvallende fluorescerende kleur valt overdag op, en de reflecterende banden rond borst en buik kaatsen invallend licht terug, bijvoorbeeld van koplampen of straatverlichting. De binnenzijde heeft een zachte fleecevoering met een kleine fleece flap in de nek, en de jas heeft een capuchon. Op de rug zit een opening voor de lijn, zodat je een tuigje onder de jas kunt laten zitten tijdens een wandeling. De jas sluit met verstelbaar klittenband bij borst en buik. Let op: de maat is de jaslengte. Meet je kat staand van de basis van de nek tot de staartaanzet. Maat S heeft een jaslengte van 25 cm en past bij een ruglengte van 23 tot 27 cm, maat M heeft een jaslengte van 30 cm en past bij een ruglengte van 28 tot 32 cm.",
     shortDescription: "Fluo geelgroene kattenjas met reflecterende banden, fleecevoering, capuchon en tuigopening.",
     features: [
       "Fluo geelgroen met reflecterende banden rond borst en buik: beter zichtbaar bij weinig licht wanneer er licht op valt.",
@@ -1064,12 +1215,13 @@ export const products: Product[] = [
       "Capuchon: extra bedekking tijdens koude buitenmomenten.",
       "Opening op de rug voor een tuigje: lijn bevestigen zonder het jasje uit te trekken.",
       "Verstelbaar klittenband bij borst en buik: aan te passen aan de bouw van je kat.",
+      "Twee maten: jaslengte 25 cm (S) en 30 cm (M).",
     ],
     badge: 'new',
     variants: [
       {
         id: "9300000412841190",
-        label: "25 cm",
+        label: "S (25 cm)",
         price: 39.99,
         bolUrl: "https://www.bol.com/nl/p/-/9300000412841190",
         specs: { "Jaslengte": "25 cm", "Past bij ruglengte": "23 tot 27 cm", "Rasvoorbeeld": "kleine katten en naaktkatten, zoals een Sphynx", "Kleur": "fluo geelgroen", "Materiaal voering": "fleece", "Sluiting": "verstelbaar klittenband bij borst en buik", "Capuchon": "ja", "Tuigopening op de rug": "ja", "Reflecterend": "ja" },
@@ -1082,6 +1234,171 @@ export const products: Product[] = [
           "/assets/products/9300000412841190/img_5.jpg",
           "/assets/products/9300000412841190/img_6.jpg",
           "/assets/products/9300000412841190/img_7.jpg",
+        ],
+      },
+      {
+        id: "kattenjas-fluo-geelgroen-30cm",
+        ean: "6156813515577",
+        label: "M (30 cm)",
+        price: 40.99,
+        specs: { "Jaslengte": "30 cm", "Past bij ruglengte": "28 tot 32 cm", "Rasvoorbeeld": "katten en naaktkatten, zoals een Sphynx", "Kleur": "fluo geelgroen", "Materiaal voering": "fleece", "Sluiting": "verstelbaar klittenband bij borst en buik", "Capuchon": "ja", "Tuigopening op de rug": "ja", "Reflecterend": "ja" },
+        image: "/assets/products/kattenjas-fluo-geelgroen-30cm/img_1.jpg",
+        images: [
+          "/assets/products/kattenjas-fluo-geelgroen-30cm/img_1.jpg",
+          "/assets/products/kattenjas-fluo-geelgroen-30cm/img_2.jpg",
+          "/assets/products/kattenjas-fluo-geelgroen-30cm/img_3.jpg",
+          "/assets/products/kattenjas-fluo-geelgroen-30cm/img_4.jpg",
+          "/assets/products/kattenjas-fluo-geelgroen-30cm/img_5.jpg",
+          "/assets/products/kattenjas-fluo-geelgroen-30cm/img_6.jpg",
+          "/assets/products/kattenjas-fluo-geelgroen-30cm/img_7.jpg",
+        ],
+      },
+    ],
+  },
+  /**
+   * De twee kattenjassen van november 2026. Het zijn dezelfde modellen
+   * als de hondenjassen hierboven, maar in kattenmaten; de tekst komt
+   * dan ook van die listings plus wat er op de maat- en detailfoto's
+   * zelf staat.
+   *
+   * Let op dat de ruglengtes per model verschillen: de antracieten gaat
+   * van 23-27 naar 28-32 cm, die met het tuig van 24-27 naar 28-31 cm.
+   * Dat staat zo op de maatfoto's en is dus geen typefout.
+   */
+  {
+    slug: "kattenjas-antraciet",
+    name: "Kattenjas Antraciet",
+    category: "cat-clothing",
+    description: "Een antracietkleurige winterjas voor de kat, met een hoge col met zachte gebreide binnenrand die de nek warm houdt. De buitenstof is waterafstotend en winddicht: regen parelt eraf in plaats van in de stof te trekken. Binnenin zit een zachte fleecevoering. Over de rug en langs de buikband lopen reflecterende biezen die oplichten zodra er licht op valt, zodat je kat in het donker beter te zien is. Op de rug zit een opening voor het tuigje: je laat de lijn erdoorheen lopen naar het tuig onder de jas, en de jas blijft tijdens de wandeling gewoon zitten. Verkrijgbaar in maat S met een jaslengte van 25 cm en maat M met een jaslengte van 30 cm. Meet je kat staand van de basis van de nek, waar de halsband ligt, tot de staartaanzet.",
+    shortDescription: "Waterafstotende en winddichte antracieten kattenjas met hoge col, fleecevoering en reflecterende biezen, in maat S en M.",
+    features: [
+      "Waterafstotend en winddicht: regen parelt van de stof af.",
+      "Hoge col met zachte gebreide binnenrand: houdt de nek warm.",
+      "Zachte fleecevoering: een warme laag rondom het lichaam.",
+      "Reflecterende biezen en buikband: lichten op in het donker.",
+      "Opening op de rug voor het tuigje: de lijn erdoorheen, de jas blijft aan.",
+      "Twee maten: jaslengte 25 cm (S) en 30 cm (M).",
+    ],
+    badge: 'new',
+    sections: [
+      {
+        title: "Welke maat past?",
+        body: "Meet je kat terwijl hij staat: van de basis van de nek, waar de halsband ligt, tot de staartaanzet. Maat S heeft een jaslengte van 25 cm en past bij een ruglengte van ongeveer 23 tot 27 cm. Maat M heeft een jaslengte van 30 cm en past bij een ruglengte van ongeveer 28 tot 32 cm. Zit je kat er precies tussenin, neem dan de grotere maat.",
+      },
+    ],
+    included: ["1x kattenjas."],
+    variants: [
+      {
+        id: "kattenjas-antraciet-25cm",
+        ean: "6156813657611",
+        label: "S (25 cm)",
+        price: 39.99,
+        specs: {"Jaslengte": "25 cm", "Past bij ruglengte": "23 tot 27 cm", "Kleur": "antraciet", "Materiaal voering": "fleece", "Kraag": "hoge col met gebreide binnenrand", "Tuigopening op de rug": "ja", "Reflecterend": "ja, biezen en buikband", "Waterafstotend": "ja", "Winddicht": "ja"},
+        image: "/assets/products/kattenjas-antraciet-25cm/img_1.jpg",
+        images: [
+          "/assets/products/kattenjas-antraciet-25cm/img_1.jpg",
+          "/assets/products/kattenjas-antraciet-25cm/img_2.jpg",
+          "/assets/products/kattenjas-antraciet-25cm/img_3.jpg",
+          "/assets/products/kattenjas-antraciet-25cm/img_4.jpg",
+          "/assets/products/kattenjas-antraciet-25cm/img_5.jpg",
+        ],
+        imageAlts: [
+          "Kat met de antracieten kattenjas aan, van opzij op een witte achtergrond",
+          "Maatindicatie: kat met de jas aan, met de bijbehorende ruglengte van 23 tot 27 cm",
+          "De lijn gaat door de opening op de rug naar het tuigje onder de jas",
+          "Regendruppels parelen van de buitenstof af tijdens een wandeling in de regen",
+          "De reflecterende biezen en buikband lichten op bij straatverlichting in het donker",
+        ],
+      },
+      {
+        id: "kattenjas-antraciet-30cm",
+        ean: "6156813979973",
+        label: "M (30 cm)",
+        price: 40.99,
+        specs: {"Jaslengte": "30 cm", "Past bij ruglengte": "28 tot 32 cm", "Kleur": "antraciet", "Materiaal voering": "fleece", "Kraag": "hoge col met gebreide binnenrand", "Tuigopening op de rug": "ja", "Reflecterend": "ja, biezen en buikband", "Waterafstotend": "ja", "Winddicht": "ja"},
+        image: "/assets/products/kattenjas-antraciet-30cm/img_1.jpg",
+        images: [
+          "/assets/products/kattenjas-antraciet-30cm/img_1.jpg",
+          "/assets/products/kattenjas-antraciet-30cm/img_2.jpg",
+          "/assets/products/kattenjas-antraciet-30cm/img_3.jpg",
+          "/assets/products/kattenjas-antraciet-30cm/img_4.jpg",
+          "/assets/products/kattenjas-antraciet-30cm/img_5.jpg",
+        ],
+        imageAlts: [
+          "Kat met de antracieten kattenjas aan, van opzij op een witte achtergrond",
+          "Maatindicatie: kat met de jas aan, met de bijbehorende ruglengte van 28 tot 32 cm",
+          "De lijn gaat door de opening op de rug naar het tuigje onder de jas",
+          "Regendruppels parelen van de buitenstof af tijdens een wandeling in de regen",
+          "De reflecterende biezen en buikband lichten op bij straatverlichting in het donker",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "kattenjas-tuig",
+    name: "Kattenjas met Ingebouwd Tuig",
+    category: "cat-clothing",
+    description: "Een grijsmelange winterjas met het tuigje er al in: over de rug lopen verstelbare banden met een D-ring, zodat je de lijn direct aan de jas vastklikt en er geen los tuigje meer onder hoeft. De jas gaat open met een rits over de rug. De buitenstof is waterafstotend, regen parelt eraf, en de binnenkant is gevoerd met zachte fleece, met een hoge zwarte kraag in de nek. De banden van het tuig zijn reflecterend en lichten op zodra er licht op valt, zodat je kat in het donker beter te zien is. Verkrijgbaar in maat S met een jaslengte van 25 cm en maat M met een jaslengte van 30 cm. Meet je kat staand van de basis van de nek, waar de halsband ligt, tot de staartaanzet.",
+    shortDescription: "Waterafstotende grijze kattenjas met een ingebouwd tuig met D-ring, reflecterende banden en fleecevoering, in maat S en M.",
+    features: [
+      "Ingebouwd tuig met D-ring op de rug: klik de lijn direct vast, zonder los tuigje eronder.",
+      "Reflecterende tuigbanden: beter zichtbaar in het donker.",
+      "Waterafstotende buitenstof: regen parelt eraf tijdens een natte wandeling.",
+      "Gevoerd met zachte fleece, met een hoge kraag in de nek.",
+      "Rits over de rug: de jas gaat open en dicht zonder over de kop te hoeven.",
+      "Twee maten: jaslengte 25 cm (S) en 30 cm (M).",
+    ],
+    badge: 'new',
+    sections: [
+      {
+        title: "Welke maat past?",
+        body: "Meet je kat terwijl hij staat: van de basis van de nek, waar de halsband ligt, tot de staartaanzet. Maat S heeft een jaslengte van 25 cm en past bij een ruglengte van ongeveer 24 tot 27 cm. Maat M heeft een jaslengte van 30 cm en past bij een ruglengte van ongeveer 28 tot 31 cm. De tuigbanden zijn verstelbaar, dus zit je kat er tussenin, neem dan de grotere maat.",
+      },
+    ],
+    included: ["1x kattenjas met ingebouwd tuig."],
+    variants: [
+      {
+        id: "kattenjas-tuig-25cm",
+        ean: "6156813576585",
+        label: "S (25 cm)",
+        price: 39.99,
+        specs: {"Jaslengte": "25 cm", "Past bij ruglengte": "24 tot 27 cm", "Kleur": "grijs melange met zwart", "Materiaal voering": "fleece", "Ingebouwd tuig": "ja, met D-ring op de rug", "Sluiting": "rits over de rug", "Verstelbaar": "ja, reflecterende tuigbanden", "Reflecterend": "ja", "Waterafstotend": "ja"},
+        image: "/assets/products/kattenjas-tuig-25cm/img_1.jpg",
+        images: [
+          "/assets/products/kattenjas-tuig-25cm/img_1.jpg",
+          "/assets/products/kattenjas-tuig-25cm/img_2.jpg",
+          "/assets/products/kattenjas-tuig-25cm/img_3.jpg",
+          "/assets/products/kattenjas-tuig-25cm/img_4.jpg",
+          "/assets/products/kattenjas-tuig-25cm/img_5.jpg",
+        ],
+        imageAlts: [
+          "Kat met de grijze kattenjas met ingebouwd tuig aan, van opzij op een witte achtergrond",
+          "Maatindicatie: kat met de jas aan, met de bijbehorende ruglengte van 24 tot 27 cm",
+          "De lijn vastgeklikt aan de D-ring op de rug van het ingebouwde tuig",
+          "Regendruppels parelen van de buitenstof af tijdens een wandeling in het bos",
+          "De reflecterende tuigbanden lichten op bij straatverlichting in het donker",
+        ],
+      },
+      {
+        id: "kattenjas-tuig-30cm",
+        ean: "6156813629618",
+        label: "M (30 cm)",
+        price: 40.99,
+        specs: {"Jaslengte": "30 cm", "Past bij ruglengte": "28 tot 31 cm", "Kleur": "grijs melange met zwart", "Materiaal voering": "fleece", "Ingebouwd tuig": "ja, met D-ring op de rug", "Sluiting": "rits over de rug", "Verstelbaar": "ja, reflecterende tuigbanden", "Reflecterend": "ja", "Waterafstotend": "ja"},
+        image: "/assets/products/kattenjas-tuig-30cm/img_1.jpg",
+        images: [
+          "/assets/products/kattenjas-tuig-30cm/img_1.jpg",
+          "/assets/products/kattenjas-tuig-30cm/img_2.jpg",
+          "/assets/products/kattenjas-tuig-30cm/img_3.jpg",
+          "/assets/products/kattenjas-tuig-30cm/img_4.jpg",
+          "/assets/products/kattenjas-tuig-30cm/img_5.jpg",
+        ],
+        imageAlts: [
+          "Kat met de grijze kattenjas met ingebouwd tuig aan, van opzij op een witte achtergrond",
+          "Maatindicatie: kat met de jas aan, met de bijbehorende ruglengte van 28 tot 31 cm",
+          "De lijn vastgeklikt aan de D-ring op de rug van het ingebouwde tuig",
+          "Regendruppels parelen van de buitenstof af tijdens een wandeling in het bos",
+          "De reflecterende tuigbanden lichten op bij straatverlichting in het donker",
         ],
       },
     ],
@@ -2136,7 +2453,7 @@ export const categories: Category[] = [
     name: 'Verzorging & schoonmaak',
     slug: 'pet-care',
     description: 'Praktische hulp tegen losse haren op de bank, in de auto en op je kleding.',
-    image: '/assets/products/9300000394744627/img_1.jpg',
+    image: '/assets/products/dierenharen-verwijderaar-set/img_1.jpg',
   },
 ]
 
@@ -2170,10 +2487,14 @@ export function startingPrice(product: Product): number | null {
  *
  * De eerste twee volgen de werkelijke verkopen: jassen gaan het hardst,
  * daarna de verhoogde voerbakken. De derde is een keuze en geen cijfer -
- * een derde soort product om de rij te vullen. Zodra de verkopen een
- * echte nummer drie laten zien, hoort die hier te komen.
+ * een derde soort product om de rij te vullen.
+ *
+ * Let op bij het bijwerken: hier is geen cijfer uit te lezen. Het meeste
+ * gaat via bol, en van de eigen bestellingen bewaren we alleen het
+ * totaalbedrag, geen regels per product. Wil je dit ooit op data kunnen
+ * baseren, dan moeten de line items van Stripe mee de database in.
  */
-const BEST_SELLER_SLUGS = ['hondenjas', 'verhoogde-hondenbak', 'hondenmand-sambo'] as const
+const BEST_SELLER_SLUGS = ['hondenjas', 'verhoogde-hondenbak', 'dierenharen-verwijderaar-set'] as const
 
 export function getBestSellers(): Product[] {
   return BEST_SELLER_SLUGS.map((slug) => products.find((p) => p.slug === slug)).filter(
