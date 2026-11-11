@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { timingSafeEqual } from 'node:crypto'
+import { BESCHERMDE_HEADERS, SELECTIE_COOKIE, tokenGeldig } from '@/lib/selectie/sessie'
 
 /**
  * Schermt de beheerpagina af met HTTP Basic auth.
@@ -29,7 +30,51 @@ function vraagOmWachtwoord(): NextResponse {
   })
 }
 
+/**
+ * De productselectietool (/selectie) heeft een eigen slot: een cookie met
+ * een ondertekend token in plaats van Basic auth. Hier wordt alleen
+ * gecontroleerd; inloggen gebeurt op /selectie/login, dat daarom zelf
+ * vrij toegankelijk moet blijven.
+ *
+ * Dat de controle hier staat en niet in elke route is bewust. Een
+ * vergeten controle in één nieuwe route zou de hele tool openzetten, en
+ * dat is precies het soort fout dat je niet ziet.
+ */
+function selectiePoort(request: NextRequest): NextResponse {
+  const pad = request.nextUrl.pathname
+  if (pad === '/selectie/login' || pad === '/api/selectie/login') {
+    const vrij = NextResponse.next()
+    for (const [k, v] of Object.entries(BESCHERMDE_HEADERS)) vrij.headers.set(k, v)
+    return vrij
+  }
+
+  if (tokenGeldig(request.cookies.get(SELECTIE_COOKIE)?.value)) {
+    const door = NextResponse.next()
+    for (const [k, v] of Object.entries(BESCHERMDE_HEADERS)) door.headers.set(k, v)
+    return door
+  }
+
+  // Een API-aanroep krijgt een 401 terug; een pagina stuurt de bezoeker
+  // naar het inlogscherm, met waar hij heen wilde erin.
+  if (pad.startsWith('/api/')) {
+    return NextResponse.json(
+      { ok: false, error: 'Niet ingelogd' },
+      { status: 401, headers: BESCHERMDE_HEADERS }
+    )
+  }
+  const naar = request.nextUrl.clone()
+  naar.pathname = '/selectie/login'
+  naar.search = pad === '/selectie' ? '' : `?terug=${encodeURIComponent(pad)}`
+  const om = NextResponse.redirect(naar)
+  for (const [k, v] of Object.entries(BESCHERMDE_HEADERS)) om.headers.set(k, v)
+  return om
+}
+
 export function proxy(request: NextRequest) {
+  if (request.nextUrl.pathname.startsWith('/selectie') || request.nextUrl.pathname.startsWith('/api/selectie')) {
+    return selectiePoort(request)
+  }
+
   // Trimmen, want een meegeplakte spatie of regeleinde in de
   // omgevingsvariabele maakt het wachtwoord anders onvindbaar - dat is
   // op dit project eerder gebeurd met de Google-tag.
@@ -57,5 +102,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/api/admin/:path*'],
+  matcher: ['/admin/:path*', '/api/admin/:path*', '/selectie/:path*', '/api/selectie/:path*'],
 }

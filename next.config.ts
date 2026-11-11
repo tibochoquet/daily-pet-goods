@@ -8,6 +8,10 @@ const nextConfig: NextConfig = {
    */
   outputFileTracingIncludes: {
     '/api/webhooks/stripe': ['./public/legal/**/*'],
+    // De productselectietool wordt op de server gelezen in plaats van
+    // vanuit public/ geserveerd, zodat hij achter het wachtwoord blijft.
+    // Zonder deze regel zit het bestand niet in de bundel.
+    '/selectie': ['./selectie-app/**/*'],
   },
   async redirects() {
     return [

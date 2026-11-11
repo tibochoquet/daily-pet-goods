@@ -1,4 +1,4 @@
-import { boolean, index, integer, pgTable, serial, text, timestamp, uniqueIndex } from 'drizzle-orm/pg-core'
+import { boolean, index, integer, jsonb, pgTable, primaryKey, serial, text, timestamp, uniqueIndex } from 'drizzle-orm/pg-core'
 
 /**
  * Stripe blijft de bron van waarheid voor de betaling zelf. Deze tabel
@@ -129,3 +129,30 @@ export const rateLimitHits = pgTable(
   },
   (t) => [index('rate_limit_hits_lookup_idx').on(t.bucket, t.key, t.createdAt)]
 )
+
+/**
+ * De documenten van de productselectietool (/selectie).
+ *
+ * Eén rij per document, met de inhoud als JSONB. De tool kent drie
+ * collecties - `decisions` (per product), `custom` (zelf toegevoegde
+ * producten) en `settings` (één document `main`) - en die vorm is hier
+ * letterlijk overgenomen, zodat de app zelf niet hoeft te veranderen.
+ *
+ * Waarom JSONB en geen kolommen: de documenten zijn vormvrij en groeien
+ * mee met de tool. Een schemawijziging per nieuw veld zou hier alleen
+ * maar in de weg zitten; dit is geen webshopdata waar de vorm toe doet.
+ */
+export const selectieDocs = pgTable(
+  'selectie_docs',
+  {
+    /** 'decisions', 'custom' of 'settings'. */
+    collection: text('collection').notNull(),
+    /** Product-id, eigen product-id, of 'main' bij settings. */
+    docId: text('doc_id').notNull(),
+    data: jsonb('data').notNull().default({}),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [primaryKey({ columns: [t.collection, t.docId] })]
+)
+
+export type SelectieDocRow = typeof selectieDocs.$inferSelect

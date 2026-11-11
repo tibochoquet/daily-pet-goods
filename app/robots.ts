@@ -19,6 +19,10 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
+      // Interne werkpagina's. Ze zitten achter een wachtwoord en sturen
+      // zelf al X-Robots-Tag mee; dit is de tweede laag, voor crawlers
+      // die alleen deze lijst lezen.
+      disallow: ['/admin', '/selectie'],
     },
     sitemap: `${SITE_URL}/sitemap.xml`,
   }
