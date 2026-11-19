@@ -104,6 +104,30 @@ export async function POST(req: NextRequest) {
     case 'checkout.session.completed':
     case 'checkout.session.async_payment_succeeded': {
       const session = event.data.object as Stripe.Checkout.Session
+
+      // Dit Stripe-account is gedeeld met umberstudio.nl, dat er een
+      // boek op verkoopt. Stripe stuurt elk endpoint ALLE events van het
+      // account - niet alleen de events van de site waar het endpoint
+      // bij hoort - dus een boekverkoop komt ook hier binnen. Zonder
+      // deze regel zou die hier als pakketbestelling worden afgehandeld:
+      // de koper kreeg een bestelbevestiging van Daily Pet Goods met
+      // verzendtekst en 14 dagen bedenktijd, en er verscheen een order
+      // zonder adres in de verzendlijst.
+      //
+      // `orderRef` wordt gezet in app/api/checkout/route.ts, de enige
+      // plek in dit project die een Checkout Session aanmaakt. Elke
+      // sessie van deze winkel heeft hem dus, en geen enkele sessie van
+      // de andere winkel. Maak je ooit een Stripe Payment Link voor deze
+      // winkel, dan heeft die geen orderRef en wordt hij hier
+      // overgeslagen - zet er dan zelf een orderRef op.
+      if (!session.metadata?.orderRef) {
+        console.info('Stripe webhook: sessie zonder orderRef, hoort bij een andere winkel op dit account - overgeslagen.', {
+          sessionId: session.id,
+          eventId: event.id,
+        })
+        break
+      }
+
       if (session.payment_status !== 'paid') {
         console.info('Stripe webhook: sessie nog niet betaald, wachten op async bevestiging.', {
           sessionId: session.id,
