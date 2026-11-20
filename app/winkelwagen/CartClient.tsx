@@ -169,11 +169,14 @@ export default function CartClient({ saleActive }: { saleActive: boolean }) {
         }),
       })
       const data = await res.json().catch(() => ({}))
-      // 409 is de statuscode die deze route gebruikt voor iets waar de
-      // klant zelf wat aan kan doen: uitverkocht, nog niet te bestellen,
-      // of een actie die net is afgelopen. Die melding hoort hij te
-      // lezen in plaats van de algemene "er ging iets mis".
-      if (res.status === 409 && typeof data.error === 'string') {
+      // 409 en 503 zijn de statuscodes waarmee deze route een melding
+      // stuurt die voor de klant bedoeld is: uitverkocht, nog niet te
+      // bestellen of een actie die net is afgelopen (409), of een winkel
+      // die zelf niet kan afrekenen (503). Die tekst hoort hij te lezen
+      // in plaats van de algemene "er ging iets mis". Bij 503 is
+      // "probeer het opnieuw" bovendien misleidend: dat levert hetzelfde
+      // op tot er aan onze kant iets veranderd is.
+      if ((res.status === 409 || res.status === 503) && typeof data.error === 'string') {
         setError(data.error)
         setCheckingOut(false)
         return

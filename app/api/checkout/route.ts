@@ -29,6 +29,16 @@ interface CheckoutItem {
 const MAX_QUANTITY_PER_ITEM = 20
 
 /**
+ * Wat de klant leest als de winkel zelf niet kan afrekenen.
+ *
+ * Bewust zonder "probeer het later opnieuw": bij een ontbrekende of
+ * ingetrokken sleutel levert opnieuw proberen exact hetzelfde op, en dan
+ * is dat advies een omweg naar dezelfde muur. Mailen helpt wel.
+ */
+const BETAALINSTELLING_KAPOT =
+  'Afrekenen lukt nu niet door een instelling aan onze kant. Mail ons, dan regelen we je bestelling met de hand.'
+
+/**
  * De niet-geheime labels van een Stripe-fout: type, code, param, status.
  *
  * Die vier komen uit Stripe's eigen foutmodel en bevatten geen sleutel
@@ -192,11 +202,7 @@ export async function POST(req: NextRequest) {
   if (!process.env.STRIPE_SECRET_KEY) {
     console.error('Checkout: STRIPE_SECRET_KEY ontbreekt in deze omgeving.')
     return NextResponse.json(
-      {
-        error:
-          'Afrekenen lukt nu niet door een instelling aan onze kant. Mail ons, dan regelen we je bestelling met de hand.',
-        reden: 'stripe_key_ontbreekt',
-      },
+      { error: BETAALINSTELLING_KAPOT, reden: 'stripe_key_ontbreekt' },
       { status: 503 }
     )
   }
@@ -309,6 +315,20 @@ export async function POST(req: NextRequest) {
   } catch (err) {
     console.error('Checkout: aanmaken van Stripe session mislukt:', err)
     const stripeFout = stripeFoutLabels(err)
+
+    // Een authenticatiefout is geen storing die overwaait: de sleutel van
+    // de winkel is ongeldig of ingetrokken - code `api_key_expired` als
+    // hij in het dashboard vervangen is. Zelfde oorzaak en zelfde
+    // oplossing als een ontbrekende sleutel, dus zelfde antwoord. En een
+    // 503 in plaats van een 500, want dit is niet "het ging even mis"
+    // maar "zo blijft het tot de sleutel vervangen is".
+    if (stripeFout?.type === 'StripeAuthenticationError') {
+      return NextResponse.json(
+        { error: BETAALINSTELLING_KAPOT, reden: 'stripe_sleutel_ongeldig', stripe: stripeFout },
+        { status: 503 }
+      )
+    }
+
     return NextResponse.json(
       { error: 'Kon checkout niet starten', ...(stripeFout ? { stripe: stripeFout } : {}) },
       { status: 500 }
