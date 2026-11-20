@@ -28,6 +28,34 @@ interface CheckoutItem {
 
 const MAX_QUANTITY_PER_ITEM = 20
 
+/**
+ * De niet-geheime labels van een Stripe-fout: type, code, param, status.
+ *
+ * Die vier komen uit Stripe's eigen foutmodel en bevatten geen sleutel
+ * en geen accountgegevens. De melding zelf kan dat wel, dus die blijft
+ * in de serverlog en gaat niet mee in het antwoord.
+ *
+ * Zonder deze labels is een storing hier alleen in de logs van de
+ * hosting te zien, en is "Kon checkout niet starten" een doodlopend
+ * spoor: precies de situatie waarin de bestelknop stil stuk kan staan
+ * zonder dat iemand ziet waarom.
+ *
+ * Bewust op vorm getoetst en niet met `instanceof`: zijn er twee kopieën
+ * van de stripe-module geladen, dan klopt de klasse-identiteit niet meer
+ * en zou juist de fout die we willen zien eruit vallen.
+ */
+function stripeFoutLabels(err: unknown) {
+  if (typeof err !== 'object' || err === null) return null
+  const e = err as { type?: unknown; code?: unknown; param?: unknown; statusCode?: unknown }
+  if (typeof e.type !== 'string' || !e.type.startsWith('Stripe')) return null
+  return {
+    type: e.type,
+    code: typeof e.code === 'string' ? e.code : null,
+    param: typeof e.param === 'string' ? e.param : null,
+    status: typeof e.statusCode === 'number' ? e.statusCode : null,
+  }
+}
+
 export async function POST(req: NextRequest) {
   let body: { items?: CheckoutItem[]; discountCode?: unknown; saleShown?: unknown }
   try {
@@ -156,6 +184,23 @@ export async function POST(req: NextRequest) {
       ? { code: codeDiscount.code, name: `Korting (${codeDiscount.code})`, amountOff: codeDiscount.amountOff }
       : null
 
+  // Zonder sleutel valt er niets aan te maken. Apart afvangen en niet in
+  // de catch hieronder laten belanden: dit is geen storing bij Stripe
+  // maar een instelling die in deze omgeving ontbreekt, en dat verschil
+  // bepaalt waar je moet gaan kijken. Voor de klant is het ook geen
+  // "probeer het opnieuw" - opnieuw proberen helpt hier niets.
+  if (!process.env.STRIPE_SECRET_KEY) {
+    console.error('Checkout: STRIPE_SECRET_KEY ontbreekt in deze omgeving.')
+    return NextResponse.json(
+      {
+        error:
+          'Afrekenen lukt nu niet door een instelling aan onze kant. Mail ons, dan regelen we je bestelling met de hand.',
+        reden: 'stripe_key_ontbreekt',
+      },
+      { status: 503 }
+    )
+  }
+
   try {
     const stripe = getStripe()
 
@@ -263,6 +308,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ url: session.url })
   } catch (err) {
     console.error('Checkout: aanmaken van Stripe session mislukt:', err)
-    return NextResponse.json({ error: 'Kon checkout niet starten' }, { status: 500 })
+    const stripeFout = stripeFoutLabels(err)
+    return NextResponse.json(
+      { error: 'Kon checkout niet starten', ...(stripeFout ? { stripe: stripeFout } : {}) },
+      { status: 500 }
+    )
   }
 }
