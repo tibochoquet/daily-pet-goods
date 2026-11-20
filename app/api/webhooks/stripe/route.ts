@@ -190,7 +190,7 @@ function itemRowsHtml(lineItems: Stripe.LineItem[]): string {
         `<tr>
           <td style="padding:8px 0;border-bottom:1px solid #E8E2D9;font-size:13px;color:#4B5563;">${item.description}</td>
           <td style="padding:8px 0;border-bottom:1px solid #E8E2D9;font-size:13px;color:#4B5563;text-align:center;">×${item.quantity}</td>
-          <td style="padding:8px 0;border-bottom:1px solid #E8E2D9;font-size:13px;color:#1A1A1A;text-align:right;">${formatPrice((item.amount_total ?? 0) / 100)}</td>
+          <td style="padding:8px 0;border-bottom:1px solid #E8E2D9;font-size:13px;color:#1A1A1A;text-align:right;">${formatPrice((item.amount_subtotal ?? 0) / 100)}</td>
         </tr>`
     )
     .join('')

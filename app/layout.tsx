@@ -22,6 +22,25 @@ const playfair = Playfair_Display({
   display: 'swap',
 })
 
+/**
+ * Elke pagina onder deze layout verlopen na vijf minuten.
+ *
+ * Nodig voor de tijdelijke actie. De balk hierboven en de prijzen op de
+ * kaarten worden op de server bepaald, en zonder deze regel waren de
+ * homepage, /shop, /honden, /katten en alle tekstpagina's volledig
+ * statisch: die veranderen dan pas bij een nieuwe deploy, dus de actie
+ * zou er niet beginnen en - erger - niet stoppen.
+ *
+ * Vijf minuten is dezelfde waarde die de productpagina's al hadden. De
+ * prijs van zo'n hervalidatie is laag: het zijn statische renders van
+ * lokale data, alleen de productpagina haalt reviews uit de database.
+ *
+ * Het echte slot op de actieprijs zit niet hier maar in
+ * app/api/checkout/route.ts, dat bij elke bestelling opnieuw naar de
+ * serverklok kijkt.
+ */
+export const revalidate = 300
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {

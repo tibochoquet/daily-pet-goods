@@ -4,6 +4,8 @@ import Link from 'next/link'
 import type { Product } from '@/lib/types'
 import { startingPrice } from '@/lib/products'
 import Badge from '@/components/ui/Badge'
+import SaleBadge from '@/components/sale/SaleBadge'
+import { pricingFor } from '@/lib/sale'
 
 interface ProductCardProps {
   product: Product
@@ -12,6 +14,7 @@ interface ProductCardProps {
 export default function ProductCard({ product }: ProductCardProps) {
   const cover = product.variants[0]
   const price = startingPrice(product)
+  const pricing = pricingFor(price)
   const multipleVariants = product.variants.length > 1
 
   return (
@@ -30,6 +33,13 @@ export default function ProductCard({ product }: ProductCardProps) {
             <Badge variant={product.badge} />
           </div>
         )}
+        {/* Rechtsboven, zodat dit nooit over een "Bestseller" of "Nieuw"
+            linksboven heen valt. */}
+        {pricing?.active && (
+          <div className="absolute top-4 right-4">
+            <SaleBadge />
+          </div>
+        )}
       </div>
 
       {/* Content */}
@@ -43,13 +53,23 @@ export default function ProductCard({ product }: ProductCardProps) {
 
         <div className="flex items-center justify-between">
           <span className="text-sm text-[#1A1A1A]">
-            {price !== null ? (
+            {pricing === null ? (
+              <span className="font-medium text-[#6B7280]">Prijs volgt</span>
+            ) : pricing.active ? (
               <>
                 <span className="text-[#9CA3AF]">Vanaf </span>
-                <span className="font-medium">{formatPrice(price)}</span>
+                {/* nowrap per bedrag, zodat het euroteken niet op een
+                    eigen regel belandt - zie de winkelwagen. */}
+                <span className="whitespace-nowrap font-semibold">{formatPrice(pricing.current)}</span>{' '}
+                <s className="whitespace-nowrap text-[#9CA3AF] decoration-[#9CA3AF]">
+                  {formatPrice(pricing.base)}
+                </s>
               </>
             ) : (
-              <span className="font-medium text-[#6B7280]">Prijs volgt</span>
+              <>
+                <span className="text-[#9CA3AF]">Vanaf </span>
+                <span className="font-medium">{formatPrice(pricing.current)}</span>
+              </>
             )}
           </span>
           {multipleVariants && (

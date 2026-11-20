@@ -54,7 +54,13 @@ export default function NewsletterSignup() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="jouw@email.nl"
-              className="flex-1 bg-white border border-[#E8E2D9] rounded-full px-5 py-3.5 text-sm text-[#1A1A1A] placeholder:text-[#B0A898] focus:outline-none focus:border-[#2C4A3E] focus:ring-2 focus:ring-[#2C4A3E]/10 transition-all"
+              /* min-w-0 is wat het veld laat krimpen. Een flex-item heeft
+                 standaard min-width:auto, en bij een input is dat de
+                 breedte van zo'n twintig tekens - daardoor werd de
+                 knop ernaast op een 320px-telefoon buiten het scherm
+                 geduwd en kreeg de hele pagina een horizontale balk. De
+                 kortingscode-invoer in de winkelwagen had dit al. */
+              className="flex-1 min-w-0 bg-white border border-[#E8E2D9] rounded-full px-5 py-3.5 text-sm text-[#1A1A1A] placeholder:text-[#B0A898] focus:outline-none focus:border-[#2C4A3E] focus:ring-2 focus:ring-[#2C4A3E]/10 transition-all"
             />
             <button
               type="submit"

@@ -5,6 +5,8 @@ import ProductDetailClient from './ProductDetailClient'
 import JsonLd from '@/components/JsonLd'
 import ProductReviews from '@/components/shop/ProductReviews'
 import { business, SITE_URL } from '@/lib/business'
+import { isSaleActive, sale } from '@/config/sale'
+import { pricingFor } from '@/lib/sale'
 import { isDbConfigured } from '@/lib/db'
 import { findPublishedReviewsForProduct, type ProductReviews as Reviews } from '@/lib/db/reviews'
 
@@ -67,6 +69,20 @@ export default async function ProductPage({ params }: Props) {
   const prices = product.variants.map((v) => v.price).filter((p): p is number => p !== null)
   const lowPrice = prices.length > 0 ? Math.min(...prices) : null
   const highPrice = prices.length > 0 ? Math.max(...prices) : null
+
+  /**
+   * Tijdens de actie gaat de actieprijs in de structured data, niet de
+   * normale. Google vergelijkt wat hier staat met wat de bezoeker op de
+   * pagina ziet, en bij verschil negeert hij de hele vermelding - dus
+   * dezelfde bron als de zichtbare prijs, en `priceValidUntil` erbij
+   * zodat duidelijk is dat het om een tijdelijke prijs gaat.
+   *
+   * Eén klok voor pagina en structured data: `saleActive` gaat ook naar
+   * ProductDetailClient, zodat die twee nooit uiteen kunnen lopen.
+   */
+  const saleActive = isSaleActive()
+  const offerPrijs = (euro: number) => pricingFor(euro, saleActive)?.current ?? euro
+  const priceValidUntil = saleActive ? sale.endsAt.slice(0, 10) : null
   // No variant carries inStock: false today (no real inventory system
   // behind this yet), so this reads as available - but it's a real flag
   // now, not a hardcoded string. Any variant in the group being in stock
@@ -99,18 +115,20 @@ export default async function ProductPage({ params }: Props) {
         ? {
             '@type': 'AggregateOffer',
             priceCurrency: 'EUR',
-            lowPrice: lowPrice.toFixed(2),
-            highPrice: highPrice.toFixed(2),
+            lowPrice: offerPrijs(lowPrice).toFixed(2),
+            highPrice: offerPrijs(highPrice).toFixed(2),
             offerCount: product.variants.length,
             availability,
             url: `${SITE_URL}/products/${product.slug}`,
+            ...(priceValidUntil ? { priceValidUntil } : {}),
           }
         : {
             '@type': 'Offer',
             priceCurrency: 'EUR',
-            price: lowPrice.toFixed(2),
+            price: offerPrijs(lowPrice).toFixed(2),
             availability,
             url: `${SITE_URL}/products/${product.slug}`,
+            ...(priceValidUntil ? { priceValidUntil } : {}),
           }
 
   const productSchema = {
@@ -158,7 +176,7 @@ export default async function ProductPage({ params }: Props) {
   return (
     <>
       <JsonLd data={productSchema} />
-      <ProductDetailClient product={product} />
+      <ProductDetailClient product={product} saleActive={saleActive} />
       <ProductReviews {...reviews} />
     </>
   )

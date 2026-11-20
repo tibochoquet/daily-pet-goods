@@ -7,18 +7,32 @@ import Link from 'next/link'
 import { ChevronLeft, ShoppingCart, Check, Play, Truck, RotateCcw, MessageCircle, Package, AlertTriangle, ChevronLeft as Prev, ChevronRight as Next } from 'lucide-react'
 import type { Product } from '@/lib/types'
 import { useCart } from '@/components/cart/CartProvider'
+import { pricingFor } from '@/lib/sale'
+import SaleBadge from '@/components/sale/SaleBadge'
 
 type MediaItem =
   | { type: 'video'; src: string; alt: string }
   | { type: 'image'; src: string; alt: string }
 
-export default function ProductDetailClient({ product }: { product: Product }) {
+/**
+ * `saleActive` komt van de server (zie page.tsx) en wordt hier niet zelf
+ * uitgerekend: de browserklok mag niet bepalen welke prijs er staat,
+ * anders wijkt wat React rendert af van de HTML die de bezoeker kreeg.
+ */
+export default function ProductDetailClient({
+  product,
+  saleActive,
+}: {
+  product: Product
+  saleActive: boolean
+}) {
   const [variantIndex, setVariantIndex] = useState(0)
   const variant = product.variants[variantIndex]
   const hasVariants = product.variants.length > 1
   const { addItem } = useCart()
   const [added, setAdded] = useState(false)
   const inStock = variant.inStock ?? true
+  const pricing = pricingFor(variant.price, saleActive)
   // Nog geen prijs betekent: wel te zien, nog niet te bestellen. Dat is
   // iets anders dan uitverkocht, dus het krijgt ook een eigen tekst.
   const hasPrice = variant.price !== null
@@ -173,19 +187,35 @@ export default function ProductDetailClient({ product }: { product: Product }) {
           <p className="text-[#6B7280] leading-relaxed mb-8">{product.shortDescription}</p>
 
           <div className="mb-8">
-            {variant.price !== null ? (
-              <>
-                <span className="text-3xl font-semibold text-[#1A1A1A]">
-                  {formatPrice(variant.price)}
-                </span>
-                <span className="text-sm text-[#9CA3AF] ml-2">incl. verzending</span>
-              </>
-            ) : (
+            {pricing === null ? (
               <>
                 <span className="text-3xl font-semibold text-[#1A1A1A]">Prijs volgt</span>
                 <span className="block text-sm text-[#9CA3AF] mt-1">
                   Dit product staat er net op en is binnenkort te bestellen.
                 </span>
+              </>
+            ) : pricing.active ? (
+              <>
+                <span className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
+                  <span className="whitespace-nowrap text-3xl font-semibold text-[#1A1A1A]">
+                    {formatPrice(pricing.current)}
+                  </span>
+                  <s className="whitespace-nowrap text-lg text-[#9CA3AF] decoration-[#9CA3AF]">
+                    {formatPrice(pricing.base)}
+                  </s>
+                  <SaleBadge />
+                </span>
+                <span className="block text-sm text-[#2C4A3E] mt-2">
+                  Je bespaart {formatPrice(pricing.saved)}
+                  <span className="text-[#9CA3AF]"> · incl. verzending</span>
+                </span>
+              </>
+            ) : (
+              <>
+                <span className="text-3xl font-semibold text-[#1A1A1A]">
+                  {formatPrice(pricing.current)}
+                </span>
+                <span className="text-sm text-[#9CA3AF] ml-2">incl. verzending</span>
               </>
             )}
           </div>

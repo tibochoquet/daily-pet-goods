@@ -1,9 +1,30 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowRight, Sparkles, ShieldCheck, Truck } from 'lucide-react'
+import { ArrowRight, Sparkles, ShieldCheck, Truck, Tag } from 'lucide-react'
 import { brandImages } from '@/lib/images'
+import { isSaleActive, sale, saleEndLabel, saleEndShort } from '@/config/sale'
 
-function Eyebrow() {
+/**
+ * De hero heeft drie varianten naast elkaar - telefoon met foto, tablet
+ * zonder foto, desktop met foto - omdat één foto niet op alle drie de
+ * verhoudingen werkt.
+ *
+ * De actietekst zit daarom in losse onderdelen die alle drie de blokken
+ * gebruiken, met de opmaakklassen als parameter. Drie keer dezelfde
+ * tekst uitschrijven zou betekenen dat een wijziging op één plek wordt
+ * vergeten, en dan staat er op een tablet iets anders dan op een
+ * telefoon.
+ */
+
+function Eyebrow({ saleActive }: { saleActive: boolean }) {
+  if (saleActive) {
+    return (
+      <div className="inline-flex items-center gap-2 bg-white text-[#1A1A1A] text-xs font-bold uppercase tracking-wider px-4 py-2 rounded-full mb-6 sm:mb-8">
+        <Tag size={12} className="text-[#C8745A]" />
+        {sale.campaign} &middot; t/m {saleEndShort()}
+      </div>
+    )
+  }
   return (
     <div className="inline-flex items-center gap-2 border border-white/25 text-white/80 text-xs font-semibold uppercase tracking-wider px-4 py-2 rounded-full mb-6 sm:mb-8">
       <Sparkles size={12} className="text-[#C8745A]" />
@@ -12,6 +33,45 @@ function Eyebrow() {
   )
 }
 
+function Heading({ saleActive, className }: { saleActive: boolean; className: string }) {
+  if (saleActive) {
+    return (
+      <h1 className={className}>
+        {sale.discountPercent}% korting op{' '}
+        <em className="not-italic text-[#D4956B]">alles in de winkel.</em>
+      </h1>
+    )
+  }
+  return (
+    <h1 className={className}>
+      Dagelijkse essentials{' '}
+      <em className="not-italic text-[#D4956B]">waar ze dol op zijn.</em>
+    </h1>
+  )
+}
+
+function Subline({ saleActive, className }: { saleActive: boolean; className: string }) {
+  if (saleActive) {
+    return (
+      <p className={className}>
+        Van verhoogde voerbakken tot winterjassen: tot en met {saleEndLabel()} gaat er{' '}
+        {sale.discountPercent}% van elke prijs af. Automatisch, je hebt er geen code voor nodig.
+      </p>
+    )
+  }
+  return (
+    <p className={className}>
+      Premium, zorgvuldig geselecteerde producten voor honden en katten. Mooi in huis, praktisch elke dag.
+    </p>
+  )
+}
+
+/**
+ * Dezelfde knoptekst met en zonder actie. "Bekijk alle producten met
+ * korting" liep op een 320px-telefoon over twee regels, en de korting
+ * staat op dat moment al in de pil, de kop én de subregel - een vierde
+ * keer in de knop is ruis.
+ */
 function Ctas() {
   return (
     <div className="flex flex-wrap gap-3 mb-10 sm:mb-12">
@@ -42,6 +102,8 @@ function TrustBar() {
 }
 
 export default function Hero() {
+  const saleActive = isSaleActive()
+
   return (
     <section className="w-full">
       {/* Phone only (< sm): full-bleed photo hero, separate from the tablet
@@ -57,15 +119,17 @@ export default function Hero() {
           sizes="100vw"
           quality={85}
         />
+        {/* Tijdens de actie een extra donkere laag over de foto: de
+            actietekst is langer dan de gewone en moet ook boven de
+            lichte delen van de foto leesbaar blijven. */}
+        {saleActive && <div className="absolute inset-0 bg-black/45" />}
         <div className="relative z-10 px-5 py-16">
-          <Eyebrow />
-          <h1 className="font-serif text-3xl font-bold text-white leading-[1.1] tracking-tight mb-4">
-            Dagelijkse essentials{' '}
-            <em className="not-italic text-[#D4956B]">waar ze dol op zijn.</em>
-          </h1>
-          <p className="text-base text-white/70 leading-relaxed mb-8">
-            Premium, zorgvuldig geselecteerde producten voor honden en katten. Mooi in huis, praktisch elke dag.
-          </p>
+          <Eyebrow saleActive={saleActive} />
+          <Heading
+            saleActive={saleActive}
+            className="font-serif text-3xl font-bold text-white leading-[1.1] tracking-tight mb-4"
+          />
+          <Subline saleActive={saleActive} className="text-base text-white/70 leading-relaxed mb-8" />
           <Ctas />
           <TrustBar />
         </div>
@@ -74,15 +138,13 @@ export default function Hero() {
       {/* Tablet only (sm to lg): text-only block, no photo. Unchanged from
           before - the new phone photo hero above is scoped to phone width
           only. */}
-      <div className="hidden sm:block lg:hidden bg-[#1F3329] px-5 sm:px-8 py-16 sm:py-20">
-        <Eyebrow />
-        <h1 className="font-serif text-3xl sm:text-4xl font-bold text-white leading-[1.1] tracking-tight mb-4">
-          Dagelijkse essentials{' '}
-          <em className="not-italic text-[#D4956B]">waar ze dol op zijn.</em>
-        </h1>
-        <p className="text-base text-white/70 leading-relaxed mb-8">
-          Premium, zorgvuldig geselecteerde producten voor honden en katten. Mooi in huis, praktisch elke dag.
-        </p>
+      <div className={`hidden sm:block lg:hidden px-5 sm:px-8 py-16 sm:py-20 ${saleActive ? 'bg-[#1A1A1A]' : 'bg-[#1F3329]'}`}>
+        <Eyebrow saleActive={saleActive} />
+        <Heading
+          saleActive={saleActive}
+          className="font-serif text-3xl sm:text-4xl font-bold text-white leading-[1.1] tracking-tight mb-4"
+        />
+        <Subline saleActive={saleActive} className="text-base text-white/70 leading-relaxed mb-8" />
         <Ctas />
         <TrustBar />
       </div>
@@ -103,18 +165,19 @@ export default function Hero() {
         <div className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/30 to-transparent" />
         {/* Subtle bottom fade */}
         <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/20 to-transparent" />
+        {saleActive && (
+          <div className="absolute inset-0 bg-gradient-to-r from-black/45 via-black/20 to-transparent" />
+        )}
 
         {/* Content. Left side, over the darker area */}
         <div className="relative z-10 w-full max-w-7xl mx-auto px-8 py-32">
           <div className="max-w-lg">
-            <Eyebrow />
-            <h1 className="font-serif text-6xl xl:text-[4.25rem] font-bold text-white leading-[1.05] tracking-tight mb-6">
-              Dagelijkse essentials{' '}
-              <em className="not-italic text-[#D4956B]">waar ze dol op zijn.</em>
-            </h1>
-            <p className="text-lg text-white/70 leading-relaxed mb-10">
-              Premium, zorgvuldig geselecteerde producten voor honden en katten. Mooi in huis, praktisch elke dag.
-            </p>
+            <Eyebrow saleActive={saleActive} />
+            <Heading
+              saleActive={saleActive}
+              className="font-serif text-6xl xl:text-[4.25rem] font-bold text-white leading-[1.05] tracking-tight mb-6"
+            />
+            <Subline saleActive={saleActive} className="text-lg text-white/70 leading-relaxed mb-10" />
             <Ctas />
             <TrustBar />
           </div>

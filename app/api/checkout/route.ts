@@ -4,6 +4,8 @@ import { randomBytes } from 'crypto'
 import { getStripe } from '@/lib/stripe'
 import { getVariantById } from '@/lib/products'
 import { calculateDiscount } from '@/lib/discounts'
+import { calculateSaleDiscount } from '@/lib/saleCart'
+import { isSaleActive, sale } from '@/config/sale'
 import { business, PUBLIC_BASE_URL, SITE_URL } from '@/lib/business'
 
 /**
@@ -27,7 +29,7 @@ interface CheckoutItem {
 const MAX_QUANTITY_PER_ITEM = 20
 
 export async function POST(req: NextRequest) {
-  let body: { items?: CheckoutItem[]; discountCode?: unknown }
+  let body: { items?: CheckoutItem[]; discountCode?: unknown; saleShown?: unknown }
   try {
     body = await req.json()
   } catch {
@@ -91,16 +93,68 @@ export async function POST(req: NextRequest) {
   // second factor.
   const orderRef = `DPG-${Date.now().toString(36).toUpperCase()}-${randomBytes(3).toString('hex').toUpperCase()}`
 
+  const cartLines = items.map((i) => ({ id: i.id, quantity: i.quantity }))
+
+  /**
+   * De actiekorting, berekend uit de serverklok.
+   *
+   * Dit is het punt waarop de actie echt afloopt. Een pagina die nog in
+   * de cache van een CDN zit of in een tabblad openstaat sinds voor de
+   * einddatum, kan hier niets aan veranderen: de klant stuurt alleen
+   * variant-id's en aantallen, en of er korting is wordt hier opnieuw
+   * bepaald. Na `endsAt` geeft dit null en wordt er dus tegen de normale
+   * prijs afgerekend, hoe de pagina er bij de klant ook uitzag.
+   */
+  const nu = new Date()
+  const saleActiveNow = isSaleActive(nu)
+  const saleDiscount = calculateSaleDiscount(cartLines, nu)
+
+  /**
+   * De winkelwagenpagina stuurt mee wat zij aan de klant heeft getoond.
+   * Wijkt dat af van wat hier geldt, dan stond die pagina open over het
+   * begin of het eind van de actie heen, of kwam hij uit een cache.
+   *
+   * Doorgaan zou betekenen dat Stripe een ander bedrag int dan er op het
+   * scherm stond. Dus niet doorgaan: dit is de enige plek waar dat nog
+   * te zien is, want de klant verlaat de site hierna naar Stripe. Wie
+   * zonder dit veld post (een oude tab met oude javascript) krijgt
+   * gewoon de prijs van nu - de korting hierboven is dan al naar de
+   * serverklok bepaald.
+   */
+  if (typeof body.saleShown === 'boolean' && body.saleShown !== saleActiveNow) {
+    return NextResponse.json(
+      {
+        error: saleActiveNow
+          ? `De ${sale.campaign}-actie is net begonnen. Herlaad de pagina voor de nieuwe prijzen.`
+          : `De ${sale.campaign}-actie is net afgelopen. Herlaad de pagina voor de actuele prijzen.`,
+      },
+      { status: 409 }
+    )
+  }
+
   // Re-derive the discount from the cart we just validated above. If the
   // code no longer applies (e.g. the only jacket was removed after the
   // code was entered) checkout continues at full price rather than
   // failing - the summary the customer saw is re-rendered from the same
   // rule, so this can only ever mean "no discount", never a surprise one.
-  const discountCodeInput = typeof body.discountCode === 'string' ? body.discountCode : ''
-  const discountResult = discountCodeInput
-    ? calculateDiscount(discountCodeInput, items.map((i) => ({ id: i.id, quantity: i.quantity })))
-    : null
-  const discount = discountResult?.ok ? discountResult.discount : null
+  //
+  // Tijdens de actie wordt een code niet eens bekeken. Stripe accepteert
+  // één coupon per sessie, dus stapelen zou betekenen dat we twee
+  // kortingen tot één bedrag samenvoegen en zo meer weggeven dan de
+  // actie belooft. De actie is bovendien altijd minstens zo gunstig als
+  // de enige bestaande code: 10% op alles tegen 10% op alleen jassen.
+  const discountCodeInput =
+    !saleDiscount && typeof body.discountCode === 'string' ? body.discountCode : ''
+  const discountResult = discountCodeInput ? calculateDiscount(discountCodeInput, cartLines) : null
+  const codeDiscount = discountResult?.ok ? discountResult.discount : null
+
+  // Eén vorm voor beide soorten korting, zodat er hieronder maar één pad
+  // naar Stripe loopt.
+  const discount = saleDiscount
+    ? { code: saleDiscount.code, name: saleDiscount.label, amountOff: saleDiscount.amountOff }
+    : codeDiscount
+      ? { code: codeDiscount.code, name: `Korting (${codeDiscount.code})`, amountOff: codeDiscount.amountOff }
+      : null
 
   try {
     const stripe = getStripe()
@@ -118,7 +172,7 @@ export async function POST(req: NextRequest) {
         amount_off: Math.round(discount.amountOff * 100),
         currency: 'eur',
         duration: 'once',
-        name: `Korting (${discount.code})`,
+        name: discount.name,
         max_redemptions: 1,
         // This coupon is created for this one checkout only. Expiring it
         // keeps the Stripe account from filling up with dead one-off

@@ -2,6 +2,8 @@ import Image from 'next/image'
 import { formatPrice } from '@/lib/business'
 import Link from 'next/link'
 import { ArrowRight, Sparkles } from 'lucide-react'
+import { isSaleActive } from '@/config/sale'
+import { pricingFor } from '@/lib/sale'
 
 export interface HeroTag {
   label: string
@@ -90,6 +92,12 @@ export default function EditorialHero({
   tags,
   quickNav,
 }: EditorialHeroProps) {
+  // De prijslabels op de foto staan los in app/honden/page.tsx en
+  // app/katten/page.tsx en komen dus niet uit lib/products.ts. Zonder
+  // dit zouden ze tijdens de actie de volle prijs blijven roepen terwijl
+  // de rest van de pagina korting toont.
+  const saleActive = isSaleActive()
+
   return (
     <section className="w-full">
       {/* Mobile & tablet (< lg): text-only block, no photo. Fully independent from the desktop layout. */}
@@ -148,7 +156,20 @@ export default function EditorialHero({
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-60" />
             </span>
             <span className="absolute left-1/2 top-full mt-2 -translate-x-1/2 whitespace-nowrap rounded-full bg-white/90 backdrop-blur-sm px-3.5 py-1.5 text-xs font-medium text-[#1A1A1A] shadow-md transition-all duration-200 group-hover:bg-white group-hover:shadow-xl group-hover:scale-105">
-              {tag.label} <span className="text-[#9CA3AF] group-hover:text-[#6B7280]">· vanaf {formatPrice(tag.price)}</span>
+              {tag.label}{' '}
+              <span className="text-[#9CA3AF] group-hover:text-[#6B7280]">
+                · vanaf{' '}
+                {saleActive ? (
+                  <>
+                    <s className="decoration-[#9CA3AF]">{formatPrice(tag.price)}</s>{' '}
+                    <span className="font-semibold text-[#1A1A1A]">
+                      {formatPrice(pricingFor(tag.price, true)!.current)}
+                    </span>
+                  </>
+                ) : (
+                  formatPrice(tag.price)
+                )}
+              </span>
             </span>
           </Link>
         ))}

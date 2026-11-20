@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { calculateDiscount, type CartLine } from '@/lib/discounts'
+import { isSaleActive, sale } from '@/config/sale'
 
 /**
  * Validates a discount code against the real cart and returns the amount
@@ -26,6 +27,20 @@ export async function POST(req: NextRequest) {
   const code = typeof body.code === 'string' ? body.code : ''
   if (!code.trim()) {
     return NextResponse.json({ ok: false, error: 'Vul een kortingscode in.' }, { status: 400 })
+  }
+
+  // Tijdens de actie geldt de actiekorting en wordt een code niet
+  // toegepast - zie de uitleg in app/api/checkout/route.ts. Dat wordt
+  // hier met dezelfde serverklok bepaald als daar, zodat het antwoord
+  // hier nooit iets belooft wat de checkout daarna weigert.
+  if (isSaleActive()) {
+    return NextResponse.json(
+      {
+        ok: false,
+        error: `Je krijgt nu al ${sale.discountPercent}% ${sale.campaign}-korting op alles. Een kortingscode kun je daar niet bij gebruiken.`,
+      },
+      { status: 409 }
+    )
   }
 
   // Not combinable. Checked here so applying a second code gives the

@@ -109,7 +109,15 @@ export async function buildOrderEmailData(session: Stripe.Checkout.Session): Pro
       variant: found?.variant?.label ?? null,
       quantity,
       // unitAmount, niet het regeltotaal: de template vermenigvuldigt zelf.
-      unitAmount: Math.round((line.amount_total ?? 0) / Math.max(quantity, 1)),
+      //
+      // `amount_subtotal` en niet `amount_total`: de prijs vóór korting.
+      // Stripe verdeelt een sessiekorting over de regels, dus
+      // `amount_total` is de prijs ná korting - en dan tellen de regels
+      // in de mail niet op tot het subtotaal waar de kortingsregel nog
+      // eens van afgaat. Dat leest als twee keer korting. Nu staat er de
+      // normale prijs per regel, en legt de kortingsregel het verschil
+      // tot het totaal uit.
+      unitAmount: Math.round((line.amount_subtotal ?? 0) / Math.max(quantity, 1)),
       imageUrl: found?.variant?.image ?? null,
       slug: productSlug,
     }
