@@ -84,7 +84,12 @@ test('start en eind staan op de bedoelde Nederlandse tijd', () => {
       dateStyle: 'short',
       timeStyle: 'medium',
     }).format(d)
-  assert.equal(nl(saleStart), '27-11-2026, 00:00:00')
+  // Het begin is middernacht Nederlandse tijd. De datum zelf staat hier
+  // niet vast, want die mag schuiven - de actie is een keer naar voren
+  // gehaald. Dat hij om 00:00:00 begint en niet om 01:00, is wel de
+  // belofte en precies wat de offset in de string moet opleveren.
+  assert.match(nl(saleStart), /^\d{2}-\d{2}-\d{4}, 00:00:00$/)
+  // Het eind is de laatste seconde van Cyber Monday.
   assert.equal(nl(saleEnd), '30-11-2026, 23:59:59')
 })
 

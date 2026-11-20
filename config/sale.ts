@@ -75,16 +75,21 @@ export const sale = {
   /**
    * Begin en eind met expliciete tijdzone-offset in de string.
    *
-   * "2026-11-27T00:00" zonder offset leest Node als UTC en de browser
+   * "2026-11-20T00:00" zonder offset leest Node als UTC en de browser
    * als lokale tijd, en dan begint de actie voor de bezoeker een uur
    * eerder dan voor de server. Beide data vallen in wintertijd, dus de
    * offset is +01:00 en verandert niet tijdens de actie.
+   *
+   * Het begin ligt een week voor Black Friday zelf: de actie loopt vanaf
+   * 20 november en niet pas vanaf de 27e. Een begindatum in het verleden
+   * is hier geen probleem - `isSaleActive` kijkt alleen of nu tussen
+   * begin en eind valt, dus de actie staat meteen aan.
    *
    * Het eind staat op 23:59:59 en niet op 23:59:00, zodat de laatste
    * minuut van Cyber Monday meetelt in plaats van er net buiten te
    * vallen.
    */
-  startsAt: '2026-11-27T00:00:00+01:00',
+  startsAt: '2026-11-20T00:00:00+01:00',
   endsAt: '2026-11-30T23:59:59+01:00',
 } as const
 
