@@ -273,7 +273,9 @@ export default function CartClient({ saleActive }: { saleActive: boolean }) {
                           {formatPrice(item.price * item.quantity)}
                         </s>
                       )}
-                      <span className="whitespace-nowrap font-semibold">
+                      <span
+                        className={`whitespace-nowrap font-bold ${saleActive ? 'text-sale' : ''}`}
+                      >
                         {formatPrice(regelTotaalCenten(item.price, item.quantity) / 100)}
                       </span>
                     </span>
@@ -304,12 +306,12 @@ export default function CartClient({ saleActive }: { saleActive: boolean }) {
                 <span>{formatPrice(subtotal)}</span>
               </div>
               {saleActive && saleAmountOff > 0 && (
-                <div className="flex items-center justify-between gap-2 text-[#2C4A3E]">
+                <div className="flex items-center justify-between gap-2 text-sale-ink">
                   <span className="flex items-center gap-1.5">
                     {sale.campaign}-korting
                     <SaleBadge />
                   </span>
-                  <span className="whitespace-nowrap font-medium">
+                  <span className="whitespace-nowrap font-bold">
                     &minus; {formatPrice(saleAmountOff)}
                   </span>
                 </div>
@@ -347,8 +349,8 @@ export default function CartClient({ saleActive }: { saleActive: boolean }) {
                 /* Geen invoerveld tijdens de actie: de korting staat er
                    al op en een code is niet te combineren. Een veld dat
                    elke code weigert, is onvriendelijker dan geen veld. */
-                <p className="text-xs text-[#2C4A3E]">
-                  <span className="font-semibold">{sale.campaign}-korting toegepast</span>:{' '}
+                <p className="rounded-xl bg-sale-tint px-3.5 py-3 text-xs leading-relaxed text-sale-ink">
+                  <span className="font-bold">{sale.campaign}-korting toegepast</span>:{' '}
                   {sale.discountPercent}% op alles.
                   {saleAmountOff > 0 && <> Je bespaart {formatPrice(saleAmountOff)}.</>} Een
                   kortingscode kun je er niet bij gebruiken.

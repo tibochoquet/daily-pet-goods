@@ -162,7 +162,7 @@ export default function EditorialHero({
                 {saleActive ? (
                   <>
                     <s className="decoration-[#9CA3AF]">{formatPrice(tag.price)}</s>{' '}
-                    <span className="font-semibold text-[#1A1A1A]">
+                    <span className="font-bold text-sale">
                       {formatPrice(pricingFor(tag.price, true)!.current)}
                     </span>
                   </>

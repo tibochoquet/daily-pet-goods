@@ -1,8 +1,9 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowRight, Sparkles, ShieldCheck, Truck, Tag } from 'lucide-react'
+import { ArrowRight, Clock, Sparkles, ShieldCheck, Truck, Tag } from 'lucide-react'
 import { brandImages } from '@/lib/images'
 import { isSaleActive, sale, saleEndLabel, saleEndShort } from '@/config/sale'
+import SaleCountdown from '@/components/sale/SaleCountdown'
 
 /**
  * De hero heeft drie varianten naast elkaar - telefoon met foto, tablet
@@ -19,8 +20,8 @@ import { isSaleActive, sale, saleEndLabel, saleEndShort } from '@/config/sale'
 function Eyebrow({ saleActive }: { saleActive: boolean }) {
   if (saleActive) {
     return (
-      <div className="inline-flex items-center gap-2 bg-white text-[#1A1A1A] text-xs font-bold uppercase tracking-wider px-4 py-2 rounded-full mb-6 sm:mb-8">
-        <Tag size={12} className="text-[#C8745A]" />
+      <div className="inline-flex items-center gap-2 bg-sale text-white text-xs font-bold uppercase tracking-wider px-4 py-2 rounded-full mb-6 sm:mb-8 shadow-[0_8px_26px_rgba(224,31,45,0.45)]">
+        <Tag size={12} />
         {sale.campaign} &middot; t/m {saleEndShort()}
       </div>
     )
@@ -37,8 +38,15 @@ function Heading({ saleActive, className }: { saleActive: boolean; className: st
   if (saleActive) {
     return (
       <h1 className={className}>
-        {sale.discountPercent}% korting op{' '}
-        <em className="not-italic text-[#D4956B]">alles in de winkel.</em>
+        {/* Het rode vlak zit om de korting zelf en niet om de hele regel:
+            dat is het stuk dat van een meter afstand gelezen moet worden.
+            `box-decoration-clone` zorgt dat het vlak op een smalle
+            telefoon netjes om elke regel heen loopt in plaats van om het
+            geheel, wat een scheve hap uit de tweede regel geeft. */}
+        <span className="box-decoration-clone bg-sale px-2.5 text-white">
+          {sale.discountPercent}% korting
+        </span>{' '}
+        op alles in de winkel.
       </h1>
     )
   }
@@ -82,6 +90,26 @@ function Ctas() {
         Bekijk alle producten
         <ArrowRight size={15} />
       </Link>
+    </div>
+  )
+}
+
+/**
+ * De aftelklok in de hero.
+ *
+ * Staat los van de balk bovenaan, want die scrollt weg en dit is het
+ * eerste wat iemand ziet. Glas over de foto in plaats van rood: het rood
+ * zit al in de pil erboven en in de kop, en drie rode vlakken boven
+ * elkaar wordt een poster in plaats van een winkel.
+ */
+function SaleClock({ className = '' }: { className?: string }) {
+  return (
+    <div
+      className={`inline-flex items-center gap-2 rounded-full bg-white/10 ring-1 ring-white/25 backdrop-blur-sm px-4 py-2 text-sm text-white ${className}`}
+    >
+      <Clock size={14} aria-hidden />
+      <span className="text-white/75">Nog</span>
+      <SaleCountdown className="font-bold" />
     </div>
   )
 }
@@ -130,6 +158,7 @@ export default function Hero() {
             className="font-serif text-3xl font-bold text-white leading-[1.1] tracking-tight mb-4"
           />
           <Subline saleActive={saleActive} className="text-base text-white/70 leading-relaxed mb-8" />
+          {saleActive && <SaleClock className="mb-7" />}
           <Ctas />
           <TrustBar />
         </div>
@@ -138,13 +167,14 @@ export default function Hero() {
       {/* Tablet only (sm to lg): text-only block, no photo. Unchanged from
           before - the new phone photo hero above is scoped to phone width
           only. */}
-      <div className={`hidden sm:block lg:hidden px-5 sm:px-8 py-16 sm:py-20 ${saleActive ? 'bg-[#1A1A1A]' : 'bg-[#1F3329]'}`}>
+      <div className={`hidden sm:block lg:hidden px-5 sm:px-8 py-16 sm:py-20 ${saleActive ? 'bg-gradient-to-br from-[#1A1A1A] via-[#3B0710] to-[#7A0A14]' : 'bg-[#1F3329]'}`}>
         <Eyebrow saleActive={saleActive} />
         <Heading
           saleActive={saleActive}
           className="font-serif text-3xl sm:text-4xl font-bold text-white leading-[1.1] tracking-tight mb-4"
         />
         <Subline saleActive={saleActive} className="text-base text-white/70 leading-relaxed mb-8" />
+        {saleActive && <SaleClock className="mb-7" />}
         <Ctas />
         <TrustBar />
       </div>
@@ -178,6 +208,7 @@ export default function Hero() {
               className="font-serif text-6xl xl:text-[4.25rem] font-bold text-white leading-[1.05] tracking-tight mb-6"
             />
             <Subline saleActive={saleActive} className="text-lg text-white/70 leading-relaxed mb-10" />
+            {saleActive && <SaleClock className="mb-9" />}
             <Ctas />
             <TrustBar />
           </div>

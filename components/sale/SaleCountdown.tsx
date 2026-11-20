@@ -46,10 +46,10 @@ export default function SaleCountdown({ className = '' }: { className?: string }
 
   return (
     <span
-      className={`inline-block min-w-[6.5rem] text-center tabular-nums ${className}`}
+      className={`inline-block min-w-[5.75rem] text-center tabular-nums ${className}`}
       aria-live="off"
     >
-      {over ? `nog ${over}` : ' '}
+      {over ?? '\u00a0'}
     </span>
   )
 }

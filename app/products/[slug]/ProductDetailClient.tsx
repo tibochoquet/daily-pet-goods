@@ -197,7 +197,7 @@ export default function ProductDetailClient({
             ) : pricing.active ? (
               <>
                 <span className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
-                  <span className="whitespace-nowrap text-3xl font-semibold text-[#1A1A1A]">
+                  <span className="whitespace-nowrap text-3xl font-bold text-sale">
                     {formatPrice(pricing.current)}
                   </span>
                   <s className="whitespace-nowrap text-lg text-[#9CA3AF] decoration-[#9CA3AF]">
@@ -205,9 +205,11 @@ export default function ProductDetailClient({
                   </s>
                   <SaleBadge />
                 </span>
-                <span className="block text-sm text-[#2C4A3E] mt-2">
-                  Je bespaart {formatPrice(pricing.saved)}
-                  <span className="text-[#9CA3AF]"> · incl. verzending</span>
+                <span className="mt-2.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm">
+                  <span className="inline-flex items-center rounded-full bg-sale-tint px-3 py-1 font-semibold text-sale-ink">
+                    Je bespaart {formatPrice(pricing.saved)}
+                  </span>
+                  <span className="text-[#9CA3AF]">incl. verzending</span>
                 </span>
               </>
             ) : (

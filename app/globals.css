@@ -16,6 +16,23 @@
   --color-border: #E8E2D9;
   --color-muted: #6B7280;
 
+  /* Black Friday. Eén plek voor het rood, zoals config/sale.ts de enige
+     plek is voor het percentage en de datums. Levert bg-sale, text-sale,
+     border-sale, decoration-sale en de /nn-varianten op.
+
+     Contrast nagerekend: wit op --color-sale is 4.77:1 en --color-sale op
+     wit ook 4.77:1, dus beide halen AA voor kleine tekst. Gebruik in een
+     rood vlak daarom volle witte tekst en geen white/85 - dat zakt naar
+     3.4:1 en valt door de ondergrens. Voor een pil binnen zo'n vlak is
+     --color-sale-dark bedoeld (wit erop: 7.6:1). Rode tekst op een
+     lichte ondergrond gaat met --color-sale-ink op --color-sale-tint,
+     8.6:1 - fel rood als tekst op crème kan ook, maar niet op een
+     roze vlak. */
+  --color-sale: #E01F2D;
+  --color-sale-dark: #A8101B;
+  --color-sale-ink: #8A0C16;
+  --color-sale-tint: #FDECEE;
+
   --font-sans: var(--font-inter);
   --font-serif: var(--font-playfair);
 }
@@ -38,4 +55,22 @@ h1, h2, h3, h4 {
 
 html {
   scroll-behavior: smooth;
+}
+
+/**
+ * De diagonale streepjes in de actiebalk.
+ *
+ * Als achtergrond op de balk zelf en niet als extra laag eroverheen,
+ * zodat de balk één element blijft en de tekst nergens achter een
+ * overlay verdwijnt. Heel laag contrast: het moet "actie" suggereren,
+ * niet meelezen.
+ */
+.sale-stripes {
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0px,
+    rgba(255, 255, 255, 0.1) 1px,
+    transparent 1px,
+    transparent 10px
+  );
 }
