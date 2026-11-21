@@ -2,8 +2,6 @@ import type { Metadata } from 'next'
 import Hero from '@/components/home/Hero'
 import FeaturedCategories from '@/components/home/FeaturedCategories'
 import BestSellers from '@/components/home/BestSellers'
-import SaleTiers from '@/components/sale/SaleTiers'
-import SaleTrust from '@/components/sale/SaleTrust'
 import SaleDeals from '@/components/sale/SaleDeals'
 import EditorialBanner from '@/components/home/EditorialBanner'
 import CustomerReviews from '@/components/home/CustomerReviews'
@@ -48,12 +46,15 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 /**
- * Tijdens de actie wisselt er één sectie en komen er twee bij.
+ * Tijdens de actie wisselt er precies één sectie.
  *
- * De hero blijft dezelfde component en wisselt intern alleen van tekst,
- * en het bestsellerraster krijgt de dealkop - geen extra raster met
- * dezelfde producten erin. Erbij komen de twee actiekaarten (met het
- * anker waar de hero naar verwijst) en de vertrouwensbalk eronder.
+ * De hero blijft dezelfde component en wisselt intern van tekst: de twee
+ * treden en de vier beloftes zitten dáárin, niet als losse secties
+ * eronder. Die stonden hier eerst wel, en dat las als een hero met twee
+ * vreemde stroken eronder in plaats van als één actie.
+ *
+ * Het bestsellerraster krijgt de dealkop - geen extra raster met
+ * dezelfde producten erin.
  *
  * Alles aan één `isSaleActive()`, dus na `endsAt` staat de homepage er
  * weer precies zoals hiervoor - binnen vijf minuten, door de
@@ -65,12 +66,6 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-      {saleActive && (
-        <>
-          <SaleTiers />
-          <SaleTrust />
-        </>
-      )}
       <FeaturedCategories />
       {saleActive ? <SaleDeals /> : <BestSellers />}
       <EditorialBanner />

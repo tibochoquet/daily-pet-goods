@@ -4,6 +4,7 @@ import { products } from '@/lib/products'
 import ProductDetailClient from './ProductDetailClient'
 import JsonLd from '@/components/JsonLd'
 import ProductReviews from '@/components/shop/ProductReviews'
+import RelatedProducts from '@/components/shop/RelatedProducts'
 import { business, SITE_URL } from '@/lib/business'
 import { isSaleActive, sale } from '@/config/sale'
 import { pricingFor } from '@/lib/sale'
@@ -178,6 +179,7 @@ export default async function ProductPage({ params }: Props) {
       <JsonLd data={productSchema} />
       <ProductDetailClient product={product} saleActive={saleActive} />
       <ProductReviews {...reviews} />
+      <RelatedProducts product={product} />
     </>
   )
 }

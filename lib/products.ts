@@ -1,4 +1,4 @@
-import type { Product, Category, ProductVariant } from './types'
+import type { Product, Category, ProductCategory, ProductVariant } from './types'
 
 /**
  * Product data mirrored from the Daily Lifegoods bol.com listings.
@@ -2519,4 +2519,50 @@ export function getVariantById(
     if (variant) return { product, variant }
   }
   return undefined
+}
+
+/**
+ * Hond, kat, of allebei - afgeleid uit het voorvoegsel van de categorie.
+ *
+ * De categorieën heten niet voor niets `dog-...` en `cat-...`; een
+ * tweede lijst die per categorie nog eens het dier noemt, zou bij een
+ * nieuwe categorie worden vergeten. `pet-...` is bewust voor allebei
+ * (verzorging, vervoer) en past dus overal bij.
+ */
+function dierVanCategorie(category: ProductCategory): 'hond' | 'kat' | 'beide' {
+  if (category.startsWith('dog-')) return 'hond'
+  if (category.startsWith('cat-')) return 'kat'
+  return 'beide'
+}
+
+/**
+ * De producten onder "Anderen keken ook naar" op een productpagina.
+ *
+ * Eerst dezelfde categorie: bij een jas zijn dat de andere jassen, en
+ * dat is precies de vergelijking die een bezoeker toch al maakt. Daarna
+ * de rest van het assortiment voor hetzelfde dier, zodat een categorie
+ * met maar één product (vervoer, verzorging) geen halflege rij krijgt,
+ * en als laatste de rest - liever een hondenmand onder een kattenjas dan
+ * een gat.
+ *
+ * Binnen elke groep blijft de volgorde van dit bestand gelden. Dat is
+ * geen detail: de productpagina's worden bij de build gegenereerd, dus
+ * met een willekeurige volgorde zou elke deploy een andere rij opleveren
+ * zonder dat er iets aan de winkel veranderd is.
+ */
+export function getRelatedProducts(product: Product, limit = 4): Product[] {
+  const dier = dierVanCategorie(product.category)
+  const anderen = products.filter((p) => p.slug !== product.slug)
+
+  const zelfdeCategorie = anderen.filter((p) => p.category === product.category)
+  const zelfdeDier = anderen.filter(
+    (p) =>
+      p.category !== product.category &&
+      (dierVanCategorie(p.category) === dier || dierVanCategorie(p.category) === 'beide')
+  )
+  const rest = anderen.filter(
+    (p) => !zelfdeCategorie.includes(p) && !zelfdeDier.includes(p)
+  )
+
+  return [...zelfdeCategorie, ...zelfdeDier, ...rest].slice(0, limit)
 }
