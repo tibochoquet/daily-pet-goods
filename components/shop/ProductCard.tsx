@@ -60,7 +60,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                 <span className="text-[#9CA3AF]">Vanaf </span>
                 {/* nowrap per bedrag, zodat het euroteken niet op een
                     eigen regel belandt - zie de winkelwagen. */}
-                <span className="whitespace-nowrap font-bold text-sale">{formatPrice(pricing.current)}</span>{' '}
+                <span className="whitespace-nowrap font-bold text-bf-red">{formatPrice(pricing.current)}</span>{' '}
                 <s className="whitespace-nowrap text-[#9CA3AF] decoration-[#9CA3AF]">
                   {formatPrice(pricing.base)}
                 </s>

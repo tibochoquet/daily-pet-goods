@@ -1,5 +1,5 @@
-import { Clock, Truck } from 'lucide-react'
-import { isSaleActive, sale } from '@/config/sale'
+import { Truck } from 'lucide-react'
+import { isSaleActive, sale, saleTierLabel } from '@/config/sale'
 import SaleCountdown from '@/components/sale/SaleCountdown'
 
 /**
@@ -10,10 +10,17 @@ import SaleCountdown from '@/components/sale/SaleCountdown'
  * de halve eerste schermvullende indruk weg. Gratis verzending staat ook
  * nog op de productpagina, in de hero en bij het afrekenen.
  *
- * Fel rood met een diagonale streepjestextuur, en de resterende tijd in
- * een donkerrode pil ernaast. Volle witte tekst, geen white/85: op dit
- * rood zakt dat naar 3.4:1 en dan is de balk wel fel maar niet meer goed
- * leesbaar. Het rood staat in app/globals.css.
+ * Effen diep rood, dunne witte caps met veel letterafstand. Geen
+ * streeppatroon en geen verloop: de balk staat vlak boven een crème
+ * pagina met serif-koppen, en een textuur erin maakt er een
+ * uitverkoopsticker van. Het rood doet het werk, de typografie houdt het
+ * netjes. Het rood staat in app/globals.css.
+ *
+ * Altijd precies één regel hoog, ook op 320px. Daarom `whitespace-nowrap`
+ * plus één segment dat pas vanaf `sm` meedoet: op een telefoon staat de
+ * volledige belofte er (beide percentages) met de countdown, en vanaf
+ * een tablet komt de campagnenaam er vooraan bij. Twee regels rood boven
+ * een pagina is geen balk meer maar een vlak.
  *
  * Of de actie loopt wordt op de server bepaald. Deze balk staat in de
  * root layout, dus elke pagina erft hem; app/layout.tsx heeft daarom
@@ -23,17 +30,28 @@ import SaleCountdown from '@/components/sale/SaleCountdown'
 export default function AnnouncementBar() {
   if (isSaleActive()) {
     return (
-      <div className="sale-stripes bg-sale text-white">
-        <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 px-4 py-2 text-xs leading-tight sm:text-sm">
-          <span className="font-bold uppercase tracking-wider">{sale.campaign}</span>
-          <span className="font-semibold">
-            {sale.discountPercent}% korting
-            <span className="hidden sm:inline"> op alles</span>
+      <div className="bg-bf-red text-white">
+        <div className="flex items-center justify-center gap-2.5 overflow-hidden whitespace-nowrap px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.14em] sm:gap-3.5 sm:text-[11px]">
+          <span className="hidden sm:inline">{sale.campaign}</span>
+          <span className="hidden text-white/40 sm:inline" aria-hidden>
+            &middot;
           </span>
-          <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-sale-dark px-2.5 py-0.5 font-semibold">
-            <Clock size={12} className="shrink-0" aria-hidden />
-            <SaleCountdown />
+          <span>
+            {sale.discountPercent}% op alles
           </span>
+          <span className="text-white/40" aria-hidden>
+            &middot;
+          </span>
+          <span>
+            {sale.tierDiscountPercent}% vanaf {saleTierLabel()}
+          </span>
+          <span className="text-white/40" aria-hidden>
+            &middot;
+          </span>
+          {/* Niet-vet en iets lichter: de klok is de urgentie, niet de
+              boodschap. Vet erbij zou drie dingen tegelijk laten
+              schreeuwen. */}
+          <SaleCountdown className="font-medium tracking-[0.1em] text-white/90" />
         </div>
       </div>
     )

@@ -66,6 +66,26 @@ export const sale = {
   /** Hele procenten. Wordt in centen gerekend, zie lib/sale.ts. */
   discountPercent: 10,
   /**
+   * De tweede trede: vanaf dit subtotaal geldt `tierDiscountPercent` in
+   * plaats van `discountPercent`.
+   *
+   * In euro's, want zo staat het ook in de teksten op de site. De
+   * omrekening naar centen gebeurt in lib/sale.ts.
+   *
+   * De drempel wordt getoetst aan het subtotaal tegen NORMALE prijzen,
+   * dus voor korting. Anders zou de korting zichzelf in de weg zitten:
+   * een winkelwagen van 105 euro zakt met 10% naar 94,50 en zou de
+   * drempel dan weer niet halen, waarna hij er met 20% wel weer boven
+   * komt. Dat heen-en-weer heeft geen stabiele uitkomst.
+   */
+  tierThreshold: 100,
+  /**
+   * Vervangt `discountPercent` zodra de drempel gehaald is - het stapelt
+   * niet. Over de hele bestelling, niet alleen over het deel boven de
+   * drempel.
+   */
+  tierDiscountPercent: 20,
+  /**
    * Of de actie mag lopen. Dit is de waarde uit dit bestand;
    * NEXT_PUBLIC_SALE_ENABLED heeft er voorrang op. Lees hem nooit
    * rechtstreeks maar via `saleEnabled()`, anders mis je de
@@ -80,8 +100,8 @@ export const sale = {
    * eerder dan voor de server. Beide data vallen in wintertijd, dus de
    * offset is +01:00 en verandert niet tijdens de actie.
    *
-   * Het begin ligt een week voor Black Friday zelf: de actie loopt vanaf
-   * 20 november en niet pas vanaf de 27e. Een begindatum in het verleden
+   * Het begin ligt voor Black Friday zelf: de actie loopt vanaf
+   * 21 november en niet pas vanaf de 27e. Een begindatum in het verleden
    * is hier geen probleem - `isSaleActive` kijkt alleen of nu tussen
    * begin en eind valt, dus de actie staat meteen aan.
    *
@@ -89,7 +109,7 @@ export const sale = {
    * minuut van Cyber Monday meetelt in plaats van er net buiten te
    * vallen.
    */
-  startsAt: '2026-11-20T00:00:00+01:00',
+  startsAt: '2026-11-21T00:00:00+01:00',
   endsAt: '2026-11-30T23:59:59+01:00',
 } as const
 
@@ -108,6 +128,21 @@ if (saleEnd.getTime() <= saleStart.getTime()) {
 }
 if (!Number.isInteger(sale.discountPercent) || sale.discountPercent <= 0 || sale.discountPercent >= 100) {
   throw new Error('config/sale.ts: discountPercent moet een heel getal tussen 1 en 99 zijn.')
+}
+if (
+  !Number.isInteger(sale.tierDiscountPercent) ||
+  sale.tierDiscountPercent >= 100 ||
+  sale.tierDiscountPercent <= sale.discountPercent
+) {
+  // Een tweede trede die gelijk of lager is, zou betekenen dat een
+  // volle winkelwagen minder korting krijgt dan een halve. Dat is geen
+  // instelling die je stil wilt kunnen maken.
+  throw new Error(
+    'config/sale.ts: tierDiscountPercent moet een heel getal zijn, hoger dan discountPercent en lager dan 100.'
+  )
+}
+if (!Number.isFinite(sale.tierThreshold) || sale.tierThreshold <= 0) {
+  throw new Error('config/sale.ts: tierThreshold moet een bedrag boven 0 zijn.')
 }
 
 /**
@@ -143,6 +178,27 @@ export function saleEndLabel(): string {
     day: 'numeric',
     month: 'long',
   }).format(saleEnd)
+}
+
+/**
+ * De drempel voor de tweede trede zoals je hem voorleest: "€ 100".
+ *
+ * Zonder ",00", want de drempel is een rond bedrag en in een balk van
+ * één regel is "€ 100,00" vier tekens ruis. Staat de drempel ooit op een
+ * bedrag met centen, dan komen die er wel bij te staan.
+ *
+ * Met Intl en niet met `formatPrice` uit lib/business.ts, zodat dit
+ * bestand niets hoeft te importeren - zie de toelichting bovenaan.
+ */
+export function saleTierLabel(): string {
+  return new Intl.NumberFormat('nl-NL', {
+    style: 'currency',
+    currency: 'EUR',
+    minimumFractionDigits: Number.isInteger(sale.tierThreshold) ? 0 : 2,
+    maximumFractionDigits: 2,
+  })
+    .format(sale.tierThreshold)
+    .replace(/\u00a0|\u202f/g, ' ')
 }
 
 /**

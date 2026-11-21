@@ -6,9 +6,9 @@ import Link from 'next/link'
 import { Minus, Plus, Trash2, ShoppingBag, X } from 'lucide-react'
 import { useCart } from '@/components/cart/CartProvider'
 import { btwAmount, formatPrice } from '@/lib/business'
-import { sale } from '@/config/sale'
-import { saleDiscountCents, toCents } from '@/lib/sale'
-import SaleBadge from '@/components/sale/SaleBadge'
+import { sale, saleTierLabel } from '@/config/sale'
+import { discountCentsAt, saleCartTotals, saleDiscountLabel, toCents } from '@/lib/sale'
+import CartTierProgress, { type TierSuggestie } from '@/components/sale/CartTierProgress'
 
 interface AppliedDiscount {
   code: string
@@ -23,7 +23,13 @@ interface AppliedDiscount {
  * niet zelf: dan zou een verkeerd gezette klok korting kunnen tonen die
  * de checkout daarna weigert.
  */
-export default function CartClient({ saleActive }: { saleActive: boolean }) {
+export default function CartClient({
+  saleActive,
+  tierSuggesties,
+}: {
+  saleActive: boolean
+  tierSuggesties: TierSuggestie[]
+}) {
   const { items, subtotal, removeItem, setQuantity, discountCode, setDiscountCode } = useCart()
   const [checkingOut, setCheckingOut] = useState(false)
   const [error, setError] = useState('')
@@ -129,24 +135,35 @@ export default function CartClient({ saleActive }: { saleActive: boolean }) {
     !saleActive && discountCode && discount?.code === discountCode ? discount : null
 
   /**
-   * De actiekorting over deze winkelwagen.
+   * De actiekorting over deze winkelwagen: welke trede geldt, hoeveel
+   * korting dat is, en wat er nog ontbreekt voor de hoge trede.
    *
-   * Hier per stuk afgerond en dan vermenigvuldigd, precies zoals
-   * lib/saleCart.ts het op de server doet. Dezelfde formule aan beide
-   * kanten is wat garandeert dat het bedrag in dit overzicht gelijk is
-   * aan wat Stripe straks int; over het subtotaal afronden scheelt bij
-   * sommige prijzen een cent.
+   * Met `saleCartTotals` uit lib/sale.ts - dezelfde functie die de
+   * checkout aan de serverkant gebruikt, via lib/saleCart.ts. Dat is wat
+   * garandeert dat het bedrag in dit overzicht gelijk is aan wat Stripe
+   * straks int, inclusief het afronden per stuk en inclusief de vraag
+   * welk percentage hier opgaat.
    */
-  const saleAmountOff = saleActive
-    ? items.reduce((som, i) => som + saleDiscountCents(toCents(i.price)) * i.quantity, 0) / 100
-    : 0
+  const totals = saleCartTotals(
+    items.map((i) => ({ price: i.price, quantity: i.quantity })),
+    saleActive
+  )
+  const saleAmountOff = totals.amountOff
 
   const total = Math.max(0, subtotal - saleAmountOff - (activeDiscount?.amountOff ?? 0))
 
-  /** Regeltotaal in centen, zodat drie keer 35,99 niet 107,97000000001 wordt. */
+  /**
+   * Regeltotaal in centen, zodat drie keer 35,99 niet 107,97000000001
+   * wordt.
+   *
+   * Tegen het percentage dat op déze winkelwagen geldt en niet altijd
+   * tegen het basispercentage. Anders tellen de regels op tot iets
+   * anders dan het totaal in het overzicht, en dan staat er op deze
+   * pagina geen bedrag meer waarvan de klant kan zien dat het klopt.
+   */
   function regelTotaalCenten(prijs: number, aantal: number): number {
     const basis = toCents(prijs)
-    return (saleActive ? basis - saleDiscountCents(basis) : basis) * aantal
+    return (totals.active ? basis - discountCentsAt(basis, totals.percent) : basis) * aantal
   }
 
   async function handleCheckout() {
@@ -216,6 +233,11 @@ export default function CartClient({ saleActive }: { saleActive: boolean }) {
         Winkelwagen
       </h1>
 
+      {/* Bovenaan en niet naast het overzicht: dit is het eerste wat je
+          op deze pagina kunt doen om voordeliger uit te zijn, en op een
+          telefoon staat de rechterkolom pas onder de hele productlijst. */}
+      <CartTierProgress saleActive={saleActive} suggestions={tierSuggesties} />
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
         {/* Items */}
         <div className="lg:col-span-2 space-y-4">
@@ -274,7 +296,7 @@ export default function CartClient({ saleActive }: { saleActive: boolean }) {
                         </s>
                       )}
                       <span
-                        className={`whitespace-nowrap font-bold ${saleActive ? 'text-sale' : ''}`}
+                        className={`whitespace-nowrap font-bold ${saleActive ? 'text-bf-red' : ''}`}
                       >
                         {formatPrice(regelTotaalCenten(item.price, item.quantity) / 100)}
                       </span>
@@ -306,11 +328,11 @@ export default function CartClient({ saleActive }: { saleActive: boolean }) {
                 <span>{formatPrice(subtotal)}</span>
               </div>
               {saleActive && saleAmountOff > 0 && (
-                <div className="flex items-center justify-between gap-2 text-sale-ink">
-                  <span className="flex items-center gap-1.5">
-                    {sale.campaign}-korting
-                    <SaleBadge />
-                  </span>
+                /* Met het percentage dat echt is toegepast, en met
+                   exact hetzelfde label als de kortingsregel op de
+                   betaalpagina van Stripe - zie saleDiscountLabel. */
+                <div className="flex items-center justify-between gap-2 text-bf-red">
+                  <span>{saleDiscountLabel(totals.percent)}</span>
                   <span className="whitespace-nowrap font-bold">
                     &minus; {formatPrice(saleAmountOff)}
                   </span>
@@ -336,7 +358,7 @@ export default function CartClient({ saleActive }: { saleActive: boolean }) {
                 <span>Verzending (NL &amp; BE)</span>
                 <span className="text-[#2C4A3E] font-medium">Gratis</span>
               </div>
-              <div className="border-t border-[#E8E2D9] pt-3 flex justify-between font-semibold text-[#1A1A1A] text-base">
+              <div className="border-t border-[#E8E2D9] pt-3 flex justify-between font-bold text-[#1A1A1A] text-lg">
                 <span>Totaal</span>
                 <span>{formatPrice(total)}</span>
               </div>
@@ -349,11 +371,16 @@ export default function CartClient({ saleActive }: { saleActive: boolean }) {
                 /* Geen invoerveld tijdens de actie: de korting staat er
                    al op en een code is niet te combineren. Een veld dat
                    elke code weigert, is onvriendelijker dan geen veld. */
-                <p className="rounded-xl bg-sale-tint px-3.5 py-3 text-xs leading-relaxed text-sale-ink">
+                <p className="rounded-xl bg-bf-red-tint px-3.5 py-3 text-xs leading-relaxed text-bf-red">
                   <span className="font-bold">{sale.campaign}-korting toegepast</span>:{' '}
-                  {sale.discountPercent}% op alles.
-                  {saleAmountOff > 0 && <> Je bespaart {formatPrice(saleAmountOff)}.</>} Een
-                  kortingscode kun je er niet bij gebruiken.
+                  {totals.percent}% op je hele bestelling.
+                  {!totals.tierReached && (
+                    <>
+                      {' '}
+                      Vanaf {saleTierLabel()} wordt dat {sale.tierDiscountPercent}%.
+                    </>
+                  )}{' '}
+                  Een kortingscode kun je er niet bij gebruiken.
                 </p>
               ) : activeDiscount ? (
                 <p className="text-xs text-[#2C4A3E]">
@@ -390,7 +417,9 @@ export default function CartClient({ saleActive }: { saleActive: boolean }) {
               type="button"
               onClick={handleCheckout}
               disabled={checkingOut}
-              className="block w-full text-center bg-[#C8745A] text-white font-semibold py-3.5 rounded-full hover:bg-[#A85E45] transition-colors disabled:opacity-60"
+              className={`block w-full rounded-full py-3.5 text-center font-semibold text-white transition-colors disabled:opacity-60 ${
+                saleActive ? 'bg-bf-red hover:bg-bf-red-dark' : 'bg-[#C8745A] hover:bg-[#A85E45]'
+              }`}
             >
               {checkingOut ? 'Bezig...' : 'Doorgaan naar betalen'}
             </button>

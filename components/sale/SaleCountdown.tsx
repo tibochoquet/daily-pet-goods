@@ -4,7 +4,11 @@ import { useEffect, useState } from 'react'
 import { saleEnd } from '@/config/sale'
 
 /**
- * Hoelang de actie nog loopt, aftikkend per seconde.
+ * Hoelang de actie nog loopt, in de balk bovenaan.
+ *
+ * Staat nog op precies één plek op de site. Hij stond eerst ook in de
+ * hero, en twee klokken boven elkaar op hetzelfde scherm maken van een
+ * winkel een aftelpagina.
  *
  * Rekent pas na `mounted` en niet al bij de server-render. De pagina's
  * van deze site zijn statisch met ISR, dus een op de server berekende
@@ -13,18 +17,28 @@ import { saleEnd } from '@/config/sale'
  * dagen. Beter een lege plek van een tel lang dan een verkeerd getal.
  *
  * De breedte staat vast (`min-w`, `tabular-nums`) zodat de balk niet
- * verspringt op het moment dat het getal verschijnt of van 10 naar 9
- * tekens gaat.
+ * verspringt op het moment dat het getal verschijnt of van vorm
+ * verandert.
+ */
+
+/**
+ * Compact, en van vorm wisselend: met meer dan een dag te gaan "9d 2u",
+ * daarbinnen de klok "02:34:11".
+ *
+ * Seconden tien dagen lang laten meetikken kost in de balk ongeveer
+ * evenveel ruimte als de hele actietekst, en ze zeggen op dat moment
+ * niets - "nog negen dagen" is dan de informatie. In het laatste etmaal
+ * is het omgekeerd: dan is de klok juist wél wat telt.
  */
 function resterend(ms: number) {
   const totaalSeconden = Math.max(0, Math.floor(ms / 1000))
   const dagen = Math.floor(totaalSeconden / 86400)
   const uren = Math.floor((totaalSeconden % 86400) / 3600)
+  if (dagen > 0) return `${dagen}d ${uren}u`
   const minuten = Math.floor((totaalSeconden % 3600) / 60)
   const seconden = totaalSeconden % 60
   const tweecijferig = (n: number) => String(n).padStart(2, '0')
-  const klok = `${tweecijferig(uren)}:${tweecijferig(minuten)}:${tweecijferig(seconden)}`
-  return dagen > 0 ? `${dagen}d ${klok}` : klok
+  return `${tweecijferig(uren)}:${tweecijferig(minuten)}:${tweecijferig(seconden)}`
 }
 
 export default function SaleCountdown({ className = '' }: { className?: string }) {
@@ -46,10 +60,10 @@ export default function SaleCountdown({ className = '' }: { className?: string }
 
   return (
     <span
-      className={`inline-block min-w-[5.75rem] text-center tabular-nums ${className}`}
+      className={`inline-block min-w-[4.25rem] text-center tabular-nums ${className}`}
       aria-live="off"
     >
-      {over ?? '\u00a0'}
+      {over ?? ' '}
     </span>
   )
 }

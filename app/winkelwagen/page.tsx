@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import { isSaleActive } from '@/config/sale'
+import { products } from '@/lib/products'
+import type { TierSuggestie } from '@/components/sale/CartTierProgress'
 import CartClient from './CartClient'
 
 export const metadata: Metadata = {
@@ -23,6 +25,37 @@ export const metadata: Metadata = {
  */
 export const dynamic = 'force-dynamic'
 
+/**
+ * De producten die de voortgangsbalk mag voorstellen.
+ *
+ * Alleen producten met één variant. Bij meerdere maten zou een knop
+ * "toevoegen" een maat voor de klant kiezen, en een verkeerde maat komt
+ * als retour terug - dat is een slechtere afloop dan een kortere rij
+ * suggesties. Uitverkochte varianten vallen er ook uit: de checkout
+ * weigert die alsnog.
+ *
+ * Op de server samengesteld, zodat lib/products.ts niet mee de
+ * browserbundel in gaat. Buiten de actie wordt er niets meegestuurd.
+ */
+function tierSuggesties(): TierSuggestie[] {
+  return products.flatMap((product) => {
+    if (product.variants.length !== 1) return []
+    const variant = product.variants[0]
+    if (variant.price === null) return []
+    if (!(variant.inStock ?? true)) return []
+    return [
+      {
+        id: variant.id,
+        name: product.name,
+        variantLabel: variant.label,
+        price: variant.price,
+        image: variant.image,
+      },
+    ]
+  })
+}
+
 export default function CartPage() {
-  return <CartClient saleActive={isSaleActive()} />
+  const saleActive = isSaleActive()
+  return <CartClient saleActive={saleActive} tierSuggesties={saleActive ? tierSuggesties() : []} />
 }

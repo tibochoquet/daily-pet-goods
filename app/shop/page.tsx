@@ -4,7 +4,7 @@ import { brandImages } from '@/lib/images'
 import ProductCard from '@/components/shop/ProductCard'
 import EditorialHero from '@/components/shop/EditorialHero'
 import NewsletterSignup from '@/components/home/NewsletterSignup'
-import { isSaleActive, sale } from '@/config/sale'
+import { isSaleActive, sale, saleTierLabel } from '@/config/sale'
 
 export const metadata: Metadata = {
   title: 'Alle producten',
@@ -59,8 +59,9 @@ export default function ShopPage() {
               <span className="font-semibold text-[#1A1A1A]">{products.length} producten</span> met gratis verzending
             </p>
             {isSaleActive() && (
-              <span className="inline-flex items-center rounded-full bg-sale px-3 py-1 text-xs font-bold uppercase tracking-wide text-white shadow-sm">
-                {sale.discountPercent}% korting op alles
+              <span className="inline-flex items-center rounded-full bg-bf-red px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white">
+                {sale.discountPercent}% op alles &middot; {sale.tierDiscountPercent}% vanaf{' '}
+                {saleTierLabel()}
               </span>
             )}
           </div>

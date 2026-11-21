@@ -8,6 +8,7 @@ import { ChevronLeft, ShoppingCart, Check, Play, Truck, RotateCcw, MessageCircle
 import type { Product } from '@/lib/types'
 import { useCart } from '@/components/cart/CartProvider'
 import { pricingFor } from '@/lib/sale'
+import { sale, saleTierLabel } from '@/config/sale'
 import SaleBadge from '@/components/sale/SaleBadge'
 
 type MediaItem =
@@ -197,20 +198,29 @@ export default function ProductDetailClient({
             ) : pricing.active ? (
               <>
                 <span className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
-                  <span className="whitespace-nowrap text-3xl font-bold text-sale">
+                  <span className="whitespace-nowrap text-3xl font-bold text-bf-red">
                     {formatPrice(pricing.current)}
                   </span>
                   <s className="whitespace-nowrap text-lg text-[#9CA3AF] decoration-[#9CA3AF]">
                     {formatPrice(pricing.base)}
                   </s>
                   <SaleBadge />
+                  <span className="text-sm text-[#9CA3AF]">incl. verzending</span>
                 </span>
-                <span className="mt-2.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm">
-                  <span className="inline-flex items-center rounded-full bg-sale-tint px-3 py-1 font-semibold text-sale-ink">
-                    Je bespaart {formatPrice(pricing.saved)}
-                  </span>
-                  <span className="text-[#9CA3AF]">incl. verzending</span>
-                </span>
+                {/* Een nudge en geen kortingsclaim op dit product: de
+                    20% hangt van de hele winkelwagen af, dus hij staat
+                    hier als één rustige regel en niet als label naast de
+                    prijs. De "Je bespaart"-pill die hier stond, is weg -
+                    bij een bedrag van een paar euro leest zo'n pill als
+                    weinig korting, terwijl de prijs ernaast het al
+                    vertelt. */}
+                <Link
+                  href="/winkelwagen"
+                  className="mt-3 inline-block text-sm text-bf-red underline-offset-4 hover:underline"
+                >
+                  {sale.campaign}: {sale.tierDiscountPercent}% korting vanaf {saleTierLabel()} in je
+                  winkelwagen
+                </Link>
               </>
             ) : (
               <>
@@ -250,12 +260,18 @@ export default function ProductDetailClient({
           <button
             onClick={handleAdd}
             disabled={!canOrder}
+            /* Tijdens de actie in het actie-rood: de terracotta
+               huisstijlknop vlak onder een rode prijs botst, en dit is
+               de knop waar de actie naartoe werkt. De "toegevoegd"-stand
+               blijft groen - dat is een bevestiging, geen actie. */
             className={`flex items-center justify-center gap-2.5 w-full sm:w-auto px-8 py-4 rounded-full font-semibold text-sm transition-all duration-200 mb-10 ${
               !canOrder
                 ? 'bg-[#E8E2D9] text-[#9CA3AF] cursor-not-allowed'
                 : added
                   ? 'bg-[#2C4A3E] text-white'
-                  : 'bg-[#C8745A] text-white hover:bg-[#A85E45]'
+                  : saleActive
+                    ? 'bg-bf-red text-white hover:bg-bf-red-dark'
+                    : 'bg-[#C8745A] text-white hover:bg-[#A85E45]'
             }`}
           >
             {!hasPrice ? (

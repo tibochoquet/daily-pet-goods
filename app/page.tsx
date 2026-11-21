@@ -2,11 +2,15 @@ import type { Metadata } from 'next'
 import Hero from '@/components/home/Hero'
 import FeaturedCategories from '@/components/home/FeaturedCategories'
 import BestSellers from '@/components/home/BestSellers'
+import SaleHero from '@/components/sale/SaleHero'
+import SaleTiers from '@/components/sale/SaleTiers'
+import SaleTrust from '@/components/sale/SaleTrust'
+import SaleDeals from '@/components/sale/SaleDeals'
 import EditorialBanner from '@/components/home/EditorialBanner'
 import CustomerReviews from '@/components/home/CustomerReviews'
 import FAQ from '@/components/home/FAQ'
 import NewsletterSignup from '@/components/home/NewsletterSignup'
-import { isSaleActive, sale, saleEndLabel } from '@/config/sale'
+import { isSaleActive, sale, saleEndLabel, saleTierLabel } from '@/config/sale'
 import { business } from '@/lib/business'
 
 /**
@@ -30,7 +34,8 @@ export async function generateMetadata(): Promise<Metadata> {
       },
       description:
         `${sale.campaign} bij ${business.brandName}: tot en met ${saleEndLabel()} ${sale.discountPercent}% korting op alle ` +
-        'producten voor honden en katten. Gratis verzending, geen kortingscode nodig.',
+        `producten voor honden en katten, en ${sale.tierDiscountPercent}% vanaf ${saleTierLabel()} in je winkelwagen. ` +
+        'Gratis verzending, geen kortingscode nodig.',
       alternates: { canonical: '/' },
     }
   }
@@ -43,12 +48,34 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
+/**
+ * Tijdens de actie wisselen er twee secties en komen er twee bij.
+ *
+ * De hero wordt de lichte actiehero, en het bestsellerraster krijgt de
+ * dealkop - geen extra raster met dezelfde producten erin. Erbij komen
+ * de twee actiekaarten (met het anker waar de hero naar verwijst) en de
+ * vertrouwensbalk eronder.
+ *
+ * Alles aan één `isSaleActive()`, dus na `endsAt` staat de homepage er
+ * weer precies zoals hiervoor - binnen vijf minuten, door de
+ * `revalidate` in app/layout.tsx.
+ */
 export default function HomePage() {
+  const saleActive = isSaleActive()
+
   return (
     <>
-      <Hero />
+      {saleActive ? (
+        <>
+          <SaleHero />
+          <SaleTiers />
+          <SaleTrust />
+        </>
+      ) : (
+        <Hero />
+      )}
       <FeaturedCategories />
-      <BestSellers />
+      {saleActive ? <SaleDeals /> : <BestSellers />}
       <EditorialBanner />
       <CustomerReviews />
       <FAQ />

@@ -1,7 +1,15 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { isSaleActive, sale, saleEnabled, saleEnd, saleStart } from '@/config/sale'
-import { pricingFor, saleDiscountCents, salePriceCents, toCents } from './sale'
+import {
+  discountCentsAt,
+  pricingFor,
+  saleCartTotals,
+  saleDiscountCents,
+  saleDiscountLabel,
+  salePriceCents,
+  toCents,
+} from './sale'
 import { calculateSaleDiscount } from './saleCart'
 import { products } from './products'
 
@@ -65,6 +73,14 @@ test('pricingFor: aan betekent actieprijs plus het bespaarde bedrag', () => {
 test('pricingFor: een variant zonder prijs blijft zonder prijs', () => {
   assert.equal(pricingFor(null, true), null)
   assert.equal(pricingFor(null, false), null)
+})
+
+test('de actie loopt op 21 november', () => {
+  // De dag waarop hij live moest staan. Bewust niet `isSaleActive()` met
+  // de echte klok: die test zou in december omvallen zonder dat er iets
+  // stuk is.
+  assert.equal(isSaleActive(new Date('2026-11-21T12:00:00+01:00')), true)
+  assert.equal(isSaleActive(new Date('2026-11-21T00:00:00+01:00')), true, 'vanaf middernacht')
 })
 
 test('de actie loopt alleen tussen start en eind', () => {
@@ -154,4 +170,189 @@ test('onbekende of onzinnige regels leveren geen korting op', () => {
   // Een aantal van 0 of een gebroken aantal telt niet mee.
   assert.equal(calculateSaleDiscount([{ id: variant.id, quantity: 0 }], tijdens), null)
   assert.equal(calculateSaleDiscount([{ id: variant.id, quantity: 1.5 }], tijdens), null)
+})
+
+/* ---------- De tweede trede: 20% vanaf de drempel ---------- */
+
+test('onder de drempel geldt het basispercentage, erop en erboven de tweede trede', () => {
+  // De drie bedragen uit de opdracht: 99,99 / 100 / 120.
+  const onder = saleCartTotals([{ price: 99.99, quantity: 1 }], true)
+  assert.equal(onder.active, true)
+  assert.equal(onder.tierReached, false)
+  assert.equal(onder.percent, sale.discountPercent)
+  assert.equal(onder.subtotal, 99.99)
+  // 10% van 9999 cent is 999,9 -> 1000.
+  assert.equal(onder.amountOff, 10)
+  assert.equal(onder.total, 89.99)
+  assert.equal(onder.remainingForTier, 0.01)
+
+  const precies = saleCartTotals([{ price: 100, quantity: 1 }], true)
+  assert.equal(precies.tierReached, true, 'de drempel zelf telt mee')
+  assert.equal(precies.percent, sale.tierDiscountPercent)
+  assert.equal(precies.amountOff, 20)
+  assert.equal(precies.total, 80)
+  assert.equal(precies.remainingForTier, 0)
+
+  const erboven = saleCartTotals([{ price: 120, quantity: 1 }], true)
+  assert.equal(erboven.tierReached, true)
+  assert.equal(erboven.percent, sale.tierDiscountPercent)
+  assert.equal(erboven.amountOff, 24)
+  assert.equal(erboven.total, 96)
+})
+
+test('de treden stapelen niet en gelden over de hele bestelling', () => {
+  const t = saleCartTotals([{ price: 120, quantity: 1 }], true)
+  // 20% over 120 euro.
+  assert.equal(t.amountOff, 24)
+  // Niet 10% + 20% samen (36), en niet 10% over de eerste 100 plus 20%
+  // over de laatste 20 (14).
+  assert.notEqual(t.amountOff, 36)
+  assert.notEqual(t.amountOff, 14)
+})
+
+test('de drempel wordt getoetst aan het subtotaal vóór korting', () => {
+  // 105 euro zakt met 10% naar 94,50 en zou de drempel daarna niet meer
+  // halen - en met 20% weer wel. Zou de toets ná korting gebeuren, dan
+  // heeft deze winkelwagen geen stabiele uitkomst.
+  const t = saleCartTotals([{ price: 105, quantity: 1 }], true)
+  assert.equal(t.tierReached, true)
+  assert.equal(t.amountOff, 21)
+  assert.equal(t.total, 84)
+})
+
+test('losse regels tellen samen op voor de drempel', () => {
+  // 2 x 39,99 + 24,99 = 104,97, dus over de drempel.
+  const t = saleCartTotals(
+    [
+      { price: 39.99, quantity: 2 },
+      { price: 24.99, quantity: 1 },
+    ],
+    true
+  )
+  assert.equal(t.subtotal, 104.97)
+  assert.equal(t.tierReached, true)
+  // Per stuk: 20% van 3999 = 799,8 -> 800 (twee keer), 20% van 2499 =
+  // 499,8 -> 500. Samen 2100 cent.
+  assert.equal(t.amountOff, 21)
+  assert.equal(t.total, 83.97)
+})
+
+test('afronden gebeurt per stuk, ook op de tweede trede', () => {
+  // Zes keer 19,99 is 119,94. Per stuk: 20% van 1999 cent is 399,8 ->
+  // 400, zes keer is 2400.
+  const t = saleCartTotals([{ price: 19.99, quantity: 6 }], true)
+  assert.equal(t.subtotal, 119.94)
+  assert.equal(t.amountOff, 24)
+  // Over het subtotaal afgerond was het 23,99 geweest: een cent minder
+  // dan zes keer het bedrag dat op de productpagina stond.
+  assert.equal(Math.round((11994 * sale.tierDiscountPercent) / 100), 2399)
+})
+
+test('discountCentsAt gaat niet over de rooie bij onzin', () => {
+  assert.equal(discountCentsAt(3999, sale.tierDiscountPercent), 800)
+  assert.equal(discountCentsAt(0, 20), 0)
+  assert.equal(discountCentsAt(-100, 20), 0)
+  assert.equal(discountCentsAt(3999, 0), 0)
+  assert.equal(discountCentsAt(3999, -10), 0)
+})
+
+test('zonder actie geen korting, hoe vol de winkelwagen ook is', () => {
+  const t = saleCartTotals([{ price: 120, quantity: 1 }], false)
+  assert.equal(t.active, false)
+  assert.equal(t.tierReached, false)
+  assert.equal(t.amountOff, 0)
+  assert.equal(t.total, 120)
+  assert.equal(t.subtotal, 120)
+  // Niets aan te moedigen als er geen actie loopt.
+  assert.equal(t.remainingForTier, 0)
+})
+
+test('een lege winkelwagen levert nul korting op', () => {
+  const t = saleCartTotals([], true)
+  assert.equal(t.subtotal, 0)
+  assert.equal(t.amountOff, 0)
+  assert.equal(t.total, 0)
+  assert.equal(t.tierReached, false)
+  assert.equal(t.remainingForTier, sale.tierThreshold)
+})
+
+test('onzinnige regels tellen niet mee voor de drempel', () => {
+  // Een gebroken aantal of een prijs van niets mag de drempel niet
+  // halen, want de checkout rekent zulke regels ook niet mee.
+  const t = saleCartTotals(
+    [
+      { price: 120, quantity: 1.5 },
+      { price: 0, quantity: 5 },
+      { price: 39.99, quantity: 1 },
+    ],
+    true
+  )
+  assert.equal(t.subtotal, 39.99)
+  assert.equal(t.tierReached, false)
+  assert.equal(t.amountOff, 4)
+})
+
+test('het kortingslabel noemt het percentage dat echt is toegepast', () => {
+  assert.equal(
+    saleDiscountLabel(sale.discountPercent),
+    `${sale.campaign}-korting (${sale.discountPercent}%)`
+  )
+  assert.match(saleDiscountLabel(sale.tierDiscountPercent), /\(20%\)$/)
+})
+
+test('de server rekent precies hetzelfde als de winkelwagen', () => {
+  // De winkelwagen rekent met prijzen uit de browser, de checkout met
+  // prijzen uit lib/products.ts. Wijken die twee ook maar een cent af,
+  // dan int Stripe iets anders dan er op het scherm stond. Dit is de
+  // test die dat vastzet - voor beide treden.
+  const metPrijs = products
+    .flatMap((p) => p.variants)
+    .filter((v): v is (typeof v) & { price: number } => v.price !== null)
+  assert.ok(metPrijs.length >= 2)
+
+  const opPrijs = [...metPrijs].sort((a, b) => a.price - b.price)
+  const goedkoopste = opPrijs[0]
+  const duurste = opPrijs[opPrijs.length - 1]
+
+  const winkelwagens = [
+    [{ id: goedkoopste.id, quantity: 1 }],
+    [{ id: duurste.id, quantity: 3 }],
+    [
+      { id: duurste.id, quantity: 2 },
+      { id: goedkoopste.id, quantity: 1 },
+    ],
+  ]
+
+  for (const regels of winkelwagens) {
+    const server = calculateSaleDiscount(regels, tijdens)
+    const prijzen = regels.map((r) => ({
+      price: metPrijs.find((v) => v.id === r.id)!.price,
+      quantity: r.quantity,
+    }))
+    const winkelwagen = saleCartTotals(prijzen, true)
+
+    assert.ok(server, 'tijdens de actie hoort er korting te zijn')
+    assert.equal(server.subtotal, winkelwagen.subtotal)
+    assert.equal(server.percentOff, winkelwagen.percent)
+    assert.equal(server.amountOff, winkelwagen.amountOff)
+    assert.equal(server.label, saleDiscountLabel(winkelwagen.percent))
+  }
+
+  // En minstens één van die winkelwagens hoort de hoge trede te halen,
+  // anders test het bovenstaande alleen de 10%.
+  const driemaalDuurste = saleCartTotals([{ price: duurste.price, quantity: 3 }], true)
+  assert.equal(driemaalDuurste.tierReached, true, 'drie keer het duurste product haalt de drempel')
+  assert.equal(driemaalDuurste.percent, sale.tierDiscountPercent)
+})
+
+test('na de einddatum ook geen 20%, hoe vol de winkelwagen ook is', () => {
+  const variant = products.flatMap((p) => p.variants).find((v) => v.price !== null)
+  assert.ok(variant)
+  // Twintig stuks is ruim boven de drempel.
+  const regels = [{ id: variant.id, quantity: 20 }]
+  const tijdensActie = calculateSaleDiscount(regels, tijdens)
+  assert.ok(tijdensActie)
+  assert.equal(tijdensActie.percentOff, sale.tierDiscountPercent)
+  assert.equal(calculateSaleDiscount(regels, erna), null, 'erna niets')
+  assert.equal(calculateSaleDiscount(regels, ervoor), null, 'ervoor ook niets')
 })
