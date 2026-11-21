@@ -59,7 +59,7 @@ export default function ShopPage() {
               <span className="font-semibold text-[#1A1A1A]">{products.length} producten</span> met gratis verzending
             </p>
             {isSaleActive() && (
-              <span className="inline-flex items-center rounded-full bg-bf-red px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white">
+              <span className="inline-flex items-center rounded-full bg-[#2C4A3E] px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white">
                 {sale.discountPercent}% op alles &middot; {sale.tierDiscountPercent}% vanaf{' '}
                 {saleTierLabel()}
               </span>

@@ -24,7 +24,7 @@ export default function SaleTrust() {
   return (
     <section className="border-y border-[#E8E2D9] bg-white">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <ul className="grid grid-cols-1 gap-x-8 gap-y-4 py-7 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="grid grid-cols-1 gap-x-8 gap-y-3 py-5 sm:grid-cols-2 lg:grid-cols-4">
           {beloftes.map(({ icon: Icon, tekst }) => (
             <li key={tekst} className="flex items-start gap-2.5 text-sm leading-snug text-[#4B5563]">
               <Icon size={15} className="mt-0.5 shrink-0 text-[#2C4A3E]" />

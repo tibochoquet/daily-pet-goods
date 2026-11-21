@@ -216,7 +216,7 @@ export default function ProductDetailClient({
                     vertelt. */}
                 <Link
                   href="/winkelwagen"
-                  className="mt-3 inline-block text-sm text-bf-red underline-offset-4 hover:underline"
+                  className="mt-3 inline-block text-sm text-[#2C4A3E] underline-offset-4 hover:underline"
                 >
                   {sale.campaign}: {sale.tierDiscountPercent}% korting vanaf {saleTierLabel()} in je
                   winkelwagen
@@ -260,18 +260,16 @@ export default function ProductDetailClient({
           <button
             onClick={handleAdd}
             disabled={!canOrder}
-            /* Tijdens de actie in het actie-rood: de terracotta
-               huisstijlknop vlak onder een rode prijs botst, en dit is
-               de knop waar de actie naartoe werkt. De "toegevoegd"-stand
-               blijft groen - dat is een bevestiging, geen actie. */
+            /* Dezelfde terracotta huisstijlknop, met en zonder actie.
+               Het rood van de actie zit op de prijs erboven; de knop ook
+               rood maken zou het rood van een signaal in een tweede
+               huisstijlkleur veranderen. */
             className={`flex items-center justify-center gap-2.5 w-full sm:w-auto px-8 py-4 rounded-full font-semibold text-sm transition-all duration-200 mb-10 ${
               !canOrder
                 ? 'bg-[#E8E2D9] text-[#9CA3AF] cursor-not-allowed'
                 : added
                   ? 'bg-[#2C4A3E] text-white'
-                  : saleActive
-                    ? 'bg-bf-red text-white hover:bg-bf-red-dark'
-                    : 'bg-[#C8745A] text-white hover:bg-[#A85E45]'
+                  : 'bg-[#C8745A] text-white hover:bg-[#A85E45]'
             }`}
           >
             {!hasPrice ? (

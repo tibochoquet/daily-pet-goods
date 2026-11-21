@@ -22,6 +22,10 @@ import { pricingFor, saleCartTotals } from '@/lib/sale'
  * `saleActive` komt van de server. De browser bepaalt dat niet zelf:
  * dan zou een verkeerd gezette klok korting kunnen tonen die de checkout
  * daarna weigert.
+ *
+ * Alles in de huisstijl: groene balk, groene knoppen, neutrale rand.
+ * Het enige rood is het bedrag dat nog ontbreekt en de prijzen in de
+ * suggesties - daar hoort het, want dat zijn bedragen.
  */
 
 /** Eén suggestie. Komt van de server, zie app/winkelwagen/page.tsx. */
@@ -81,12 +85,12 @@ export default function CartTierProgress({
   return (
     <div
       className={`mb-8 rounded-2xl border p-5 sm:p-6 ${
-        totals.tierReached ? 'border-bf-red/30 bg-bf-red-tint' : 'border-bf-red/25 bg-white'
+        totals.tierReached ? 'border-[#2C4A3E]/25 bg-[#2C4A3E]/[0.06]' : 'border-[#E8E2D9] bg-white'
       }`}
     >
       {totals.tierReached ? (
-        <p className="flex items-start gap-2.5 text-sm font-semibold leading-snug text-bf-red">
-          <Check size={16} className="mt-0.5 shrink-0" />
+        <p className="flex items-start gap-2.5 text-sm font-semibold leading-snug text-[#1A1A1A]">
+          <Check size={16} className="mt-0.5 shrink-0 text-[#2C4A3E]" />
           Je krijgt {sale.tierDiscountPercent}% {sale.campaign}-korting op je hele bestelling.
         </p>
       ) : (
@@ -99,7 +103,7 @@ export default function CartTierProgress({
 
       {/* Dun, en de enige plek in dit blok met een gevuld rood vlak. */}
       <div
-        className="mt-4 h-1.5 w-full overflow-hidden rounded-full bg-bf-red/15"
+        className="mt-4 h-1.5 w-full overflow-hidden rounded-full bg-[#E8E2D9]"
         role="progressbar"
         aria-valuenow={percentage}
         aria-valuemin={0}
@@ -107,7 +111,7 @@ export default function CartTierProgress({
         aria-label={`Voortgang naar ${sale.tierDiscountPercent}% korting vanaf ${saleTierLabel()}`}
       >
         <div
-          className="h-full rounded-full bg-bf-red transition-[width] duration-500 ease-out"
+          className="h-full rounded-full bg-[#2C4A3E] transition-[width] duration-500 ease-out"
           style={{ width: `${percentage}%` }}
         />
       </div>
@@ -153,7 +157,7 @@ export default function CartTierProgress({
                         image: tip.image,
                       })
                     }
-                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-bf-red text-white transition-colors hover:bg-bf-red-dark"
+                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#2C4A3E] text-white transition-colors hover:bg-[#3D6456]"
                     aria-label={`${tip.name} toevoegen aan winkelwagen`}
                   >
                     <Plus size={16} />

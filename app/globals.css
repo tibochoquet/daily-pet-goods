@@ -18,32 +18,33 @@
 
   /* Black Friday. Eén plek voor het rood, zoals config/sale.ts de enige
      plek is voor het percentage en de datums. Levert bg-bf-red,
-     text-bf-red, border-bf-red, decoration-bf-red en de /nn-varianten
-     op.
+     text-bf-red, border-bf-red en de /nn-varianten op.
 
-     Een diep, licht gedempt rood en geen felrood. Rood is hier een
-     signaalkleur en die werkt alleen zolang de rest van de pagina rustig
-     blijft: crème, groen en het warme accent. Fel rood naast een
-     crèmekleurige achtergrond en serif-koppen leest als een
-     uitverkoopsticker, niet als een winkel.
+     Bewust één enkele tint en geen rode schaal met een donkere en een
+     lichte variant. Het rood mag op precies drie soorten dingen staan:
+     bedragen (actieprijzen, kortingsregels, het bedrag dat nog ontbreekt
+     voor de tweede trede), de balk met de klok, en de ronde badges met
+     het percentage. Al het andere - knoppen, links, randen, vlakken -
+     blijft de gewone huisstijl: groen, terracotta, crème. Bestond er een
+     hover-rood en een roze vlak, dan is de verleiding om ook knoppen en
+     meldingen rood te maken een kwestie van tijd, en dan is het geen
+     signaalkleur meer maar een tweede huisstijl.
+
+     Een diep, licht gedempt rood en geen felrood, om dezelfde reden.
 
      Contrast nagerekend in plaats van op het oog gekozen:
-       wit op --bf-red            6.54:1  (AA ook voor kleine tekst)
-       wit op --bf-red-dark       8.98:1  (hover, en pillen in een rood vlak)
-       --bf-red op wit            6.54:1
-       --bf-red op --bf-red-tint  5.73:1  (de rustige roze vlakken)
+       wit op --bf-red               6.54:1  (AA ook voor kleine tekst)
+       --bf-red op wit               6.54:1
        --bf-red op de crème #FAFAF7  6.25:1
 
-     Volle witte tekst in een rood vlak dus, geen white/80: dat zakt naar
+     Volle witte tekst in de rode balk dus, geen white/80: dat zakt naar
      ongeveer 4:1 en dan is de balk wel rood maar niet meer comfortabel
      leesbaar.
 
-     De waarden staan in :root als --bf-red en worden hier alleen
-     doorgegeven, zodat ze ook in een losse CSS-regel of een arbitrary
-     value te gebruiken zijn. */
+     De waarde staat in :root als --bf-red en wordt hier alleen
+     doorgegeven, zodat hij ook in een losse CSS-regel of een arbitrary
+     value te gebruiken is. */
   --color-bf-red: var(--bf-red);
-  --color-bf-red-dark: var(--bf-red-dark);
-  --color-bf-red-tint: var(--bf-red-tint);
 
   --font-sans: var(--font-inter);
   --font-serif: var(--font-playfair);
@@ -55,8 +56,6 @@
 
   /* Zie de toelichting in @theme hierboven. */
   --bf-red: #B3261E;
-  --bf-red-dark: #8E1D17;
-  --bf-red-tint: #FBEDEB;
 }
 
 body {

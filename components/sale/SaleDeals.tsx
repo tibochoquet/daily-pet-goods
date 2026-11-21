@@ -12,9 +12,10 @@ import { sale } from '@/config/sale'
  * extra sectie maar dubbele inhoud. Zelfde producten, zelfde raster,
  * zelfde kaarten - alleen de kop staat in het teken van de actie.
  *
- * Het rood zit hier in het streepje en de bovenregel, en verder alleen
- * in wat de kaarten zelf al doen: een klein badge en de actieprijs.
- * Geen gevuld rood vlak tussen de rijen.
+ * De bovenregel staat in dezelfde terracotta als op de rest van de
+ * homepage ("Meest geliefd", "Categorieën"). Het rood van de actie zit
+ * alleen in wat de kaarten zelf al doen: de ronde percentage-badge en
+ * de actieprijs. Geen rood vlak en geen rode lijn tussen de rijen.
  */
 export default function SaleDeals() {
   const products = getBestSellers()
@@ -24,8 +25,7 @@ export default function SaleDeals() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-10 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
           <div>
-            <p className="mb-2 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-bf-red">
-              <span className="h-px w-7 shrink-0 bg-bf-red" aria-hidden />
+            <p className="mb-2 text-sm font-semibold uppercase tracking-wider text-[#C8745A]">
               {sale.discountPercent}% korting op alles
             </p>
             <h2 className="font-serif text-3xl font-bold text-[#1A1A1A] md:text-4xl">

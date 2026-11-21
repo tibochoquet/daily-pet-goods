@@ -371,8 +371,8 @@ export default function CartClient({
                 /* Geen invoerveld tijdens de actie: de korting staat er
                    al op en een code is niet te combineren. Een veld dat
                    elke code weigert, is onvriendelijker dan geen veld. */
-                <p className="rounded-xl bg-bf-red-tint px-3.5 py-3 text-xs leading-relaxed text-bf-red">
-                  <span className="font-bold">{sale.campaign}-korting toegepast</span>:{' '}
+                <p className="rounded-xl bg-[#2C4A3E]/[0.06] px-3.5 py-3 text-xs leading-relaxed text-[#4B5563]">
+                  <span className="font-bold text-[#1A1A1A]">{sale.campaign}-korting toegepast</span>:{' '}
                   {totals.percent}% op je hele bestelling.
                   {!totals.tierReached && (
                     <>
@@ -417,9 +417,7 @@ export default function CartClient({
               type="button"
               onClick={handleCheckout}
               disabled={checkingOut}
-              className={`block w-full rounded-full py-3.5 text-center font-semibold text-white transition-colors disabled:opacity-60 ${
-                saleActive ? 'bg-bf-red hover:bg-bf-red-dark' : 'bg-[#C8745A] hover:bg-[#A85E45]'
-              }`}
+              className="block w-full rounded-full bg-[#C8745A] py-3.5 text-center font-semibold text-white transition-colors hover:bg-[#A85E45] disabled:opacity-60"
             >
               {checkingOut ? 'Bezig...' : 'Doorgaan naar betalen'}
             </button>
