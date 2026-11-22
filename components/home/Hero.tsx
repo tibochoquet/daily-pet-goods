@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowRight, Sparkles, ShieldCheck, Truck, Clock, RotateCcw } from 'lucide-react'
+import { ArrowRight, Sparkles, ShieldCheck, Truck, Clock, RotateCcw, Check } from 'lucide-react'
 import { brandImages } from '@/lib/images'
 import { isSaleActive, sale, saleEndShort, saleTierLabel } from '@/config/sale'
 
@@ -9,16 +9,28 @@ import { isSaleActive, sale, saleEndShort, saleTierLabel } from '@/config/sale'
  * zonder foto, desktop met foto - omdat één foto niet op alle drie de
  * verhoudingen werkt.
  *
- * Tijdens de actie hoort de hele actie hier: de twee treden en de vier
- * beloftes staan in de hero zelf en niet als losse secties eronder.
- * Dezelfde foto's, dezelfde hoogtes, dezelfde gradients, dezelfde witte
- * knop - een actie is iets wat je erover legt, geen andere homepage.
+ * Tijdens de actie hoort de hele actie hier, op alle drie de breedtes:
+ * de twee treden en de beloftes staan in de hero zelf en niet als losse
+ * secties eronder. Op de telefoon lag de uitleg eerst in een groen vlak
+ * onder de foto, en dat las alsnog als een tweede sectie. Nu ligt alles
+ * op de foto: de tekst in het bovenstuk, de beloftebalk tegen de
+ * onderrand - dezelfde opbouw als op de desktop.
  *
- * Op de telefoon en de tablet staat de uitleg in een groen vlak dat
- * tegen de foto aan zit, zonder tussenruimte. Op de desktop past hij in
- * de tekstkolom zelf en loopt de beloftebalk over de onderkant van de
- * foto. In alle drie de gevallen is het één blok, en dat is precies wat
- * het verschil was met de losse kaarten die hier eerst onder stonden.
+ * Wat er op de telefoon staat is een kwestie van ruimte, niet van smaak.
+ * Boven de dieren is daar ongeveer 300px plek, en de volledige uitleg is
+ * ruim twee keer zoveel. Daarom staat elke trede daar op één regel
+ * (TiersKort) en blijven er drie korte beloftes over (BeloftesKort). De
+ * volledige teksten staan op de tablet en de desktop, waar ze passen.
+ *
+ * Niets staat er twee keer. De balk bovenaan elke pagina
+ * (components/layout/AnnouncementBar.tsx) noemt de campagne, beide
+ * percentages en de resterende tijd al, en die balk staat vlak boven
+ * deze hero. Een bovenregel "Black Friday · t/m 30 november" boven een
+ * kop die "Black Friday" is, met daaronder nog een regel met diezelfde
+ * twee percentages, is binnen één schermhoogte drie keer hetzelfde.
+ * Tijdens de actie vervallen die bovenregel en die subregel daarom: de
+ * kop, de uitleg bij de treden en de stickers zeggen samen alles één
+ * keer.
  *
  * Het enige rood zijn de ronde percentage-stickers. Prijzen, de balk met
  * de klok en dit soort badges zijn de plekken waar het rood hoort; een
@@ -32,17 +44,8 @@ import { isSaleActive, sale, saleEndShort, saleTierLabel } from '@/config/sale'
  * telefoon.
  */
 
-function Eyebrow({ saleActive }: { saleActive: boolean }) {
-  if (saleActive) {
-    // Dun en wit in plaats van de omrande pil: de kop eronder is kort,
-    // dus een zware pil erboven zou het zwaartepunt verkeerd leggen.
-    return (
-      <p className="mb-6 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-white sm:mb-8">
-        <span className="h-px w-7 shrink-0 bg-white/50" aria-hidden />
-        {sale.campaign} &middot; t/m {saleEndShort()}
-      </p>
-    )
-  }
+/** De bovenregel buiten de actie om. Zie de toelichting hierboven. */
+function Eyebrow() {
   return (
     <div className="inline-flex items-center gap-2 border border-white/25 text-white/80 text-xs font-semibold uppercase tracking-wider px-4 py-2 rounded-full mb-6 sm:mb-8">
       <Sparkles size={12} className="text-[#C8745A]" />
@@ -63,22 +66,8 @@ function Heading({ saleActive, className }: { saleActive: boolean; className: st
   )
 }
 
-function Subline({ saleActive, className }: { saleActive: boolean; className: string }) {
-  if (saleActive) {
-    // Steviger wit dan de gewone subregel hieronder. Die is sfeer en mag
-    // wegvallen tegen de foto; deze regel is de aanbieding zelf en staat
-    // op een telefoon boven de lichte helft van het beeld. De kleur zit
-    // op de spans en niet in `className`, zodat de gewone hero zijn
-    // eigen white/70 houdt.
-    return (
-      <p className={className}>
-        <span className="text-white/90">{sale.discountPercent}% korting op alles.</span>{' '}
-        <span className="font-semibold text-white">
-          {sale.tierDiscountPercent}% vanaf {saleTierLabel()}.
-        </span>
-      </p>
-    )
-  }
+/** De subregel buiten de actie om. Zie de toelichting hierboven. */
+function Subline({ className }: { className: string }) {
   return (
     <p className={className}>
       Premium, zorgvuldig geselecteerde producten voor honden en katten. Mooi in huis, praktisch elke dag.
@@ -110,12 +99,12 @@ function Ctas({ saleActive }: { saleActive: boolean }) {
  * De kortingsstickers over de foto.
  *
  * Twee ronde percentage-badges, de tweede schuin en half over de eerste
- * heen geplakt, met een derde sticker voor de einddatum. Ze mogen groot
- * en midden in beeld - dat hoort bij een actie - maar ze blijven van de
- * hond en de kat af. Daarom staan ze op allebei de foto's in het lege
- * bovenstuk: op de desktopfoto de wand met lijsten rechtsboven, op de
- * telefoonfoto de kale muur erboven. De dieren zitten op allebei de
- * foto's in de onderste helft.
+ * heen geplakt, met op de desktop een derde sticker voor de einddatum.
+ * Ze mogen groot en midden in beeld - dat hoort bij een actie - maar ze
+ * blijven van de hond en de kat af. Daarom staan ze op allebei de foto's
+ * in het lege bovenstuk: op de desktopfoto de wand met lijsten
+ * rechtsboven, op de telefoonfoto de kale muur erboven. De dieren zitten
+ * op allebei de foto's in de onderste helft.
  *
  * Alleen op de twee blokken mét foto. Het tabletblok is een vlak groen
  * paneel en geen compositie; een sticker die daar in een hoek zweeft,
@@ -131,7 +120,7 @@ function Stickers({ compact = false }: { compact?: boolean }) {
 
   return (
     <div
-      className={`absolute z-20 ${compact ? 'right-4 top-8' : 'right-12 top-28'}`}
+      className={`absolute z-20 ${compact ? 'right-4 top-4' : 'right-12 top-28'}`}
       aria-hidden
     >
       <div
@@ -167,7 +156,7 @@ function Stickers({ compact = false }: { compact?: boolean }) {
 }
 
 /**
- * De twee treden van de actie.
+ * De twee treden van de actie, voluit.
  *
  * `op` bepaalt alleen de ondergrond: op de foto een donker glaspaneel,
  * zodat de tekst leesbaar blijft wat er onder de kolom ook voorbijkomt;
@@ -204,17 +193,60 @@ function Tiers({ op, className = '' }: { op: 'foto' | 'vlak'; className?: string
 }
 
 /**
+ * Dezelfde twee treden op telefoonbreedte: één regel per trede.
+ *
+ * Dit staat op de foto, boven de dieren, en daar is plek voor ongeveer
+ * vier regels tekst. De percentages en de drempel komen uit dezelfde
+ * config als hierboven, dus die kunnen niet uiteen lopen; alleen de
+ * toelichting is korter. Wat hier wegvalt (geen kortingscode nodig, de
+ * uitleg dat de hoogste trede over de hele bestelling gaat) staat
+ * voluit op /actievoorwaarden en in de winkelwagen.
+ */
+function TiersKort({ className = '' }: { className?: string }) {
+  const regels = [
+    {
+      kop: `${sale.discountPercent}% korting op alles`,
+      staart: 'de actieprijs staat er al bij.',
+    },
+    {
+      kop: `${sale.tierDiscountPercent}% vanaf ${saleTierLabel()}`,
+      staart: 'dan geldt dat op je hele bestelling.',
+    },
+  ]
+
+  return (
+    <ul className={`space-y-2 ${className}`}>
+      {regels.map(({ kop, staart }) => (
+        <li key={kop} className="flex gap-2 text-[13px] leading-snug text-white/75">
+          <Check size={14} className="mt-0.5 shrink-0 text-white/50" />
+          <span>
+            <strong className="font-semibold text-white">{kop}</strong> &mdash; {staart}
+          </span>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+/**
  * Vier beloftes die allemaal elders op de site al staan en daar
  * waargemaakt worden: /verzending, de algemene voorwaarden, /retourneren
  * en de betaalmethodes bij het afrekenen. Er staat hier dus met opzet
  * niets nieuws - een actie is precies de plek waar de verleiding groot
  * is om er een belofte bij te verzinnen.
+ *
+ * `kort` is dezelfde belofte in twee of drie woorden, voor de balk op
+ * telefoonbreedte. De verzendbelofte heeft er geen: "dezelfde dag
+ * verzonden" zonder "op werkdagen voor 15:00" is op zaterdagmiddag
+ * gewoon niet waar, en een belofte inkorten tot hij onwaar wordt is
+ * erger dan hem daar niet tonen. Hij staat voluit op de tablet, de
+ * desktop en op /verzending.
  */
 const beloftes = [
-  { icon: Truck, tekst: 'Gratis verzending in NL & BE' },
-  { icon: Clock, tekst: 'Op werkdagen voor 15:00 besteld, dezelfde dag verzonden' },
-  { icon: RotateCcw, tekst: '14 dagen bedenktijd' },
-  { icon: ShieldCheck, tekst: 'Veilig betalen met iDEAL, Klarna en meer' },
+  { icon: Truck, tekst: 'Gratis verzending in NL & BE', kort: 'Gratis verzending' },
+  { icon: Clock, tekst: 'Op werkdagen voor 15:00 besteld, dezelfde dag verzonden', kort: null },
+  { icon: RotateCcw, tekst: '14 dagen bedenktijd', kort: '14 dagen bedenktijd' },
+  { icon: ShieldCheck, tekst: 'Veilig betalen met iDEAL, Klarna en meer', kort: 'Veilig betalen' },
 ]
 
 function Beloftes({ kolommen, className = '' }: { kolommen: string; className?: string }) {
@@ -230,6 +262,34 @@ function Beloftes({ kolommen, className = '' }: { kolommen: string; className?: 
         </li>
       ))}
     </ul>
+  )
+}
+
+/**
+ * De beloftebalk op telefoonbreedte: drie korte labels tegen de onderrand
+ * van de foto.
+ *
+ * Dezelfde plek en dezelfde matglazen ondergrond als op de desktop. Hij
+ * ligt onder de dieren - die zitten op deze foto tussen 59% en 84% van
+ * de hoogte - en dekt dus alleen het kleed af.
+ */
+function BeloftesKort() {
+  const kort = beloftes.filter((b) => b.kort !== null)
+
+  return (
+    <div className="absolute inset-x-0 bottom-0 z-10 border-t border-white/15 bg-black/60 backdrop-blur-sm">
+      <ul className="grid grid-cols-3 gap-2 px-4 py-3">
+        {kort.map(({ icon: Icon, kort: label }) => (
+          <li
+            key={label}
+            className="flex flex-col items-center gap-1 text-center text-[10px] font-medium leading-tight text-white/85"
+          >
+            <Icon size={13} className="shrink-0 text-white/55" />
+            {label}
+          </li>
+        ))}
+      </ul>
+    </div>
   )
 }
 
@@ -267,18 +327,28 @@ export default function Hero() {
           sizes="100vw"
           quality={85}
         />
-        <div className="relative z-10 px-5 py-14">
-          {/* Smal gehouden zolang de stickers rechtsboven staan. Zonder
-              actie staan die er niet en mag de kop de volle breedte
-              pakken. */}
-          <div className={saleActive ? 'max-w-[13.5rem]' : ''}>
-            <Eyebrow saleActive={saleActive} />
-            <Heading
-              saleActive={saleActive}
-              className="font-serif text-3xl font-bold text-white leading-[1.1] tracking-tight mb-4"
-            />
-          </div>
-          <Subline saleActive={saleActive} className="text-base text-white/70 leading-relaxed mb-8" />
+        {/* Tijdens de actie staat er meer tekst op deze foto dan alleen een
+            kop, en de muur erachter is licht. Een scrim over het bovenstuk
+            houdt die tekst leesbaar; hij stopt voor de dieren. */}
+        {saleActive && (
+          <div className="absolute inset-x-0 top-0 h-[62%] bg-gradient-to-b from-black/60 via-black/30 to-transparent" />
+        )}
+        {/* Tijdens de actie begint de tekst lager: de stickers hangen
+            rechtsboven tot ongeveer 120px, en de regels bij de treden
+            lopen over de volle breedte. Onder de stickers beginnen is het
+            enige wat die twee uit elkaar houdt zonder de tekst in een
+            smalle kolom te persen. */}
+        <div className={`relative z-10 px-5 ${saleActive ? 'pb-28 pt-32' : 'py-14'}`}>
+          {!saleActive && <Eyebrow />}
+          <Heading
+            saleActive={saleActive}
+            className="font-serif text-3xl font-bold text-white leading-[1.1] tracking-tight mb-4"
+          />
+          {saleActive ? (
+            <TiersKort className="mb-8 mt-5" />
+          ) : (
+            <Subline className="text-base text-white/70 leading-relaxed mb-8" />
+          )}
           <Ctas saleActive={saleActive} />
           {!saleActive && (
             <div className="mt-10">
@@ -287,40 +357,33 @@ export default function Hero() {
           )}
         </div>
         {saleActive && <Stickers compact />}
+        {saleActive && <BeloftesKort />}
       </div>
-
-      {/* De uitleg op telefoonbreedte: een groen vlak dat tegen de foto
-          aan zit. Dezelfde kleur als het tabletblok hieronder, zodat de
-          hero op elke breedte één blok blijft. */}
-      {saleActive && (
-        <div className="sm:hidden bg-[#1F3329] px-5 py-7">
-          <Tiers op="vlak" />
-          <Beloftes kolommen="grid-cols-1" className="mt-6 border-t border-white/15 pt-6" />
-        </div>
-      )}
 
       {/* Tablet only (sm to lg): text-only block, no photo. Unchanged from
           before - the phone photo hero above is scoped to phone width only. */}
       <div className="hidden sm:block lg:hidden bg-[#1F3329] px-5 sm:px-8 py-16 sm:py-20">
-        <Eyebrow saleActive={saleActive} />
+        {!saleActive && <Eyebrow />}
         <Heading
           saleActive={saleActive}
-          className="font-serif text-3xl sm:text-4xl font-bold text-white leading-[1.1] tracking-tight mb-4"
+          className={`font-serif text-3xl sm:text-4xl font-bold text-white leading-[1.1] tracking-tight ${saleActive ? 'mb-8' : 'mb-4'}`}
         />
-        <Subline saleActive={saleActive} className="text-base text-white/70 leading-relaxed mb-8" />
-        <Ctas saleActive={saleActive} />
         {saleActive ? (
           <>
-            <Tiers op="vlak" className="mt-10 max-w-xl border-t border-white/15" />
-            <Beloftes
-              kolommen="grid-cols-2"
-              className="mt-8 border-t border-white/15 pt-6"
-            />
+            {/* Dezelfde volgorde als op de desktop: eerst waar de actie uit
+                bestaat, dan de knop. */}
+            <Tiers op="vlak" className="mb-8 max-w-xl border-t border-white/15" />
+            <Ctas saleActive={saleActive} />
+            <Beloftes kolommen="grid-cols-2" className="mt-10 border-t border-white/15 pt-6" />
           </>
         ) : (
-          <div className="mt-10">
-            <TrustBar />
-          </div>
+          <>
+            <Subline className="text-base text-white/70 leading-relaxed mb-8" />
+            <Ctas saleActive={saleActive} />
+            <div className="mt-10">
+              <TrustBar />
+            </div>
+          </>
         )}
       </div>
 
@@ -346,13 +409,16 @@ export default function Hero() {
           className={`relative z-10 w-full max-w-7xl mx-auto px-8 ${saleActive ? 'py-24' : 'py-32'}`}
         >
           <div className="max-w-lg">
-            <Eyebrow saleActive={saleActive} />
+            {!saleActive && <Eyebrow />}
             <Heading
               saleActive={saleActive}
               className="font-serif text-6xl xl:text-[4.25rem] font-bold text-white leading-[1.05] tracking-tight mb-6"
             />
-            <Subline saleActive={saleActive} className="text-lg text-white/70 leading-relaxed mb-8" />
-            {saleActive && <Tiers op="foto" className="mb-8" />}
+            {saleActive ? (
+              <Tiers op="foto" className="mb-8" />
+            ) : (
+              <Subline className="text-lg text-white/70 leading-relaxed mb-8" />
+            )}
             <Ctas saleActive={saleActive} />
             {!saleActive && (
               <div className="mt-12">
