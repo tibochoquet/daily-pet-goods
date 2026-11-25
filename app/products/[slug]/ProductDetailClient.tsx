@@ -27,7 +27,19 @@ export default function ProductDetailClient({
   product: Product
   saleActive: boolean
 }) {
-  const [variantIndex, setVariantIndex] = useState(0)
+  /**
+   * Begin op de eerste maat die te bestellen is.
+   *
+   * Zonder dit opent een product waarvan de kleinste maat uitverkocht is
+   * meteen op "Tijdelijk uitverkocht", met de prijs van een maat die de
+   * klant niet kan kopen - terwijl de andere maten gewoon op voorraad
+   * liggen. Is er geen enkele te bestellen, dan blijft het de eerste:
+   * dan is uitverkocht ook het eerlijke beeld.
+   */
+  const [variantIndex, setVariantIndex] = useState(() => {
+    const i = product.variants.findIndex((v) => (v.inStock ?? true) && v.price !== null)
+    return i === -1 ? 0 : i
+  })
   const variant = product.variants[variantIndex]
   const hasVariants = product.variants.length > 1
   const { addItem } = useCart()
@@ -239,19 +251,31 @@ export default function ProductDetailClient({
                 Kies een optie
               </p>
               <div className="flex flex-wrap gap-2">
-                {product.variants.map((v, i) => (
-                  <button
-                    key={v.id}
-                    onClick={() => selectVariant(i)}
-                    className={`px-4 py-2.5 rounded-full border text-sm font-medium transition-colors ${
-                      i === variantIndex
-                        ? 'border-[#2C4A3E] bg-[#2C4A3E] text-white'
-                        : 'border-[#E8E2D9] text-[#1A1A1A] hover:border-[#2C4A3E]'
-                    }`}
-                  >
-                    {v.label}
-                  </button>
-                ))}
+                {product.variants.map((v, i) => {
+                  /* Een uitverkochte maat blijft aanklikbaar: de foto's en
+                     de specs van die maat zijn er nog, en de knop eronder
+                     vertelt waarom er niets te bestellen valt. Doorstreept
+                     en grijs, zodat het te zien is vóór de klik in plaats
+                     van erna. De aria-label zegt het er hardop bij: een
+                     streep door een woord is voor een schermlezer niets. */
+                  const uitverkocht = !(v.inStock ?? true)
+                  return (
+                    <button
+                      key={v.id}
+                      onClick={() => selectVariant(i)}
+                      aria-label={uitverkocht ? `${v.label}, tijdelijk uitverkocht` : undefined}
+                      className={`px-4 py-2.5 rounded-full border text-sm font-medium transition-colors ${
+                        i === variantIndex
+                          ? 'border-[#2C4A3E] bg-[#2C4A3E] text-white'
+                          : uitverkocht
+                            ? 'border-[#E8E2D9] text-[#6B7280] hover:border-[#9CA3AF]'
+                            : 'border-[#E8E2D9] text-[#1A1A1A] hover:border-[#2C4A3E]'
+                      }`}
+                    >
+                      {uitverkocht ? <s className="decoration-1">{v.label}</s> : v.label}
+                    </button>
+                  )
+                })}
               </div>
             </div>
           )}

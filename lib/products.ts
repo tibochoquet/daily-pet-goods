@@ -742,7 +742,7 @@ export const products: Product[] = [
   },
   {
     slug: "hondenjas",
-    name: "Hondenjas",
+    name: "Groene hondenjas",
     category: "dog-clothing",
     description: "Bescherm je hond tijdens koude, regenachtige en winderige wandelingen met deze warme hondenjas. De jas is ideaal als winterjas en helpt je hond te beschermen tegen regen, wind en kou. De zachte fleecevoering aan de binnenzijde zorgt voor extra warmte en comfort, terwijl de buitenzijde bescherming biedt tegen weersinvloeden. Op de rug bevindt zich een reflecterende strook: wanneer daar in het donker licht op valt, wordt je hond beter zichtbaar tijdens avond- en ochtendwandelingen. De praktische ritssluiting op de rug maakt aan- en uittrekken eenvoudig. Verkrijgbaar in zes jaslengtes van 25 tot 50 cm, van kleine tot middelgrote honden. Het ras is slechts een voorbeeld: meet altijd eerst de ruglengte van je hond, van de basis van de nek tot het begin van de staart, en kies daarop de maat.",
     shortDescription: "Waterdichte, windbestendige winterjas met fleecevoering en reflecterende strook, in zes maten.",
@@ -819,6 +819,10 @@ export const products: Product[] = [
         id: "9300000386606250",
         label: "M",
         price: 42.99,
+        // Tijdelijk uitverkocht sinds 25 november 2026. Hiermee staat de
+        // knop uit, weigert /api/checkout deze variant en valt hij uit de
+        // suggesties in de winkelwagen.
+        inStock: false,
         bolUrl: "https://www.bol.com/nl/p/-/9300000386606250",
         specs: { "Jaslengte": "40 cm", "Past bij ruglengte": "38 tot 42 cm", "Rasvoorbeeld": "kleine honden, zoals een Dwergschnauzer", "Materiaal voering": "fleece", "Sluiting": "rits op de rug", "Waterdicht": "ja", "Windbestendig": "ja", "Reflecterend": "ja" },
         image: "/assets/products/9300000386606250/img_1.jpg",
@@ -1362,6 +1366,10 @@ export const products: Product[] = [
         ean: "6156813576585",
         label: "S (25 cm)",
         price: 39.99,
+        // Tijdelijk uitverkocht sinds 25 november 2026. Hiermee staat de
+        // knop uit, weigert /api/checkout deze variant en valt hij uit de
+        // suggesties in de winkelwagen.
+        inStock: false,
         specs: {"Jaslengte": "25 cm", "Past bij ruglengte": "24 tot 27 cm", "Kleur": "grijs melange met zwart", "Materiaal voering": "fleece", "Ingebouwd tuig": "ja, met D-ring op de rug", "Sluiting": "rits over de rug", "Verstelbaar": "ja, reflecterende tuigbanden", "Reflecterend": "ja", "Waterafstotend": "ja"},
         image: "/assets/products/kattenjas-tuig-25cm/img_1.jpg",
         images: [
@@ -1692,6 +1700,10 @@ export const products: Product[] = [
         ean: "6156811672678",
         label: "XXS",
         price: 39.99,
+        // Tijdelijk uitverkocht sinds 25 november 2026. Hiermee staat de
+        // knop uit, weigert /api/checkout deze variant en valt hij uit de
+        // suggesties in de winkelwagen.
+        inStock: false,
         specs: {"Jaslengte": "25 cm", "Past bij ruglengte": "23 tot 27 cm", "Rasvoorbeeld": "Chihuahua, dwergpinscher", "Kleur": "grijs melange met zwart", "Materiaal buitenzijde": "waterafstotend polyester", "Materiaal voering": "fleece", "Sluiting": "rits over de hele rug", "Tuigopening op de rug": "ja, met D-ringen voor de lijn", "Verstelbaar": "ja, reflecterende banden", "Reflecterend": "ja", "Waterafstotend": "ja"},
         image: "/assets/products/hondenjas-grijs-rits-25cm/img_1.jpg",
         images: [

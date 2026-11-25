@@ -124,7 +124,7 @@ export default function HondenPage() {
             image: '/assets/products/9300000386598590/img_6.jpg',
             imageAlt: 'Jack Russell met groene hondenjas tijdens een winterse wandeling',
             tags: [
-              { label: 'Hondenjas', price: 39.99, href: '/products/hondenjas', top: '70%', left: '32%' },
+              { label: 'Groene hondenjas', price: 39.99, href: '/products/hondenjas', top: '70%', left: '32%' },
               { label: 'Hondenjas Fluo Geelgroen', price: 39.99, href: '/products/hondenjas-fluo-geelgroen', top: '82%', left: '62%' },
             ],
           },
