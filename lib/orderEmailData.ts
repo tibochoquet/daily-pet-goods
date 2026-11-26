@@ -2,6 +2,7 @@ import Stripe from 'stripe'
 import { getStripe } from './stripe'
 import { SITE_URL } from './business'
 import { products } from './products'
+import { isPreorder, preorderLabel } from './preorder'
 import type { OrderEmailData, OrderItem } from './emails'
 
 /**
@@ -95,6 +96,12 @@ export async function buildOrderEmailData(session: Stripe.Checkout.Session): Pro
   })
 
   const slugs: (string | null)[] = []
+  /**
+   * De verzenddata van de pre-orders in deze bestelling, opgehaald uit
+   * lib/products.ts - Stripe weet er niets van. De laatste telt: we
+   * sturen een bestelling in één keer.
+   */
+  const preorderDatums: string[] = []
   const items: OrderItem[] = lineItems.data.map((line) => {
     const product = line.price?.product
     const meta =
@@ -103,6 +110,9 @@ export async function buildOrderEmailData(session: Stripe.Checkout.Session): Pro
     const variantId = meta.variantId ?? null
     slugs.push(productSlug)
     const found = lookupVariant(productSlug, variantId)
+    if (found && found.product.shipsFrom && isPreorder(found.product)) {
+      preorderDatums.push(found.product.shipsFrom)
+    }
     const quantity = line.quantity ?? 1
     return {
       name: found?.product.name ?? line.description ?? '',
@@ -151,6 +161,14 @@ export async function buildOrderEmailData(session: Stripe.Checkout.Session): Pro
     vatAmount: null,
     paymentMethod: await resolvePaymentMethod(session),
     petType: resolvePetType(slugs),
+    preorderDatum:
+      preorderDatums.length > 0
+        ? preorderLabel(
+            preorderDatums.reduce((a, b) =>
+              new Date(a).getTime() >= new Date(b).getTime() ? a : b
+            )
+          )
+        : null,
     orderUrl: buildOrderUrl(orderRef, email),
   }
 }

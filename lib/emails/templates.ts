@@ -51,11 +51,24 @@ export function orderConfirmationEmail(
 ): RenderedEmail {
   const attachments = opts.attachmentsIncluded ?? true;
   const subject = `Bedankt! Je bestelling ${order.orderNumber} is bevestigd`;
-  const preheader = 'Op werkdagen voor 15:00 besteld, dezelfde dag verzonden. Hieronder staat alles op een rij.';
+  /**
+   * Een pre-order verandert de enige belofte die in deze mail staat.
+   * "Dezelfde dag verzonden" zou hier onwaar zijn, en dit is precies de
+   * mail waarin de klant leest wanneer hij zijn pakket kan verwachten -
+   * dus staat de datum op alledrie de plekken waar die belofte stond.
+   */
+  const preorder = order.preorderDatum ? esc(order.preorderDatum) : null;
+  const preheader = preorder
+    ? `We verzenden je bestelling vanaf ${preorder}. Hieronder staat alles op een rij.`
+    : 'Op werkdagen voor 15:00 besteld, dezelfde dag verzonden. Hieronder staat alles op een rij.';
 
   const delivery = `${label('Levering')}<p style="margin:0;font-family:${f.sans};font-size:14px;line-height:22px;color:${c.ink};">${
     order.shippingCost === 0 ? 'Gratis verzending' : 'Verzending'
-  } met ${brand.carriers}. Op werkdagen voor 15:00 besteld, dezelfde dag verzonden; daarna heb je je pakket meestal binnen 1 tot 3 werkdagen in huis.</p>`;
+  } met ${brand.carriers}. ${
+    preorder
+      ? `Je bestelling bevat een pre-order: we sturen hem in één keer, vanaf ${preorder}.`
+      : 'Op werkdagen voor 15:00 besteld, dezelfde dag verzonden; daarna heb je je pakket meestal binnen 1 tot 3 werkdagen in huis.'
+  }</p>`;
 
   const withdrawal = note(
     `${label('Je bedenktijd')}
@@ -72,7 +85,9 @@ export function orderConfirmationEmail(
       `${eyebrow(`Bestelling ${esc(order.orderNumber)} · ${dateShort(order.placedAt)}`)}${h1(
         `Bedankt voor je bestelling, ${esc(order.firstName)}.`,
       )}${p(
-        `We hebben je betaling ontvangen. Bestel je op een werkdag voor 15:00, dan pakken we alles zelf voor je in en gaat het diezelfde dag mee met ${brand.carriers}. Zodra je pakket onderweg is, krijg je van ons een mail met je track &amp; trace.`,
+        preorder
+          ? `We hebben je betaling ontvangen. Je bestelling bevat een pre-order, dus we sturen hem in één keer vanaf ${preorder}. Zodra je pakket onderweg is, krijg je van ons een mail met je track &amp; trace.`
+          : `We hebben je betaling ontvangen. Bestel je op een werkdag voor 15:00, dan pakken we alles zelf voor je in en gaat het diezelfde dag mee met ${brand.carriers}. Zodra je pakket onderweg is, krijg je van ons een mail met je track &amp; trace.`,
       )}`,
       '4px 48px 0',
     ),
@@ -100,7 +115,11 @@ export function orderConfirmationEmail(
 
 Bestelling ${order.orderNumber} · ${dateShort(order.placedAt)}
 
-We hebben je betaling ontvangen. Bestel je op een werkdag voor 15:00, dan pakken we alles zelf voor je in en gaat het diezelfde dag mee met ${brand.carriers}. Zodra je pakket onderweg is, krijg je een mail met je track & trace.
+${
+    order.preorderDatum
+      ? `We hebben je betaling ontvangen. Je bestelling bevat een pre-order, dus we sturen hem in één keer vanaf ${order.preorderDatum}. Zodra je pakket onderweg is, krijg je een mail met je track & trace.`
+      : `We hebben je betaling ontvangen. Bestel je op een werkdag voor 15:00, dan pakken we alles zelf voor je in en gaat het diezelfde dag mee met ${brand.carriers}. Zodra je pakket onderweg is, krijg je een mail met je track & trace.`
+  }
 
 JE BESTELLING
 ${textItems(order)}

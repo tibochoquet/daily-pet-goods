@@ -1,5 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
+import { existsSync } from 'node:fs'
+import { join } from 'node:path'
 import { getRelatedProducts, products } from './products'
 
 /**
@@ -69,4 +71,49 @@ test('de volgorde ligt vast', () => {
   const een = getRelatedProducts(product).map((p) => p.slug)
   const twee = getRelatedProducts(product).map((p) => p.slug)
   assert.deepEqual(een, twee)
+})
+
+/**
+ * En drie dingen die bij het toevoegen van een product fout kunnen gaan
+ * zonder dat je het op een testpagina ziet.
+ */
+
+test('elke slug en elk variant-id is uniek', () => {
+  const slugs = products.map((p) => p.slug)
+  assert.equal(new Set(slugs).size, slugs.length, 'twee producten delen een slug')
+
+  // Een dubbel variant-id is erger dan een dubbele slug: de winkelwagen
+  // en /api/checkout zoeken een variant op id op, dus dan belandt de
+  // verkeerde maat - of het verkeerde product - in de bestelling.
+  const ids = products.flatMap((p) => p.variants.map((v) => v.id))
+  assert.equal(new Set(ids).size, ids.length, 'twee varianten delen een id')
+})
+
+test('elke foto in dit bestand staat ook echt in public', () => {
+  const ontbreekt: string[] = []
+  for (const product of products) {
+    for (const variant of product.variants) {
+      const paden = [variant.image, ...(variant.images ?? [])]
+      for (const pad of paden) {
+        if (!existsSync(join(import.meta.dirname, '..', 'public', pad))) {
+          ontbreekt.push(`${product.slug} / ${variant.id}: ${pad}`)
+        }
+      }
+    }
+  }
+  assert.deepEqual(ontbreekt, [], 'deze paden staan wel in products.ts maar niet op schijf')
+})
+
+test('bij elke foto hoort een alt-tekst, of helemaal geen', () => {
+  for (const product of products) {
+    for (const variant of product.variants) {
+      if (!variant.imageAlts) continue
+      const aantal = (variant.images ?? [variant.image]).length
+      assert.equal(
+        variant.imageAlts.length,
+        aantal,
+        `${product.slug} / ${variant.id}: ${variant.imageAlts.length} alt-teksten bij ${aantal} foto's`
+      )
+    }
+  }
 })

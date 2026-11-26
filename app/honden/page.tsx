@@ -117,8 +117,10 @@ export default function HondenPage() {
           hero: {
             eyebrow: 'Klaar voor elk weer',
             title: 'Warm, droog en goed zichtbaar',
+            // Bewust zonder te tellen hoeveel jassen het er zijn: die
+            // zin klopte na elke nieuwe jas een dag later niet meer.
             description:
-              'Twee waterdichte winterjassen met zachte fleecevoering, allebei in zes jaslengtes van 25 tot 50 cm: de groene jas met reflecterende strook op de rug, en een fluo geelgroene jas met reflecterende banden en een opening voor het tuigje.',
+              'Waterdichte winterjassen met zachte fleecevoering, in jaslengtes van 25 tot 50 cm. Met een reflecterende strook, een fluo uitvoering voor het donker of een rits over de hele rug - en nieuw: twee jassen waar het tuig al in zit, zodat je de riem direct aan de D-ringen klikt.',
             ctaLabel: 'Bekijk de collectie',
             ctaHref: '/honden#hondenkleding',
             image: '/assets/products/9300000386598590/img_6.jpg',

@@ -6,6 +6,7 @@ import { getVariantById } from '@/lib/products'
 import { calculateDiscount } from '@/lib/discounts'
 import { calculateSaleDiscount } from '@/lib/saleCart'
 import { isSaleActive, sale } from '@/config/sale'
+import { isPreorder, preorderLabel, preorderZin } from '@/lib/preorder'
 import { business, PUBLIC_BASE_URL, SITE_URL } from '@/lib/business'
 
 /**
@@ -79,7 +80,21 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Winkelwagen is leeg' }, { status: 400 })
   }
 
+  /**
+   * Eén klok voor dit hele verzoek: de actie, de pre-orders en alles wat
+   * daarop volgt kijken naar hetzelfde moment. Twee keer `new Date()` in
+   * één afrekening kan rond middernacht twee verschillende antwoorden
+   * geven, en dan rekent de ene regel iets anders dan de andere.
+   */
+  const nu = new Date()
+
   const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = []
+  /**
+   * De verzenddata van de pre-orders in deze bestelling. De laatste
+   * bepaalt wat er op de betaalpagina staat: we sturen een bestelling in
+   * één keer, dus hij gaat weg zodra het traagste artikel binnen is.
+   */
+  const preorderDatums: string[] = []
 
   for (const item of items) {
     if (typeof item?.id !== 'string' || typeof item?.quantity !== 'number') {
@@ -111,6 +126,12 @@ export async function POST(req: NextRequest) {
       )
     }
 
+    // Een pre-order krijgt de verzenddatum als regeltekst mee. Die staat
+    // dan op de betaalpagina én op de bon van Stripe, naast precies het
+    // artikel waar hij over gaat.
+    const preorder = isPreorder(product, nu) ? product.shipsFrom : undefined
+    if (preorder) preorderDatums.push(preorder)
+
     line_items.push({
       quantity: item.quantity,
       price_data: {
@@ -118,12 +139,19 @@ export async function POST(req: NextRequest) {
         unit_amount: Math.round(variant.price * 100),
         product_data: {
           name: `${product.name} - ${variant.label}`,
+          ...(preorder ? { description: preorderZin(preorder) } : {}),
           images: [new URL(variant.image, SITE_URL).toString()],
           metadata: { variantId: variant.id, productSlug: product.slug },
         },
       },
     })
   }
+
+  // De laatste datum van de bestelling, of null als er niets op wacht.
+  const preorderDatum =
+    preorderDatums.length > 0
+      ? preorderDatums.reduce((a, b) => (new Date(a).getTime() >= new Date(b).getTime() ? a : b))
+      : null
 
   // Random suffix (not just the timestamp) so an order number can't be
   // guessed from roughly when someone ordered - it's now a real lookup
@@ -143,7 +171,6 @@ export async function POST(req: NextRequest) {
    * bepaald. Na `endsAt` geeft dit null en wordt er dus tegen de normale
    * prijs afgerekend, hoe de pagina er bij de klant ook uitzag.
    */
-  const nu = new Date()
   const saleActiveNow = isSaleActive(nu)
   const saleDiscount = calculateSaleDiscount(cartLines, nu)
 
@@ -253,8 +280,12 @@ export async function POST(req: NextRequest) {
       // dus pas ze samen met /verzending aan.
       custom_text: {
         submit: {
-          message:
-            'Gratis verzending · op werkdagen voor 15:00 besteld, dezelfde dag verzonden · 14 dagen bedenktijd',
+          // Zit er een pre-order in, dan is "dezelfde dag verzonden" hier
+          // niet waar. Dit is het laatste scherm voor de betaling, dus
+          // staat er wat er wél gebeurt.
+          message: preorderDatum
+            ? `Pre-order: we verzenden je bestelling in één keer, vanaf ${preorderLabel(preorderDatum)} · gratis verzending · 14 dagen bedenktijd`
+            : 'Gratis verzending · op werkdagen voor 15:00 besteld, dezelfde dag verzonden · 14 dagen bedenktijd',
         },
         shipping_address: { message: 'We verzenden met DHL of DPD naar Nederland en België.' },
       },

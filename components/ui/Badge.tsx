@@ -1,11 +1,14 @@
 interface BadgeProps {
-  variant: 'bestseller' | 'new' | 'sale' | 'betaald' | 'retour-aangemeld' | 'retour-onderweg' | 'retour-ontvangen' | 'terugbetaald'
+  variant: 'bestseller' | 'new' | 'sale' | 'preorder' | 'betaald' | 'retour-aangemeld' | 'retour-onderweg' | 'retour-ontvangen' | 'terugbetaald'
 }
 
 const config = {
   bestseller: { label: 'Bestseller', className: 'bg-[#2C4A3E] text-white' },
   new: { label: 'Nieuw', className: 'bg-[#C8745A] text-white' },
   sale: { label: 'Aanbieding', className: 'bg-yellow-500 text-white' },
+  // Inkt en geen rood: rood is tijdens een actie het signaal voor
+  // bedragen en de klok, en een pre-order is geen korting.
+  preorder: { label: 'Pre-order', className: 'bg-[#1A1A1A] text-white' },
   // Order/return states - only ones we can actually know without a
   // carrier integration (see lib/orders.ts). No "verzonden"/"onderweg"
   // shipping variant on purpose - there's no tracking data to back it.

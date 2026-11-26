@@ -10,6 +10,13 @@ import { sale, saleTierLabel } from '@/config/sale'
 import { discountCentsAt, saleCartTotals, saleDiscountLabel, toCents } from '@/lib/sale'
 import CartTierProgress, { type TierSuggestie } from '@/components/sale/CartTierProgress'
 
+/**
+ * Variant-id's die pas later verzonden worden, met de datum erbij. Komt
+ * van de server (zie page.tsx), want de winkelwagen zelf bewaart alleen
+ * wat de klant erin legde.
+ */
+export type Preorders = Record<string, { datum: string; label: string }>
+
 interface AppliedDiscount {
   code: string
   label: string
@@ -26,9 +33,11 @@ interface AppliedDiscount {
 export default function CartClient({
   saleActive,
   tierSuggesties,
+  preorders = {},
 }: {
   saleActive: boolean
   tierSuggesties: TierSuggestie[]
+  preorders?: Preorders
 }) {
   const { items, subtotal, removeItem, setQuantity, discountCode, setDiscountCode } = useCart()
   const [checkingOut, setCheckingOut] = useState(false)
@@ -153,6 +162,25 @@ export default function CartClient({
   const total = Math.max(0, subtotal - saleAmountOff - (activeDiscount?.amountOff ?? 0))
 
   /**
+   * De laatste verzenddatum in deze winkelwagen, of null.
+   *
+   * De laatste en niet de eerste: we sturen een bestelling in één keer,
+   * dus hij ligt klaar zodra het traagste artikel er is. Dat eerder
+   * beloven zou betekenen dat de klant op de verkeerde dag staat te
+   * wachten.
+   */
+  const preorderRegels = items
+    .map((i) => preorders[i.id])
+    .filter((r): r is Preorders[string] => r !== undefined)
+  const preorder =
+    preorderRegels.length > 0
+      ? preorderRegels.reduce((a, b) =>
+          new Date(a.datum).getTime() >= new Date(b.datum).getTime() ? a : b
+        )
+      : null
+  const allesPreorder = preorderRegels.length === items.length
+
+  /**
    * Regeltotaal in centen, zodat drie keer 35,99 niet 107,97000000001
    * wordt.
    *
@@ -254,7 +282,14 @@ export default function CartClient({
                 <h3 className="font-medium text-[#1A1A1A] text-sm leading-snug line-clamp-2 mb-0.5">
                   {item.name}
                 </h3>
-                <p className="text-xs text-[#9CA3AF] mb-3">{item.variantLabel}</p>
+                <p className="text-xs text-[#9CA3AF] mb-3">
+                  {item.variantLabel}
+                  {preorders[item.id] && (
+                    <span className="block text-[#6B7280]">
+                      Pre-order &middot; verzonden vanaf {preorders[item.id].label}
+                    </span>
+                  )}
+                </p>
 
                 {/* flex-wrap: met twee prijzen naast elkaar passen de
                     aantalknoppen en het bedrag op een 320px-telefoon niet
@@ -406,6 +441,19 @@ export default function CartClient({
               )}
               {discountError && <p className="text-xs text-[#C8745A] mt-2">{discountError}</p>}
             </div>
+
+            {/* Direct boven de knop, want dit is de laatste plek waar de
+                klant het leest voordat hij betaalt. Staat er ook nog iets
+                anders in de winkelwagen, dan is de datum het belangrijkste
+                nieuws: die bepaalt wanneer het hele pakket weggaat. */}
+            {preorder && (
+              <p className="mb-4 rounded-xl bg-[#FBF6EE] px-3.5 py-3 text-xs leading-relaxed text-[#4B5563]">
+                <span className="font-bold text-[#1A1A1A]">Pre-order</span>
+                {allesPreorder
+                  ? `: we verzenden je bestelling vanaf ${preorder.label}.`
+                  : ` in je winkelwagen: we sturen je bestelling in één keer, vanaf ${preorder.label}.`}
+              </p>
+            )}
 
             <p className="text-xs text-[#6B7280] mb-4">
               Betalen via iDEAL, creditcard, Bancontact, Klarna en meer.

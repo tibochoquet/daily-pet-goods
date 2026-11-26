@@ -76,6 +76,18 @@ export interface Product {
    * Goods" achter.
    */
   seoTitle?: string
+  /**
+   * Pre-order: de datum waarop dit product de deur uit kan, met expliciete
+   * tijdzone-offset (`2026-12-04T00:00:00+01:00`). Zolang die datum in de
+   * toekomst ligt, is het product gewoon te bestellen en te betalen, maar
+   * belooft de site nergens dat het vandaag verzonden wordt.
+   *
+   * Na de datum doet dit veld niets meer - zie lib/preorder.ts - dus het
+   * hoeft op de dag zelf niet te worden weggehaald. Niet te verwarren met
+   * `inStock` op de variant: dat is de schakelaar die bestellen echt
+   * tegenhoudt.
+   */
+  shipsFrom?: string
   variants: ProductVariant[]
 }
 

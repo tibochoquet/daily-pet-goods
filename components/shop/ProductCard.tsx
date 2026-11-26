@@ -6,6 +6,7 @@ import { startingPrice } from '@/lib/products'
 import Badge from '@/components/ui/Badge'
 import SaleBadge from '@/components/sale/SaleBadge'
 import { pricingFor } from '@/lib/sale'
+import { isPreorder, preorderLabel } from '@/lib/preorder'
 
 interface ProductCardProps {
   product: Product
@@ -16,6 +17,20 @@ export default function ProductCard({ product }: ProductCardProps) {
   const price = startingPrice(product)
   const pricing = pricingFor(price)
   const multipleVariants = product.variants.length > 1
+  /**
+   * Een server component, dus dit gaat naar de serverklok - dezelfde als
+   * die van de productpagina en de checkout. Na de verzenddatum valt het
+   * label vanzelf weg en staat er weer "Nieuw".
+   */
+  const preorder = isPreorder(product) && product.shipsFrom
+    ? preorderLabel(product.shipsFrom)
+    : null
+  /**
+   * Eén label linksboven. Bij een pre-order gaat die plek naar
+   * "Pre-order": dat zegt meer dan "Nieuw", en twee labels naast elkaar
+   * maken van een productfoto een prikbord.
+   */
+  const badge = preorder ? ('preorder' as const) : product.badge
 
   return (
     <Link href={`/products/${product.slug}`} className="group block">
@@ -28,9 +43,9 @@ export default function ProductCard({ product }: ProductCardProps) {
           className="object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out"
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
         />
-        {product.badge && (
+        {badge && (
           <div className="absolute top-4 left-4">
-            <Badge variant={product.badge} />
+            <Badge variant={badge} />
           </div>
         )}
         {/* Rechtsboven, zodat dit nooit over een "Bestseller" of "Nieuw"
@@ -78,6 +93,13 @@ export default function ProductCard({ product }: ProductCardProps) {
             </span>
           )}
         </div>
+
+        {/* De datum hoort bij de prijs en niet alleen bij het label
+            linksboven: wie langs een rij kaarten scrolt, leest hier wat
+            "Pre-order" concreet betekent. */}
+        {preorder && (
+          <p className="mt-1.5 text-xs text-[#6B7280]">Verzonden vanaf {preorder}</p>
+        )}
       </div>
     </Link>
   )

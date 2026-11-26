@@ -7,6 +7,7 @@ import ProductReviews from '@/components/shop/ProductReviews'
 import RelatedProducts from '@/components/shop/RelatedProducts'
 import { business, SITE_URL } from '@/lib/business'
 import { isSaleActive, sale } from '@/config/sale'
+import { isPreorder, preorderIso, preorderLabel } from '@/lib/preorder'
 import { pricingFor } from '@/lib/sale'
 import { isDbConfigured } from '@/lib/db'
 import { findPublishedReviewsForProduct, type ProductReviews as Reviews } from '@/lib/db/reviews'
@@ -84,10 +85,17 @@ export default async function ProductPage({ params }: Props) {
   const saleActive = isSaleActive()
   const offerPrijs = (euro: number) => pricingFor(euro, saleActive)?.current ?? euro
   const priceValidUntil = saleActive ? sale.endsAt.slice(0, 10) : null
-  // No variant carries inStock: false today (no real inventory system
-  // behind this yet), so this reads as available - but it's a real flag
-  // now, not a hardcoded string. Any variant in the group being in stock
-  // is enough to advertise the product as available.
+
+  /**
+   * Pre-order of niet, bepaald met de serverklok - net als de actie.
+   *
+   * De browser rekent dit niet zelf uit: dan zou een bezoeker met een
+   * verkeerd gezette klok een andere belofte lezen dan er in de HTML
+   * staat, en bij hydratie is dat een verschil dat React opmerkt. De
+   * datum gaat daarom al als tekst naar beneden.
+   */
+  const preorder = isPreorder(product)
+  const preorderDatum = preorder && product.shipsFrom ? preorderLabel(product.shipsFrom) : null
   // Zonder database geen reviews, maar de pagina blijft gewoon werken.
   let reviews: Reviews = { items: [], aantal: 0, gemiddelde: 0 }
   if (isDbConfigured()) {
@@ -98,8 +106,22 @@ export default async function ProductPage({ params }: Props) {
     }
   }
 
+  // Eén variant op voorraad is genoeg om de groep als leverbaar te
+  // vermelden; welke maat op is, staat op de pagina zelf.
   const anyInStock = product.variants.some((v) => v.inStock ?? true)
-  const availability = anyInStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock'
+  /**
+   * `PreOrder` is in schema.org precies wat hier aan de hand is: wel te
+   * bestellen, nog niet te verzenden. Met `availabilityStarts` erbij,
+   * want zonder die datum weet Google alleen dat het niet op voorraad is
+   * en niet vanaf wanneer wel.
+   */
+  const availability = preorder
+    ? 'https://schema.org/PreOrder'
+    : anyInStock
+      ? 'https://schema.org/InStock'
+      : 'https://schema.org/OutOfStock'
+  const availabilityStarts =
+    preorder && product.shipsFrom ? { availabilityStarts: preorderIso(product.shipsFrom) } : {}
 
   /**
    * Zonder prijs geen `offers`.
@@ -120,6 +142,7 @@ export default async function ProductPage({ params }: Props) {
             highPrice: offerPrijs(highPrice).toFixed(2),
             offerCount: product.variants.length,
             availability,
+            ...availabilityStarts,
             url: `${SITE_URL}/products/${product.slug}`,
             ...(priceValidUntil ? { priceValidUntil } : {}),
           }
@@ -128,6 +151,7 @@ export default async function ProductPage({ params }: Props) {
             priceCurrency: 'EUR',
             price: offerPrijs(lowPrice).toFixed(2),
             availability,
+            ...availabilityStarts,
             url: `${SITE_URL}/products/${product.slug}`,
             ...(priceValidUntil ? { priceValidUntil } : {}),
           }
@@ -177,7 +201,7 @@ export default async function ProductPage({ params }: Props) {
   return (
     <>
       <JsonLd data={productSchema} />
-      <ProductDetailClient product={product} saleActive={saleActive} />
+      <ProductDetailClient product={product} saleActive={saleActive} preorderDatum={preorderDatum} />
       <ProductReviews {...reviews} />
       <RelatedProducts product={product} />
     </>

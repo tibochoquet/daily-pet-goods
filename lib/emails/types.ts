@@ -34,6 +34,12 @@ export interface OrderEmailData {
   vatAmount?: Cents | null;
   paymentMethod?: string | null; // 'iDEAL', 'Bancontact', 'Klarna', 'Visa •••• 4242'
   petType?: 'hond' | 'kat' | null; // bepaalt foto en tekst bij het cadeautje in de doos
+  /**
+   * Staat er een pre-order in deze bestelling, dan de datum waarop het
+   * pakket de deur uit gaat, al voorgelezen: '4 december'. De mail
+   * belooft dan niet dat het vandaag nog weggaat.
+   */
+  preorderDatum?: string | null;
   orderUrl: string; // deep link naar /mijn-bestelling
 }
 

@@ -59,8 +59,10 @@ export default function KattenPage() {
           hero: {
             eyebrow: 'Warm door de winter',
             title: 'Een extra warme laag voor koude dagen',
+            // Zonder aantal, net als bij de hondenjassen: een zin die de
+            // jassen telt, klopt na de volgende jas niet meer.
             description:
-              'Een waterdichte, winddichte kattenjas met zachte fleecevoering - met een uitvoering speciaal voor naaktkatten zoals de Sphynx, die geen vacht hebben om hen tegen de kou te beschermen, en een fluo geelgroene jas met reflecterende banden voor wandelingen aan het tuigje.',
+              'Waterdichte, winddichte kattenjassen met zachte fleecevoering, in 25 en 30 cm ruglengte - met een uitvoering speciaal voor naaktkatten zoals de Sphynx, die geen vacht hebben om hen tegen de kou te beschermen, een fluo uitvoering voor het donker, en jassen waar het tuig al in zit: riem direct aan de D-ringen.',
             ctaLabel: 'Bekijk de collectie',
             ctaHref: '/katten#kattenkleding',
             image: '/assets/products/9300000386611069/img_6.jpg',

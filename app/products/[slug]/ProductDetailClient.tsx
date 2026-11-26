@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { formatPrice } from '@/lib/business'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ChevronLeft, ShoppingCart, Check, Play, Truck, RotateCcw, MessageCircle, Package, AlertTriangle, ChevronLeft as Prev, ChevronRight as Next } from 'lucide-react'
+import { ChevronLeft, ShoppingCart, Check, Play, Truck, RotateCcw, MessageCircle, Package, AlertTriangle, CalendarClock, ChevronLeft as Prev, ChevronRight as Next } from 'lucide-react'
 import type { Product } from '@/lib/types'
 import { useCart } from '@/components/cart/CartProvider'
 import { pricingFor } from '@/lib/sale'
@@ -19,13 +19,19 @@ type MediaItem =
  * `saleActive` komt van de server (zie page.tsx) en wordt hier niet zelf
  * uitgerekend: de browserklok mag niet bepalen welke prijs er staat,
  * anders wijkt wat React rendert af van de HTML die de bezoeker kreeg.
+ *
+ * `preorderDatum` komt om dezelfde reden als kant-en-klare tekst binnen
+ * ("4 december") in plaats van als datum. Is hij null, dan is dit een
+ * gewoon product en belooft de pagina gewoon verzending vandaag.
  */
 export default function ProductDetailClient({
   product,
   saleActive,
+  preorderDatum = null,
 }: {
   product: Product
   saleActive: boolean
+  preorderDatum?: string | null
 }) {
   /**
    * Begin op de eerste maat die te bestellen is.
@@ -280,6 +286,22 @@ export default function ProductDetailClient({
             </div>
           )}
 
+          {/* Pre-order: wel te bestellen, nog niet te verzenden. Direct
+              boven de knop, want dit is wat iemand moet weten vóór hij
+              hem indrukt - en niet pas in de bevestigingsmail. Bij een
+              uitverkochte maat blijft hij weg: dan is "verzonden vanaf"
+              een belofte over iets wat je niet kunt bestellen. */}
+          {preorderDatum && canOrder && (
+            <div className="mb-4 flex items-start gap-2.5 rounded-xl border border-[#E8D9C8] bg-[#FBF6EE] p-4">
+              <CalendarClock size={16} className="mt-0.5 shrink-0 text-[#C8745A]" />
+              <p className="text-sm leading-relaxed text-[#4B5563]">
+                <span className="font-semibold text-[#1A1A1A]">Pre-order.</span> Je rekent nu af en
+                wij verzenden vanaf {preorderDatum}. Gratis verzending en 14 dagen bedenktijd
+                gelden gewoon.
+              </p>
+            </div>
+          )}
+
           {/* Add to cart */}
           <button
             onClick={handleAdd}
@@ -305,6 +327,11 @@ export default function ProductDetailClient({
                 <Check size={16} />
                 Toegevoegd aan winkelwagen
               </>
+            ) : preorderDatum ? (
+              <>
+                <CalendarClock size={16} />
+                Nu pre-orderen
+              </>
             ) : (
               <>
                 <ShoppingCart size={16} />
@@ -320,7 +347,15 @@ export default function ProductDetailClient({
           <div className="mb-10 space-y-3 border-t border-b border-[#E8E2D9] py-6">
             <div className="flex items-start gap-2.5 text-sm text-[#4B5563]">
               <Truck size={16} className="mt-0.5 shrink-0 text-[#2C4A3E]" />
-              <span>Gratis verzending met DHL of DPD binnen NL &amp; BE. Op werkdagen voor 15:00 besteld, dezelfde dag verzonden.</span>
+              {/* Bij een pre-order zou "dezelfde dag verzonden" een
+                  belofte zijn die we niet waarmaken, dus staat daar de
+                  datum. */}
+              <span>
+                Gratis verzending met DHL of DPD binnen NL &amp; BE.{' '}
+                {preorderDatum
+                  ? `Dit is een pre-order: je bestelling gaat vanaf ${preorderDatum} de deur uit.`
+                  : 'Op werkdagen voor 15:00 besteld, dezelfde dag verzonden.'}
+              </span>
             </div>
             <div className="flex items-start gap-2.5 text-sm text-[#4B5563]">
               <RotateCcw size={16} className="mt-0.5 shrink-0 text-[#2C4A3E]" />

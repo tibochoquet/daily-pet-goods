@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 import { isSaleActive } from '@/config/sale'
 import { products } from '@/lib/products'
+import { isPreorder, preorderLabel } from '@/lib/preorder'
 import type { TierSuggestie } from '@/components/sale/CartTierProgress'
-import CartClient from './CartClient'
+import CartClient, { type Preorders } from './CartClient'
 
 export const metadata: Metadata = {
   title: 'Winkelwagen',
@@ -55,7 +56,37 @@ function tierSuggesties(): TierSuggestie[] {
   })
 }
 
+/**
+ * Welke variant-id's pas later verzonden worden, met de datum erbij.
+ *
+ * De winkelwagen staat in de browser van de bezoeker en bewaart alleen
+ * id, naam, prijs en foto - of iets een pre-order is, weet hij niet. Dat
+ * komt dus van hier, waar de serverklok geldt. Een id dat er niet in
+ * staat, is een gewoon product; na de verzenddatum raakt het vanzelf uit
+ * deze lijst en verdwijnt de melding.
+ */
+function preorders(): Preorders {
+  const regels: Preorders = {}
+  for (const product of products) {
+    if (!product.shipsFrom || !isPreorder(product)) continue
+    // De datum gaat als tekst mee voor op het scherm, en als ISO-string
+    // om te kunnen vergelijken: liggen er twee pre-orders in de
+    // winkelwagen, dan telt de laatste datum.
+    const regel = { datum: product.shipsFrom, label: preorderLabel(product.shipsFrom) }
+    for (const variant of product.variants) {
+      regels[variant.id] = regel
+    }
+  }
+  return regels
+}
+
 export default function CartPage() {
   const saleActive = isSaleActive()
-  return <CartClient saleActive={saleActive} tierSuggesties={saleActive ? tierSuggesties() : []} />
+  return (
+    <CartClient
+      saleActive={saleActive}
+      tierSuggesties={saleActive ? tierSuggesties() : []}
+      preorders={preorders()}
+    />
+  )
 }
