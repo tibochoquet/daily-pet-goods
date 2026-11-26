@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { products } from '@/lib/products'
+import { colorSiblings, products } from '@/lib/products'
 import ProductDetailClient from './ProductDetailClient'
 import JsonLd from '@/components/JsonLd'
 import ProductReviews from '@/components/shop/ProductReviews'
@@ -96,6 +96,17 @@ export default async function ProductPage({ params }: Props) {
    */
   const preorder = isPreorder(product)
   const preorderDatum = preorder && product.shipsFrom ? preorderLabel(product.shipsFrom) : null
+
+  /**
+   * De kleuren van ditzelfde artikel, als rijtje voor bovenaan de
+   * pagina. Alleen wat de kiezer nodig heeft, zodat niet de hele
+   * productdata van de andere kleur mee de browser in gaat.
+   */
+  const kleuren = colorSiblings(product).map((p) => ({
+    slug: p.slug,
+    label: p.color?.label ?? p.name,
+    swatch: p.color?.swatch ?? '#E8E2D9',
+  }))
   // Zonder database geen reviews, maar de pagina blijft gewoon werken.
   let reviews: Reviews = { items: [], aantal: 0, gemiddelde: 0 }
   if (isDbConfigured()) {
@@ -201,7 +212,12 @@ export default async function ProductPage({ params }: Props) {
   return (
     <>
       <JsonLd data={productSchema} />
-      <ProductDetailClient product={product} saleActive={saleActive} preorderDatum={preorderDatum} />
+      <ProductDetailClient
+        product={product}
+        saleActive={saleActive}
+        preorderDatum={preorderDatum}
+        kleuren={kleuren}
+      />
       <ProductReviews {...reviews} />
       <RelatedProducts product={product} />
     </>

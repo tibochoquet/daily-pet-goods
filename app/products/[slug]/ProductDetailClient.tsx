@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { ChevronLeft, ShoppingCart, Check, Play, Truck, RotateCcw, MessageCircle, Package, AlertTriangle, CalendarClock, ChevronLeft as Prev, ChevronRight as Next } from 'lucide-react'
 import type { Product } from '@/lib/types'
 import { useCart } from '@/components/cart/CartProvider'
+import { useSizeMemory } from '@/components/shop/SizeMemory'
 import { pricingFor } from '@/lib/sale'
 import { sale, saleTierLabel } from '@/config/sale'
 import SaleBadge from '@/components/sale/SaleBadge'
@@ -14,6 +15,13 @@ import SaleBadge from '@/components/sale/SaleBadge'
 type MediaItem =
   | { type: 'video'; src: string; alt: string }
   | { type: 'image'; src: string; alt: string }
+
+/** Eén kleur van ditzelfde artikel; zie `colorSiblings` in lib/products.ts. */
+export interface KleurKeuze {
+  slug: string
+  label: string
+  swatch: string
+}
 
 /**
  * `saleActive` komt van de server (zie page.tsx) en wordt hier niet zelf
@@ -28,21 +36,36 @@ export default function ProductDetailClient({
   product,
   saleActive,
   preorderDatum = null,
+  kleuren = [],
 }: {
   product: Product
   saleActive: boolean
   preorderDatum?: string | null
+  kleuren?: KleurKeuze[]
 }) {
+  const geheugen = useSizeMemory()
   /**
-   * Begin op de eerste maat die te bestellen is.
+   * Begin op de maat die de bezoeker net koos, en anders op de eerste
+   * maat die te bestellen is.
    *
-   * Zonder dit opent een product waarvan de kleinste maat uitverkocht is
-   * meteen op "Tijdelijk uitverkocht", met de prijs van een maat die de
-   * klant niet kan kopen - terwijl de andere maten gewoon op voorraad
-   * liggen. Is er geen enkele te bestellen, dan blijft het de eerste:
-   * dan is uitverkocht ook het eerlijke beeld.
+   * Dat tweede is er omdat een product waarvan de kleinste maat
+   * uitverkocht is anders meteen opent op "Tijdelijk uitverkocht", met
+   * de prijs van een maat die de klant niet kan kopen - terwijl de
+   * andere maten gewoon op voorraad liggen. Is er geen enkele te
+   * bestellen, dan blijft het de eerste: dan is uitverkocht ook het
+   * eerlijke beeld.
+   *
+   * Komt de bezoeker van dezelfde jas in een andere kleur, dan wint zijn
+   * eigen keuze - ook als die maat hier uitverkocht is. De doorgestreepte
+   * maat en de knop eronder vertellen dat dan; stilletjes een andere maat
+   * tonen zou dat niet doen.
    */
   const [variantIndex, setVariantIndex] = useState(() => {
+    const onthouden =
+      geheugen?.keuze && product.color && geheugen.keuze.groep === product.color.group
+        ? product.variants.findIndex((v) => v.label === geheugen.keuze?.maat)
+        : -1
+    if (onthouden !== -1) return onthouden
     const i = product.variants.findIndex((v) => (v.inStock ?? true) && v.price !== null)
     return i === -1 ? 0 : i
   })
@@ -70,6 +93,7 @@ export default function ProductDetailClient({
     setTimeout(() => setAdded(false), 2000)
   }
 
+  const huidigeKleur = kleuren.find((k) => k.slug === product.slug)?.label ?? ''
   const images = variant.images && variant.images.length > 0 ? variant.images : [variant.image]
   /**
    * Alt-tekst per foto. Staat er een beschrijving in `imageAlts`, dan die;
@@ -91,7 +115,12 @@ export default function ProductDetailClient({
     setVariantIndex(i)
     setActiveIndex(0)
     setAdded(false)
+    // Zodat de andere kleur hierop opent in plaats van op maat één.
+    if (product.color) {
+      geheugen?.onthoudMaat({ groep: product.color.group, maat: product.variants[i].label })
+    }
   }
+
 
   function prev() {
     setActiveIndex((i) => (i === 0 ? media.length - 1 : i - 1))
@@ -250,11 +279,57 @@ export default function ProductDetailClient({
             )}
           </div>
 
+          {/* Kleurkeuze. Elke kleur houdt zijn eigen pagina - en dus
+              zijn eigen kaart in het overzicht, zijn eigen foto's en zijn
+              eigen plek in de zoekresultaten. Dit rijtje is er zodat je
+              er vanaf hier ook heen kunt, zonder terug te hoeven naar de
+              lijst. */}
+          {kleuren.length > 1 && (
+            <div className="mb-6">
+              <p className="mb-3 text-sm font-medium text-[#1A1A1A]">
+                Kleur: <span className="font-normal text-[#6B7280]">{huidigeKleur}</span>
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {kleuren.map((kleur) => {
+                  const actief = kleur.slug === product.slug
+                  const inhoud = (
+                    <>
+                      <span
+                        aria-hidden
+                        className="h-3.5 w-3.5 shrink-0 rounded-full border border-black/15"
+                        style={{ backgroundColor: kleur.swatch }}
+                      />
+                      {kleur.label}
+                    </>
+                  )
+                  return actief ? (
+                    <span
+                      key={kleur.slug}
+                      aria-current="true"
+                      className="inline-flex items-center gap-2 rounded-full border border-[#2C4A3E] bg-[#2C4A3E] px-4 py-2.5 text-sm font-medium text-white"
+                    >
+                      {inhoud}
+                    </span>
+                  ) : (
+                    <Link
+                      key={kleur.slug}
+                      href={`/products/${kleur.slug}`}
+                      scroll={false}
+                      className="inline-flex items-center gap-2 rounded-full border border-[#E8E2D9] px-4 py-2.5 text-sm font-medium text-[#1A1A1A] transition-colors hover:border-[#2C4A3E]"
+                    >
+                      {inhoud}
+                    </Link>
+                  )
+                })}
+              </div>
+            </div>
+          )}
+
           {/* Variant selector */}
           {hasVariants && (
             <div className="mb-8">
               <p className="text-sm font-medium text-[#1A1A1A] mb-3">
-                Kies een optie
+                {product.variantTitle ?? 'Kies een optie'}
               </p>
               <div className="flex flex-wrap gap-2">
                 {product.variants.map((v, i) => {

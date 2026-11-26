@@ -77,6 +77,29 @@ export interface Product {
    */
   seoTitle?: string
   /**
+   * Dezelfde artikel in een andere kleur.
+   *
+   * Producten met dezelfde `group` houden elk hun eigen pagina, hun
+   * eigen naam en hun eigen kaart in het overzicht - zo blijft elke
+   * kleur vindbaar in plaats van verstopt achter een keuzerondje - en
+   * tonen elkaar bovenaan als kleurkeuze. Zie `colorSiblings` in
+   * lib/products.ts.
+   */
+  color?: {
+    /** Gedeelde sleutel; alleen producten met dezelfde sleutel horen bij elkaar. */
+    group: string
+    /** De kleur zoals hij in de kiezer staat: "Blauw". */
+    label: string
+    /** Het bolletje in de kiezer, als hex. Uit de productfoto gehaald. */
+    swatch: string
+  }
+  /**
+   * Het kopje boven de variantkiezer. Standaard "Kies een optie"; bij een
+   * product waar de varianten maten zijn en er ook een kleurrij boven
+   * staat, leest "Maat" een stuk duidelijker.
+   */
+  variantTitle?: string
+  /**
    * Pre-order: de datum waarop dit product de deur uit kan, met expliciete
    * tijdzone-offset (`2026-12-04T00:00:00+01:00`). Zolang die datum in de
    * toekomst ligt, is het product gewoon te bestellen en te betalen, maar

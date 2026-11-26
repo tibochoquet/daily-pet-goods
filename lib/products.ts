@@ -2400,6 +2400,8 @@ export const products: Product[] = [
    */
   {
     slug: "hondenjas-tuig-blauw",
+    color: { group: 'jas-met-tuig-hond', label: 'Blauw', swatch: '#2B59C7' },
+    variantTitle: 'Maat',
     name: "Hondenjas met Ingebouwd Tuig – Blauw",
     category: "dog-clothing",
     description: "Met deze warme winterjas heeft je hond geen los tuig of halsband meer nodig: het tuig zit vast aan de jas en je klikt de riem direct aan de twee metalen D-ringen op de rug. De jas is blauw met lichtgrijs. De buitenstof is gewatteerd met een ruitstiksel en waterdicht, zodat regen eraf parelt, en de binnenkant is gevoerd met zachte fleece, met ribboord rond de pootgaten en de achterrand. De hoge kraag houdt de wind uit de nek en zet je met het koord en de twee stoppers strakker of losser. Rond die kraag loopt een brede reflecterende band, en op alle tuigbanden zitten reflecterende stiksels die oplichten in het licht van koplampen en straatverlichting. De rits over de rug betekent dat de jas niet over de kop hoeft. Verkrijgbaar in vier maten, van 25 tot 40 cm ruglengte, voor kleine honden zoals een Chihuahua, Maltezer, Jack Russell of Dwergschnauzer.",
@@ -2584,6 +2586,8 @@ export const products: Product[] = [
   },
   {
     slug: "hondenjas-tuig-roze",
+    color: { group: 'jas-met-tuig-hond', label: 'Roze', swatch: '#F43967' },
+    variantTitle: 'Maat',
     name: "Hondenjas met Ingebouwd Tuig – Roze",
     category: "dog-clothing",
     description: "Met deze warme winterjas heeft je hond geen los tuig of halsband meer nodig: het tuig zit vast aan de jas en je klikt de riem direct aan de twee metalen D-ringen op de rug. De jas is roze met lichtgrijs. De buitenstof is gewatteerd met een ruitstiksel en waterdicht, zodat regen eraf parelt, en de binnenkant is gevoerd met zachte fleece, met ribboord rond de pootgaten en de achterrand. De hoge kraag houdt de wind uit de nek en zet je met het koord en de twee stoppers strakker of losser. Rond die kraag loopt een brede reflecterende band, en op alle tuigbanden zitten reflecterende stiksels die oplichten in het licht van koplampen en straatverlichting. De rits over de rug betekent dat de jas niet over de kop hoeft. Verkrijgbaar in vier maten, van 25 tot 40 cm ruglengte, voor kleine honden zoals een Chihuahua, Maltezer, Jack Russell of Dwergschnauzer.",
@@ -2760,6 +2764,8 @@ export const products: Product[] = [
   },
   {
     slug: "kattenjas-tuig-blauw",
+    color: { group: 'jas-met-tuig-kat', label: 'Blauw', swatch: '#2B59C7' },
+    variantTitle: 'Maat',
     name: "Kattenjas met Ingebouwd Tuig – Blauw",
     category: "cat-clothing",
     description: "Dezelfde jas als de hondenversie, maar dan in de twee kleinste maten en op de kat gezet. Je kat heeft er geen los kattentuig meer bij nodig: het tuig zit vast aan de jas en je klikt de riem direct aan de twee metalen D-ringen op de rug. De jas is blauw met lichtgrijs, met een gewatteerde, waterdichte buitenstof en een zachte fleecevoering, en is daarmee extra fijn voor katten die het snel koud hebben, zoals naaktkatten, kortharige en oudere katten. De hoge kraag trek je met het koord en de twee stoppers strakker om de nek, en rond die kraag loopt een brede reflecterende band, net als de reflecterende stiksels op de tuigbanden. De rits over de rug betekent dat de jas niet over de kop hoeft. Verkrijgbaar in maat S met een ruglengte van 25 cm en maat M met 30 cm.",
@@ -2865,6 +2871,8 @@ export const products: Product[] = [
   },
   {
     slug: "kattenjas-tuig-roze",
+    color: { group: 'jas-met-tuig-kat', label: 'Roze', swatch: '#F43967' },
+    variantTitle: 'Maat',
     name: "Kattenjas met Ingebouwd Tuig – Roze",
     category: "cat-clothing",
     description: "Dezelfde jas als de hondenversie, maar dan in de twee kleinste maten en op de kat gezet. Je kat heeft er geen los kattentuig meer bij nodig: het tuig zit vast aan de jas en je klikt de riem direct aan de twee metalen D-ringen op de rug. De jas is roze met lichtgrijs, met een gewatteerde, waterdichte buitenstof en een zachte fleecevoering, en is daarmee extra fijn voor katten die het snel koud hebben, zoals naaktkatten, kortharige en oudere katten. De hoge kraag trek je met het koord en de twee stoppers strakker om de nek, en rond die kraag loopt een brede reflecterende band, net als de reflecterende stiksels op de tuigbanden. De rits over de rug betekent dat de jas niet over de kop hoeft. Verkrijgbaar in maat S met een ruglengte van 25 cm en maat M met 30 cm.",
@@ -3104,6 +3112,22 @@ export function getBestSellers(): Product[] {
 
 export function getCategoryBySlug(slug: string): Category | undefined {
   return categories.find((c) => c.slug === slug)
+}
+
+/**
+ * Hetzelfde artikel in zijn andere kleuren, inclusief het product zelf,
+ * in de volgorde van dit bestand. Een lege lijst betekent: dit product
+ * heeft geen kleurgenoten.
+ *
+ * Elke kleur houdt zijn eigen pagina en zijn eigen kaart in het
+ * overzicht. Deze functie is er alleen voor het rijtje kleuren bovenaan
+ * de productpagina, zodat je van blauw naar roze kunt zonder eerst terug
+ * te gaan naar de lijst.
+ */
+export function colorSiblings(product: Product): Product[] {
+  const groep = product.color?.group
+  if (!groep) return []
+  return products.filter((p) => p.color?.group === groep)
 }
 
 /**

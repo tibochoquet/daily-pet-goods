@@ -7,6 +7,7 @@ import Footer from '@/components/layout/Footer'
 import JsonLd from '@/components/JsonLd'
 import GoogleTag from '@/components/GoogleTag'
 import { CartProvider } from '@/components/cart/CartProvider'
+import { SizeMemoryProvider } from '@/components/shop/SizeMemory'
 import { Analytics } from '@vercel/analytics/next'
 import { business, SITE_URL } from '@/lib/business'
 
@@ -120,7 +121,11 @@ export default function RootLayout({
         <CartProvider>
           <AnnouncementBar />
           <Navigation />
-          <main>{children}</main>
+          {/* Boven de route, zodat de gekozen maat blijft staan bij
+              het wisselen van kleur - zie SizeMemory. */}
+          <SizeMemoryProvider>
+            <main>{children}</main>
+          </SizeMemoryProvider>
           <Footer />
         </CartProvider>
         <Analytics />
