@@ -1337,7 +1337,10 @@ export const products: Product[] = [
   },
   {
     slug: "kattenjas-tuig",
-    name: "Kattenjas met Ingebouwd Tuig",
+    // De kleur hoort sinds november 2026 in de naam: er staan nu drie
+    // kattenjassen met ingebouwd tuig naast elkaar. De slug blijft
+    // `kattenjas-tuig`, want die staat in links en zoekresultaten.
+    name: "Kattenjas met Ingebouwd Tuig – Grijs",
     category: "cat-clothing",
     description: "Een grijsmelange winterjas met het tuigje er al in: over de rug lopen verstelbare banden met een D-ring, zodat je de lijn direct aan de jas vastklikt en er geen los tuigje meer onder hoeft. De jas gaat open met een rits over de rug. De buitenstof is waterafstotend, regen parelt eraf, en de binnenkant is gevoerd met zachte fleece, met een hoge zwarte kraag in de nek. De banden van het tuig zijn reflecterend en lichten op zodra er licht op valt, zodat je kat in het donker beter te zien is. Verkrijgbaar in maat S met een jaslengte van 25 cm en maat M met een jaslengte van 30 cm. Meet je kat staand van de basis van de nek, waar de halsband ligt, tot de staartaanzet.",
     shortDescription: "Waterafstotende grijze kattenjas met een ingebouwd tuig met D-ring, reflecterende banden en fleecevoering, in maat S en M.",
