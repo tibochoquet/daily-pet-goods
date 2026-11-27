@@ -1366,10 +1366,7 @@ export const products: Product[] = [
         ean: "6156813576585",
         label: "S (25 cm)",
         price: 39.99,
-        // Tijdelijk uitverkocht sinds 25 november 2026. Hiermee staat de
-        // knop uit, weigert /api/checkout deze variant en valt hij uit de
-        // suggesties in de winkelwagen.
-        inStock: false,
+        // Was uitverkocht van 25 tot 27 november 2026 en ligt er weer.
         specs: {"Jaslengte": "25 cm", "Past bij ruglengte": "24 tot 27 cm", "Kleur": "grijs melange met zwart", "Materiaal voering": "fleece", "Ingebouwd tuig": "ja, met D-ring op de rug", "Sluiting": "rits over de rug", "Verstelbaar": "ja, reflecterende tuigbanden", "Reflecterend": "ja", "Waterafstotend": "ja"},
         image: "/assets/products/kattenjas-tuig-25cm/img_1.jpg",
         images: [
@@ -1700,10 +1697,7 @@ export const products: Product[] = [
         ean: "6156811672678",
         label: "XXS",
         price: 39.99,
-        // Tijdelijk uitverkocht sinds 25 november 2026. Hiermee staat de
-        // knop uit, weigert /api/checkout deze variant en valt hij uit de
-        // suggesties in de winkelwagen.
-        inStock: false,
+        // Was uitverkocht van 25 tot 27 november 2026 en ligt er weer.
         specs: {"Jaslengte": "25 cm", "Past bij ruglengte": "23 tot 27 cm", "Rasvoorbeeld": "Chihuahua, dwergpinscher", "Kleur": "grijs melange met zwart", "Materiaal buitenzijde": "waterafstotend polyester", "Materiaal voering": "fleece", "Sluiting": "rits over de hele rug", "Tuigopening op de rug": "ja, met D-ringen voor de lijn", "Verstelbaar": "ja, reflecterende banden", "Reflecterend": "ja", "Waterafstotend": "ja"},
         image: "/assets/products/hondenjas-grijs-rits-25cm/img_1.jpg",
         images: [
